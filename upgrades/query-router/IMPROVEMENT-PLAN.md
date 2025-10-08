@@ -20,7 +20,10 @@ After comprehensive research into state-of-the-art query routing systems (Octobe
 
 **Research Foundation:**
 - 📚 [Semantic Router](../../research/documentation/query-routing/semantic-router.md) - 10ms intent classification
+- 📚 [Semantic Router Analysis](../../research/documentation/query-routing/semantic-router-analysis.md) - Version 0.1.11, best-in-class
 - 📚 [Query Rewriting](../../research/documentation/query-routing/query-rewriting-rag.md) - Microsoft +21 point improvement
+- 📚 [Claude vs OpenAI](../../research/documentation/query-routing/claude-vs-openai-query-rewriting.md) - Claude 3.5 Sonnet superior
+- 📚 [Async Best Practices](../../research/documentation/query-routing/async-best-practices-2025.md) - Full async conversion
 - 📚 [Agentic RAG](../../research/documentation/query-routing/agentic-rag-2025.md) - 2025 paradigm shift
 - 📚 [Adaptive Routing](../../research/documentation/query-routing/adaptive-routing-learning.md) - Learned weights
 - 📚 [GraphRAG](../../research/documentation/query-routing/graphrag-hybrid-search.md) - 99% precision hybrid search
@@ -61,8 +64,8 @@ TEMPORAL_KEYWORDS = {"changed", "evolved", "history", ...}
 - Brittle to wording changes
 
 **Solution:** Semantic intent classification using embeddings
-- **Research:** [Semantic Router](../../research/documentation/query-routing/semantic-router.md)
-- **Technology:** aurelio-labs/semantic-router (10ms decisions)
+- **Research:** [Semantic Router](../../research/documentation/query-routing/semantic-router.md) | [Analysis](../../research/documentation/query-routing/semantic-router-analysis.md)
+- **Technology:** aurelio-labs/semantic-router 0.1.11 (latest, 10ms decisions)
 - **Implementation:** Phase 1.1
 
 ---
@@ -78,7 +81,8 @@ TEMPORAL_KEYWORDS = {"changed", "evolved", "history", ...}
 - Suboptimal retrieval
 
 **Solution:** Multi-strategy query rewriting
-- **Research:** [Query Rewriting for RAG](../../research/documentation/query-routing/query-rewriting-rag.md)
+- **Research:** [Query Rewriting for RAG](../../research/documentation/query-routing/query-rewriting-rag.md) | [Claude vs OpenAI Analysis](../../research/documentation/query-routing/claude-vs-openai-query-rewriting.md)
+- **Technology:** Claude 3.5 Sonnet API (superior to GPT-4, 67% lower cost)
 - **Techniques:** HyDE, decomposition, normalization, expansion
 - **Implementation:** Phase 1.2
 
@@ -252,6 +256,7 @@ Temporal keywords get 2x weight (hardcoded)
 ```python
 # File: src/apex_memory/query_router/semantic_classifier.py
 
+# Install: pip install semantic-router==0.1.11
 from semantic_router import Route, SemanticRouter
 from semantic_router.encoders import OpenAIEncoder
 
@@ -407,6 +412,8 @@ def test_semantic_classification():
 
 from typing import List, Optional
 from enum import Enum
+import anthropic  # pip install anthropic==0.39.0
+import os
 
 class RewriteStrategy(Enum):
     NORMALIZATION = "normalization"
@@ -415,11 +422,15 @@ class RewriteStrategy(Enum):
     EXPANSION = "expansion"
 
 class QueryRewriter:
-    """Multi-strategy query rewriting for RAG optimization."""
+    """Multi-strategy query rewriting for RAG optimization using Claude 3.5 Sonnet."""
 
-    def __init__(self, llm_service, embedding_service):
-        self.llm = llm_service
+    def __init__(self, embedding_service):
+        # Use Claude 3.5 Sonnet for superior query rewriting (67% lower cost than GPT-4)
+        self.claude_client = anthropic.Anthropic(
+            api_key=os.getenv("ANTHROPIC_API_KEY")
+        )
         self.embeddings = embedding_service
+        self.model = "claude-3-5-sonnet-20241022"  # Latest Claude model
 
     def rewrite(
         self,
@@ -467,16 +478,21 @@ class QueryRewriter:
         return normalized
 
     def _hyde(self, query: str) -> str:
-        """Generate hypothetical answer, use for search."""
+        """Generate hypothetical answer using Claude 3.5 Sonnet."""
         prompt = f"""Write a concise passage that answers this question:
 Question: {query}
 Answer:"""
 
-        hypothetical_answer = self.llm.generate(prompt, max_tokens=200)
-        return hypothetical_answer
+        response = self.claude_client.messages.create(
+            model=self.model,
+            max_tokens=200,
+            temperature=0.3,
+            messages=[{"role": "user", "content": prompt}]
+        )
+        return response.content[0].text.strip()
 
     def _decompose(self, query: str) -> List[str]:
-        """Break complex query into sub-queries."""
+        """Break complex query into sub-queries using Claude 3.5 Sonnet."""
         if len(query.split()) < 10:
             # Too short to decompose
             return []
@@ -486,7 +502,13 @@ Question: {query}
 Sub-questions:
 1."""
 
-        decomposed = self.llm.generate(prompt, max_tokens=300)
+        response = self.claude_client.messages.create(
+            model=self.model,
+            max_tokens=300,
+            temperature=0.2,  # Low temp for consistent decomposition
+            messages=[{"role": "user", "content": prompt}]
+        )
+        decomposed = response.content[0].text.strip()
         sub_queries = self._parse_numbered_list(decomposed)
         return sub_queries
 
@@ -531,7 +553,8 @@ Sub-questions:
 
 class QueryRouter:
     def __init__(self, ...):
-        self.query_rewriter = QueryRewriter(llm_service, embedding_service)
+        # QueryRewriter now uses Claude 3.5 Sonnet internally
+        self.query_rewriter = QueryRewriter(embedding_service)
 
     def query(self, query_text: str, ...):
         # Step 1: Analyze intent
@@ -2390,22 +2413,37 @@ class TestQueryRouterUpgrade:
    - Out-of-scope detection
    - Embedding-based routing
 
-2. **[Query Rewriting for RAG](../../research/documentation/query-routing/query-rewriting-rag.md)**
+2. **[Semantic Router Analysis](../../research/documentation/query-routing/semantic-router-analysis.md)**
+   - Version 0.1.11 (latest)
+   - Best-in-class comparison
+   - Alternative evaluation
+
+3. **[Query Rewriting for RAG](../../research/documentation/query-routing/query-rewriting-rag.md)**
    - Microsoft +21-28 point improvement
    - HyDE, decomposition, expansion
    - RaFe and LLM-QE frameworks
 
-3. **[Agentic RAG 2025](../../research/documentation/query-routing/agentic-rag-2025.md)**
+4. **[Claude vs OpenAI for Query Rewriting](../../research/documentation/query-routing/claude-vs-openai-query-rewriting.md)**
+   - Claude 3.5 Sonnet superior to GPT-4
+   - 67% lower cost
+   - Better instruction following
+
+5. **[Async Best Practices 2025](../../research/documentation/query-routing/async-best-practices-2025.md)**
+   - Full async conversion recommended
+   - FastAPI async-native integration
+   - Performance benchmarks
+
+6. **[Agentic RAG 2025](../../research/documentation/query-routing/agentic-rag-2025.md)**
    - Paradigm shift to autonomous agents
    - Reflection, planning, tool use
    - Multi-router architectures
 
-4. **[Adaptive Routing with Learned Weights](../../research/documentation/query-routing/adaptive-routing-learning.md)**
+7. **[Adaptive Routing with Learned Weights](../../research/documentation/query-routing/adaptive-routing-learning.md)**
    - Contextual bandits (PILOT)
    - Matrix factorization
    - Online learning
 
-5. **[GraphRAG Hybrid Search](../../research/documentation/query-routing/graphrag-hybrid-search.md)**
+8. **[GraphRAG Hybrid Search](../../research/documentation/query-routing/graphrag-hybrid-search.md)**
    - 99% precision benchmarks
    - Neo4j vector index
    - Unified graph + vector
