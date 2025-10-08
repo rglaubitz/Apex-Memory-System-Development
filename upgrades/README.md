@@ -19,10 +19,15 @@ upgrades/
 ├── query-router/          # Active: Query routing improvements
 │   ├── README.md         # Quick reference
 │   └── IMPROVEMENT-PLAN.md  # Comprehensive 8-week plan
+├── planned/               # Planned upgrades (research phase)
+│   ├── README.md         # Planned upgrades index
+│   ├── ingestion-pipeline-v2/      # 📝 Research
+│   ├── temporal-intelligence-enhancement/  # 📝 Research
+│   └── multi-modal-rag/           # 📝 Research
 ├── completed/             # Completed upgrades (historical)
 │   ├── README.md         # Completed upgrades index
-│   ├── documentation-system/    # ✅ Oct 2025
-│   └── cross-reference-system/  # ✅ Oct 2025
+│   ├── documentation-system/      # ✅ Oct 2025
+│   └── cross-reference-system/    # ✅ Oct 2025
 └── [future-upgrade]/      # Template for new upgrades
     ├── README.md
     └── IMPROVEMENT-PLAN.md
@@ -119,31 +124,64 @@ Comprehensive upgrade bringing Apex query routing from current keyword-based app
 
 ---
 
-## Planned Upgrades
+## Planned Upgrades 📝
+
+For detailed planning and research tracking, see **[`planned/`](planned/)** directory.
 
 ### Ingestion Pipeline v2
 
 **Status:** 📝 Research Phase
 **Priority:** Medium
 **Timeline:** TBD
+**Research Progress:** 0%
 
 **Goal:** Improve document parsing quality, add multi-modal support, optimize parallel processing
+
+**Key Improvements:**
+- 95%+ format preservation (PDF, DOCX, PPTX)
+- Multi-modal support (images, tables, diagrams)
+- Consistent 10+ docs/second throughput
+- 90%+ entity extraction accuracy
+
+📂 **[Full Planning](planned/ingestion-pipeline-v2/)**
+
+---
 
 ### Temporal Intelligence Enhancement
 
 **Status:** 📝 Research Phase
 **Priority:** Medium
 **Timeline:** TBD
+**Research Progress:** 0%
 
 **Goal:** Enhance Graphiti integration, improve pattern detection, add time-series forecasting
+
+**Key Features:**
+- Pattern detection (recurring themes, trends)
+- Community detection (GraphRAG approach)
+- Time-series forecasting
+- Query router integration
+
+📂 **[Full Planning](planned/temporal-intelligence-enhancement/)**
+
+---
 
 ### Multi-Modal RAG
 
 **Status:** 📝 Research Phase
 **Priority:** Low
 **Timeline:** TBD
+**Research Progress:** 0%
 
 **Goal:** Support images, tables, audio in retrieval and generation
+
+**Capabilities:**
+- Image ingestion and search
+- Table structure preservation
+- Audio/video transcription
+- Cross-modal retrieval (text → images)
+
+📂 **[Full Planning](planned/multi-modal-rag/)**
 
 ---
 
