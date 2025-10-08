@@ -1,303 +1,336 @@
-# Phased Development Workflow
+# Workflow Documentation
 
-5-phase development process with quality gates for the Apex Memory System.
+This directory contains all workflow documentation for the Apex Memory System Development project.
 
-## Overview
+---
 
-The workflow system ensures high-quality, research-driven development through structured phases with validation at each stage.
+## Available Workflows
+
+### 1. Features Implementation Workflow
+
+**📘 [FEATURES-IMPLEMENTATION-WORKFLOW.md](./FEATURES-IMPLEMENTATION-WORKFLOW.md)**
+
+The comprehensive, battle-tested workflow for implementing major features.
+
+**Use for:**
+- Major feature implementations (multi-week, multi-phase)
+- System upgrades requiring research
+- Features touching multiple components
+- Anything requiring deployment planning
+
+**Don't use for:**
+- Bug fixes (too heavyweight)
+- Simple code changes
+- Quick patches
+
+**Quick start:** [FEATURES-QUICK-START.md](./FEATURES-QUICK-START.md)
+**Checklist:** [PHASE-IMPLEMENTATION-CHECKLIST.md](./PHASE-IMPLEMENTATION-CHECKLIST.md)
+
+**Success story:** Query Router Upgrade (October 2025)
+- 8 research documents
+- 20+ implementation files
+- 30+ tests
+- 8 deployment examples
+- Zero rework required
+
+---
+
+## Workflow Components
+
+### Documentation
+
+| Document | Purpose | When to Use |
+|----------|---------|-------------|
+| [FEATURES-IMPLEMENTATION-WORKFLOW.md](./FEATURES-IMPLEMENTATION-WORKFLOW.md) | Complete workflow guide | Read once, reference during implementation |
+| [FEATURES-QUICK-START.md](./FEATURES-QUICK-START.md) | One-page cheat sheet | Quick reference during active work |
+| [PHASE-IMPLEMENTATION-CHECKLIST.md](./PHASE-IMPLEMENTATION-CHECKLIST.md) | Detailed phase checklist | Use for each implementation phase |
+
+### Templates
+
+All templates are in [`templates/features/`](./templates/features/):
+
+| Template | Purpose |
+|----------|---------|
+| [IMPROVEMENT-PLAN-TEMPLATE.md](./templates/features/IMPROVEMENT-PLAN-TEMPLATE.md) | Comprehensive feature specification |
+| [IMPLEMENTATION-GUIDE-TEMPLATE.md](./templates/features/IMPLEMENTATION-GUIDE-TEMPLATE.md) | Step-by-step implementation guide |
+| [DEPLOYMENT-GUIDE-TEMPLATE.md](./templates/features/DEPLOYMENT-GUIDE-TEMPLATE.md) | Deployment procedures |
+| [README-TEMPLATE.md](./templates/features/README-TEMPLATE.md) | Feature overview and progress tracking |
+| [PHASE-README-TEMPLATE.md](./templates/features/PHASE-README-TEMPLATE.md) | Per-phase documentation |
+
+---
+
+## The Features Implementation Workflow
+
+### Overview
+
+A **7-phase, research-first workflow** that ensures production-ready features with zero rework.
 
 ```
-Phase 1: Vision → Phase 2: Mission → Phase 3: Execution Planning
-                                              ↓
-                                    Phase 3.5: Review Board ⭐
-                                              ↓
-                     Phase 4: Implementation → Phase 5: Testing
+Phase 0: Identify → Phase 1: RDF → Phases 2-5: Implement → Phase 6: Deploy Docs → Phase 7: Ship
+   (1 day)          (1 week)         (4-6 weeks)            (1 week)            (ongoing)
 ```
 
-## Phases
+### Key Success Factors
 
-### Phase 1: Vision
+✅ **Research-first** → Better decisions
+✅ **Plan mode first** → Aligned approach
+✅ **Proactive tests** → Quality without asking
+✅ **Context compact** → Prevents overflow
+✅ **Examples alongside** → Usable immediately
+✅ **Docs as you go** → Never falls behind
+✅ **Deployment manual last** → Complete operational guide
 
-**Purpose:** Define strategic goals and success criteria
+### The Phase Implementation Pattern
 
-**Activities:**
-- Identify business objectives
-- Define user needs and pain points
-- Establish success metrics
-- Create vision document
+For each implementation phase (Phases 2-5):
 
-**Deliverables:**
-- Vision statement
-- Success criteria
-- Key performance indicators (KPIs)
+1. 🛑 **Enter Plan Mode** - Pause before coding
+2. 💬 **Discuss Requirements** - What do we need?
+3. 📚 **Fill Research Gaps** - Get missing info
+4. ▶️ **Exit Plan Mode** - Ready to execute
+5. 💻 **Write Code** - Real working code (3-5 files)
+6. ✨ **Generate Tests** - Proactively! (15-30 tests)
+7. 📝 **Create Examples** - Copy-paste ready
+8. 📄 **Update Docs** - Phase README, CHANGELOG
+9. 🗜️ **Context Compact** - Before next phase (critical!)
+10. ✅ **Mark Complete** - Phase done, ready for next
 
-**Quality Gate:** User approval of vision
+### Timeline (Major Feature)
 
-**Duration:** 1-2 days
-
----
-
-### Phase 2: Mission
-
-**Purpose:** Research and define technical approach
-
-**Activities:**
-- Use research team to gather documentation
-- Review best practices and industry standards
-- Evaluate technology options
-- Create technical approach document
-
-**Research Team Agents:**
-- research-manager (coordination)
-- documentation-hunter (official docs)
-- github-examples-hunter (code examples)
-- standards-researcher (best practices)
-- competitive-intelligence-analyst (alternatives)
-
-**Deliverables:**
-- Research documentation in `research/documentation/`
-- Code examples in `research/examples/`
-- Technology selection with rationale
-- Mission document
-
-**Quality Gate:** Research quality validated by CIO
-
-**Duration:** 3-5 days
-
----
-
-### Phase 3: Execution Planning
-
-**Purpose:** Create detailed implementation plan
-
-**Activities:**
-- Break down work into phases and tasks
-- Identify dependencies and risks
-- Define implementation approach
-- Create comprehensive plan with code examples
-
-**Deliverables:**
-- Detailed execution plan (e.g., IMPROVEMENT-PLAN.md)
-- Task breakdown
-- Risk mitigation strategies
-- Timeline estimates
-
-**Quality Gate:** Plan completeness check
-
-**Duration:** 2-3 days
-
----
-
-### Phase 3.5: Review Board ⭐
-
-**Purpose:** C-suite validation before implementation
-
-**The Review Board consists of 3 C-suite executive agents:**
-
-#### Chief Information Officer (CIO)
-**Reviews:** Research quality and documentation completeness
-
-**Validation Criteria:**
-- ✅ Research follows source hierarchy (Tier 1-5)
-- ✅ Documentation is current (<2 years OR explicitly verified)
-- ✅ GitHub examples are high-quality (1.5k+ stars)
-- ✅ All sources include citations with URLs
-- ✅ Breaking changes and deprecations noted
-- ✅ Dependencies clearly documented
-
-**Scoring Rubric (0-100):**
-- Research Quality (40 pts)
-- Documentation Completeness (30 pts)
-- Source Hierarchy Compliance (20 pts)
-- Citation Accuracy (10 pts)
-
-#### Chief Technology Officer (CTO)
-**Reviews:** Technical architecture and implementation feasibility
-
-**Validation Criteria:**
-- ✅ Technology stack is appropriate
-- ✅ Architecture is sound and scalable
-- ✅ API design follows best practices
-- ✅ Data architecture is well-designed
-- ✅ Code quality standards are defined
-- ✅ Security considerations addressed
-
-**Scoring Rubric (0-100):**
-- Technical Architecture (40 pts)
-- Implementation Feasibility (30 pts)
-- Code Quality Standards (20 pts)
-- Security & Performance (10 pts)
-
-#### Chief Operations Officer (COO)
-**Reviews:** Operational capacity and goal achievement
-
-**Validation Criteria:**
-- ✅ Goals are achievable
-- ✅ Timeline is realistic
-- ✅ Resources are adequate
-- ✅ UX quality is addressed
-- ✅ User adoption is likely
-- ✅ Business impact is clear
-
-**Scoring Rubric (0-100):**
-- Goal Achievement (40 pts)
-- Timeline Realism (30 pts)
-- Resource Adequacy (20 pts)
-- UX & Adoption (10 pts)
-
-**Review Process:**
-1. CIO reviews first (research foundation)
-2. CTO reviews second (technical architecture)
-3. COO reviews last (operational execution)
-4. All 3 must approve to proceed
-
-**Possible Verdicts:**
-- ✅ **APPROVED** - Proceed to Phase 4
-- ⚠️ **APPROVED_WITH_CONCERNS** - Proceed with noted concerns
-- ❌ **REJECTED** - Major issues, must revise and resubmit
-
-**Veto Power:** Any executive can REJECT and block implementation
-
-**Duration:** 1-2 days
-
-**Output:** Review Board reports in `research/review-board/`
-
----
-
-### Phase 4: Implementation
-
-**Purpose:** Execute the approved plan
-
-**Activities:**
-- Follow phased implementation approach
-- Track progress with TodoWrite
-- Create ADRs for significant decisions
-- Regular progress updates
-
-**Quality Standards:**
-- Follow approved plan
-- Maintain code quality (black, isort, flake8, mypy)
-- Write tests for new functionality
-- Document as you go
-
-**Progress Tracking:**
-- Use TodoWrite for task management
-- Update upgrade README with status
-- Regular check-ins
-
-**Quality Gate:** COO validates execution progress
-
-**Duration:** Varies by project (4-8 weeks typical)
-
----
-
-### Phase 5: Testing
-
-**Purpose:** Validate implementation against requirements
-
-**Activities:**
-- Run comprehensive test suite
-- Benchmark performance against targets
-- Validate success criteria from Phase 1
-- Document actual results vs. expected
-
-**Testing Types:**
-- Unit tests (pytest)
-- Integration tests
-- Performance benchmarks
-- User acceptance testing (if applicable)
-
-**Deliverables:**
-- Test results report
-- Performance benchmarks
-- Comparison: actual vs. expected gains
-- Lessons learned
-
-**Quality Gate:** CTO validates technical achievement
-
-**Duration:** 1-2 weeks
-
----
-
-## Quality Gates Summary
-
-| Phase | Quality Gate | Validator | Criteria |
-|-------|-------------|-----------|----------|
-| 1: Vision | User approval | User | Vision aligns with needs |
-| 2: Mission | Research quality | CIO | Follows source hierarchy |
-| 3: Execution Planning | Plan completeness | - | All sections complete |
-| **3.5: Review Board** | **C-suite approval** | **CIO + CTO + COO** | **All 3 approve** |
-| 4: Implementation | Execution progress | COO | Following approved plan |
-| 5: Testing | Technical achievement | CTO | Meets success criteria |
-
-## Workflow Commands
-
-**Note:** Workflow commands are managed through Claude Code slash commands.
-
-Example commands (hypothetical):
 ```
-/start-vision <project-name>
-/start-mission <project-name>
-/start-execution-planning <project-name>
-/start-review-board <project-name>
-/start-implementation <project-name>
-/start-testing <project-name>
+Week 1:   Phase 1 (RDF)                    → 8 research docs
+Week 2-3: Phase 2 (Foundation)             → Code + 15 tests → COMPACT
+Week 3-4: Phase 3 (Intelligent Features)   → Code + 15 tests → COMPACT
+Week 5-6: Phase 4 (Advanced Features)      → Code + 15 tests → COMPACT
+Week 7:   Phase 5 (Polish)                 → Code + 15 tests → COMPACT
+Week 8:   Phase 6 (Deployment Manual)      → 4 guides + 8 examples
+Week 8+:  Phase 7 (Ship)                   → Deploy + monitor
+
+Total: 8 weeks for major feature
+Context compacts: 4 (critical!)
 ```
 
-## Example: Query Router Upgrade
+---
 
-**Phase 1: Vision** (Complete)
-- Goal: Improve query routing to 2025 standards
-- Success: 85-95% accuracy, <500ms P90 latency
+## Quick Decision Tree
 
-**Phase 2: Mission** (Complete)
-- Research: 5 documents covering Semantic Router, Query Rewriting, Agentic RAG, Adaptive Routing, GraphRAG
-- Sources: Microsoft, Neo4j, arXiv papers, industry benchmarks
+```
+Starting work?
+├─ Major feature (multi-week)?
+│  └─ Use Features Implementation Workflow
+│
+├─ Bug fix?
+│  └─ Use regular development flow (not this workflow)
+│
+├─ Simple change?
+│  └─ Use regular development flow (not this workflow)
+│
+└─ Research needed?
+   └─ Start with Phase 1 (RDF)
 
-**Phase 3: Execution Planning** (Complete)
-- Plan: `upgrades/query-router/IMPROVEMENT-PLAN.md`
-- Timeline: 8 weeks, 4 phases
-- Expected gains: +21-28 points relevance, 99% precision
+During implementation?
+├─ Starting new phase?
+│  └─ Enter plan mode first!
+│
+├─ Just finished coding?
+│  └─ Generate tests proactively
+│
+├─ Phase complete?
+│  └─ Context compact!
+│
+└─ All phases done?
+   └─ Create deployment manual
 
-**Phase 3.5: Review Board** (Ready)
-- CIO: Validates research quality (5 Tier 1-2 sources)
-- CTO: Validates technical architecture
-- COO: Validates 8-week timeline feasibility
-
-**Phase 4: Implementation** (Not Started)
-- Waiting for Review Board approval
-
-**Phase 5: Testing** (Planned)
-- Benchmarks against current system
-- Validate 85-95% accuracy target
-
-## Best Practices
-
-### Do's ✅
-- Follow phases in order (no skipping)
-- Get Review Board approval before implementation
-- Track all research with citations
-- Create ADRs for significant decisions
-- Update documentation as you go
-- Use agents for specialized tasks
-
-### Don'ts ❌
-- Skip Review Board (Phase 3.5)
-- Implement without approved plan
-- Use research without citations
-- Make architectural decisions without ADRs
-- Ignore quality gate feedback
-- Bypass C-suite executives
-
-## References
-
-- **C-Suite Agents:** `../.claude/agents/` (CIO, CTO, COO)
-- **Research Team:** `../.claude/agents/README.md`
-- **Upgrades:** `../upgrades/README.md`
-- **ADR Template:** `../research/architecture-decisions/README.md`
+Ready to ship?
+├─ All tests passing?
+│  └─ Create deployment guides
+│
+├─ Guides complete?
+│  └─ Final commit
+│
+├─ Deployed?
+│  └─ Move to completed/
+│
+└─ Done! 🎉
+```
 
 ---
 
-**Process Owner:** Development Coordination
-**Quality Enforcement:** C-Suite Review Board
+## Getting Started
+
+### For a New Feature
+
+1. **Read the workflow guide:**
+   ```bash
+   open workflow/FEATURES-IMPLEMENTATION-WORKFLOW.md
+   ```
+
+2. **Create feature directory:**
+   ```bash
+   mkdir -p upgrades/planned/[feature-name]
+   ```
+
+3. **Copy templates:**
+   ```bash
+   cp workflow/templates/features/IMPROVEMENT-PLAN-TEMPLATE.md upgrades/planned/[feature-name]/IMPROVEMENT-PLAN.md
+   cp workflow/templates/features/README-TEMPLATE.md upgrades/planned/[feature-name]/README.md
+   ```
+
+4. **Start Phase 0 (Identification):**
+   - Fill in README.md with problem statement
+   - Define high-level scope
+   - Get stakeholder buy-in
+
+5. **Execute Phase 1 (RDF):**
+   ```bash
+   # Option A: Automated
+   /rdf [feature-name]
+
+   # Option B: Manual research + documentation
+   ```
+
+6. **Follow the 7-phase workflow:**
+   - Use [FEATURES-QUICK-START.md](./FEATURES-QUICK-START.md) as guide
+   - Use [PHASE-IMPLEMENTATION-CHECKLIST.md](./PHASE-IMPLEMENTATION-CHECKLIST.md) for each phase
+   - Create deployment manual in Phase 6
+   - Ship in Phase 7
+
+---
+
+## Quality Standards
+
+### Research Phase
+
+- ✅ Minimum 8 research documents
+- ✅ All sources Tier 1-2 (official docs, 1.5k+ star repos)
+- ✅ Latest versions verified
+- ✅ Complete comparison tables
+
+### Implementation Phase
+
+- ✅ 20+ implementation files
+- ✅ 30+ tests (generated proactively!)
+- ✅ 80%+ code coverage
+- ✅ All async where appropriate
+
+### Example Quality
+
+- ✅ 8+ deployment examples
+- ✅ Copy-paste ready
+- ✅ No placeholders or TODOs
+
+### Documentation Quality
+
+- ✅ 100% coverage
+- ✅ Deployment guide complete
+- ✅ Testing guide complete
+- ✅ Troubleshooting guide complete
+
+---
+
+## Success Stories
+
+### Query Router Upgrade (October 2025)
+
+**The workflow in action:**
+
+- **Research Phase:** 8 comprehensive research documents (40,000+ words)
+- **Implementation:** 4 phases, each with plan mode → code → tests → compact
+- **Tests:** 30+ tests generated proactively (never asked!)
+- **Context Compacts:** 4 successful compacts (prevented overflow)
+- **Deployment:** Complete manual with 4 guides + 8 examples
+- **Result:** Production-ready with zero rework
+
+**Timeline:**
+- Planned: 8 weeks
+- Actual: 8 weeks
+- Rework: 0 weeks
+
+**Quality:**
+- Documentation: 100% complete
+- Tests: 100% passing
+- Examples: 100% working
+- Deployment: Successful
+
+**Lessons learned:**
+- ✅ Plan mode discussions prevented rework
+- ✅ Proactive test generation caught bugs early
+- ✅ Context compacts kept conversation manageable
+- ✅ Deployment manual enabled smooth rollout
+
+---
+
+## Contributing
+
+When adding new workflows:
+
+1. Create main workflow document
+2. Create quick-start guide
+3. Create templates
+4. Add to this README
+5. Test with real feature implementation
+6. Document lessons learned
+
+---
+
+## Related Resources
+
+### Internal
+- [RDF Workflow Guide](../.claude/RDF-WORKFLOW-GUIDE.md) - Automated research workflow
+- [Upgrades README](../upgrades/README.md) - Upgrade tracking system
+- [Research README](../research/README.md) - Research organization
+
+### Templates
+- [Feature Templates](./templates/features/) - All feature templates
+- [Example Feature](../upgrades/completed/query-router/) - Complete example
+
+---
+
+## FAQ
+
+**Q: When should I use the Features Implementation Workflow?**
+
+A: Use it for major features that:
+- Span multiple weeks (4-8 weeks typical)
+- Require research phase
+- Touch multiple components
+- Need deployment planning
+- Require comprehensive testing
+
+**Q: Can I use this workflow for bug fixes?**
+
+A: No, it's too heavyweight. Bug fixes should use the regular development flow.
+
+**Q: What if I skip the plan mode discussion?**
+
+A: You'll likely miss requirements and need rework. Plan mode catches issues before coding.
+
+**Q: What if I skip context compaction?**
+
+A: Context will overflow and you'll lose conversation continuity. Compact after EVERY phase.
+
+**Q: What if I don't generate tests proactively?**
+
+A: Quality will suffer and bugs will reach production. Generate 15-30 tests per phase WITHOUT being asked.
+
+**Q: Can I skip the deployment manual?**
+
+A: No. Without it, nobody can safely deploy your feature. Create it in Phase 6.
+
+---
+
+## Maintenance
+
+This workflow documentation should be updated:
+- After each successful feature implementation
+- When lessons are learned
+- When patterns are discovered
+- When templates need improvements
+
 **Last Updated:** October 2025
+**Version:** 1.0
+**Status:** Production-Ready
+
+---
+
+**This workflow has been battle-tested and is ready for use on any major feature implementation.**
