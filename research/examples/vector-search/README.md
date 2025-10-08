@@ -882,3 +882,27 @@ class ApexQueryRouter:
 ---
 
 **Document End**
+
+---
+
+## Related Upgrades
+
+### Query Router Improvement Plan
+
+Vector search examples inform the **Query Router upgrade** for semantic search optimization:
+
+**Examples Applied:**
+- HNSW optimization → Faster semantic search (Phase 2)
+- Multi-vector indexing → Multiple embeddings per document (Phase 4)
+- Hybrid search → Keyword + semantic combination (Phase 1)
+
+📋 **[Query Router Upgrade](../../../upgrades/query-router/IMPROVEMENT-PLAN.md)**
+
+---
+
+## Cross-References
+
+- **Research:** `../../documentation/query-routing/semantic-router.md`
+- **Frameworks:** `../../documentation/qdrant/`, `../../documentation/pgvector/`
+- **ADRs:** `../../architecture-decisions/ADR-005` - HNSW vs IVFFlat
+- **Upgrades:** `../../../upgrades/query-router/` - Active improvement plan

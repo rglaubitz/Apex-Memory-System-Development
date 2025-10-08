@@ -561,3 +561,11 @@ embedding = client.embeddings.create(
 
 - **2025-10-06:** Major update - Added GPT-5, GPT-5-Codex, GPT-4.1 series, text-embedding-3-large
 - **2025-10-06 (original):** Initial version - Only text-embedding-3-small (OUTDATED)
+
+---
+
+## Cross-References
+
+- **Research:** `../query-routing/` - Query routing research (uses OpenAI embeddings)
+- **Upgrades:** `../../../upgrades/query-router/` - Query Router improvement plan
+- **ADRs:** `../../architecture-decisions/ADR-001` - Multi-database architecture

@@ -582,3 +582,11 @@ app.openapi = custom_openapi
 **Quality Rating:** ⭐⭐⭐⭐⭐ Tier 1 - Official Documentation
 **Source Type:** Official API Documentation
 **Verification Date:** 2025-10-06
+
+---
+
+## Cross-References
+
+- **Examples:** `../../examples/fastapi-async/` - Async pattern implementations
+- **ADRs:** `../../architecture-decisions/` - API design decisions
+- **Upgrades:** `../../../upgrades/` - Active improvement plans

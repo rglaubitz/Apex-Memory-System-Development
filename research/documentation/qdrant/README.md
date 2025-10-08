@@ -738,3 +738,34 @@ Qdrant is a modern, purpose-built vector database with excellent performance, sc
 - HNSW indexes with cosine distance for embeddings
 - Payload indexes on temporal and category fields
 - Replication factor 3 for high availability
+
+---
+
+## Related Upgrades
+
+### Query Router Improvement Plan - Semantic Caching & Vector Search
+
+Qdrant plays a key role in the **Query Router upgrade** for semantic search and caching improvements:
+
+**Current Limitations:**
+- Exact-match-only caching (75% hit rate)
+- No semantic similarity caching
+- Static query routing to Qdrant
+
+**Qdrant Enhancements:**
+- **Semantic Caching** - Cache by embedding similarity (target: 90%+ hit rate)
+- **HNSW Optimization** - Faster vector search (<50ms P90)
+- **Adaptive Routing** - Learned weights for when to use Qdrant vs other databases
+
+**Research:** See `../query-routing/semantic-router.md` and `../query-routing/adaptive-routing-learning.md`
+
+📋 **[Query Router Upgrade](../../../upgrades/query-router/IMPROVEMENT-PLAN.md)** - Phase 2 (Week 3-4)
+
+---
+
+## Cross-References
+
+- **Research:** `../query-routing/` - Query routing research (5 documents)
+- **ADRs:** `../../architecture-decisions/ADR-001`, `ADR-005` (HNSW indexing)
+- **Examples:** `../../examples/vector-search/` - HNSW implementations
+- **Upgrades:** `../../../upgrades/query-router/` - Active improvement plan

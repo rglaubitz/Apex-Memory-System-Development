@@ -741,3 +741,12 @@ Graphiti is a specialized temporal knowledge graph framework designed for AI age
 - Point-in-time knowledge reconstruction
 - Historical audit trails for debugging
 - Hybrid semantic + graph search for retrieval
+
+---
+
+## Cross-References
+
+- **Research:** `../query-routing/agentic-rag-2025.md` - Temporal intelligence patterns
+- **ADRs:** `../../architecture-decisions/ADR-004` - Bi-temporal versioning
+- **Examples:** `../../examples/temporal-intelligence/` - Implementation patterns
+- **Upgrades:** `../../../upgrades/` - Active improvement plans

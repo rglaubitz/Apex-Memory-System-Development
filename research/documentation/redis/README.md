@@ -786,3 +786,32 @@ Redis 7 is a battle-tested, high-performance in-memory data structure store idea
 - Temporary data storage (processing intermediate results)
 - Distributed locks for coordination
 - Real-time notifications via Pub/Sub
+
+---
+
+## Related Upgrades
+
+### Query Router Improvement Plan - Semantic Caching
+
+Redis is central to the **semantic caching** approach in the Query Router upgrade:
+
+**Current Implementation:**
+- Exact-match caching (75% hit rate)
+- <100ms repeat query latency
+
+**Enhancements:**
+- **Semantic Caching** - Cache by embedding similarity (target: 90%+ hit rate)
+- **Cache-First Routing** - Check semantic cache before querying databases
+- **Adaptive Invalidation** - Smart cache eviction based on query patterns
+
+**Research:** See `../query-routing/adaptive-routing-learning.md`
+
+📋 **[Query Router Upgrade](../../../upgrades/query-router/IMPROVEMENT-PLAN.md)** - Phase 2 (Week 3-4)
+
+---
+
+## Cross-References
+
+- **Research:** `../query-routing/` - Query routing research
+- **ADRs:** `../../architecture-decisions/ADR-001` - Multi-database architecture
+- **Upgrades:** `../../../upgrades/query-router/` - Active improvement plan

@@ -213,3 +213,34 @@ RETURN e
 Neo4j is the leading graph database platform with robust support for temporal knowledge graphs, making it ideal for the Apex Memory System. The current production-ready version is **Neo4j 5.x LTS**, with comprehensive documentation, active development, and enterprise support. The Cypher query language provides an intuitive, SQL-like syntax for graph operations, and the platform offers excellent performance for relationship-heavy queries.
 
 **Key Takeaway:** Use Neo4j 5.x LTS (not 6.0.2) with Python Driver 6.0 for optimal compatibility and support.
+
+---
+
+## Related Upgrades
+
+### Query Router Improvement Plan - GraphRAG Hybrid Search
+
+Neo4j is central to the **GraphRAG hybrid search** approach in the Query Router upgrade:
+
+**Current Limitation:**
+- Separate queries to Qdrant (vector) and Neo4j (graph)
+- 2x latency (150ms → need <80ms)
+- Complex merging logic
+
+**Neo4j 5.x Solution:**
+- **Vector Index Support** - Native vector embeddings in Neo4j 5.x+
+- **Unified Queries** - Single Cypher query combining vector + graph
+- **99% Precision** - Graph-aware ranking and relationship context
+
+**Research:** See `../query-routing/graphrag-hybrid-search.md` for implementation details
+
+📋 **[Query Router Upgrade](../../../upgrades/query-router/IMPROVEMENT-PLAN.md)** - Phase 2 (Week 3-4)
+
+---
+
+## Cross-References
+
+- **Research:** `../query-routing/graphrag-hybrid-search.md` - GraphRAG patterns
+- **ADRs:** `../../architecture-decisions/ADR-001` - Multi-database architecture
+- **Examples:** `../../examples/multi-database-rag/` - GraphRAG implementations
+- **Upgrades:** `../../../upgrades/query-router/` - Active improvement plan

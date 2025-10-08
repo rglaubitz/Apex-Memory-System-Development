@@ -413,3 +413,34 @@ PostgreSQL 16 is a mature, feature-rich relational database system with excellen
 - Strong Python ecosystem support
 - Active community and comprehensive documentation
 - Production-ready for enterprise applications
+
+---
+
+## Related Upgrades
+
+### Query Router Improvement Plan - Hybrid Semantic Queries
+
+PostgreSQL + pgvector supports **hybrid semantic queries** in the Query Router upgrade:
+
+**Current Use:**
+- Metadata filtering
+- Structured data queries
+- Full-text search
+
+**Enhancements:**
+- **Hybrid Queries** - Combine exact filters with semantic search (pgvector)
+- **Metadata-First Routing** - Route metadata queries directly to PostgreSQL
+- **Query Rewriting** - Decompose complex queries for hybrid execution
+
+**Research:** See `../query-routing/query-rewriting-rag.md` and `../query-routing/graphrag-hybrid-search.md`
+
+📋 **[Query Router Upgrade](../../../upgrades/query-router/IMPROVEMENT-PLAN.md)** - Phase 1-2 (Week 1-4)
+
+---
+
+## Cross-References
+
+- **Research:** `../query-routing/` - Query routing research
+- **ADRs:** `../../architecture-decisions/ADR-001` - Multi-database architecture
+- **Related:** `../pgvector/` - Vector extension documentation
+- **Upgrades:** `../../../upgrades/query-router/` - Active improvement plan

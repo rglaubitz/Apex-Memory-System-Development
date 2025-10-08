@@ -984,3 +984,27 @@ The key differentiator for Apex is the **temporal intelligence layer** (Graphiti
 
 **Reviewed by:** github-examples-hunter
 **Date:** October 6, 2025
+
+---
+
+## Related Upgrades
+
+### Query Router Improvement Plan
+
+This research directly informs the **Query Router upgrade** for parallel multi-database retrieval:
+
+**Examples Applied:**
+- Microsoft GraphRAG → 99% precision hybrid search (Phase 2)
+- LlamaIndex multi-query → Query decomposition patterns (Phase 1)
+- LangChain routing → Adaptive routing strategies (Phase 2)
+
+📋 **[Query Router Upgrade](../../../upgrades/query-router/IMPROVEMENT-PLAN.md)**
+
+---
+
+## Cross-References
+
+- **Research:** `../../documentation/query-routing/graphrag-hybrid-search.md`
+- **Frameworks:** `../../documentation/neo4j/`, `../../documentation/qdrant/`
+- **ADRs:** `../../architecture-decisions/ADR-003` - Intent-based routing
+- **Upgrades:** `../../../upgrades/query-router/` - Active improvement plan

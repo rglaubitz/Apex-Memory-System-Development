@@ -958,3 +958,12 @@ RETURN p.name, c.name
 **Activity Threshold:** PASSED (commits within 6 months)
 **License Verification:** PASSED (Apache 2.0, MIT)
 **Documentation Completeness:** PASSED (comprehensive with citations)
+
+---
+
+## Cross-References
+
+- **Research:** `../../documentation/query-routing/agentic-rag-2025.md` - Temporal patterns
+- **Frameworks:** `../../documentation/graphiti/` - Temporal knowledge graphs
+- **ADRs:** `../../architecture-decisions/ADR-004` - Bi-temporal versioning
+- **Upgrades:** `../../../upgrades/` - Active improvement plans
