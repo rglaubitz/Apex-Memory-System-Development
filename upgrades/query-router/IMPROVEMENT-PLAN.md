@@ -559,7 +559,7 @@ class QueryRouter:
 
 ### 1.3 Routing Analytics & Telemetry
 
-**Goal:** Track all routing decisions for optimization
+**Goal:** Track all routing decisions for optimization with production-grade observability
 
 **Research:** [Adaptive Routing - Data Collection](../../research/documentation/query-routing/adaptive-routing-learning.md#phase-1-data-collection-week-1)
 
@@ -572,6 +572,46 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import Dict, List, Optional
 import json
+from prometheus_client import Counter, Histogram, Gauge
+from opentelemetry import trace
+from opentelemetry.exporter.jaeger import JaegerExporter
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.trace.export import BatchSpanProcessor
+
+# Prometheus Metrics
+routing_requests_total = Counter(
+    'apex_routing_requests_total',
+    'Total number of routing requests',
+    ['intent', 'cached']
+)
+
+routing_latency = Histogram(
+    'apex_routing_latency_seconds',
+    'Routing decision latency in seconds',
+    ['intent', 'databases']
+)
+
+routing_accuracy = Gauge(
+    'apex_routing_accuracy',
+    'Routing accuracy score',
+    ['intent']
+)
+
+database_query_latency = Histogram(
+    'apex_database_query_latency_seconds',
+    'Database query latency in seconds',
+    ['database', 'query_type']
+)
+
+# Jaeger Distributed Tracing
+tracer_provider = TracerProvider()
+jaeger_exporter = JaegerExporter(
+    agent_host_name="localhost",
+    agent_port=6831,
+)
+tracer_provider.add_span_processor(BatchSpanProcessor(jaeger_exporter))
+trace.set_tracer_provider(tracer_provider)
+tracer = trace.get_tracer(__name__)
 
 @dataclass
 class RoutingDecision:
@@ -581,18 +621,21 @@ class RoutingDecision:
     intent: str
     databases_used: List[str]
     databases_scores: Dict[str, float]
+    database_latencies: Dict[str, float]  # NEW: Per-database timing
     num_results: int
     avg_relevance: float
     latency_ms: float
     cached: bool
+    trace_id: Optional[str] = None  # NEW: Jaeger trace ID
     user_clicked: Optional[bool] = None
     user_satisfaction: Optional[float] = None
 
 class RoutingAnalytics:
-    """Track and analyze routing decisions."""
+    """Track and analyze routing decisions with Prometheus + Jaeger."""
 
     def __init__(self, postgres_conn):
         self.db = postgres_conn
+        self.tracer = tracer
         self._create_tables()
 
     def _create_tables(self):
@@ -605,16 +648,19 @@ class RoutingAnalytics:
                 intent VARCHAR(50) NOT NULL,
                 databases_used TEXT[] NOT NULL,
                 database_scores JSONB NOT NULL,
+                database_latencies JSONB NOT NULL,
                 num_results INTEGER NOT NULL,
                 avg_relevance FLOAT,
                 latency_ms FLOAT NOT NULL,
                 cached BOOLEAN NOT NULL,
+                trace_id VARCHAR(64),
                 user_clicked BOOLEAN,
                 user_satisfaction FLOAT
             );
 
             CREATE INDEX idx_routing_timestamp ON routing_decisions(timestamp);
             CREATE INDEX idx_routing_intent ON routing_decisions(intent);
+            CREATE INDEX idx_routing_trace_id ON routing_decisions(trace_id);
         """)
 
     def log_decision(
@@ -623,32 +669,59 @@ class RoutingAnalytics:
         intent: QueryIntent,
         databases_used: List[str],
         database_scores: Dict[str, float],
+        database_latencies: Dict[str, float],
         results: List[AggregatedResult],
         latency_ms: float,
-        cached: bool
+        cached: bool,
+        trace_id: Optional[str] = None
     ):
-        """Log a routing decision."""
+        """Log a routing decision with Prometheus metrics and Jaeger tracing."""
         avg_relevance = (
             sum(r.relevance for r in results) / len(results)
             if results else 0.0
         )
 
+        # Update Prometheus metrics
+        routing_requests_total.labels(
+            intent=intent.query_type.value,
+            cached=cached
+        ).inc()
+
+        routing_latency.labels(
+            intent=intent.query_type.value,
+            databases=",".join(sorted(databases_used))
+        ).observe(latency_ms / 1000.0)
+
+        routing_accuracy.labels(
+            intent=intent.query_type.value
+        ).set(avg_relevance)
+
+        # Track per-database latency
+        for db, db_latency in database_latencies.items():
+            database_query_latency.labels(
+                database=db,
+                query_type=intent.query_type.value
+            ).observe(db_latency / 1000.0)
+
+        # Store in PostgreSQL
         self.db.execute("""
             INSERT INTO routing_decisions (
                 timestamp, query, intent, databases_used,
-                database_scores, num_results, avg_relevance,
-                latency_ms, cached
-            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+                database_scores, database_latencies, num_results,
+                avg_relevance, latency_ms, cached, trace_id
+            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         """, (
             datetime.now(),
             query,
             intent.query_type.value,
             databases_used,
             json.dumps(database_scores),
+            json.dumps(database_latencies),
             len(results),
             avg_relevance,
             latency_ms,
-            cached
+            cached,
+            trace_id
         ))
 
     def get_metrics(self, start_date: datetime, end_date: datetime) -> Dict:
@@ -678,6 +751,63 @@ class RoutingAnalytics:
         return {row['intent']: row['count'] for row in results}
 ```
 
+**Router Integration with Jaeger Tracing:**
+
+```python
+# File: src/apex_memory/query_router/router.py
+
+class QueryRouter:
+    def __init__(self, ...):
+        self.analytics = RoutingAnalytics(postgres_conn)
+        self.tracer = tracer
+
+    async def query(self, query_text: str, ...):
+        # Start Jaeger trace
+        with self.tracer.start_as_current_span("query_routing") as span:
+            span.set_attribute("query", query_text)
+            trace_id = format(span.get_span_context().trace_id, '032x')
+
+            start_time = time.time()
+            database_latencies = {}
+
+            # Analyze intent
+            with self.tracer.start_as_current_span("intent_analysis"):
+                intent = self.analyzer.analyze(query_text)
+                span.set_attribute("intent", intent.query_type.value)
+
+            # Rewrite query
+            with self.tracer.start_as_current_span("query_rewriting"):
+                rewrites = self.query_rewriter.rewrite(query_text, intent.query_type)
+
+            # Route to databases
+            with self.tracer.start_as_current_span("database_routing") as routing_span:
+                for db in intent.databases:
+                    db_start = time.time()
+                    with self.tracer.start_as_current_span(f"query_{db}"):
+                        results[db] = await self._query_database(db, embedding)
+                    database_latencies[db] = (time.time() - db_start) * 1000
+
+            latency_ms = (time.time() - start_time) * 1000
+
+            # Log with trace ID
+            self.analytics.log_decision(
+                query=query_text,
+                intent=intent,
+                databases_used=list(intent.databases),
+                database_scores=database_scores,
+                database_latencies=database_latencies,
+                results=aggregated_results,
+                latency_ms=latency_ms,
+                cached=use_cache,
+                trace_id=trace_id
+            )
+
+            span.set_attribute("latency_ms", latency_ms)
+            span.set_attribute("num_results", len(aggregated_results))
+
+            return aggregated_results
+```
+
 **Dashboard API:**
 
 ```python
@@ -698,7 +828,29 @@ async def get_intent_breakdown(
 ):
     """Get query distribution by intent."""
     return analytics.get_intent_breakdown()
+
+@router.get("/analytics/routing/trace/{trace_id}")
+async def get_trace_details(
+    trace_id: str,
+    analytics: RoutingAnalytics = Depends(get_analytics)
+):
+    """Get detailed trace for debugging (links to Jaeger UI)."""
+    return {
+        "trace_id": trace_id,
+        "jaeger_url": f"http://localhost:16686/trace/{trace_id}",
+        "decision": analytics.get_decision_by_trace(trace_id)
+    }
 ```
+
+**Grafana Dashboard Configuration:**
+
+Create dashboard with panels for:
+- Query throughput (requests/sec by intent)
+- P50/P95/P99 latency by database
+- Cache hit rate over time
+- Routing accuracy by intent
+- Database latency heatmap
+- Error rate and anomaly detection
 
 ---
 
@@ -1671,6 +1823,247 @@ class OnlineLearningRouter:
 
 ---
 
+## Phase 4.3: Gradual Rollout Strategy
+
+**Goal:** Safe, incremental deployment with feature flags and A/B testing
+
+**Implementation:**
+
+### 4.3.1 Feature Flag System
+
+```python
+# File: src/apex_memory/feature_flags.py
+
+from enum import Enum
+from typing import Dict, Optional
+import redis
+
+class FeatureFlag(Enum):
+    SEMANTIC_CLASSIFICATION = "semantic_classification"
+    QUERY_REWRITING = "query_rewriting"
+    ADAPTIVE_WEIGHTS = "adaptive_weights"
+    GRAPHRAG_HYBRID = "graphrag_hybrid"
+    SEMANTIC_CACHING = "semantic_caching"
+    MULTI_ROUTER = "multi_router"
+    SELF_CORRECTION = "self_correction"
+
+class FeatureFlagManager:
+    """Manage feature flags for gradual rollout."""
+
+    def __init__(self, redis_client):
+        self.redis = redis_client
+
+    def is_enabled(self, flag: FeatureFlag, user_id: Optional[str] = None) -> bool:
+        """Check if feature is enabled for user."""
+        # Global flag
+        global_key = f"flag:{flag.value}:enabled"
+        global_enabled = self.redis.get(global_key)
+
+        if global_enabled == "false":
+            return False
+
+        # Rollout percentage
+        rollout_key = f"flag:{flag.value}:rollout_pct"
+        rollout_pct = float(self.redis.get(rollout_key) or 0)
+
+        if user_id:
+            # Consistent hash for user
+            user_hash = hash(user_id) % 100
+            return user_hash < rollout_pct
+
+        # Random sampling for anonymous
+        import random
+        return random.random() * 100 < rollout_pct
+
+    def set_rollout(self, flag: FeatureFlag, percentage: float):
+        """Set rollout percentage (0-100)."""
+        self.redis.set(f"flag:{flag.value}:rollout_pct", str(percentage))
+```
+
+### 4.3.2 Shadow Mode Testing
+
+```python
+# File: src/apex_memory/query_router/shadow_router.py
+
+class ShadowRouter:
+    """Run new router alongside old router without affecting users."""
+
+    def __init__(self, old_router, new_router, analytics):
+        self.old_router = old_router
+        self.new_router = new_router
+        self.analytics = analytics
+
+    async def query(self, query_text: str, user_id: Optional[str] = None):
+        """Execute both routers, return old results, compare in background."""
+        # Always use old router for user-facing results
+        old_results = await self.old_router.query(query_text)
+
+        # Execute new router in background (no user impact)
+        asyncio.create_task(self._shadow_query(query_text, old_results, user_id))
+
+        return old_results
+
+    async def _shadow_query(self, query: str, old_results, user_id):
+        """Execute new router and compare results."""
+        try:
+            new_results = await self.new_router.query(query)
+
+            # Compare results
+            comparison = self._compare_results(old_results, new_results)
+
+            # Log comparison
+            await self.analytics.log_shadow_comparison(
+                query=query,
+                user_id=user_id,
+                old_results=old_results,
+                new_results=new_results,
+                comparison=comparison
+            )
+        except Exception as e:
+            logger.error(f"Shadow query failed: {e}")
+```
+
+### 4.3.3 Canary Deployment
+
+```python
+# File: src/apex_memory/query_router/canary_router.py
+
+class CanaryRouter:
+    """Route percentage of traffic to new router."""
+
+    def __init__(self, old_router, new_router, feature_flags):
+        self.old_router = old_router
+        self.new_router = new_router
+        self.flags = feature_flags
+
+    async def query(self, query_text: str, user_id: Optional[str] = None):
+        """Route to old or new router based on canary percentage."""
+        if self.flags.is_enabled(FeatureFlag.SEMANTIC_CLASSIFICATION, user_id):
+            # Canary: use new router
+            return await self.new_router.query(query_text)
+        else:
+            # Control: use old router
+            return await self.old_router.query(query_text)
+```
+
+**Rollout Schedule:**
+
+1. **Week 1:** Shadow mode (0% users affected, 100% comparison data)
+2. **Week 2:** 5% canary (monitor metrics closely)
+3. **Week 3:** 25% canary (if metrics improve ≥5%)
+4. **Week 4:** 50% canary (if no regressions)
+5. **Week 5:** 100% rollout (if all metrics pass)
+
+---
+
+## Integration with Other Upgrades
+
+### Integration: Saga Pattern Enhancement
+
+**Cross-Reference:** [Saga Pattern Enhancement](../saga-pattern-enhancement/README.md)
+
+The query router integrates with the saga pattern enhancement for distributed transaction consistency:
+
+**Key Integration Points:**
+
+1. **Distributed Locking for Write Operations**
+   - Query router coordinates with saga pattern's Redis Redlock
+   - Prevents concurrent writes during query routing
+   - Ensures consistency across database writes
+
+2. **Idempotency Key Integration**
+   ```python
+   # File: src/apex_memory/query_router/router.py
+
+   class QueryRouter:
+       async def query_with_write(self, query_text: str, write_data: Dict):
+           """Query with potential write operation (uses saga pattern)."""
+           # Generate idempotency key
+           idempotency_key = self.saga_coordinator.generate_idempotency_key(
+               query_text,
+               write_data
+           )
+
+           # Check if already processed
+           if await self.saga_coordinator.is_processed(idempotency_key):
+               return await self.saga_coordinator.get_result(idempotency_key)
+
+           # Acquire distributed lock
+           lock = await self.saga_coordinator.acquire_lock(idempotency_key)
+
+           try:
+               # Execute routing with saga pattern
+               results = await self._execute_with_saga(query_text, write_data)
+               return results
+           finally:
+               await lock.release()
+   ```
+
+3. **Circuit Breaker Integration**
+   - Query router respects circuit breaker states from saga pattern
+   - Fails fast if database circuit breaker is open
+   - Routes around failing databases
+
+**Expected Benefits:**
+- 99.9% consistency for queries with writes
+- Zero duplicate query executions
+- Graceful degradation when databases fail
+
+---
+
+### Integration: Security Layer (Planned)
+
+**Cross-Reference:** [Security Layer](../planned/security-layer/README.md)
+
+The query router will integrate with the planned security layer for:
+
+**Key Integration Points:**
+
+1. **Authentication Middleware**
+   ```python
+   # File: src/apex_memory/query_router/router.py
+
+   from fastapi import Depends
+   from apex_memory.security import get_current_user
+
+   @router.post("/api/query")
+   async def query_endpoint(
+       query_request: QueryRequest,
+       current_user: User = Depends(get_current_user)  # Security layer
+   ):
+       """Protected query endpoint."""
+       # Log user context
+       logger.info(f"Query from user {current_user.id}: {query_request.query}")
+
+       # Execute routing
+       results = await query_router.query(
+           query_text=query_request.query,
+           user_id=current_user.id  # For personalization
+       )
+
+       # Audit logging
+       await audit_log.log_query(current_user.id, query_request.query, results)
+
+       return results
+   ```
+
+2. **Rate Limiting Integration**
+   - Per-user query limits (e.g., 1000 queries/day)
+   - Redis-based distributed rate limiter
+   - Graceful 429 responses
+
+3. **Row-Level Security (Future)**
+   - Filter query results by user permissions
+   - Integrate with PostgreSQL RLS
+   - RBAC enforcement at routing layer
+
+**Migration Plan:**
+- Phase 1: Add authentication (Week 1 of security upgrade)
+- Phase 2: Add rate limiting (Week 2 of security upgrade)
+- Phase 3: Add RBAC filtering (Week 3+ of security upgrade)
+
+---
+
 ## Quick Wins (Immediate Implementation)
 
 ### Quick Win #1: Add Confidence Scores
@@ -2027,16 +2420,57 @@ class TestQueryRouterUpgrade:
 
 ---
 
+## Related Upgrades
+
+This improvement plan integrates with and depends on:
+
+1. **[Saga Pattern Enhancement](../saga-pattern-enhancement/README.md)** (Active)
+   - Distributed locking for query-with-write operations
+   - Idempotency keys for safe retries
+   - Circuit breakers for graceful degradation
+   - Status: Active implementation (5-day timeline)
+
+2. **[Security Layer](../planned/security-layer/README.md)** (Planned)
+   - Authentication middleware for protected endpoints
+   - Per-user rate limiting
+   - Row-level security for result filtering
+   - Status: Planned (before production launch)
+
+3. **[External Engineer Proposal Analysis](../../research/review/external-engineer-proposal-analysis.md)**
+   - Comprehensive comparison of external proposals to our research-backed plan
+   - Validated our approach superior to BERT-based routing
+   - Integrated enhanced analytics (Prometheus + Jaeger)
+   - Status: Completed analysis
+
+---
+
 ## Next Steps
 
 1. **Review and Approve Plan** ✅
 2. **Set up Development Environment**
+   - Install Prometheus, Jaeger, Grafana
+   - Configure feature flag Redis
 3. **Implement Quick Wins (Week 1)**
+   - Confidence scores
+   - Routing decision logging
+   - Out-of-scope detection
+   - Query normalization
+   - Database response time tracking
 4. **Begin Phase 1 Implementation (Week 1-2)**
-5. **Continuous evaluation and iteration**
+   - Semantic intent classification
+   - Query rewriting pipeline
+   - Enhanced analytics with Prometheus + Jaeger
+5. **Deploy in Shadow Mode (Week 3)**
+   - Run new router alongside old
+   - Collect comparison data
+   - Validate improvements
+6. **Gradual Canary Rollout (Week 4-5)**
+   - 5% → 25% → 50% → 100%
+   - Monitor metrics at each step
+7. **Continuous evaluation and iteration**
 
 ---
 
 **Last Updated:** October 7, 2025
-**Status:** Planning → Ready for Implementation
+**Status:** Planning → Ready for Implementation (Enhanced with External Analysis)
 **Owner:** Apex Engineering Team

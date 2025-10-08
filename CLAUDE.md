@@ -2,6 +2,42 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## ⚠️ IMPORTANT RULES - MUST ALWAYS FOLLOW
+
+**These rules are critical and must be followed in every session:**
+
+### Rule 1: Read Key Structural READMEs First
+
+**BEFORE beginning any work with the user**, you MUST read these key structural files:
+
+- `README.md` (root)
+- `CLAUDE.md` (project-local, this file)
+- `upgrades/README.md`
+- `research/README.md`
+- `workflow/README.md`
+- `upgrades/completed/README.md` (if working with completed upgrades)
+- `upgrades/planned/README.md` (if working with planned upgrades)
+
+**Purpose:** Understand project structure, current state, and upgrade lifecycle before making any changes.
+
+### Rule 2: Read Framework-Specific READMEs Before Implementation
+
+**BEFORE executing any implementation task from a plan**, you MUST read the applicable framework-specific documentation:
+
+**Examples:**
+- Implementing Neo4j features → Read `research/documentation/neo4j/README.md`
+- Working with PostgreSQL/pgvector → Read `research/documentation/postgresql/README.md` and `research/documentation/pgvector/README.md`
+- Query routing implementation → Read `research/documentation/query-routing/README.md`
+- Qdrant integration → Read `research/documentation/qdrant/README.md`
+- Graphiti temporal features → Read `research/documentation/graphiti/README.md`
+- FastAPI endpoints → Read `research/documentation/fastapi/README.md`
+
+**Purpose:** Ensure implementation follows research-backed best practices and uses documented patterns.
+
+**⚠️ DO NOT skip these reads to save tokens. Research-first principles require you to be informed before implementing.**
+
+---
+
 ## Project Overview
 
 **Apex Memory System Development** is a research-driven development wrapper for the Apex Memory System project. This directory provides:
@@ -22,8 +58,10 @@ Apex-Memory-System-Development/
 │   │   └── query-routing/    # Query routing research (Oct 2025)
 │   ├── examples/              # Verified code samples (Tier 2 sources)
 │   └── architecture-decisions/ # ADRs with research citations
-├── upgrades/                  # Active improvement plans
-│   └── query-router/          # Query router upgrade (8-week plan)
+├── upgrades/                  # Upgrade tracking system
+│   ├── query-router/          # Active: Query router (8-week plan)
+│   ├── planned/               # Planned upgrades (research phase)
+│   └── completed/             # Completed upgrades (archive)
 ├── workflow/                  # Workflow management (phases, approvals)
 └── .claude/                   # Claude Code configuration
     ├── agents/                # Custom agent definitions
@@ -136,22 +174,26 @@ python -m uvicorn apex_memory.main:app --reload --port 8000
 
 **For full architecture details, see:** `apex-memory-system/CLAUDE.md`
 
-## Active Upgrades
+## Upgrade Tracking System
 
-### Query Router Improvement Plan (October 2025)
+The `upgrades/` directory tracks the complete upgrade lifecycle with research-backed improvement plans.
 
-**Status:** Planning → Implementation Ready
+**Current Status:** 2 completed ✅ | 1 active 🚀 | 3 planned 📝
+
+### Active Upgrade: Query Router Improvement Plan
+
+**Status:** 🚀 Planning Complete → Implementation Ready
 **Timeline:** 8 weeks (4 phases)
 **Priority:** High
 
-We've completed comprehensive research on state-of-the-art query routing systems and identified 10 critical flaws in the current implementation. The improvement plan brings Apex to 2025 standards with:
+Comprehensive upgrade bringing Apex query routing to 2025 standards based on latest RAG research.
 
 **Expected Gains:**
-- +21-28 point relevance improvement
-- 90ms faster routing decisions
-- 15-30% accuracy improvement
-- 99% precision on relationship queries
-- 90%+ cache hit rate
+- +21-28 point relevance improvement (Microsoft benchmarks)
+- 99% precision on relationship queries (GraphRAG)
+- 90ms faster intent classification (Semantic Router)
+- 15-30% accuracy improvement (adaptive learning)
+- 90%+ cache hit rate (semantic caching)
 
 **Plan Location:** [`upgrades/query-router/IMPROVEMENT-PLAN.md`](upgrades/query-router/IMPROVEMENT-PLAN.md)
 
@@ -168,7 +210,95 @@ We've completed comprehensive research on state-of-the-art query routing systems
 3. **Week 5-6:** Agentic evolution (complexity analysis, multi-router, self-correction)
 4. **Week 7-8:** Advanced features (multimodal, real-time adaptation)
 
-**Quick Wins Available:** 5 immediate improvements that can be implemented today (confidence scores, logging, OOS detection, normalization, timing tracking)
+---
+
+### Completed Upgrades ✅
+
+#### Documentation System (October 2025)
+
+**Completed:** 2025-10-07
+**Impact:** ⭐⭐⭐⭐⭐ Critical Infrastructure
+
+Created comprehensive documentation system with 31 professional README files covering entire project structure.
+
+**Results:**
+- ✅ 31 READMEs created (from 0)
+- ✅ 100% documentation coverage
+- ✅ Professional GitHub landing page
+- ✅ 34,000+ lines committed and organized
+
+📂 **[Full Documentation](upgrades/completed/documentation-system/)**
+
+---
+
+#### Cross-Reference System (October 2025)
+
+**Completed:** 2025-10-07
+**Impact:** ⭐⭐⭐⭐⭐ Major Usability Improvement
+
+Enhanced documentation with comprehensive bidirectional cross-references creating complete knowledge graph.
+
+**Results:**
+- ✅ 385 insertions across 14 files
+- ✅ Bidirectional navigation between all docs
+- ✅ Query Router fully integrated with research
+- ✅ 1-click access to related topics
+
+📂 **[Full Documentation](upgrades/completed/cross-reference-system/)**
+
+---
+
+### Planned Upgrades 📝
+
+#### Ingestion Pipeline v2
+
+**Priority:** Medium | **Research Progress:** 0%
+
+**Goal:** Improve document parsing quality, add multi-modal support, optimize parallel processing
+
+**Key Improvements:**
+- 95%+ format preservation (PDF, DOCX, PPTX)
+- Multi-modal support (images, tables, diagrams)
+- Consistent 10+ docs/second throughput
+- 90%+ entity extraction accuracy
+
+📂 **[Full Planning](upgrades/planned/ingestion-pipeline-v2/)**
+
+---
+
+#### Temporal Intelligence Enhancement
+
+**Priority:** Medium | **Research Progress:** 0%
+
+**Goal:** Enhance Graphiti integration, improve pattern detection, add time-series forecasting
+
+**Key Features:**
+- Pattern detection (recurring themes, trends)
+- Community detection (GraphRAG approach)
+- Time-series forecasting
+- Query router integration
+
+📂 **[Full Planning](upgrades/planned/temporal-intelligence-enhancement/)**
+
+---
+
+#### Multi-Modal RAG
+
+**Priority:** Low | **Research Progress:** 0%
+
+**Goal:** Support images, tables, audio in retrieval and generation
+
+**Capabilities:**
+- Image ingestion and search
+- Table structure preservation
+- Audio/video transcription
+- Cross-modal retrieval (text → images)
+
+📂 **[Full Planning](upgrades/planned/multi-modal-rag/)**
+
+---
+
+**For complete upgrade workflow and lifecycle, see:** [`upgrades/README.md`](upgrades/README.md)
 
 ## Research Management
 
