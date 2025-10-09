@@ -383,4 +383,52 @@ fine-tuned-embeddings/
 
 ---
 
+## Research & References
+
+### Primary Research
+
+**Sentence Transformers (Fine-Tuning Framework):**
+- [`research/documentation/sentence-transformers/README.md`](../../research/documentation/sentence-transformers/README.md) - Complete guide to sentence-transformers library, triplet loss, and model fine-tuning
+
+**Semantic Router (Integration Target):**
+- [`research/documentation/query-routing/semantic-router.md`](../../research/documentation/query-routing/semantic-router.md) - 10ms intent classification with embeddings
+- [`research/documentation/query-routing/semantic-router-analysis.md`](../../research/documentation/query-routing/semantic-router-analysis.md) - Deep analysis of semantic-router v0.1.11
+
+### Testing & Validation
+
+**Test Framework:** [`../../tests/`](../../tests/)
+
+Comprehensive testing infrastructure for validating embedding improvements:
+
+- **Confusion Matrix:** [`tests/analysis/confusion_matrix.txt`](../../tests/analysis/confusion_matrix.txt) - Shows graph intent failures (66.0%) that fine-tuning will address
+- **Test Runner:** [`tests/analysis/difficulty_stratified_test.py`](../../tests/analysis/difficulty_stratified_test.py) - 250-query stratified test
+- **Baseline Results:** [`tests/results/stratified/2025-10-08-stratified-results.json`](../../tests/results/stratified/2025-10-08-stratified-results.json) - OpenAI baseline: 77.9% overall
+
+### Training Data
+
+**Primary Dataset:** [`../../apex-memory-system/config/training-queries-v7.json`](../../apex-memory-system/config/training-queries-v7.json)
+
+Logistics-specialized training data (314 queries):
+- 80 route definitions with mixed difficulty (closes semantic gap)
+- 234 training queries (50% OpenHaul/Origin Transport freight ops)
+- Freight terminology: detention, accessorials, kingpin, fifth wheel, ELD mandate, DOT compliance
+
+### Related Projects
+
+**Query Router Improvement Plan:** [`../query-router/`](../query-router/)
+
+Comprehensive 8-week query routing upgrade plan leveraging fine-tuned embeddings for semantic classification improvements.
+
+**Integration Point:** Fine-tuned embeddings replace OpenAI text-embedding-3-small in semantic-router for 17+ point accuracy gains on medium/hard queries.
+
+### Technical Documentation
+
+**Implementation Files:**
+- **Training Script:** [`training/train_embeddings.py`](training/train_embeddings.py) - BatchHardTripletLoss training with sentence-transformers
+- **Export Script:** [`training/export_model.py`](training/export_model.py) - HuggingFace format export for semantic-router
+- **Testing Guide:** [`TESTING.md`](TESTING.md) - Complete validation workflow and success criteria
+- **Project Requirements:** [`PRP.md`](PRP.md) - Functional/non-functional requirements and risk analysis
+
+---
+
 *Last updated: 2025-10-09*

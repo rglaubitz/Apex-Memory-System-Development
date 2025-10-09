@@ -834,17 +834,41 @@ dlq_size = Gauge(
 
 ## References
 
+### Architecture Decisions
+
+- **[ADR-002: Saga Pattern for Distributed Writes](../../research/architecture-decisions/ADR-002-saga-pattern-distributed-writes.md)** - Original architecture decision record documenting saga pattern implementation rationale
+
+### Implementation
+
+- **Current Implementation:** [`apex-memory-system/src/apex_memory/services/transaction_manager.py`](../../apex-memory-system/src/apex_memory/services/transaction_manager.py) - Transaction manager with basic saga pattern
+- **Database Integration:**
+  - PostgreSQL: `apex-memory-system/src/apex_memory/services/postgresql_service.py`
+  - Neo4j: `apex-memory-system/src/apex_memory/services/neo4j_service.py`
+  - Qdrant: `apex-memory-system/src/apex_memory/services/qdrant_service.py`
+  - Graphiti: `apex-memory-system/src/apex_memory/services/graphiti_service.py`
+
 ### Research Sources
 
+**Official Documentation:**
 - **Redis Redlock:** https://redis.io/docs/manual/patterns/distributed-locks/
 - **Stripe Idempotency:** https://stripe.com/docs/api/idempotent_requests
-- **Circuit Breaker:** https://martinfowler.com/bliki/CircuitBreaker.html
-- **Saga Pattern:** https://microservices.io/patterns/data/saga.html
+- **Circuit Breaker (Martin Fowler):** https://martinfowler.com/bliki/CircuitBreaker.html
+- **Saga Pattern (Microservices.io):** https://microservices.io/patterns/data/saga.html
+
+**Additional Resources:**
+- Redis client: [`research/documentation/redis/`](../../research/documentation/redis/) - Redis patterns and best practices
+- PostgreSQL: [`research/documentation/postgresql/`](../../research/documentation/postgresql/) - PostgreSQL transactions and idempotency
 
 ### Related Upgrades
 
-- **Query Router** - Benefits from consistent data writes
-- **Security Layer** - Audit logs will track saga failures
+- **[Query Router Improvement Plan](../query-router/)** - Benefits from consistent data writes across all databases
+- **Security Layer** - Audit logs will track saga failures and compensation events
+
+### Testing
+
+- **Integration Tests:** Validate saga compensations work correctly
+- **Load Tests:** Ensure distributed locks don't create bottlenecks
+- **Chaos Tests:** Verify circuit breakers trigger correctly under failures
 
 ---
 

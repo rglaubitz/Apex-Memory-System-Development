@@ -165,8 +165,32 @@ project-name/
 - [Completed Upgrades](../completed/README.md) - Archived projects
 
 **Research Foundation:**
-- [Query Routing Research](../../research/documentation/query-routing/) - Semantic Router, GraphRAG, Query Rewriting
-- [Architecture Decisions](../../research/architecture-decisions/) - ADRs for key decisions
+- [Query Routing Research](../../research/documentation/query-routing/) - 11 research documents (Semantic Router, GraphRAG, Query Rewriting, Agentic RAG, Adaptive Learning)
+- [Sentence Transformers](../../research/documentation/sentence-transformers/) - Fine-tuning framework documentation
+- [Architecture Decisions](../../research/architecture-decisions/) - ADRs for key architectural decisions
+  - [ADR-002: Saga Pattern](../../research/architecture-decisions/ADR-002-saga-pattern-distributed-writes.md) - Distributed transaction management
+
+**Testing & Validation:**
+- [Test Framework](../../tests/) - Comprehensive testing infrastructure
+  - [Difficulty-Stratified Test Suite](../../tests/test-suites/difficulty-stratified-250-queries.json) - 250 queries across 3 difficulty tiers
+  - [Test Runner](../../tests/analysis/difficulty_stratified_test.py) - Main test execution script
+  - [Confusion Matrix](../../tests/analysis/confusion_matrix.txt) - Intent classification error analysis
+  - [Historical Results](../../tests/results/stratified/) - Test execution results over time
+
+**Training Data & Configuration:**
+- [Training Queries v7](../../apex-memory-system/config/training-queries-v7.json) - Logistics-specialized dataset (314 queries)
+  - 80 route definitions (mixed difficulty)
+  - 234 training queries (OpenHaul/Origin Transport specialized)
+  - Closes semantic gap, enables fine-tuning
+
+**Implementation References:**
+- [Transaction Manager](../../apex-memory-system/src/apex_memory/services/transaction_manager.py) - Current saga pattern implementation
+- [Semantic Classifier](../../apex-memory-system/src/apex_memory/query_router/semantic_classifier.py) - Query intent classification with semantic-router
+
+**Project Interconnections:**
+- **Query Router** ↔ **Fine-Tuned Embeddings** - Fine-tuned embeddings improve semantic classification accuracy
+- **Query Router** ↔ **Saga Pattern** - Consistent data writes enable reliable query routing
+- All projects share: `tests/`, `research/documentation/`, and `apex-memory-system/config/training-queries-v7.json`
 
 ---
 

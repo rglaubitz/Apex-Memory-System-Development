@@ -43,6 +43,41 @@ Comprehensive upgrade bringing Apex query routing from current keyword-based app
 | [Adaptive Routing](../../research/documentation/query-routing/adaptive-routing-learning.md) | Contextual bandits, learned weights | +15-30% accuracy |
 | [GraphRAG](../../research/documentation/query-routing/graphrag-hybrid-search.md) | Unified vector+graph, 99% precision | Best-in-class |
 
+📚 **[Complete Research Documentation](../../research/documentation/query-routing/)** - 11 research documents covering all aspects of modern RAG query routing
+
+## Testing & Validation
+
+**Test Framework:** [`../../tests/`](../../tests/)
+
+Comprehensive testing framework with 250-query difficulty-stratified test suite validating semantic intent classification accuracy across easy/medium/hard queries.
+
+**Key Test Files:**
+- **Test Suite:** [`tests/test-suites/difficulty-stratified-250-queries.json`](../../tests/test-suites/difficulty-stratified-250-queries.json) - 250 queries across 3 difficulty tiers
+- **Test Runner:** [`tests/analysis/difficulty_stratified_test.py`](../../tests/analysis/difficulty_stratified_test.py) - Main test execution script
+- **Results:** [`tests/results/stratified/`](../../tests/results/stratified/) - Historical test results and analysis
+- **Confusion Matrix:** [`tests/analysis/confusion_matrix.txt`](../../tests/analysis/confusion_matrix.txt) - Intent classification error patterns
+
+**Latest Test Results (2025-10-08):**
+- Overall: 77.9% (target: ≥85%)
+- Easy: 95.9% ✅ | Medium: 67.8% ❌ | Hard: 60.0% ❌
+- Graph intent: 66.0% (catastrophic collapse on medium tier → 43.8%)
+
+## Training Data & Configuration
+
+**Primary Dataset:** [`../../apex-memory-system/config/training-queries-v7.json`](../../apex-memory-system/config/training-queries-v7.json)
+
+Latest logistics-specialized training dataset (314 queries):
+- 80 route definitions (mixed difficulty: 10 easy + 5 medium + 5 hard per intent)
+- 234 training queries (50% freight logistics + 50% generic)
+- Specialized for OpenHaul and Origin Transport business operations
+
+**Related Datasets:**
+- `training-queries.json` - Base dataset (split from v7)
+- `training-queries-split.json` - Train/test split version
+- `difficulty-stratified-queries.json` - 250-query test suite
+
+**See Also:** [Fine-Tuned Embeddings Project](../fine-tuned-embeddings/) - Leverages v7 dataset to train domain-specific embeddings for improved accuracy
+
 ## Implementation Phases
 
 ### Phase 1: Foundation (Week 1-2)
