@@ -1,0 +1,36 @@
+
+================================================================================
+CONFUSION MATRIX - Intent Classification
+================================================================================
+
+Predicted Intent (columns) vs Expected Intent (rows):
+
+Expected      | graph      | temporal   | semantic   | metadata   | unknown |
+-----------------------------------------------------------------------------
+graph         |         35 |         10 |         11 |          7 |       0 |
+temporal      |          3 |         53 |          5 |          1 |       0 |
+semantic      |          6 |          1 |         52 |          3 |       0 |
+metadata      |          9 |          7 |          2 |         44 |       0 |
+
+Confusion Summary:
+
+Graph queries misclassified as:
+  - temporal: 10 queries
+  - semantic: 11 queries
+  - metadata: 7 queries
+
+Temporal queries misclassified as:
+  - graph: 3 queries
+  - semantic: 5 queries
+  - metadata: 1 queries
+
+Semantic queries misclassified as:
+  - graph: 6 queries
+  - temporal: 1 queries
+  - metadata: 3 queries
+
+Metadata queries misclassified as:
+  - graph: 9 queries
+  - temporal: 7 queries
+  - semantic: 2 queries
+================================================================================

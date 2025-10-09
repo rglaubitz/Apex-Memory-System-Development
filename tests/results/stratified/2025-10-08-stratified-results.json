@@ -1,0 +1,4682 @@
+{
+  "test_run": {
+    "timestamp": "2025-10-08T18:06:11.508970",
+    "total_queries": 250,
+    "api_endpoint": "http://localhost:8000/api/v1/query/"
+  },
+  "results": [
+    {
+      "query_id": 1,
+      "query": "which servers are directly connected to database-prod",
+      "expected_intent": "graph",
+      "actual_intent": "graph",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'connected to' relationship signal",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 1.4381959438323975,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:09.166375"
+    },
+    {
+      "query_id": 2,
+      "query": "show me all dependencies between microservice-auth and other services",
+      "expected_intent": "graph",
+      "actual_intent": "semantic",
+      "intent_correct": false,
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'dependencies between' graph terminology",
+      "databases_used": [
+        "graphiti",
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 3.309175968170166,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:12.579213"
+    },
+    {
+      "query_id": 3,
+      "query": "find the relationship network for customer Acme Industries",
+      "expected_intent": "graph",
+      "actual_intent": "graph",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'relationship network' phrasing",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 2.5155630111694336,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:15.202081"
+    },
+    {
+      "query_id": 4,
+      "query": "what components are linked to the payment gateway",
+      "expected_intent": "graph",
+      "actual_intent": "graph",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'linked to' connection indicator",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.7575051784515381,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:16.069752"
+    },
+    {
+      "query_id": 5,
+      "query": "trace the connection path from user login to database access",
+      "expected_intent": "graph",
+      "actual_intent": "temporal",
+      "intent_correct": false,
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'connection path' and 'trace' graph signals",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 1.109009027481079,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:17.287512"
+    },
+    {
+      "query_id": 6,
+      "query": "show all vendors associated with supplier Smith & Co",
+      "expected_intent": "graph",
+      "actual_intent": "graph",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'associated with' relationship language",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 2.6532251834869385,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:20.049942"
+    },
+    {
+      "query_id": 7,
+      "query": "map the organizational hierarchy under the CTO",
+      "expected_intent": "graph",
+      "actual_intent": "graph",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'organizational hierarchy' and 'map' terminology",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.4826841354370117,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:20.641540"
+    },
+    {
+      "query_id": 8,
+      "query": "which employees report directly to manager Johnson",
+      "expected_intent": "graph",
+      "actual_intent": "graph",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'report to' hierarchical relationship",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 1.1124258041381836,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:21.857319"
+    },
+    {
+      "query_id": 9,
+      "query": "find all upstream dependencies for the API gateway",
+      "expected_intent": "graph",
+      "actual_intent": "graph",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'upstream dependencies' graph concept",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 2.325438976287842,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:24.286043"
+    },
+    {
+      "query_id": 10,
+      "query": "show the network of related contracts for project Phoenix",
+      "expected_intent": "graph",
+      "actual_intent": "graph",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'network of related' phrasing",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.48650503158569336,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:24.881286"
+    },
+    {
+      "query_id": 11,
+      "query": "what systems depend on the authentication service",
+      "expected_intent": "graph",
+      "actual_intent": "semantic",
+      "intent_correct": false,
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'depend on' dependency relationship",
+      "databases_used": [
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.43939900398254395,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:25.423512"
+    },
+    {
+      "query_id": 12,
+      "query": "trace the supply chain path from manufacturer to retail",
+      "expected_intent": "graph",
+      "actual_intent": "graph",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'supply chain path' and 'trace'",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.4583930969238281,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:25.992066"
+    },
+    {
+      "query_id": 13,
+      "query": "show me the connection graph between all departments",
+      "expected_intent": "graph",
+      "actual_intent": "graph",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'connection graph' terminology",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.4493381977081299,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:26.541946"
+    },
+    {
+      "query_id": 14,
+      "query": "find all entities linked within 3 hops of customer ABC",
+      "expected_intent": "graph",
+      "actual_intent": "graph",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit graph traversal 'hops' language",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.42528724670410156,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:27.073560"
+    },
+    {
+      "query_id": 15,
+      "query": "which partners are connected through joint ventures",
+      "expected_intent": "graph",
+      "actual_intent": "graph",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'connected through' relationship",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.579700231552124,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:27.755075"
+    },
+    {
+      "query_id": 16,
+      "query": "show the dependency tree for the frontend application",
+      "expected_intent": "graph",
+      "actual_intent": "graph",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'dependency tree' graph structure",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.4648158550262451,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:28.322075"
+    },
+    {
+      "query_id": 17,
+      "query": "map out relationships between all stakeholders in project Alpha",
+      "expected_intent": "graph",
+      "actual_intent": "graph",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'relationships between' and 'map out'",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.7279276847839355,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:29.158789"
+    },
+    {
+      "query_id": 18,
+      "query": "find the ownership chain for intellectual property X",
+      "expected_intent": "graph",
+      "actual_intent": "graph",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'ownership chain' hierarchical relationship",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 1.0097272396087646,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:30.278647"
+    },
+    {
+      "query_id": 19,
+      "query": "show all cross-functional connections in the marketing division",
+      "expected_intent": "graph",
+      "actual_intent": "graph",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'connections' graph language",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.4398508071899414,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:30.823170"
+    },
+    {
+      "query_id": 20,
+      "query": "which services have bidirectional links to the data warehouse",
+      "expected_intent": "graph",
+      "actual_intent": "graph",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'bidirectional links' graph concept",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.4552481174468994,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:31.380681"
+    },
+    {
+      "query_id": 21,
+      "query": "trace the approval workflow from request to completion",
+      "expected_intent": "graph",
+      "actual_intent": "graph",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'workflow' path and 'trace'",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.6999349594116211,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:32.183214"
+    },
+    {
+      "query_id": 22,
+      "query": "show the network topology for our cloud infrastructure",
+      "expected_intent": "graph",
+      "actual_intent": "semantic",
+      "intent_correct": false,
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'network topology' graph terminology",
+      "databases_used": [
+        "graphiti",
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.7198600769042969,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:33.011920"
+    },
+    {
+      "query_id": 23,
+      "query": "find all components that interact with the billing system",
+      "expected_intent": "graph",
+      "actual_intent": "graph",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'interact with' relationship signal",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.4180920124053955,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:33.535188"
+    },
+    {
+      "query_id": 24,
+      "query": "which databases are coupled to the user authentication module",
+      "expected_intent": "graph",
+      "actual_intent": "semantic",
+      "intent_correct": false,
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'coupled to' dependency relationship",
+      "databases_used": [
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.5995807647705078,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:34.244511"
+    },
+    {
+      "query_id": 25,
+      "query": "show the hierarchical structure of teams under VP Engineering",
+      "expected_intent": "graph",
+      "actual_intent": "graph",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'hierarchical structure' terminology",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.48454809188842773,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:34.836596"
+    },
+    {
+      "query_id": 26,
+      "query": "show me the change history for customer account X over the past year",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'change history' and 'over the past year' temporal signals",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.44997477531433105,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:35.396811"
+    },
+    {
+      "query_id": 27,
+      "query": "when did we last update the pricing model",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'when did' and 'last update' time-based question",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.6158370971679688,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:36.122751"
+    },
+    {
+      "query_id": 28,
+      "query": "track how revenue evolved from Q1 to Q4",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'evolved from...to' temporal progression",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.6414568424224854,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:36.871793"
+    },
+    {
+      "query_id": 29,
+      "query": "show the timeline of events for incident INC-2024-05",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'timeline' temporal concept",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.47739696502685547,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:37.458828"
+    },
+    {
+      "query_id": 30,
+      "query": "what changed in the database schema since last deployment",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'changed...since' temporal language",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.46645092964172363,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:38.025857"
+    },
+    {
+      "query_id": 31,
+      "query": "display the version history for document ABC.docx",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'version history' temporal tracking",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.4334840774536133,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:38.566312"
+    },
+    {
+      "query_id": 32,
+      "query": "how has customer engagement trended over the last 6 months",
+      "expected_intent": "temporal",
+      "difficulty": "easy",
+      "status": "error",
+      "error_code": 500,
+      "error_message": "{\"detail\":\"Query execution failed: GraphitiService.search() got an unexpected keyword argument 'time_range'\"}",
+      "latency_seconds": 0.2803170680999756,
+      "timestamp": "2025-10-08T18:03:38.954459"
+    },
+    {
+      "query_id": 33,
+      "query": "when was the last time user Alice logged in",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'when was' and 'last time' temporal query",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.38956332206726074,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:39.453992"
+    },
+    {
+      "query_id": 34,
+      "query": "show me all modifications to contract C-789 over its lifetime",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'modifications...over lifetime' temporal scope",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.47462034225463867,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:40.030509"
+    },
+    {
+      "query_id": 35,
+      "query": "track the progression of sales metrics from January through December",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'progression...from through' temporal range",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.5439391136169434,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:40.676039"
+    },
+    {
+      "query_id": 36,
+      "query": "display the audit trail for financial transaction T-12345",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'audit trail' chronological tracking",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.4654240608215332,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:41.251733"
+    },
+    {
+      "query_id": 37,
+      "query": "what was the state of inventory on December 31st",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'state...on' point-in-time query",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.7382259368896484,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:42.096839"
+    },
+    {
+      "query_id": 38,
+      "query": "show how employee headcount changed year over year",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'changed year over year' temporal comparison",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.4027111530303955,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:42.602017"
+    },
+    {
+      "query_id": 39,
+      "query": "when did we first introduce the premium tier pricing",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'when did...first' temporal origin question",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.7563819885253906,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:43.465264"
+    },
+    {
+      "query_id": 40,
+      "query": "track the evolution of our product roadmap since 2022",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'evolution...since' temporal progression",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.4532949924468994,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:44.027880"
+    },
+    {
+      "query_id": 41,
+      "query": "show me the historical pattern of server outages over the past 2 years",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'historical pattern' and 'over the past' temporal scope",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.5688140392303467,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:44.706804"
+    },
+    {
+      "query_id": 42,
+      "query": "when was customer record CR-456 last modified",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'when was...last modified' temporal query",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.647838830947876,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:45.462804"
+    },
+    {
+      "query_id": 43,
+      "query": "display the activity timeline for user Bob in March",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'timeline' with temporal constraint",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.6414940357208252,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:46.214418"
+    },
+    {
+      "query_id": 44,
+      "query": "how has the bug count trended during the sprint",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'trended during' temporal progression",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 2.3159308433532715,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:48.639176"
+    },
+    {
+      "query_id": 45,
+      "query": "show all updates to policy P-100 in chronological order",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'chronological order' temporal sequencing",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.4943368434906006,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:49.234444"
+    },
+    {
+      "query_id": 46,
+      "query": "track changes to the configuration file since v2.0",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'changes...since' temporal tracking",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.5292990207672119,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:49.872297"
+    },
+    {
+      "query_id": 47,
+      "query": "when did the stock price peak in Q3",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'when did...peak' temporal event query",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.3566603660583496,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:50.333580"
+    },
+    {
+      "query_id": 48,
+      "query": "show me the complete edit history for this wiki page",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'edit history' temporal tracking",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.39324474334716797,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:50.831790"
+    },
+    {
+      "query_id": 49,
+      "query": "how has customer churn rate evolved month by month",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'evolved month by month' temporal progression",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.8337397575378418,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:51.774370"
+    },
+    {
+      "query_id": 50,
+      "query": "display the sequence of approvals for purchase order PO-999",
+      "expected_intent": "temporal",
+      "actual_intent": "graph",
+      "intent_correct": false,
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'sequence' temporal ordering",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.754112958908081,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:52.638658"
+    },
+    {
+      "query_id": 51,
+      "query": "find documents similar to the Q4 sales forecast report",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'similar to' semantic similarity signal",
+      "databases_used": [
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.40388989448547363,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:53.152168"
+    },
+    {
+      "query_id": 52,
+      "query": "search for content related to machine learning algorithms",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'related to' semantic search language",
+      "databases_used": [
+        "graphiti",
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.6737539768218994,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:53.931713"
+    },
+    {
+      "query_id": 53,
+      "query": "show me articles about cloud infrastructure security",
+      "expected_intent": "semantic",
+      "actual_intent": "graph",
+      "intent_correct": false,
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'about' topical semantic query",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.6449971199035645,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:54.681856"
+    },
+    {
+      "query_id": 54,
+      "query": "find documents that discuss data privacy regulations",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'discuss' semantic topic indicator",
+      "databases_used": [
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.2964439392089844,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:55.088479"
+    },
+    {
+      "query_id": 55,
+      "query": "what content is semantically related to artificial intelligence",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'semantically related to' language",
+      "databases_used": [
+        "graphiti",
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.767146110534668,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:55.963551"
+    },
+    {
+      "query_id": 56,
+      "query": "search for materials covering DevOps best practices",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'covering' semantic topical search",
+      "databases_used": [
+        "graphiti",
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.5552670955657959,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:56.626565"
+    },
+    {
+      "query_id": 57,
+      "query": "find presentations similar in content to this proposal",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'similar in content' semantic signal",
+      "databases_used": [
+        "graphiti",
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.6144232749938965,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:57.350932"
+    },
+    {
+      "query_id": 58,
+      "query": "show me research papers about neural networks",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'about' topical semantic query",
+      "databases_used": [
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.33275699615478516,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:57.788113"
+    },
+    {
+      "query_id": 59,
+      "query": "search for documentation related to API authentication",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'related to' semantic search",
+      "databases_used": [
+        "graphiti",
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.6306090354919434,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:58.522575"
+    },
+    {
+      "query_id": 60,
+      "query": "find content that matches the theme of digital transformation",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'matches the theme' semantic similarity",
+      "databases_used": [
+        "graphiti",
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.6290669441223145,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:59.260636"
+    },
+    {
+      "query_id": 61,
+      "query": "what documents discuss cybersecurity threats",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'discuss' semantic topic indicator",
+      "databases_used": [
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.4453871250152588,
+      "status": "success",
+      "timestamp": "2025-10-08T18:03:59.806505"
+    },
+    {
+      "query_id": 62,
+      "query": "search for articles about blockchain technology",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'about' topical semantic search",
+      "databases_used": [
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.46762704849243164,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:00.376310"
+    },
+    {
+      "query_id": 63,
+      "query": "find materials semantically similar to this white paper",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'semantically similar' explicit language",
+      "databases_used": [
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.5267219543457031,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:01.012680"
+    },
+    {
+      "query_id": 64,
+      "query": "show content related to customer retention strategies",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'related to' semantic search",
+      "databases_used": [
+        "graphiti",
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.6498708724975586,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:01.771459"
+    },
+    {
+      "query_id": 65,
+      "query": "what documents cover topics on microservices architecture",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'cover topics on' semantic indicator",
+      "databases_used": [
+        "graphiti",
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.6571750640869141,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:02.538822"
+    },
+    {
+      "query_id": 66,
+      "query": "find presentations that discuss agile methodologies",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'discuss' semantic topical search",
+      "databases_used": [
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.38169288635253906,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:03.025523"
+    },
+    {
+      "query_id": 67,
+      "query": "search for content about database optimization techniques",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'about' topical semantic query",
+      "databases_used": [
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.4517350196838379,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:03.578546"
+    },
+    {
+      "query_id": 68,
+      "query": "show me documents similar in meaning to this case study",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'similar in meaning' semantic signal",
+      "databases_used": [
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 1.0399448871612549,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:04.722622"
+    },
+    {
+      "query_id": 69,
+      "query": "find resources related to continuous integration practices",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'related to' semantic search",
+      "databases_used": [
+        "graphiti",
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.6565067768096924,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:05.481746"
+    },
+    {
+      "query_id": 70,
+      "query": "what content discusses software testing frameworks",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'discusses' semantic topic indicator",
+      "databases_used": [
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.4097750186920166,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:06.000482"
+    },
+    {
+      "query_id": 71,
+      "query": "search for materials about data warehousing strategies",
+      "expected_intent": "semantic",
+      "actual_intent": "graph",
+      "intent_correct": false,
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'about' topical semantic query",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.7008950710296631,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:06.804823"
+    },
+    {
+      "query_id": 72,
+      "query": "find documents that cover cloud migration planning",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'cover' semantic topic search",
+      "databases_used": [
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.3782029151916504,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:07.288824"
+    },
+    {
+      "query_id": 73,
+      "query": "show articles semantically related to leadership development",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'semantically related to' language",
+      "databases_used": [
+        "graphiti",
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 1.0435199737548828,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:08.442489"
+    },
+    {
+      "query_id": 74,
+      "query": "what papers discuss trends in mobile development",
+      "expected_intent": "semantic",
+      "actual_intent": "metadata",
+      "intent_correct": false,
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'discuss' semantic topic indicator",
+      "databases_used": [
+        "graphiti",
+        "postgres"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.3941819667816162,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:08.944028"
+    },
+    {
+      "query_id": 75,
+      "query": "find content similar to this sustainability report",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'similar to' semantic similarity signal",
+      "databases_used": [
+        "graphiti",
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.819404125213623,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:09.873651"
+    },
+    {
+      "query_id": 76,
+      "query": "show all invoices where amount > $10000 and status = unpaid",
+      "expected_intent": "metadata",
+      "actual_intent": "metadata",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear operators '>' and '=' for metadata filtering",
+      "databases_used": [
+        "postgres"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.19162893295288086,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:10.168296"
+    },
+    {
+      "query_id": 77,
+      "query": "filter customers by industry = technology and revenue >= 1000000",
+      "expected_intent": "metadata",
+      "actual_intent": "metadata",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'filter by' with operators '=' and '>='",
+      "databases_used": [
+        "postgres"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.22202396392822266,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:10.498838"
+    },
+    {
+      "query_id": 78,
+      "query": "list all projects where status = active and priority = high",
+      "expected_intent": "metadata",
+      "actual_intent": "metadata",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'where' clause with '=' operators",
+      "databases_used": [
+        "postgres"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.3770129680633545,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:10.986160"
+    },
+    {
+      "query_id": 79,
+      "query": "show employees with department = engineering and level >= senior",
+      "expected_intent": "metadata",
+      "actual_intent": "graph",
+      "intent_correct": false,
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear structured attributes with '=' and '>='",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.40560388565063477,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:11.500162"
+    },
+    {
+      "query_id": 80,
+      "query": "find orders where quantity > 100 and date >= 2024-01-01",
+      "expected_intent": "metadata",
+      "actual_intent": "metadata",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'where' with operators '>' and '>='",
+      "databases_used": [
+        "postgres"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.20647501945495605,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:11.807595"
+    },
+    {
+      "query_id": 81,
+      "query": "filter products by category = electronics and price <= 500",
+      "expected_intent": "metadata",
+      "actual_intent": "metadata",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'filter by' with '=' and '<=' operators",
+      "databases_used": [
+        "postgres"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.2189319133758545,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:12.128487"
+    },
+    {
+      "query_id": 82,
+      "query": "list tickets where severity = critical and assignee = unassigned",
+      "expected_intent": "metadata",
+      "actual_intent": "metadata",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'where' clause with '=' operators",
+      "databases_used": [
+        "postgres"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.23885512351989746,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:12.475149"
+    },
+    {
+      "query_id": 83,
+      "query": "show contracts where value > 50000 and term <= 12",
+      "expected_intent": "metadata",
+      "actual_intent": "metadata",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit operators '>' and '<=' for metadata",
+      "databases_used": [
+        "postgres"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.21743369102478027,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:12.801219"
+    },
+    {
+      "query_id": 84,
+      "query": "find users where role = admin and status = active",
+      "expected_intent": "metadata",
+      "actual_intent": "metadata",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'where' with '=' operators on attributes",
+      "databases_used": [
+        "postgres"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.3654179573059082,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:13.268537"
+    },
+    {
+      "query_id": 85,
+      "query": "filter vendors by country = USA and rating >= 4",
+      "expected_intent": "metadata",
+      "actual_intent": "metadata",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'filter by' with '=' and '>=' operators",
+      "databases_used": [
+        "postgres"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.14262795448303223,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:13.516669"
+    },
+    {
+      "query_id": 86,
+      "query": "list assets where location = datacenter and status = operational",
+      "expected_intent": "metadata",
+      "actual_intent": "graph",
+      "intent_correct": false,
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'where' clause with '=' operators",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.4349231719970703,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:14.061039"
+    },
+    {
+      "query_id": 87,
+      "query": "show campaigns where budget > 25000 and roi >= 2.0",
+      "expected_intent": "metadata",
+      "actual_intent": "metadata",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct operators '>' and '>=' for metadata filtering",
+      "databases_used": [
+        "postgres"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.23031306266784668,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:14.401680"
+    },
+    {
+      "query_id": 88,
+      "query": "find transactions where type = refund and amount > 1000",
+      "expected_intent": "metadata",
+      "actual_intent": "metadata",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'where' with '=' and '>' operators",
+      "databases_used": [
+        "postgres"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.5895209312438965,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:15.094122"
+    },
+    {
+      "query_id": 89,
+      "query": "filter subscriptions by plan = enterprise and mrr >= 10000",
+      "expected_intent": "metadata",
+      "actual_intent": "metadata",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'filter by' with '=' and '>=' operators",
+      "databases_used": [
+        "postgres"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.21550512313842773,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:15.418208"
+    },
+    {
+      "query_id": 90,
+      "query": "list servers where os = linux and uptime > 99.9",
+      "expected_intent": "metadata",
+      "actual_intent": "temporal",
+      "intent_correct": false,
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'where' clause with '=' and '>' operators",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.4247910976409912,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:15.951951"
+    },
+    {
+      "query_id": 91,
+      "query": "show leads where source = website and score >= 80",
+      "expected_intent": "metadata",
+      "actual_intent": "metadata",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear operators '=' and '>=' for metadata",
+      "databases_used": [
+        "postgres"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.19162487983703613,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:16.244482"
+    },
+    {
+      "query_id": 92,
+      "query": "find incidents where priority = P1 and resolution_time > 24",
+      "expected_intent": "metadata",
+      "actual_intent": "metadata",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'where' with '=' and '>' operators",
+      "databases_used": [
+        "postgres"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.18934988975524902,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:16.542272"
+    },
+    {
+      "query_id": 93,
+      "query": "filter reservations by date >= 2024-06-01 and status = confirmed",
+      "expected_intent": "metadata",
+      "actual_intent": "metadata",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'filter by' with '>=' and '=' operators",
+      "databases_used": [
+        "postgres"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.46492910385131836,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:17.108985"
+    },
+    {
+      "query_id": 94,
+      "query": "list licenses where type = commercial and expiry_date <= 2024-12-31",
+      "expected_intent": "metadata",
+      "actual_intent": "metadata",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'where' with '=' and '<=' operators",
+      "databases_used": [
+        "postgres"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.20185589790344238,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:17.413210"
+    },
+    {
+      "query_id": 95,
+      "query": "show shipments where carrier = FedEx and weight > 50",
+      "expected_intent": "metadata",
+      "actual_intent": "metadata",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit operators '=' and '>' for metadata filtering",
+      "databases_used": [
+        "postgres"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.19415020942687988,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:17.714270"
+    },
+    {
+      "query_id": 96,
+      "query": "find applications where stage = review and days_pending >= 7",
+      "expected_intent": "metadata",
+      "actual_intent": "metadata",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'where' with '=' and '>=' operators",
+      "databases_used": [
+        "postgres"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.20967817306518555,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:18.029250"
+    },
+    {
+      "query_id": 97,
+      "query": "filter bookings by room_type = suite and nights >= 3",
+      "expected_intent": "metadata",
+      "actual_intent": "metadata",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'filter by' with '=' and '>=' operators",
+      "databases_used": [
+        "postgres"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.19825482368469238,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:18.334491"
+    },
+    {
+      "query_id": 98,
+      "query": "list devices where manufacturer = Cisco and firmware_version < 2.0",
+      "expected_intent": "metadata",
+      "actual_intent": "graph",
+      "intent_correct": false,
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'where' with '=' and '<' operators",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.4164738655090332,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:18.856249"
+    },
+    {
+      "query_id": 99,
+      "query": "show payments where method = credit_card and amount >= 500",
+      "expected_intent": "metadata",
+      "actual_intent": "metadata",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct operators '=' and '>=' for metadata",
+      "databases_used": [
+        "postgres"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.3018372058868408,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:19.267418"
+    },
+    {
+      "query_id": 100,
+      "query": "find alerts where level = warning and count > 10",
+      "expected_intent": "metadata",
+      "actual_intent": "metadata",
+      "intent_correct": true,
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'where' clause with '=' and '>' operators",
+      "databases_used": [
+        "postgres"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.19838404655456543,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:19.571310"
+    },
+    {
+      "query_id": 101,
+      "query": "show the team working on project Phoenix",
+      "expected_intent": "graph",
+      "actual_intent": "graph",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Could be graph (org structure) or metadata (project assignment filter)",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.4814260005950928,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:20.157662"
+    },
+    {
+      "query_id": 102,
+      "query": "find people involved in the migration initiative",
+      "expected_intent": "graph",
+      "actual_intent": "temporal",
+      "intent_correct": false,
+      "difficulty": "medium",
+      "difficulty_rationale": "Ambiguous between graph relationships and metadata participation",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.45743584632873535,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:20.718596"
+    },
+    {
+      "query_id": 103,
+      "query": "what accounts are part of the enterprise segment",
+      "expected_intent": "graph",
+      "actual_intent": "metadata",
+      "intent_correct": false,
+      "difficulty": "medium",
+      "difficulty_rationale": "Could be graph grouping or metadata category filter",
+      "databases_used": [
+        "postgres"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.49030089378356934,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:21.317414"
+    },
+    {
+      "query_id": 104,
+      "query": "show services that use the authentication module",
+      "expected_intent": "graph",
+      "actual_intent": "semantic",
+      "intent_correct": false,
+      "difficulty": "medium",
+      "difficulty_rationale": "Weaker 'use' signal vs explicit 'depend on'",
+      "databases_used": [
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.44776391983032227,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:21.867004"
+    },
+    {
+      "query_id": 105,
+      "query": "find components in the payment processing flow",
+      "expected_intent": "graph",
+      "actual_intent": "temporal",
+      "intent_correct": false,
+      "difficulty": "medium",
+      "difficulty_rationale": "Flow implies graph but could be category membership",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.5201537609100342,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:22.494531"
+    },
+    {
+      "query_id": 106,
+      "query": "which customers belong to the VIP tier",
+      "expected_intent": "graph",
+      "actual_intent": "metadata",
+      "intent_correct": false,
+      "difficulty": "medium",
+      "difficulty_rationale": "Ambiguous between graph membership and metadata classification",
+      "databases_used": [
+        "postgres"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.2102341651916504,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:22.814918"
+    },
+    {
+      "query_id": 107,
+      "query": "show departments under the operations division",
+      "expected_intent": "graph",
+      "actual_intent": "graph",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Could be hierarchical graph or metadata parent-child",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.441680908203125,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:23.366867"
+    },
+    {
+      "query_id": 108,
+      "query": "find all resources assigned to the cloud migration",
+      "expected_intent": "graph",
+      "actual_intent": "graph",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Assignment could be graph or metadata allocation",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.5208733081817627,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:23.996003"
+    },
+    {
+      "query_id": 109,
+      "query": "what partners work with our sales team",
+      "expected_intent": "graph",
+      "actual_intent": "graph",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Work with implies relationship but weak signal",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 1.437995195388794,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:25.543056"
+    },
+    {
+      "query_id": 110,
+      "query": "show products in the premium bundle",
+      "expected_intent": "graph",
+      "actual_intent": "graph",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Bundle membership could be graph or metadata category",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.4368739128112793,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:26.081275"
+    },
+    {
+      "query_id": 111,
+      "query": "find systems affected by this security patch",
+      "expected_intent": "graph",
+      "actual_intent": "temporal",
+      "intent_correct": false,
+      "difficulty": "medium",
+      "difficulty_rationale": "Affected by is weaker dependency signal",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.4379301071166992,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:26.621276"
+    },
+    {
+      "query_id": 112,
+      "query": "which APIs interact with customer data",
+      "expected_intent": "graph",
+      "actual_intent": "semantic",
+      "intent_correct": false,
+      "difficulty": "medium",
+      "difficulty_rationale": "Interact is weaker than explicit connection language",
+      "databases_used": [
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.4142119884490967,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:27.145600"
+    },
+    {
+      "query_id": 113,
+      "query": "show teams collaborating on the Q4 roadmap",
+      "expected_intent": "graph",
+      "actual_intent": "temporal",
+      "intent_correct": false,
+      "difficulty": "medium",
+      "difficulty_rationale": "Collaboration implies graph but could be metadata participation",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.450789213180542,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:27.697097"
+    },
+    {
+      "query_id": 114,
+      "query": "find contracts tied to supplier ABC",
+      "expected_intent": "graph",
+      "actual_intent": "graph",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Tied to is weaker relationship signal than linked",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.5203299522399902,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:28.327167"
+    },
+    {
+      "query_id": 115,
+      "query": "what applications access the central database",
+      "expected_intent": "graph",
+      "actual_intent": "graph",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Access is weaker than depend or connect",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.6709530353546143,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:29.102302"
+    },
+    {
+      "query_id": 116,
+      "query": "show employees involved in customer support",
+      "expected_intent": "graph",
+      "actual_intent": "graph",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Involved in could be graph or metadata role filter",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.39927005767822266,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:29.611611"
+    },
+    {
+      "query_id": 117,
+      "query": "find projects related to infrastructure upgrade",
+      "expected_intent": "graph",
+      "actual_intent": "graph",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Related is weak, could be semantic or graph",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.9650030136108398,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:30.684463"
+    },
+    {
+      "query_id": 118,
+      "query": "which vendors supply our manufacturing division",
+      "expected_intent": "graph",
+      "actual_intent": "temporal",
+      "intent_correct": false,
+      "difficulty": "medium",
+      "difficulty_rationale": "Supply relationship is weaker than explicit connection",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.44554805755615234,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:31.236268"
+    },
+    {
+      "query_id": 119,
+      "query": "show documents associated with legal compliance",
+      "expected_intent": "graph",
+      "actual_intent": "semantic",
+      "intent_correct": false,
+      "difficulty": "medium",
+      "difficulty_rationale": "Associated is weak, could be semantic topic or graph link",
+      "databases_used": [
+        "graphiti",
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.753305196762085,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:32.092997"
+    },
+    {
+      "query_id": 120,
+      "query": "find servers handling production traffic",
+      "expected_intent": "graph",
+      "actual_intent": "temporal",
+      "intent_correct": false,
+      "difficulty": "medium",
+      "difficulty_rationale": "Handling could be graph responsibility or metadata classification",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.4328310489654541,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:32.635938"
+    },
+    {
+      "query_id": 121,
+      "query": "what changed in Q3 budget allocations",
+      "expected_intent": "graph",
+      "actual_intent": "temporal",
+      "intent_correct": false,
+      "difficulty": "medium",
+      "difficulty_rationale": "Changed is weak temporal, allocations implies graph structure",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 1.4076111316680908,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:34.144177"
+    },
+    {
+      "query_id": 122,
+      "query": "show modules that support the reporting feature",
+      "expected_intent": "graph",
+      "actual_intent": "graph",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Support is weaker dependency signal",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.39504289627075195,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:34.647785"
+    },
+    {
+      "query_id": 123,
+      "query": "find customers participating in the beta program",
+      "expected_intent": "graph",
+      "actual_intent": "metadata",
+      "intent_correct": false,
+      "difficulty": "medium",
+      "difficulty_rationale": "Participation could be graph membership or metadata filter",
+      "databases_used": [
+        "graphiti",
+        "postgres"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.6032876968383789,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:35.352344"
+    },
+    {
+      "query_id": 124,
+      "query": "which offices belong to the EMEA region",
+      "expected_intent": "graph",
+      "actual_intent": "metadata",
+      "intent_correct": false,
+      "difficulty": "medium",
+      "difficulty_rationale": "Belong to could be graph hierarchy or metadata geography",
+      "databases_used": [
+        "postgres"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.20062518119812012,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:35.661825"
+    },
+    {
+      "query_id": 125,
+      "query": "show assets managed by IT operations",
+      "expected_intent": "graph",
+      "actual_intent": "metadata",
+      "intent_correct": false,
+      "difficulty": "medium",
+      "difficulty_rationale": "Managed by could be graph ownership or metadata assignment",
+      "databases_used": [
+        "postgres"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.21878600120544434,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:35.990725"
+    },
+    {
+      "query_id": 126,
+      "query": "compare Q1 vs Q2 sales performance",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Compare could be temporal trend or metadata side-by-side",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.494307279586792,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:36.589833"
+    },
+    {
+      "query_id": 127,
+      "query": "what's different about version 2.0",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Different could be temporal change or semantic comparison",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.6433861255645752,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:37.337782"
+    },
+    {
+      "query_id": 128,
+      "query": "show updates to the pricing strategy",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Updates implies temporal but lacks explicit time signal",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.7256999015808105,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:38.172412"
+    },
+    {
+      "query_id": 129,
+      "query": "find changes in customer preferences",
+      "expected_intent": "temporal",
+      "actual_intent": "semantic",
+      "intent_correct": false,
+      "difficulty": "medium",
+      "difficulty_rationale": "Changes is weak temporal without time context",
+      "databases_used": [
+        "graphiti",
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.8331918716430664,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:39.108204"
+    },
+    {
+      "query_id": 130,
+      "query": "how does our current architecture differ from the old one",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Differ could be temporal evolution or semantic comparison",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.41512107849121094,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:39.629196"
+    },
+    {
+      "query_id": 131,
+      "query": "show modifications to the employee handbook",
+      "expected_intent": "temporal",
+      "actual_intent": "metadata",
+      "intent_correct": false,
+      "difficulty": "medium",
+      "difficulty_rationale": "Modifications implies temporal but weak time signal",
+      "databases_used": [
+        "postgres"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 1.1433439254760742,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:40.875469"
+    },
+    {
+      "query_id": 132,
+      "query": "what evolved in our product lineup",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Evolved is temporal but lacks explicit time range",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.39579105377197266,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:41.376806"
+    },
+    {
+      "query_id": 133,
+      "query": "find shifts in market positioning",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Shifts implies change but weak temporal context",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.6551973819732666,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:42.142042"
+    },
+    {
+      "query_id": 134,
+      "query": "compare old vs new infrastructure setup",
+      "expected_intent": "temporal",
+      "actual_intent": "semantic",
+      "intent_correct": false,
+      "difficulty": "medium",
+      "difficulty_rationale": "Old vs new is weak temporal, could be semantic",
+      "databases_used": [
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.5731720924377441,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:42.824324"
+    },
+    {
+      "query_id": 135,
+      "query": "show revisions to the compliance policy",
+      "expected_intent": "temporal",
+      "actual_intent": "semantic",
+      "intent_correct": false,
+      "difficulty": "medium",
+      "difficulty_rationale": "Revisions implies temporal but lacks time specificity",
+      "databases_used": [
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.5176608562469482,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:43.442650"
+    },
+    {
+      "query_id": 136,
+      "query": "what progressed during the sprint",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Progressed is temporal but during is weaker than over",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.5254299640655518,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:44.076019"
+    },
+    {
+      "query_id": 137,
+      "query": "find variations in customer behavior",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Variations could be temporal pattern or semantic diversity",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.43695688247680664,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:44.622725"
+    },
+    {
+      "query_id": 138,
+      "query": "how has the process transformed",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Transformed is temporal but lacks explicit time frame",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.6154091358184814,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:45.346646"
+    },
+    {
+      "query_id": 139,
+      "query": "show developments in the project plan",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Developments implies temporal progression but weak",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.4725668430328369,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:45.929316"
+    },
+    {
+      "query_id": 140,
+      "query": "what improved in system performance",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Improved is temporal but lacks time context",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 1.2227232456207275,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:47.260298"
+    },
+    {
+      "query_id": 141,
+      "query": "find adjustments to the budget plan",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Adjustments implies changes but weak temporal signal",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.6726510524749756,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:48.033846"
+    },
+    {
+      "query_id": 142,
+      "query": "compare this quarter with the previous one",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Compare could be temporal trend or metadata comparison",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.8558588027954102,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:48.990274"
+    },
+    {
+      "query_id": 143,
+      "query": "show alterations to the service agreement",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Alterations implies temporal but weak time signal",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.5474929809570312,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:49.641255"
+    },
+    {
+      "query_id": 144,
+      "query": "what advanced in technology adoption",
+      "expected_intent": "temporal",
+      "actual_intent": "semantic",
+      "intent_correct": false,
+      "difficulty": "medium",
+      "difficulty_rationale": "Advanced is temporal but lacks explicit time range",
+      "databases_used": [
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.41330695152282715,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:50.164822"
+    },
+    {
+      "query_id": 145,
+      "query": "find transitions in leadership structure",
+      "expected_intent": "temporal",
+      "actual_intent": "graph",
+      "intent_correct": false,
+      "difficulty": "medium",
+      "difficulty_rationale": "Transitions implies temporal but could be graph change",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.8392198085784912,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:51.114142"
+    },
+    {
+      "query_id": 146,
+      "query": "how did the metrics shift",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Shift is weak temporal without time context",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.382004976272583,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:51.603546"
+    },
+    {
+      "query_id": 147,
+      "query": "show refinements to the algorithm",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Refinements implies iterative temporal but weak",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.5032777786254883,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:52.214349"
+    },
+    {
+      "query_id": 148,
+      "query": "what matured in our capabilities",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Matured is temporal but lacks time specificity",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.5310416221618652,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:52.855481"
+    },
+    {
+      "query_id": 149,
+      "query": "find progressions in feature development",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Progressions implies temporal but weak signal",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.5508942604064941,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:53.510613"
+    },
+    {
+      "query_id": 150,
+      "query": "compare before and after the migration",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Before/after is temporal but could be semantic comparison",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.714789867401123,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:54.327375"
+    },
+    {
+      "query_id": 151,
+      "query": "information about cloud migration strategy",
+      "expected_intent": "semantic",
+      "actual_intent": "temporal",
+      "intent_correct": false,
+      "difficulty": "medium",
+      "difficulty_rationale": "Generic 'about' without explicit semantic signal",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 2.3269917964935303,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:56.762524"
+    },
+    {
+      "query_id": 152,
+      "query": "find resources on API development",
+      "expected_intent": "semantic",
+      "actual_intent": "graph",
+      "intent_correct": false,
+      "difficulty": "medium",
+      "difficulty_rationale": "On is weaker than about or related to",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.46101999282836914,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:57.333362"
+    },
+    {
+      "query_id": 153,
+      "query": "show materials covering compliance frameworks",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Covering is weak semantic, could be metadata topic",
+      "databases_used": [
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.5974500179290771,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:58.040975"
+    },
+    {
+      "query_id": 154,
+      "query": "what explains database optimization",
+      "expected_intent": "semantic",
+      "actual_intent": "graph",
+      "intent_correct": false,
+      "difficulty": "medium",
+      "difficulty_rationale": "Explains is semantic but could be metadata how-to category",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.664149284362793,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:58.805768"
+    },
+    {
+      "query_id": 155,
+      "query": "find content regarding customer retention",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Regarding is weaker than related or about",
+      "databases_used": [
+        "graphiti",
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.8370580673217773,
+      "status": "success",
+      "timestamp": "2025-10-08T18:04:59.748141"
+    },
+    {
+      "query_id": 156,
+      "query": "search documentation on security practices",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "On is weak, could be metadata category filter",
+      "databases_used": [
+        "graphiti",
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.6759781837463379,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:00.529671"
+    },
+    {
+      "query_id": 157,
+      "query": "show articles concerning data governance",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Concerning is weak semantic signal",
+      "databases_used": [
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.6285219192504883,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:01.259458"
+    },
+    {
+      "query_id": 158,
+      "query": "what describes agile methodologies",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Describes could be semantic or metadata definition category",
+      "databases_used": [
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.44538402557373047,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:01.808290"
+    },
+    {
+      "query_id": 159,
+      "query": "find materials addressing scalability challenges",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Addressing is weak semantic, could be metadata problem-type",
+      "databases_used": [
+        "graphiti",
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.8247578144073486,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:02.742803"
+    },
+    {
+      "query_id": 160,
+      "query": "search content involving machine learning",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Involving is weak, could be metadata tag filter",
+      "databases_used": [
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.41485595703125,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:03.267836"
+    },
+    {
+      "query_id": 161,
+      "query": "show resources pertaining to DevOps",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Pertaining to is weak semantic signal",
+      "databases_used": [
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.4811060428619385,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:03.856420"
+    },
+    {
+      "query_id": 162,
+      "query": "what touches on blockchain concepts",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Touches on is very weak semantic indicator",
+      "databases_used": [
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.3677489757537842,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:04.330584"
+    },
+    {
+      "query_id": 163,
+      "query": "find documents featuring AI ethics",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Featuring could be semantic or metadata contains-topic",
+      "databases_used": [
+        "graphiti",
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.6551468372344971,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:05.094633"
+    },
+    {
+      "query_id": 164,
+      "query": "search materials with CI/CD topics",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "With topics is weak, could be metadata tag",
+      "databases_used": [
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.8298780918121338,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:06.028995"
+    },
+    {
+      "query_id": 165,
+      "query": "show content mentioning microservices",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Mentioning is weak semantic, could be metadata keyword",
+      "databases_used": [
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.34569883346557617,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:06.477829"
+    },
+    {
+      "query_id": 166,
+      "query": "what includes information on testing strategies",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Includes could be semantic or metadata contains",
+      "databases_used": [
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.3920562267303467,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:06.976629"
+    },
+    {
+      "query_id": 167,
+      "query": "find articles presenting data architecture",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Presenting is weak semantic signal",
+      "databases_used": [
+        "graphiti",
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.7520310878753662,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:07.838108"
+    },
+    {
+      "query_id": 168,
+      "query": "search resources highlighting best practices",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Highlighting could be semantic or metadata category",
+      "databases_used": [
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.3637402057647705,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:08.310385"
+    },
+    {
+      "query_id": 169,
+      "query": "show materials exploring containerization",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Exploring is weak semantic, could be metadata topic",
+      "databases_used": [
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.5644478797912598,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:08.983749"
+    },
+    {
+      "query_id": 170,
+      "query": "what references Kubernetes deployment",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "References could be semantic or metadata citation",
+      "databases_used": [
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.5418589115142822,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:09.633398"
+    },
+    {
+      "query_id": 171,
+      "query": "find content detailing cloud architecture",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Detailing is weak semantic signal",
+      "databases_used": [
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.4713611602783203,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:10.214771"
+    },
+    {
+      "query_id": 172,
+      "query": "search documents containing automation topics",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Containing could be semantic or metadata has-topic",
+      "databases_used": [
+        "graphiti",
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.8702719211578369,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:11.190412"
+    },
+    {
+      "query_id": 173,
+      "query": "show papers introducing neural networks",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Introducing could be semantic or metadata tutorial category",
+      "databases_used": [
+        "graphiti",
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.8137118816375732,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:12.114283"
+    },
+    {
+      "query_id": 174,
+      "query": "what examines performance tuning",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Examines is weak semantic, could be metadata analysis-type",
+      "databases_used": [
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.6164219379425049,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:12.835849"
+    },
+    {
+      "query_id": 175,
+      "query": "find materials outlining project management",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Outlining is weak semantic signal",
+      "databases_used": [
+        "graphiti",
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.6223311424255371,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:13.566265"
+    },
+    {
+      "query_id": 176,
+      "query": "all customers in the technology sector",
+      "expected_intent": "metadata",
+      "actual_intent": "metadata",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "No explicit operator, could be metadata filter or semantic grouping",
+      "databases_used": [
+        "postgres"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.2184920310974121,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:13.891420"
+    },
+    {
+      "query_id": 177,
+      "query": "show active projects in engineering",
+      "expected_intent": "metadata",
+      "actual_intent": "metadata",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Active could be metadata status or graph membership",
+      "databases_used": [
+        "postgres"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.19665217399597168,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:14.192412"
+    },
+    {
+      "query_id": 178,
+      "query": "find premium tier customers",
+      "expected_intent": "metadata",
+      "actual_intent": "metadata",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "No operator, could be metadata category or graph tier membership",
+      "databases_used": [
+        "graphiti",
+        "postgres"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.7957561016082764,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:15.089841"
+    },
+    {
+      "query_id": 179,
+      "query": "list completed tasks for this sprint",
+      "expected_intent": "metadata",
+      "actual_intent": "metadata",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Completed is weak metadata, could be temporal finished",
+      "databases_used": [
+        "postgres"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.29593777656555176,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:15.486661"
+    },
+    {
+      "query_id": 180,
+      "query": "show high priority incidents",
+      "expected_intent": "metadata",
+      "actual_intent": "metadata",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "No explicit operator, could be metadata or semantic important",
+      "databases_used": [
+        "postgres"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.1764521598815918,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:15.769650"
+    },
+    {
+      "query_id": 181,
+      "query": "find senior engineers in the team",
+      "expected_intent": "metadata",
+      "actual_intent": "metadata",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Senior could be metadata level or graph hierarchy",
+      "databases_used": [
+        "graphiti",
+        "postgres"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.8493890762329102,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:16.725132"
+    },
+    {
+      "query_id": 182,
+      "query": "all unpaid invoices",
+      "expected_intent": "metadata",
+      "actual_intent": "metadata",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "No operator, simple category but could be semantic outstanding",
+      "databases_used": [
+        "postgres"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.20596599578857422,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:17.037711"
+    },
+    {
+      "query_id": 183,
+      "query": "show pending approvals",
+      "expected_intent": "metadata",
+      "actual_intent": "graph",
+      "intent_correct": false,
+      "difficulty": "medium",
+      "difficulty_rationale": "Pending is weak metadata, could be temporal awaiting",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.5365240573883057,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:17.684179"
+    },
+    {
+      "query_id": 184,
+      "query": "find critical severity bugs",
+      "expected_intent": "metadata",
+      "actual_intent": "metadata",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "No explicit operator, could be metadata or semantic classification",
+      "databases_used": [
+        "graphiti",
+        "postgres"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 2.73353910446167,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:20.527789"
+    },
+    {
+      "query_id": 185,
+      "query": "list expired licenses",
+      "expected_intent": "metadata",
+      "actual_intent": "metadata",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Expired could be metadata status or temporal past-date",
+      "databases_used": [
+        "postgres"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.38202977180480957,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:21.015960"
+    },
+    {
+      "query_id": 186,
+      "query": "show remote employees",
+      "expected_intent": "metadata",
+      "actual_intent": "graph",
+      "intent_correct": false,
+      "difficulty": "medium",
+      "difficulty_rationale": "Remote is category without operator",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.8390820026397705,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:21.963837"
+    },
+    {
+      "query_id": 187,
+      "query": "find large orders",
+      "expected_intent": "metadata",
+      "actual_intent": "metadata",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Large is imprecise, could be metadata range or semantic interpretation",
+      "databases_used": [
+        "graphiti",
+        "postgres"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.8903019428253174,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:22.964273"
+    },
+    {
+      "query_id": 188,
+      "query": "all overdue payments",
+      "expected_intent": "metadata",
+      "actual_intent": "temporal",
+      "intent_correct": false,
+      "difficulty": "medium",
+      "difficulty_rationale": "Overdue could be metadata status or temporal late",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.7944509983062744,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:23.861919"
+    },
+    {
+      "query_id": 189,
+      "query": "show active subscriptions",
+      "expected_intent": "metadata",
+      "actual_intent": "metadata",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Active is category without explicit operator",
+      "databases_used": [
+        "postgres"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.20549798011779785,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:24.177506"
+    },
+    {
+      "query_id": 190,
+      "query": "find unresolved tickets",
+      "expected_intent": "metadata",
+      "actual_intent": "metadata",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Unresolved could be metadata status or temporal pending",
+      "databases_used": [
+        "graphiti",
+        "postgres"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.8714590072631836,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:25.158552"
+    },
+    {
+      "query_id": 191,
+      "query": "list recent transactions",
+      "expected_intent": "metadata",
+      "actual_intent": "metadata",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Recent is imprecise temporal or metadata timeframe",
+      "databases_used": [
+        "postgres"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.20187020301818848,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:25.470542"
+    },
+    {
+      "query_id": 192,
+      "query": "show available inventory",
+      "expected_intent": "metadata",
+      "actual_intent": "metadata",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Available is category without operator",
+      "databases_used": [
+        "postgres"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.19748401641845703,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:25.776358"
+    },
+    {
+      "query_id": 193,
+      "query": "find successful deployments",
+      "expected_intent": "metadata",
+      "actual_intent": "metadata",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Successful could be metadata status or semantic positive-outcome",
+      "databases_used": [
+        "graphiti",
+        "postgres"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.6024868488311768,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:26.479178"
+    },
+    {
+      "query_id": 194,
+      "query": "all scheduled meetings",
+      "expected_intent": "metadata",
+      "actual_intent": "metadata",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Scheduled could be metadata status or temporal future",
+      "databases_used": [
+        "postgres"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.21523618698120117,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:26.803385"
+    },
+    {
+      "query_id": 195,
+      "query": "show archived documents",
+      "expected_intent": "metadata",
+      "actual_intent": "metadata",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Archived is category without explicit operator",
+      "databases_used": [
+        "postgres"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.5189571380615234,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:27.431596"
+    },
+    {
+      "query_id": 196,
+      "query": "find open positions",
+      "expected_intent": "metadata",
+      "actual_intent": "graph",
+      "intent_correct": false,
+      "difficulty": "medium",
+      "difficulty_rationale": "Open could be metadata status or semantic available",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.3561098575592041,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:27.897516"
+    },
+    {
+      "query_id": 197,
+      "query": "list verified accounts",
+      "expected_intent": "metadata",
+      "actual_intent": "metadata",
+      "intent_correct": true,
+      "difficulty": "medium",
+      "difficulty_rationale": "Verified is category without operator",
+      "databases_used": [
+        "postgres"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.6192011833190918,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:28.620619"
+    },
+    {
+      "query_id": 198,
+      "query": "show failed tests",
+      "expected_intent": "metadata",
+      "actual_intent": "temporal",
+      "intent_correct": false,
+      "difficulty": "medium",
+      "difficulty_rationale": "Failed could be metadata status or semantic negative-outcome",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.6200928688049316,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:29.346740"
+    },
+    {
+      "query_id": 199,
+      "query": "find inactive users",
+      "expected_intent": "metadata",
+      "actual_intent": "temporal",
+      "intent_correct": false,
+      "difficulty": "medium",
+      "difficulty_rationale": "Inactive is category, could be metadata or temporal not-recent",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.8083469867706299,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:30.255282"
+    },
+    {
+      "query_id": 200,
+      "query": "all approved requests",
+      "expected_intent": "metadata",
+      "actual_intent": "graph",
+      "intent_correct": false,
+      "difficulty": "medium",
+      "difficulty_rationale": "Approved could be metadata status or temporal completed-action",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.6260159015655518,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:30.986792"
+    },
+    {
+      "query_id": 201,
+      "query": "show everything associated with customer ACME",
+      "expected_intent": "graph",
+      "actual_intent": "temporal",
+      "intent_correct": false,
+      "difficulty": "hard",
+      "difficulty_rationale": "Could be graph network, metadata join, or semantic all-related content",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.8144378662109375,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:31.910313"
+    },
+    {
+      "query_id": 202,
+      "query": "find all information about project Phoenix",
+      "expected_intent": "graph",
+      "actual_intent": "graph",
+      "intent_correct": true,
+      "difficulty": "hard",
+      "difficulty_rationale": "All information is vague - graph connections, semantic documents, or metadata records",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.978874921798706,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:32.997605"
+    },
+    {
+      "query_id": 203,
+      "query": "what involves the authentication system",
+      "expected_intent": "graph",
+      "actual_intent": "semantic",
+      "intent_correct": false,
+      "difficulty": "hard",
+      "difficulty_rationale": "Involves is extremely weak - graph dependencies, semantic mentions, or metadata tags",
+      "databases_used": [
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.4802837371826172,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:33.587798"
+    },
+    {
+      "query_id": 204,
+      "query": "show data for the sales team",
+      "expected_intent": "graph",
+      "actual_intent": "graph",
+      "intent_correct": true,
+      "difficulty": "hard",
+      "difficulty_rationale": "Data for could be graph team structure, metadata ownership, or semantic team-related",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 1.0726897716522217,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:34.768583"
+    },
+    {
+      "query_id": 205,
+      "query": "find things related to infrastructure",
+      "expected_intent": "graph",
+      "actual_intent": "semantic",
+      "intent_correct": false,
+      "difficulty": "hard",
+      "difficulty_rationale": "Things related is maximally ambiguous across all intent types",
+      "databases_used": [
+        "graphiti",
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.7136881351470947,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:35.588489"
+    },
+    {
+      "query_id": 206,
+      "query": "what's connected with the billing module",
+      "expected_intent": "graph",
+      "actual_intent": "graph",
+      "intent_correct": true,
+      "difficulty": "hard",
+      "difficulty_rationale": "Connected with is weak - graph links, semantic related, or metadata associated",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.4788839817047119,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:36.172882"
+    },
+    {
+      "query_id": 207,
+      "query": "show items for customer success division",
+      "expected_intent": "graph",
+      "actual_intent": "graph",
+      "intent_correct": true,
+      "difficulty": "hard",
+      "difficulty_rationale": "Items for is vague - graph ownership, metadata assignment, or semantic belonging",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.47212886810302734,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:36.746770"
+    },
+    {
+      "query_id": 208,
+      "query": "find aspects of the cloud platform",
+      "expected_intent": "graph",
+      "actual_intent": "semantic",
+      "intent_correct": false,
+      "difficulty": "hard",
+      "difficulty_rationale": "Aspects of could be graph components, semantic topics, or metadata categories",
+      "databases_used": [
+        "graphiti",
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.647191047668457,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:37.501351"
+    },
+    {
+      "query_id": 209,
+      "query": "what belongs to the enterprise tier",
+      "expected_intent": "graph",
+      "actual_intent": "metadata",
+      "intent_correct": false,
+      "difficulty": "hard",
+      "difficulty_rationale": "Belongs to could be graph membership, metadata classification, or semantic grouping",
+      "databases_used": [
+        "graphiti",
+        "postgres"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.4062991142272949,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:38.015306"
+    },
+    {
+      "query_id": 210,
+      "query": "show elements in the architecture",
+      "expected_intent": "graph",
+      "actual_intent": "graph",
+      "intent_correct": true,
+      "difficulty": "hard",
+      "difficulty_rationale": "Elements in is weak - graph components, metadata parts, or semantic aspects",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.6723079681396484,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:38.788780"
+    },
+    {
+      "query_id": 211,
+      "query": "find resources for the operations team",
+      "expected_intent": "graph",
+      "actual_intent": "semantic",
+      "intent_correct": false,
+      "difficulty": "hard",
+      "difficulty_rationale": "Resources for could be graph allocation, metadata ownership, or semantic relevance",
+      "databases_used": [
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.4059441089630127,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:39.299371"
+    },
+    {
+      "query_id": 212,
+      "query": "what concerns the payment processing",
+      "expected_intent": "graph",
+      "actual_intent": "metadata",
+      "intent_correct": false,
+      "difficulty": "hard",
+      "difficulty_rationale": "Concerns could be graph involvement, semantic mentions, or metadata tags",
+      "databases_used": [
+        "postgres"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.22930908203125,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:39.638781"
+    },
+    {
+      "query_id": 213,
+      "query": "show details about the migration",
+      "expected_intent": "graph",
+      "actual_intent": "temporal",
+      "intent_correct": false,
+      "difficulty": "hard",
+      "difficulty_rationale": "Details about is maximally generic across all types",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.6503880023956299,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:40.394384"
+    },
+    {
+      "query_id": 214,
+      "query": "what's different about version 2.0",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "hard",
+      "difficulty_rationale": "Different could be temporal changes, semantic comparison, or metadata feature list",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.6339058876037598,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:41.131793"
+    },
+    {
+      "query_id": 215,
+      "query": "show variations in the data",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "hard",
+      "difficulty_rationale": "Variations could be temporal fluctuations, metadata diversity, or semantic differences",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.519705057144165,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:41.761035"
+    },
+    {
+      "query_id": 216,
+      "query": "compare these two approaches",
+      "expected_intent": "temporal",
+      "actual_intent": "graph",
+      "intent_correct": false,
+      "difficulty": "hard",
+      "difficulty_rationale": "Compare could be temporal before/after, semantic similarity, or metadata side-by-side",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.5100481510162354,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:42.371661"
+    },
+    {
+      "query_id": 217,
+      "query": "what differs between old and new",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "hard",
+      "difficulty_rationale": "Old/new could be temporal evolution or semantic comparison without time context",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.3128190040588379,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:42.787451"
+    },
+    {
+      "query_id": 218,
+      "query": "show changes to the system",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "hard",
+      "difficulty_rationale": "Changes lacks time context - temporal audit trail or metadata modification list",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 3.6830151081085205,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:46.573041"
+    },
+    {
+      "query_id": 219,
+      "query": "find updates",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "hard",
+      "difficulty_rationale": "Updates is minimal context - temporal changes or metadata version category",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.4144172668457031,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:47.089016"
+    },
+    {
+      "query_id": 220,
+      "query": "what evolved",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "hard",
+      "difficulty_rationale": "Evolved lacks subject and time - temporal progression or semantic development",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.4442331790924072,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:47.634740"
+    },
+    {
+      "query_id": 221,
+      "query": "show modifications",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "hard",
+      "difficulty_rationale": "Modifications lacks context - temporal audit or metadata change category",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.6110589504241943,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:48.355526"
+    },
+    {
+      "query_id": 222,
+      "query": "compare metrics",
+      "expected_intent": "temporal",
+      "actual_intent": "semantic",
+      "intent_correct": false,
+      "difficulty": "hard",
+      "difficulty_rationale": "Compare metrics could be temporal trend or metadata numerical comparison",
+      "databases_used": [
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.4590458869934082,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:48.915515"
+    },
+    {
+      "query_id": 223,
+      "query": "what shifted",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "hard",
+      "difficulty_rationale": "Shifted is minimal - temporal change or semantic movement",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.5072681903839111,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:49.524597"
+    },
+    {
+      "query_id": 224,
+      "query": "show alterations",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "hard",
+      "difficulty_rationale": "Alterations lacks context - temporal changes or metadata modification type",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.5411388874053955,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:50.175922"
+    },
+    {
+      "query_id": 225,
+      "query": "find transitions",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "hard",
+      "difficulty_rationale": "Transitions could be temporal state changes or graph relationship changes",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.6887998580932617,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:50.974547"
+    },
+    {
+      "query_id": 226,
+      "query": "what improved",
+      "expected_intent": "temporal",
+      "actual_intent": "temporal",
+      "intent_correct": true,
+      "difficulty": "hard",
+      "difficulty_rationale": "Improved lacks time frame - temporal progression or semantic better-quality",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.781315803527832,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:51.866028"
+    },
+    {
+      "query_id": 227,
+      "query": "find relevant compliance documentation",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "hard",
+      "difficulty_rationale": "Relevant is subjective - semantic topical or metadata compliance-category",
+      "databases_used": [
+        "graphiti",
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.8825020790100098,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:52.856320"
+    },
+    {
+      "query_id": 228,
+      "query": "show related information",
+      "expected_intent": "semantic",
+      "actual_intent": "graph",
+      "intent_correct": false,
+      "difficulty": "hard",
+      "difficulty_rationale": "Related information is maximally generic across all types",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.5940079689025879,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:53.559468"
+    },
+    {
+      "query_id": 229,
+      "query": "find similar content",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "hard",
+      "difficulty_rationale": "Similar lacks context - semantic similarity or metadata same-category",
+      "databases_used": [
+        "graphiti",
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 2.0360467433929443,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:55.705651"
+    },
+    {
+      "query_id": 230,
+      "query": "what matches our needs",
+      "expected_intent": "semantic",
+      "actual_intent": "graph",
+      "intent_correct": false,
+      "difficulty": "hard",
+      "difficulty_rationale": "Matches needs is subjective - semantic relevance or metadata requirements-filter",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.8817567825317383,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:56.691396"
+    },
+    {
+      "query_id": 231,
+      "query": "show applicable resources",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "hard",
+      "difficulty_rationale": "Applicable is contextual - semantic relevance or metadata applicable-type",
+      "databases_used": [
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.5057909488677979,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:57.307415"
+    },
+    {
+      "query_id": 232,
+      "query": "find appropriate materials",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "hard",
+      "difficulty_rationale": "Appropriate is subjective - semantic fit or metadata suitable-category",
+      "databases_used": [
+        "graphiti",
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.7654290199279785,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:58.178807"
+    },
+    {
+      "query_id": 233,
+      "query": "what fits the criteria",
+      "expected_intent": "semantic",
+      "actual_intent": "metadata",
+      "intent_correct": false,
+      "difficulty": "hard",
+      "difficulty_rationale": "Fits criteria could be semantic match or metadata filter match",
+      "databases_used": [
+        "postgres"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.446307897567749,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:58.732029"
+    },
+    {
+      "query_id": 234,
+      "query": "show relevant results",
+      "expected_intent": "semantic",
+      "actual_intent": "metadata",
+      "intent_correct": false,
+      "difficulty": "hard",
+      "difficulty_rationale": "Relevant is maximally generic - semantic, graph, or metadata all apply",
+      "databases_used": [
+        "postgres"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 1.0920259952545166,
+      "status": "success",
+      "timestamp": "2025-10-08T18:05:59.927321"
+    },
+    {
+      "query_id": 235,
+      "query": "find matching documents",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "hard",
+      "difficulty_rationale": "Matching lacks context - semantic similar or metadata criteria-match",
+      "databases_used": [
+        "graphiti",
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.8637969493865967,
+      "status": "success",
+      "timestamp": "2025-10-08T18:06:00.892424"
+    },
+    {
+      "query_id": 236,
+      "query": "what corresponds",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "hard",
+      "difficulty_rationale": "Corresponds is minimal - semantic match or graph relationship",
+      "databases_used": [
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.3397026062011719,
+      "status": "success",
+      "timestamp": "2025-10-08T18:06:01.339473"
+    },
+    {
+      "query_id": 237,
+      "query": "show aligned content",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "hard",
+      "difficulty_rationale": "Aligned is vague - semantic topical or metadata same-direction",
+      "databases_used": [
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.43936705589294434,
+      "status": "success",
+      "timestamp": "2025-10-08T18:06:01.880567"
+    },
+    {
+      "query_id": 238,
+      "query": "find pertinent information",
+      "expected_intent": "semantic",
+      "actual_intent": "semantic",
+      "intent_correct": true,
+      "difficulty": "hard",
+      "difficulty_rationale": "Pertinent is subjective - semantic relevance or metadata category",
+      "databases_used": [
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.40878725051879883,
+      "status": "success",
+      "timestamp": "2025-10-08T18:06:02.395373"
+    },
+    {
+      "query_id": 239,
+      "query": "show high value items",
+      "expected_intent": "metadata",
+      "actual_intent": "metadata",
+      "intent_correct": true,
+      "difficulty": "hard",
+      "difficulty_rationale": "High value is imprecise - metadata value > X or semantic important content",
+      "databases_used": [
+        "postgres"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.4109950065612793,
+      "status": "success",
+      "timestamp": "2025-10-08T18:06:02.914658"
+    },
+    {
+      "query_id": 240,
+      "query": "find important records",
+      "expected_intent": "metadata",
+      "actual_intent": "metadata",
+      "intent_correct": true,
+      "difficulty": "hard",
+      "difficulty_rationale": "Important is subjective - metadata priority or semantic significant",
+      "databases_used": [
+        "graphiti",
+        "postgres"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.7056422233581543,
+      "status": "success",
+      "timestamp": "2025-10-08T18:06:03.728083"
+    },
+    {
+      "query_id": 241,
+      "query": "show main customers",
+      "expected_intent": "metadata",
+      "actual_intent": "graph",
+      "intent_correct": false,
+      "difficulty": "hard",
+      "difficulty_rationale": "Main is imprecise - metadata top-tier or semantic key-accounts",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.5374860763549805,
+      "status": "success",
+      "timestamp": "2025-10-08T18:06:04.368847"
+    },
+    {
+      "query_id": 242,
+      "query": "find key projects",
+      "expected_intent": "metadata",
+      "actual_intent": "graph",
+      "intent_correct": false,
+      "difficulty": "hard",
+      "difficulty_rationale": "Key is subjective - metadata priority or semantic strategic",
+      "databases_used": [
+        "neo4j",
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.6319901943206787,
+      "status": "success",
+      "timestamp": "2025-10-08T18:06:05.103607"
+    },
+    {
+      "query_id": 243,
+      "query": "show significant changes",
+      "expected_intent": "metadata",
+      "actual_intent": "temporal",
+      "intent_correct": false,
+      "difficulty": "hard",
+      "difficulty_rationale": "Significant could be metadata magnitude or temporal important-changes",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.6862998008728027,
+      "status": "success",
+      "timestamp": "2025-10-08T18:06:05.898672"
+    },
+    {
+      "query_id": 244,
+      "query": "find major incidents",
+      "expected_intent": "metadata",
+      "actual_intent": "temporal",
+      "intent_correct": false,
+      "difficulty": "hard",
+      "difficulty_rationale": "Major is imprecise - metadata severity or semantic impact-level",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 1.2953979969024658,
+      "status": "success",
+      "timestamp": "2025-10-08T18:06:07.301923"
+    },
+    {
+      "query_id": 245,
+      "query": "show primary resources",
+      "expected_intent": "metadata",
+      "actual_intent": "temporal",
+      "intent_correct": false,
+      "difficulty": "hard",
+      "difficulty_rationale": "Primary could be metadata main-category or graph top-hierarchy",
+      "databases_used": [
+        "graphiti"
+      ],
+      "result_count": 0,
+      "cached": false,
+      "latency_seconds": 0.6510260105133057,
+      "status": "success",
+      "timestamp": "2025-10-08T18:06:08.060707"
+    },
+    {
+      "query_id": 246,
+      "query": "find top performers",
+      "expected_intent": "metadata",
+      "actual_intent": "metadata",
+      "intent_correct": true,
+      "difficulty": "hard",
+      "difficulty_rationale": "Top is imprecise - metadata ranking or semantic high-quality",
+      "databases_used": [
+        "graphiti",
+        "postgres"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.6713683605194092,
+      "status": "success",
+      "timestamp": "2025-10-08T18:06:08.835624"
+    },
+    {
+      "query_id": 247,
+      "query": "show critical systems",
+      "expected_intent": "metadata",
+      "actual_intent": "metadata",
+      "intent_correct": true,
+      "difficulty": "hard",
+      "difficulty_rationale": "Critical could be metadata importance or semantic essential",
+      "databases_used": [
+        "postgres"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.4032928943634033,
+      "status": "success",
+      "timestamp": "2025-10-08T18:06:09.344427"
+    },
+    {
+      "query_id": 248,
+      "query": "find essential documents",
+      "expected_intent": "metadata",
+      "actual_intent": "semantic",
+      "intent_correct": false,
+      "difficulty": "hard",
+      "difficulty_rationale": "Essential is subjective - metadata required or semantic must-have",
+      "databases_used": [
+        "graphiti",
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.6191270351409912,
+      "status": "success",
+      "timestamp": "2025-10-08T18:06:10.063824"
+    },
+    {
+      "query_id": 249,
+      "query": "show best practices",
+      "expected_intent": "metadata",
+      "actual_intent": "semantic",
+      "intent_correct": false,
+      "difficulty": "hard",
+      "difficulty_rationale": "Best could be metadata recommended-category or semantic high-quality",
+      "databases_used": [
+        "postgres",
+        "qdrant"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.5349140167236328,
+      "status": "success",
+      "timestamp": "2025-10-08T18:06:10.702481"
+    },
+    {
+      "query_id": 250,
+      "query": "find notable achievements",
+      "expected_intent": "metadata",
+      "actual_intent": "metadata",
+      "intent_correct": true,
+      "difficulty": "hard",
+      "difficulty_rationale": "Notable is subjective - metadata milestone-type or semantic significant",
+      "databases_used": [
+        "graphiti",
+        "postgres"
+      ],
+      "result_count": 10,
+      "cached": false,
+      "latency_seconds": 0.5927066802978516,
+      "status": "success",
+      "timestamp": "2025-10-08T18:06:11.400530"
+    }
+  ],
+  "metrics": {
+    "overall": {
+      "total_queries": 250,
+      "successful_queries": 249,
+      "failed_queries": 1,
+      "success_rate": 99.6,
+      "overall_accuracy": 73.89558232931726,
+      "correct_count": 184,
+      "total_count": 249
+    },
+    "latency": {
+      "p50_seconds": 0.5203299522399902,
+      "p90_seconds": 0.8903019428253174,
+      "p99_seconds": 3.021357536315918,
+      "mean_seconds": 0.6301658469510366,
+      "min_seconds": 0.14262795448303223,
+      "max_seconds": 3.6830151081085205
+    },
+    "by_difficulty": {
+      "easy": {
+        "total": 99,
+        "correct": 86,
+        "accuracy": 86.86868686868688,
+        "avg_latency": 0.6164066936030532,
+        "median_latency": 0.46645092964172363
+      },
+      "medium": {
+        "total": 100,
+        "correct": 69,
+        "accuracy": 69.0,
+        "avg_latency": 0.607620677947998,
+        "median_latency": 0.5282357931137085
+      },
+      "hard": {
+        "total": 50,
+        "correct": 29,
+        "accuracy": 57.99999999999999,
+        "avg_latency": 0.7024993085861206,
+        "median_latency": 0.6025334596633911
+      }
+    },
+    "intent_by_difficulty": {
+      "easy": {
+        "graph": {
+          "total": 25,
+          "correct": 20,
+          "accuracy": 80.0
+        },
+        "temporal": {
+          "total": 24,
+          "correct": 23,
+          "accuracy": 95.83333333333334
+        },
+        "semantic": {
+          "total": 25,
+          "correct": 22,
+          "accuracy": 88.0
+        },
+        "metadata": {
+          "total": 25,
+          "correct": 21,
+          "accuracy": 84.0
+        }
+      },
+      "medium": {
+        "graph": {
+          "total": 25,
+          "correct": 10,
+          "accuracy": 40.0
+        },
+        "temporal": {
+          "total": 25,
+          "correct": 19,
+          "accuracy": 76.0
+        },
+        "semantic": {
+          "total": 25,
+          "correct": 22,
+          "accuracy": 88.0
+        },
+        "metadata": {
+          "total": 25,
+          "correct": 18,
+          "accuracy": 72.0
+        }
+      },
+      "hard": {
+        "graph": {
+          "total": 13,
+          "correct": 5,
+          "accuracy": 38.46153846153847
+        },
+        "temporal": {
+          "total": 13,
+          "correct": 11,
+          "accuracy": 84.61538461538461
+        },
+        "semantic": {
+          "total": 12,
+          "correct": 8,
+          "accuracy": 66.66666666666666
+        },
+        "metadata": {
+          "total": 12,
+          "correct": 5,
+          "accuracy": 41.66666666666667
+        }
+      }
+    },
+    "intent_overall": {
+      "graph": {
+        "total": 63,
+        "correct": 35,
+        "accuracy": 55.55555555555556
+      },
+      "temporal": {
+        "total": 62,
+        "correct": 53,
+        "accuracy": 85.48387096774194
+      },
+      "semantic": {
+        "total": 62,
+        "correct": 52,
+        "accuracy": 83.87096774193549
+      },
+      "metadata": {
+        "total": 62,
+        "correct": 44,
+        "accuracy": 70.96774193548387
+      }
+    },
+    "confusion_matrix": {
+      "graph": {
+        "graph": 35,
+        "temporal": 10,
+        "semantic": 11,
+        "metadata": 7,
+        "unknown": 0
+      },
+      "temporal": {
+        "graph": 3,
+        "temporal": 53,
+        "semantic": 5,
+        "metadata": 1,
+        "unknown": 0
+      },
+      "semantic": {
+        "graph": 6,
+        "temporal": 1,
+        "semantic": 52,
+        "metadata": 3,
+        "unknown": 0
+      },
+      "metadata": {
+        "graph": 9,
+        "temporal": 7,
+        "semantic": 2,
+        "metadata": 44,
+        "unknown": 0
+      }
+    },
+    "database_routing": {
+      "usage_counts": {
+        "neo4j": 53,
+        "graphiti": 166,
+        "postgres": 125,
+        "qdrant": 70
+      },
+      "most_used": "graphiti"
+    },
+    "failure_analysis": {
+      "total_failures": 65,
+      "by_difficulty": {
+        "easy": {
+          "count": 13,
+          "percentage": 13.131313131313133
+        },
+        "medium": {
+          "count": 31,
+          "percentage": 31.0
+        },
+        "hard": {
+          "count": 21,
+          "percentage": 42.0
+        }
+      },
+      "examples": [
+        {
+          "query": "show me all dependencies between microservice-auth and other services",
+          "expected": "graph",
+          "actual": "semantic",
+          "difficulty": "easy",
+          "rationale": "Explicit 'dependencies between' graph terminology"
+        },
+        {
+          "query": "trace the connection path from user login to database access",
+          "expected": "graph",
+          "actual": "temporal",
+          "difficulty": "easy",
+          "rationale": "Explicit 'connection path' and 'trace' graph signals"
+        },
+        {
+          "query": "what systems depend on the authentication service",
+          "expected": "graph",
+          "actual": "semantic",
+          "difficulty": "easy",
+          "rationale": "Clear 'depend on' dependency relationship"
+        },
+        {
+          "query": "show the network topology for our cloud infrastructure",
+          "expected": "graph",
+          "actual": "semantic",
+          "difficulty": "easy",
+          "rationale": "Direct 'network topology' graph terminology"
+        },
+        {
+          "query": "which databases are coupled to the user authentication module",
+          "expected": "graph",
+          "actual": "semantic",
+          "difficulty": "easy",
+          "rationale": "Clear 'coupled to' dependency relationship"
+        },
+        {
+          "query": "display the sequence of approvals for purchase order PO-999",
+          "expected": "temporal",
+          "actual": "graph",
+          "difficulty": "easy",
+          "rationale": "Explicit 'sequence' temporal ordering"
+        },
+        {
+          "query": "show me articles about cloud infrastructure security",
+          "expected": "semantic",
+          "actual": "graph",
+          "difficulty": "easy",
+          "rationale": "Direct 'about' topical semantic query"
+        },
+        {
+          "query": "search for materials about data warehousing strategies",
+          "expected": "semantic",
+          "actual": "graph",
+          "difficulty": "easy",
+          "rationale": "Clear 'about' topical semantic query"
+        },
+        {
+          "query": "what papers discuss trends in mobile development",
+          "expected": "semantic",
+          "actual": "metadata",
+          "difficulty": "easy",
+          "rationale": "Clear 'discuss' semantic topic indicator"
+        },
+        {
+          "query": "show employees with department = engineering and level >= senior",
+          "expected": "metadata",
+          "actual": "graph",
+          "difficulty": "easy",
+          "rationale": "Clear structured attributes with '=' and '>='"
+        }
+      ]
+    },
+    "cache_performance": {
+      "hit_rate": 0.0,
+      "note": "Cache disabled for testing"
+    }
+  }
+}

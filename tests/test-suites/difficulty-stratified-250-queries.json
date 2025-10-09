@@ -1,0 +1,1766 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "created": "2025-10-08",
+    "description": "Difficulty-stratified queries for semantic router stress testing - 250 queries across easy/medium/hard tiers",
+    "total_queries": 250,
+    "difficulty_distribution": {
+      "easy": 100,
+      "medium": 100,
+      "hard": 50
+    },
+    "intent_types": ["graph", "temporal", "semantic", "metadata"]
+  },
+  "queries": [
+    {
+      "id": 1,
+      "query": "which servers are directly connected to database-prod",
+      "intent": "graph",
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'connected to' relationship signal"
+    },
+    {
+      "id": 2,
+      "query": "show me all dependencies between microservice-auth and other services",
+      "intent": "graph",
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'dependencies between' graph terminology"
+    },
+    {
+      "id": 3,
+      "query": "find the relationship network for customer Acme Industries",
+      "intent": "graph",
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'relationship network' phrasing"
+    },
+    {
+      "id": 4,
+      "query": "what components are linked to the payment gateway",
+      "intent": "graph",
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'linked to' connection indicator"
+    },
+    {
+      "id": 5,
+      "query": "trace the connection path from user login to database access",
+      "intent": "graph",
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'connection path' and 'trace' graph signals"
+    },
+    {
+      "id": 6,
+      "query": "show all vendors associated with supplier Smith & Co",
+      "intent": "graph",
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'associated with' relationship language"
+    },
+    {
+      "id": 7,
+      "query": "map the organizational hierarchy under the CTO",
+      "intent": "graph",
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'organizational hierarchy' and 'map' terminology"
+    },
+    {
+      "id": 8,
+      "query": "which employees report directly to manager Johnson",
+      "intent": "graph",
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'report to' hierarchical relationship"
+    },
+    {
+      "id": 9,
+      "query": "find all upstream dependencies for the API gateway",
+      "intent": "graph",
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'upstream dependencies' graph concept"
+    },
+    {
+      "id": 10,
+      "query": "show the network of related contracts for project Phoenix",
+      "intent": "graph",
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'network of related' phrasing"
+    },
+    {
+      "id": 11,
+      "query": "what systems depend on the authentication service",
+      "intent": "graph",
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'depend on' dependency relationship"
+    },
+    {
+      "id": 12,
+      "query": "trace the supply chain path from manufacturer to retail",
+      "intent": "graph",
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'supply chain path' and 'trace'"
+    },
+    {
+      "id": 13,
+      "query": "show me the connection graph between all departments",
+      "intent": "graph",
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'connection graph' terminology"
+    },
+    {
+      "id": 14,
+      "query": "find all entities linked within 3 hops of customer ABC",
+      "intent": "graph",
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit graph traversal 'hops' language"
+    },
+    {
+      "id": 15,
+      "query": "which partners are connected through joint ventures",
+      "intent": "graph",
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'connected through' relationship"
+    },
+    {
+      "id": 16,
+      "query": "show the dependency tree for the frontend application",
+      "intent": "graph",
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'dependency tree' graph structure"
+    },
+    {
+      "id": 17,
+      "query": "map out relationships between all stakeholders in project Alpha",
+      "intent": "graph",
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'relationships between' and 'map out'"
+    },
+    {
+      "id": 18,
+      "query": "find the ownership chain for intellectual property X",
+      "intent": "graph",
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'ownership chain' hierarchical relationship"
+    },
+    {
+      "id": 19,
+      "query": "show all cross-functional connections in the marketing division",
+      "intent": "graph",
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'connections' graph language"
+    },
+    {
+      "id": 20,
+      "query": "which services have bidirectional links to the data warehouse",
+      "intent": "graph",
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'bidirectional links' graph concept"
+    },
+    {
+      "id": 21,
+      "query": "trace the approval workflow from request to completion",
+      "intent": "graph",
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'workflow' path and 'trace'"
+    },
+    {
+      "id": 22,
+      "query": "show the network topology for our cloud infrastructure",
+      "intent": "graph",
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'network topology' graph terminology"
+    },
+    {
+      "id": 23,
+      "query": "find all components that interact with the billing system",
+      "intent": "graph",
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'interact with' relationship signal"
+    },
+    {
+      "id": 24,
+      "query": "which databases are coupled to the user authentication module",
+      "intent": "graph",
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'coupled to' dependency relationship"
+    },
+    {
+      "id": 25,
+      "query": "show the hierarchical structure of teams under VP Engineering",
+      "intent": "graph",
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'hierarchical structure' terminology"
+    },
+    {
+      "id": 26,
+      "query": "show me the change history for customer account X over the past year",
+      "intent": "temporal",
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'change history' and 'over the past year' temporal signals"
+    },
+    {
+      "id": 27,
+      "query": "when did we last update the pricing model",
+      "intent": "temporal",
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'when did' and 'last update' time-based question"
+    },
+    {
+      "id": 28,
+      "query": "track how revenue evolved from Q1 to Q4",
+      "intent": "temporal",
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'evolved from...to' temporal progression"
+    },
+    {
+      "id": 29,
+      "query": "show the timeline of events for incident INC-2024-05",
+      "intent": "temporal",
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'timeline' temporal concept"
+    },
+    {
+      "id": 30,
+      "query": "what changed in the database schema since last deployment",
+      "intent": "temporal",
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'changed...since' temporal language"
+    },
+    {
+      "id": 31,
+      "query": "display the version history for document ABC.docx",
+      "intent": "temporal",
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'version history' temporal tracking"
+    },
+    {
+      "id": 32,
+      "query": "how has customer engagement trended over the last 6 months",
+      "intent": "temporal",
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'trended over' temporal progression"
+    },
+    {
+      "id": 33,
+      "query": "when was the last time user Alice logged in",
+      "intent": "temporal",
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'when was' and 'last time' temporal query"
+    },
+    {
+      "id": 34,
+      "query": "show me all modifications to contract C-789 over its lifetime",
+      "intent": "temporal",
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'modifications...over lifetime' temporal scope"
+    },
+    {
+      "id": 35,
+      "query": "track the progression of sales metrics from January through December",
+      "intent": "temporal",
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'progression...from through' temporal range"
+    },
+    {
+      "id": 36,
+      "query": "display the audit trail for financial transaction T-12345",
+      "intent": "temporal",
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'audit trail' chronological tracking"
+    },
+    {
+      "id": 37,
+      "query": "what was the state of inventory on December 31st",
+      "intent": "temporal",
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'state...on' point-in-time query"
+    },
+    {
+      "id": 38,
+      "query": "show how employee headcount changed year over year",
+      "intent": "temporal",
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'changed year over year' temporal comparison"
+    },
+    {
+      "id": 39,
+      "query": "when did we first introduce the premium tier pricing",
+      "intent": "temporal",
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'when did...first' temporal origin question"
+    },
+    {
+      "id": 40,
+      "query": "track the evolution of our product roadmap since 2022",
+      "intent": "temporal",
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'evolution...since' temporal progression"
+    },
+    {
+      "id": 41,
+      "query": "show me the historical pattern of server outages over the past 2 years",
+      "intent": "temporal",
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'historical pattern' and 'over the past' temporal scope"
+    },
+    {
+      "id": 42,
+      "query": "when was customer record CR-456 last modified",
+      "intent": "temporal",
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'when was...last modified' temporal query"
+    },
+    {
+      "id": 43,
+      "query": "display the activity timeline for user Bob in March",
+      "intent": "temporal",
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'timeline' with temporal constraint"
+    },
+    {
+      "id": 44,
+      "query": "how has the bug count trended during the sprint",
+      "intent": "temporal",
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'trended during' temporal progression"
+    },
+    {
+      "id": 45,
+      "query": "show all updates to policy P-100 in chronological order",
+      "intent": "temporal",
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'chronological order' temporal sequencing"
+    },
+    {
+      "id": 46,
+      "query": "track changes to the configuration file since v2.0",
+      "intent": "temporal",
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'changes...since' temporal tracking"
+    },
+    {
+      "id": 47,
+      "query": "when did the stock price peak in Q3",
+      "intent": "temporal",
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'when did...peak' temporal event query"
+    },
+    {
+      "id": 48,
+      "query": "show me the complete edit history for this wiki page",
+      "intent": "temporal",
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'edit history' temporal tracking"
+    },
+    {
+      "id": 49,
+      "query": "how has customer churn rate evolved month by month",
+      "intent": "temporal",
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'evolved month by month' temporal progression"
+    },
+    {
+      "id": 50,
+      "query": "display the sequence of approvals for purchase order PO-999",
+      "intent": "temporal",
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'sequence' temporal ordering"
+    },
+    {
+      "id": 51,
+      "query": "find documents similar to the Q4 sales forecast report",
+      "intent": "semantic",
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'similar to' semantic similarity signal"
+    },
+    {
+      "id": 52,
+      "query": "search for content related to machine learning algorithms",
+      "intent": "semantic",
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'related to' semantic search language"
+    },
+    {
+      "id": 53,
+      "query": "show me articles about cloud infrastructure security",
+      "intent": "semantic",
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'about' topical semantic query"
+    },
+    {
+      "id": 54,
+      "query": "find documents that discuss data privacy regulations",
+      "intent": "semantic",
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'discuss' semantic topic indicator"
+    },
+    {
+      "id": 55,
+      "query": "what content is semantically related to artificial intelligence",
+      "intent": "semantic",
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'semantically related to' language"
+    },
+    {
+      "id": 56,
+      "query": "search for materials covering DevOps best practices",
+      "intent": "semantic",
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'covering' semantic topical search"
+    },
+    {
+      "id": 57,
+      "query": "find presentations similar in content to this proposal",
+      "intent": "semantic",
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'similar in content' semantic signal"
+    },
+    {
+      "id": 58,
+      "query": "show me research papers about neural networks",
+      "intent": "semantic",
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'about' topical semantic query"
+    },
+    {
+      "id": 59,
+      "query": "search for documentation related to API authentication",
+      "intent": "semantic",
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'related to' semantic search"
+    },
+    {
+      "id": 60,
+      "query": "find content that matches the theme of digital transformation",
+      "intent": "semantic",
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'matches the theme' semantic similarity"
+    },
+    {
+      "id": 61,
+      "query": "what documents discuss cybersecurity threats",
+      "intent": "semantic",
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'discuss' semantic topic indicator"
+    },
+    {
+      "id": 62,
+      "query": "search for articles about blockchain technology",
+      "intent": "semantic",
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'about' topical semantic search"
+    },
+    {
+      "id": 63,
+      "query": "find materials semantically similar to this white paper",
+      "intent": "semantic",
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'semantically similar' explicit language"
+    },
+    {
+      "id": 64,
+      "query": "show content related to customer retention strategies",
+      "intent": "semantic",
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'related to' semantic search"
+    },
+    {
+      "id": 65,
+      "query": "what documents cover topics on microservices architecture",
+      "intent": "semantic",
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'cover topics on' semantic indicator"
+    },
+    {
+      "id": 66,
+      "query": "find presentations that discuss agile methodologies",
+      "intent": "semantic",
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'discuss' semantic topical search"
+    },
+    {
+      "id": 67,
+      "query": "search for content about database optimization techniques",
+      "intent": "semantic",
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'about' topical semantic query"
+    },
+    {
+      "id": 68,
+      "query": "show me documents similar in meaning to this case study",
+      "intent": "semantic",
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'similar in meaning' semantic signal"
+    },
+    {
+      "id": 69,
+      "query": "find resources related to continuous integration practices",
+      "intent": "semantic",
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'related to' semantic search"
+    },
+    {
+      "id": 70,
+      "query": "what content discusses software testing frameworks",
+      "intent": "semantic",
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'discusses' semantic topic indicator"
+    },
+    {
+      "id": 71,
+      "query": "search for materials about data warehousing strategies",
+      "intent": "semantic",
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'about' topical semantic query"
+    },
+    {
+      "id": 72,
+      "query": "find documents that cover cloud migration planning",
+      "intent": "semantic",
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'cover' semantic topic search"
+    },
+    {
+      "id": 73,
+      "query": "show articles semantically related to leadership development",
+      "intent": "semantic",
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'semantically related to' language"
+    },
+    {
+      "id": 74,
+      "query": "what papers discuss trends in mobile development",
+      "intent": "semantic",
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'discuss' semantic topic indicator"
+    },
+    {
+      "id": 75,
+      "query": "find content similar to this sustainability report",
+      "intent": "semantic",
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'similar to' semantic similarity signal"
+    },
+    {
+      "id": 76,
+      "query": "show all invoices where amount > $10000 and status = unpaid",
+      "intent": "metadata",
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear operators '>' and '=' for metadata filtering"
+    },
+    {
+      "id": 77,
+      "query": "filter customers by industry = technology and revenue >= 1000000",
+      "intent": "metadata",
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'filter by' with operators '=' and '>='"
+    },
+    {
+      "id": 78,
+      "query": "list all projects where status = active and priority = high",
+      "intent": "metadata",
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'where' clause with '=' operators"
+    },
+    {
+      "id": 79,
+      "query": "show employees with department = engineering and level >= senior",
+      "intent": "metadata",
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear structured attributes with '=' and '>='"
+    },
+    {
+      "id": 80,
+      "query": "find orders where quantity > 100 and date >= 2024-01-01",
+      "intent": "metadata",
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'where' with operators '>' and '>='"
+    },
+    {
+      "id": 81,
+      "query": "filter products by category = electronics and price <= 500",
+      "intent": "metadata",
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'filter by' with '=' and '<=' operators"
+    },
+    {
+      "id": 82,
+      "query": "list tickets where severity = critical and assignee = unassigned",
+      "intent": "metadata",
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'where' clause with '=' operators"
+    },
+    {
+      "id": 83,
+      "query": "show contracts where value > 50000 and term <= 12",
+      "intent": "metadata",
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit operators '>' and '<=' for metadata"
+    },
+    {
+      "id": 84,
+      "query": "find users where role = admin and status = active",
+      "intent": "metadata",
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'where' with '=' operators on attributes"
+    },
+    {
+      "id": 85,
+      "query": "filter vendors by country = USA and rating >= 4",
+      "intent": "metadata",
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'filter by' with '=' and '>=' operators"
+    },
+    {
+      "id": 86,
+      "query": "list assets where location = datacenter and status = operational",
+      "intent": "metadata",
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'where' clause with '=' operators"
+    },
+    {
+      "id": 87,
+      "query": "show campaigns where budget > 25000 and roi >= 2.0",
+      "intent": "metadata",
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct operators '>' and '>=' for metadata filtering"
+    },
+    {
+      "id": 88,
+      "query": "find transactions where type = refund and amount > 1000",
+      "intent": "metadata",
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'where' with '=' and '>' operators"
+    },
+    {
+      "id": 89,
+      "query": "filter subscriptions by plan = enterprise and mrr >= 10000",
+      "intent": "metadata",
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'filter by' with '=' and '>=' operators"
+    },
+    {
+      "id": 90,
+      "query": "list servers where os = linux and uptime > 99.9",
+      "intent": "metadata",
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'where' clause with '=' and '>' operators"
+    },
+    {
+      "id": 91,
+      "query": "show leads where source = website and score >= 80",
+      "intent": "metadata",
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear operators '=' and '>=' for metadata"
+    },
+    {
+      "id": 92,
+      "query": "find incidents where priority = P1 and resolution_time > 24",
+      "intent": "metadata",
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'where' with '=' and '>' operators"
+    },
+    {
+      "id": 93,
+      "query": "filter reservations by date >= 2024-06-01 and status = confirmed",
+      "intent": "metadata",
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'filter by' with '>=' and '=' operators"
+    },
+    {
+      "id": 94,
+      "query": "list licenses where type = commercial and expiry_date <= 2024-12-31",
+      "intent": "metadata",
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'where' with '=' and '<=' operators"
+    },
+    {
+      "id": 95,
+      "query": "show shipments where carrier = FedEx and weight > 50",
+      "intent": "metadata",
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit operators '=' and '>' for metadata filtering"
+    },
+    {
+      "id": 96,
+      "query": "find applications where stage = review and days_pending >= 7",
+      "intent": "metadata",
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct 'where' with '=' and '>=' operators"
+    },
+    {
+      "id": 97,
+      "query": "filter bookings by room_type = suite and nights >= 3",
+      "intent": "metadata",
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'filter by' with '=' and '>=' operators"
+    },
+    {
+      "id": 98,
+      "query": "list devices where manufacturer = Cisco and firmware_version < 2.0",
+      "intent": "metadata",
+      "difficulty": "easy",
+      "difficulty_rationale": "Explicit 'where' with '=' and '<' operators"
+    },
+    {
+      "id": 99,
+      "query": "show payments where method = credit_card and amount >= 500",
+      "intent": "metadata",
+      "difficulty": "easy",
+      "difficulty_rationale": "Direct operators '=' and '>=' for metadata"
+    },
+    {
+      "id": 100,
+      "query": "find alerts where level = warning and count > 10",
+      "intent": "metadata",
+      "difficulty": "easy",
+      "difficulty_rationale": "Clear 'where' clause with '=' and '>' operators"
+    },
+    {
+      "id": 101,
+      "query": "show the team working on project Phoenix",
+      "intent": "graph",
+      "difficulty": "medium",
+      "difficulty_rationale": "Could be graph (org structure) or metadata (project assignment filter)"
+    },
+    {
+      "id": 102,
+      "query": "find people involved in the migration initiative",
+      "intent": "graph",
+      "difficulty": "medium",
+      "difficulty_rationale": "Ambiguous between graph relationships and metadata participation"
+    },
+    {
+      "id": 103,
+      "query": "what accounts are part of the enterprise segment",
+      "intent": "graph",
+      "difficulty": "medium",
+      "difficulty_rationale": "Could be graph grouping or metadata category filter"
+    },
+    {
+      "id": 104,
+      "query": "show services that use the authentication module",
+      "intent": "graph",
+      "difficulty": "medium",
+      "difficulty_rationale": "Weaker 'use' signal vs explicit 'depend on'"
+    },
+    {
+      "id": 105,
+      "query": "find components in the payment processing flow",
+      "intent": "graph",
+      "difficulty": "medium",
+      "difficulty_rationale": "Flow implies graph but could be category membership"
+    },
+    {
+      "id": 106,
+      "query": "which customers belong to the VIP tier",
+      "intent": "graph",
+      "difficulty": "medium",
+      "difficulty_rationale": "Ambiguous between graph membership and metadata classification"
+    },
+    {
+      "id": 107,
+      "query": "show departments under the operations division",
+      "intent": "graph",
+      "difficulty": "medium",
+      "difficulty_rationale": "Could be hierarchical graph or metadata parent-child"
+    },
+    {
+      "id": 108,
+      "query": "find all resources assigned to the cloud migration",
+      "intent": "graph",
+      "difficulty": "medium",
+      "difficulty_rationale": "Assignment could be graph or metadata allocation"
+    },
+    {
+      "id": 109,
+      "query": "what partners work with our sales team",
+      "intent": "graph",
+      "difficulty": "medium",
+      "difficulty_rationale": "Work with implies relationship but weak signal"
+    },
+    {
+      "id": 110,
+      "query": "show products in the premium bundle",
+      "intent": "graph",
+      "difficulty": "medium",
+      "difficulty_rationale": "Bundle membership could be graph or metadata category"
+    },
+    {
+      "id": 111,
+      "query": "find systems affected by this security patch",
+      "intent": "graph",
+      "difficulty": "medium",
+      "difficulty_rationale": "Affected by is weaker dependency signal"
+    },
+    {
+      "id": 112,
+      "query": "which APIs interact with customer data",
+      "intent": "graph",
+      "difficulty": "medium",
+      "difficulty_rationale": "Interact is weaker than explicit connection language"
+    },
+    {
+      "id": 113,
+      "query": "show teams collaborating on the Q4 roadmap",
+      "intent": "graph",
+      "difficulty": "medium",
+      "difficulty_rationale": "Collaboration implies graph but could be metadata participation"
+    },
+    {
+      "id": 114,
+      "query": "find contracts tied to supplier ABC",
+      "intent": "graph",
+      "difficulty": "medium",
+      "difficulty_rationale": "Tied to is weaker relationship signal than linked"
+    },
+    {
+      "id": 115,
+      "query": "what applications access the central database",
+      "intent": "graph",
+      "difficulty": "medium",
+      "difficulty_rationale": "Access is weaker than depend or connect"
+    },
+    {
+      "id": 116,
+      "query": "show employees involved in customer support",
+      "intent": "graph",
+      "difficulty": "medium",
+      "difficulty_rationale": "Involved in could be graph or metadata role filter"
+    },
+    {
+      "id": 117,
+      "query": "find projects related to infrastructure upgrade",
+      "intent": "graph",
+      "difficulty": "medium",
+      "difficulty_rationale": "Related is weak, could be semantic or graph"
+    },
+    {
+      "id": 118,
+      "query": "which vendors supply our manufacturing division",
+      "intent": "graph",
+      "difficulty": "medium",
+      "difficulty_rationale": "Supply relationship is weaker than explicit connection"
+    },
+    {
+      "id": 119,
+      "query": "show documents associated with legal compliance",
+      "intent": "graph",
+      "difficulty": "medium",
+      "difficulty_rationale": "Associated is weak, could be semantic topic or graph link"
+    },
+    {
+      "id": 120,
+      "query": "find servers handling production traffic",
+      "intent": "graph",
+      "difficulty": "medium",
+      "difficulty_rationale": "Handling could be graph responsibility or metadata classification"
+    },
+    {
+      "id": 121,
+      "query": "what changed in Q3 budget allocations",
+      "intent": "graph",
+      "difficulty": "medium",
+      "difficulty_rationale": "Changed is weak temporal, allocations implies graph structure"
+    },
+    {
+      "id": 122,
+      "query": "show modules that support the reporting feature",
+      "intent": "graph",
+      "difficulty": "medium",
+      "difficulty_rationale": "Support is weaker dependency signal"
+    },
+    {
+      "id": 123,
+      "query": "find customers participating in the beta program",
+      "intent": "graph",
+      "difficulty": "medium",
+      "difficulty_rationale": "Participation could be graph membership or metadata filter"
+    },
+    {
+      "id": 124,
+      "query": "which offices belong to the EMEA region",
+      "intent": "graph",
+      "difficulty": "medium",
+      "difficulty_rationale": "Belong to could be graph hierarchy or metadata geography"
+    },
+    {
+      "id": 125,
+      "query": "show assets managed by IT operations",
+      "intent": "graph",
+      "difficulty": "medium",
+      "difficulty_rationale": "Managed by could be graph ownership or metadata assignment"
+    },
+    {
+      "id": 126,
+      "query": "compare Q1 vs Q2 sales performance",
+      "intent": "temporal",
+      "difficulty": "medium",
+      "difficulty_rationale": "Compare could be temporal trend or metadata side-by-side"
+    },
+    {
+      "id": 127,
+      "query": "what's different about version 2.0",
+      "intent": "temporal",
+      "difficulty": "medium",
+      "difficulty_rationale": "Different could be temporal change or semantic comparison"
+    },
+    {
+      "id": 128,
+      "query": "show updates to the pricing strategy",
+      "intent": "temporal",
+      "difficulty": "medium",
+      "difficulty_rationale": "Updates implies temporal but lacks explicit time signal"
+    },
+    {
+      "id": 129,
+      "query": "find changes in customer preferences",
+      "intent": "temporal",
+      "difficulty": "medium",
+      "difficulty_rationale": "Changes is weak temporal without time context"
+    },
+    {
+      "id": 130,
+      "query": "how does our current architecture differ from the old one",
+      "intent": "temporal",
+      "difficulty": "medium",
+      "difficulty_rationale": "Differ could be temporal evolution or semantic comparison"
+    },
+    {
+      "id": 131,
+      "query": "show modifications to the employee handbook",
+      "intent": "temporal",
+      "difficulty": "medium",
+      "difficulty_rationale": "Modifications implies temporal but weak time signal"
+    },
+    {
+      "id": 132,
+      "query": "what evolved in our product lineup",
+      "intent": "temporal",
+      "difficulty": "medium",
+      "difficulty_rationale": "Evolved is temporal but lacks explicit time range"
+    },
+    {
+      "id": 133,
+      "query": "find shifts in market positioning",
+      "intent": "temporal",
+      "difficulty": "medium",
+      "difficulty_rationale": "Shifts implies change but weak temporal context"
+    },
+    {
+      "id": 134,
+      "query": "compare old vs new infrastructure setup",
+      "intent": "temporal",
+      "difficulty": "medium",
+      "difficulty_rationale": "Old vs new is weak temporal, could be semantic"
+    },
+    {
+      "id": 135,
+      "query": "show revisions to the compliance policy",
+      "intent": "temporal",
+      "difficulty": "medium",
+      "difficulty_rationale": "Revisions implies temporal but lacks time specificity"
+    },
+    {
+      "id": 136,
+      "query": "what progressed during the sprint",
+      "intent": "temporal",
+      "difficulty": "medium",
+      "difficulty_rationale": "Progressed is temporal but during is weaker than over"
+    },
+    {
+      "id": 137,
+      "query": "find variations in customer behavior",
+      "intent": "temporal",
+      "difficulty": "medium",
+      "difficulty_rationale": "Variations could be temporal pattern or semantic diversity"
+    },
+    {
+      "id": 138,
+      "query": "how has the process transformed",
+      "intent": "temporal",
+      "difficulty": "medium",
+      "difficulty_rationale": "Transformed is temporal but lacks explicit time frame"
+    },
+    {
+      "id": 139,
+      "query": "show developments in the project plan",
+      "intent": "temporal",
+      "difficulty": "medium",
+      "difficulty_rationale": "Developments implies temporal progression but weak"
+    },
+    {
+      "id": 140,
+      "query": "what improved in system performance",
+      "intent": "temporal",
+      "difficulty": "medium",
+      "difficulty_rationale": "Improved is temporal but lacks time context"
+    },
+    {
+      "id": 141,
+      "query": "find adjustments to the budget plan",
+      "intent": "temporal",
+      "difficulty": "medium",
+      "difficulty_rationale": "Adjustments implies changes but weak temporal signal"
+    },
+    {
+      "id": 142,
+      "query": "compare this quarter with the previous one",
+      "intent": "temporal",
+      "difficulty": "medium",
+      "difficulty_rationale": "Compare could be temporal trend or metadata comparison"
+    },
+    {
+      "id": 143,
+      "query": "show alterations to the service agreement",
+      "intent": "temporal",
+      "difficulty": "medium",
+      "difficulty_rationale": "Alterations implies temporal but weak time signal"
+    },
+    {
+      "id": 144,
+      "query": "what advanced in technology adoption",
+      "intent": "temporal",
+      "difficulty": "medium",
+      "difficulty_rationale": "Advanced is temporal but lacks explicit time range"
+    },
+    {
+      "id": 145,
+      "query": "find transitions in leadership structure",
+      "intent": "temporal",
+      "difficulty": "medium",
+      "difficulty_rationale": "Transitions implies temporal but could be graph change"
+    },
+    {
+      "id": 146,
+      "query": "how did the metrics shift",
+      "intent": "temporal",
+      "difficulty": "medium",
+      "difficulty_rationale": "Shift is weak temporal without time context"
+    },
+    {
+      "id": 147,
+      "query": "show refinements to the algorithm",
+      "intent": "temporal",
+      "difficulty": "medium",
+      "difficulty_rationale": "Refinements implies iterative temporal but weak"
+    },
+    {
+      "id": 148,
+      "query": "what matured in our capabilities",
+      "intent": "temporal",
+      "difficulty": "medium",
+      "difficulty_rationale": "Matured is temporal but lacks time specificity"
+    },
+    {
+      "id": 149,
+      "query": "find progressions in feature development",
+      "intent": "temporal",
+      "difficulty": "medium",
+      "difficulty_rationale": "Progressions implies temporal but weak signal"
+    },
+    {
+      "id": 150,
+      "query": "compare before and after the migration",
+      "intent": "temporal",
+      "difficulty": "medium",
+      "difficulty_rationale": "Before/after is temporal but could be semantic comparison"
+    },
+    {
+      "id": 151,
+      "query": "information about cloud migration strategy",
+      "intent": "semantic",
+      "difficulty": "medium",
+      "difficulty_rationale": "Generic 'about' without explicit semantic signal"
+    },
+    {
+      "id": 152,
+      "query": "find resources on API development",
+      "intent": "semantic",
+      "difficulty": "medium",
+      "difficulty_rationale": "On is weaker than about or related to"
+    },
+    {
+      "id": 153,
+      "query": "show materials covering compliance frameworks",
+      "intent": "semantic",
+      "difficulty": "medium",
+      "difficulty_rationale": "Covering is weak semantic, could be metadata topic"
+    },
+    {
+      "id": 154,
+      "query": "what explains database optimization",
+      "intent": "semantic",
+      "difficulty": "medium",
+      "difficulty_rationale": "Explains is semantic but could be metadata how-to category"
+    },
+    {
+      "id": 155,
+      "query": "find content regarding customer retention",
+      "intent": "semantic",
+      "difficulty": "medium",
+      "difficulty_rationale": "Regarding is weaker than related or about"
+    },
+    {
+      "id": 156,
+      "query": "search documentation on security practices",
+      "intent": "semantic",
+      "difficulty": "medium",
+      "difficulty_rationale": "On is weak, could be metadata category filter"
+    },
+    {
+      "id": 157,
+      "query": "show articles concerning data governance",
+      "intent": "semantic",
+      "difficulty": "medium",
+      "difficulty_rationale": "Concerning is weak semantic signal"
+    },
+    {
+      "id": 158,
+      "query": "what describes agile methodologies",
+      "intent": "semantic",
+      "difficulty": "medium",
+      "difficulty_rationale": "Describes could be semantic or metadata definition category"
+    },
+    {
+      "id": 159,
+      "query": "find materials addressing scalability challenges",
+      "intent": "semantic",
+      "difficulty": "medium",
+      "difficulty_rationale": "Addressing is weak semantic, could be metadata problem-type"
+    },
+    {
+      "id": 160,
+      "query": "search content involving machine learning",
+      "intent": "semantic",
+      "difficulty": "medium",
+      "difficulty_rationale": "Involving is weak, could be metadata tag filter"
+    },
+    {
+      "id": 161,
+      "query": "show resources pertaining to DevOps",
+      "intent": "semantic",
+      "difficulty": "medium",
+      "difficulty_rationale": "Pertaining to is weak semantic signal"
+    },
+    {
+      "id": 162,
+      "query": "what touches on blockchain concepts",
+      "intent": "semantic",
+      "difficulty": "medium",
+      "difficulty_rationale": "Touches on is very weak semantic indicator"
+    },
+    {
+      "id": 163,
+      "query": "find documents featuring AI ethics",
+      "intent": "semantic",
+      "difficulty": "medium",
+      "difficulty_rationale": "Featuring could be semantic or metadata contains-topic"
+    },
+    {
+      "id": 164,
+      "query": "search materials with CI/CD topics",
+      "intent": "semantic",
+      "difficulty": "medium",
+      "difficulty_rationale": "With topics is weak, could be metadata tag"
+    },
+    {
+      "id": 165,
+      "query": "show content mentioning microservices",
+      "intent": "semantic",
+      "difficulty": "medium",
+      "difficulty_rationale": "Mentioning is weak semantic, could be metadata keyword"
+    },
+    {
+      "id": 166,
+      "query": "what includes information on testing strategies",
+      "intent": "semantic",
+      "difficulty": "medium",
+      "difficulty_rationale": "Includes could be semantic or metadata contains"
+    },
+    {
+      "id": 167,
+      "query": "find articles presenting data architecture",
+      "intent": "semantic",
+      "difficulty": "medium",
+      "difficulty_rationale": "Presenting is weak semantic signal"
+    },
+    {
+      "id": 168,
+      "query": "search resources highlighting best practices",
+      "intent": "semantic",
+      "difficulty": "medium",
+      "difficulty_rationale": "Highlighting could be semantic or metadata category"
+    },
+    {
+      "id": 169,
+      "query": "show materials exploring containerization",
+      "intent": "semantic",
+      "difficulty": "medium",
+      "difficulty_rationale": "Exploring is weak semantic, could be metadata topic"
+    },
+    {
+      "id": 170,
+      "query": "what references Kubernetes deployment",
+      "intent": "semantic",
+      "difficulty": "medium",
+      "difficulty_rationale": "References could be semantic or metadata citation"
+    },
+    {
+      "id": 171,
+      "query": "find content detailing cloud architecture",
+      "intent": "semantic",
+      "difficulty": "medium",
+      "difficulty_rationale": "Detailing is weak semantic signal"
+    },
+    {
+      "id": 172,
+      "query": "search documents containing automation topics",
+      "intent": "semantic",
+      "difficulty": "medium",
+      "difficulty_rationale": "Containing could be semantic or metadata has-topic"
+    },
+    {
+      "id": 173,
+      "query": "show papers introducing neural networks",
+      "intent": "semantic",
+      "difficulty": "medium",
+      "difficulty_rationale": "Introducing could be semantic or metadata tutorial category"
+    },
+    {
+      "id": 174,
+      "query": "what examines performance tuning",
+      "intent": "semantic",
+      "difficulty": "medium",
+      "difficulty_rationale": "Examines is weak semantic, could be metadata analysis-type"
+    },
+    {
+      "id": 175,
+      "query": "find materials outlining project management",
+      "intent": "semantic",
+      "difficulty": "medium",
+      "difficulty_rationale": "Outlining is weak semantic signal"
+    },
+    {
+      "id": 176,
+      "query": "all customers in the technology sector",
+      "intent": "metadata",
+      "difficulty": "medium",
+      "difficulty_rationale": "No explicit operator, could be metadata filter or semantic grouping"
+    },
+    {
+      "id": 177,
+      "query": "show active projects in engineering",
+      "intent": "metadata",
+      "difficulty": "medium",
+      "difficulty_rationale": "Active could be metadata status or graph membership"
+    },
+    {
+      "id": 178,
+      "query": "find premium tier customers",
+      "intent": "metadata",
+      "difficulty": "medium",
+      "difficulty_rationale": "No operator, could be metadata category or graph tier membership"
+    },
+    {
+      "id": 179,
+      "query": "list completed tasks for this sprint",
+      "intent": "metadata",
+      "difficulty": "medium",
+      "difficulty_rationale": "Completed is weak metadata, could be temporal finished"
+    },
+    {
+      "id": 180,
+      "query": "show high priority incidents",
+      "intent": "metadata",
+      "difficulty": "medium",
+      "difficulty_rationale": "No explicit operator, could be metadata or semantic important"
+    },
+    {
+      "id": 181,
+      "query": "find senior engineers in the team",
+      "intent": "metadata",
+      "difficulty": "medium",
+      "difficulty_rationale": "Senior could be metadata level or graph hierarchy"
+    },
+    {
+      "id": 182,
+      "query": "all unpaid invoices",
+      "intent": "metadata",
+      "difficulty": "medium",
+      "difficulty_rationale": "No operator, simple category but could be semantic outstanding"
+    },
+    {
+      "id": 183,
+      "query": "show pending approvals",
+      "intent": "metadata",
+      "difficulty": "medium",
+      "difficulty_rationale": "Pending is weak metadata, could be temporal awaiting"
+    },
+    {
+      "id": 184,
+      "query": "find critical severity bugs",
+      "intent": "metadata",
+      "difficulty": "medium",
+      "difficulty_rationale": "No explicit operator, could be metadata or semantic classification"
+    },
+    {
+      "id": 185,
+      "query": "list expired licenses",
+      "intent": "metadata",
+      "difficulty": "medium",
+      "difficulty_rationale": "Expired could be metadata status or temporal past-date"
+    },
+    {
+      "id": 186,
+      "query": "show remote employees",
+      "intent": "metadata",
+      "difficulty": "medium",
+      "difficulty_rationale": "Remote is category without operator"
+    },
+    {
+      "id": 187,
+      "query": "find large orders",
+      "intent": "metadata",
+      "difficulty": "medium",
+      "difficulty_rationale": "Large is imprecise, could be metadata range or semantic interpretation"
+    },
+    {
+      "id": 188,
+      "query": "all overdue payments",
+      "intent": "metadata",
+      "difficulty": "medium",
+      "difficulty_rationale": "Overdue could be metadata status or temporal late"
+    },
+    {
+      "id": 189,
+      "query": "show active subscriptions",
+      "intent": "metadata",
+      "difficulty": "medium",
+      "difficulty_rationale": "Active is category without explicit operator"
+    },
+    {
+      "id": 190,
+      "query": "find unresolved tickets",
+      "intent": "metadata",
+      "difficulty": "medium",
+      "difficulty_rationale": "Unresolved could be metadata status or temporal pending"
+    },
+    {
+      "id": 191,
+      "query": "list recent transactions",
+      "intent": "metadata",
+      "difficulty": "medium",
+      "difficulty_rationale": "Recent is imprecise temporal or metadata timeframe"
+    },
+    {
+      "id": 192,
+      "query": "show available inventory",
+      "intent": "metadata",
+      "difficulty": "medium",
+      "difficulty_rationale": "Available is category without operator"
+    },
+    {
+      "id": 193,
+      "query": "find successful deployments",
+      "intent": "metadata",
+      "difficulty": "medium",
+      "difficulty_rationale": "Successful could be metadata status or semantic positive-outcome"
+    },
+    {
+      "id": 194,
+      "query": "all scheduled meetings",
+      "intent": "metadata",
+      "difficulty": "medium",
+      "difficulty_rationale": "Scheduled could be metadata status or temporal future"
+    },
+    {
+      "id": 195,
+      "query": "show archived documents",
+      "intent": "metadata",
+      "difficulty": "medium",
+      "difficulty_rationale": "Archived is category without explicit operator"
+    },
+    {
+      "id": 196,
+      "query": "find open positions",
+      "intent": "metadata",
+      "difficulty": "medium",
+      "difficulty_rationale": "Open could be metadata status or semantic available"
+    },
+    {
+      "id": 197,
+      "query": "list verified accounts",
+      "intent": "metadata",
+      "difficulty": "medium",
+      "difficulty_rationale": "Verified is category without operator"
+    },
+    {
+      "id": 198,
+      "query": "show failed tests",
+      "intent": "metadata",
+      "difficulty": "medium",
+      "difficulty_rationale": "Failed could be metadata status or semantic negative-outcome"
+    },
+    {
+      "id": 199,
+      "query": "find inactive users",
+      "intent": "metadata",
+      "difficulty": "medium",
+      "difficulty_rationale": "Inactive is category, could be metadata or temporal not-recent"
+    },
+    {
+      "id": 200,
+      "query": "all approved requests",
+      "intent": "metadata",
+      "difficulty": "medium",
+      "difficulty_rationale": "Approved could be metadata status or temporal completed-action"
+    },
+    {
+      "id": 201,
+      "query": "show everything associated with customer ACME",
+      "intent": "graph",
+      "difficulty": "hard",
+      "difficulty_rationale": "Could be graph network, metadata join, or semantic all-related content"
+    },
+    {
+      "id": 202,
+      "query": "find all information about project Phoenix",
+      "intent": "graph",
+      "difficulty": "hard",
+      "difficulty_rationale": "All information is vague - graph connections, semantic documents, or metadata records"
+    },
+    {
+      "id": 203,
+      "query": "what involves the authentication system",
+      "intent": "graph",
+      "difficulty": "hard",
+      "difficulty_rationale": "Involves is extremely weak - graph dependencies, semantic mentions, or metadata tags"
+    },
+    {
+      "id": 204,
+      "query": "show data for the sales team",
+      "intent": "graph",
+      "difficulty": "hard",
+      "difficulty_rationale": "Data for could be graph team structure, metadata ownership, or semantic team-related"
+    },
+    {
+      "id": 205,
+      "query": "find things related to infrastructure",
+      "intent": "graph",
+      "difficulty": "hard",
+      "difficulty_rationale": "Things related is maximally ambiguous across all intent types"
+    },
+    {
+      "id": 206,
+      "query": "what's connected with the billing module",
+      "intent": "graph",
+      "difficulty": "hard",
+      "difficulty_rationale": "Connected with is weak - graph links, semantic related, or metadata associated"
+    },
+    {
+      "id": 207,
+      "query": "show items for customer success division",
+      "intent": "graph",
+      "difficulty": "hard",
+      "difficulty_rationale": "Items for is vague - graph ownership, metadata assignment, or semantic belonging"
+    },
+    {
+      "id": 208,
+      "query": "find aspects of the cloud platform",
+      "intent": "graph",
+      "difficulty": "hard",
+      "difficulty_rationale": "Aspects of could be graph components, semantic topics, or metadata categories"
+    },
+    {
+      "id": 209,
+      "query": "what belongs to the enterprise tier",
+      "intent": "graph",
+      "difficulty": "hard",
+      "difficulty_rationale": "Belongs to could be graph membership, metadata classification, or semantic grouping"
+    },
+    {
+      "id": 210,
+      "query": "show elements in the architecture",
+      "intent": "graph",
+      "difficulty": "hard",
+      "difficulty_rationale": "Elements in is weak - graph components, metadata parts, or semantic aspects"
+    },
+    {
+      "id": 211,
+      "query": "find resources for the operations team",
+      "intent": "graph",
+      "difficulty": "hard",
+      "difficulty_rationale": "Resources for could be graph allocation, metadata ownership, or semantic relevance"
+    },
+    {
+      "id": 212,
+      "query": "what concerns the payment processing",
+      "intent": "graph",
+      "difficulty": "hard",
+      "difficulty_rationale": "Concerns could be graph involvement, semantic mentions, or metadata tags"
+    },
+    {
+      "id": 213,
+      "query": "show details about the migration",
+      "intent": "graph",
+      "difficulty": "hard",
+      "difficulty_rationale": "Details about is maximally generic across all types"
+    },
+    {
+      "id": 214,
+      "query": "what's different about version 2.0",
+      "intent": "temporal",
+      "difficulty": "hard",
+      "difficulty_rationale": "Different could be temporal changes, semantic comparison, or metadata feature list"
+    },
+    {
+      "id": 215,
+      "query": "show variations in the data",
+      "intent": "temporal",
+      "difficulty": "hard",
+      "difficulty_rationale": "Variations could be temporal fluctuations, metadata diversity, or semantic differences"
+    },
+    {
+      "id": 216,
+      "query": "compare these two approaches",
+      "intent": "temporal",
+      "difficulty": "hard",
+      "difficulty_rationale": "Compare could be temporal before/after, semantic similarity, or metadata side-by-side"
+    },
+    {
+      "id": 217,
+      "query": "what differs between old and new",
+      "intent": "temporal",
+      "difficulty": "hard",
+      "difficulty_rationale": "Old/new could be temporal evolution or semantic comparison without time context"
+    },
+    {
+      "id": 218,
+      "query": "show changes to the system",
+      "intent": "temporal",
+      "difficulty": "hard",
+      "difficulty_rationale": "Changes lacks time context - temporal audit trail or metadata modification list"
+    },
+    {
+      "id": 219,
+      "query": "find updates",
+      "intent": "temporal",
+      "difficulty": "hard",
+      "difficulty_rationale": "Updates is minimal context - temporal changes or metadata version category"
+    },
+    {
+      "id": 220,
+      "query": "what evolved",
+      "intent": "temporal",
+      "difficulty": "hard",
+      "difficulty_rationale": "Evolved lacks subject and time - temporal progression or semantic development"
+    },
+    {
+      "id": 221,
+      "query": "show modifications",
+      "intent": "temporal",
+      "difficulty": "hard",
+      "difficulty_rationale": "Modifications lacks context - temporal audit or metadata change category"
+    },
+    {
+      "id": 222,
+      "query": "compare metrics",
+      "intent": "temporal",
+      "difficulty": "hard",
+      "difficulty_rationale": "Compare metrics could be temporal trend or metadata numerical comparison"
+    },
+    {
+      "id": 223,
+      "query": "what shifted",
+      "intent": "temporal",
+      "difficulty": "hard",
+      "difficulty_rationale": "Shifted is minimal - temporal change or semantic movement"
+    },
+    {
+      "id": 224,
+      "query": "show alterations",
+      "intent": "temporal",
+      "difficulty": "hard",
+      "difficulty_rationale": "Alterations lacks context - temporal changes or metadata modification type"
+    },
+    {
+      "id": 225,
+      "query": "find transitions",
+      "intent": "temporal",
+      "difficulty": "hard",
+      "difficulty_rationale": "Transitions could be temporal state changes or graph relationship changes"
+    },
+    {
+      "id": 226,
+      "query": "what improved",
+      "intent": "temporal",
+      "difficulty": "hard",
+      "difficulty_rationale": "Improved lacks time frame - temporal progression or semantic better-quality"
+    },
+    {
+      "id": 227,
+      "query": "find relevant compliance documentation",
+      "intent": "semantic",
+      "difficulty": "hard",
+      "difficulty_rationale": "Relevant is subjective - semantic topical or metadata compliance-category"
+    },
+    {
+      "id": 228,
+      "query": "show related information",
+      "intent": "semantic",
+      "difficulty": "hard",
+      "difficulty_rationale": "Related information is maximally generic across all types"
+    },
+    {
+      "id": 229,
+      "query": "find similar content",
+      "intent": "semantic",
+      "difficulty": "hard",
+      "difficulty_rationale": "Similar lacks context - semantic similarity or metadata same-category"
+    },
+    {
+      "id": 230,
+      "query": "what matches our needs",
+      "intent": "semantic",
+      "difficulty": "hard",
+      "difficulty_rationale": "Matches needs is subjective - semantic relevance or metadata requirements-filter"
+    },
+    {
+      "id": 231,
+      "query": "show applicable resources",
+      "intent": "semantic",
+      "difficulty": "hard",
+      "difficulty_rationale": "Applicable is contextual - semantic relevance or metadata applicable-type"
+    },
+    {
+      "id": 232,
+      "query": "find appropriate materials",
+      "intent": "semantic",
+      "difficulty": "hard",
+      "difficulty_rationale": "Appropriate is subjective - semantic fit or metadata suitable-category"
+    },
+    {
+      "id": 233,
+      "query": "what fits the criteria",
+      "intent": "semantic",
+      "difficulty": "hard",
+      "difficulty_rationale": "Fits criteria could be semantic match or metadata filter match"
+    },
+    {
+      "id": 234,
+      "query": "show relevant results",
+      "intent": "semantic",
+      "difficulty": "hard",
+      "difficulty_rationale": "Relevant is maximally generic - semantic, graph, or metadata all apply"
+    },
+    {
+      "id": 235,
+      "query": "find matching documents",
+      "intent": "semantic",
+      "difficulty": "hard",
+      "difficulty_rationale": "Matching lacks context - semantic similar or metadata criteria-match"
+    },
+    {
+      "id": 236,
+      "query": "what corresponds",
+      "intent": "semantic",
+      "difficulty": "hard",
+      "difficulty_rationale": "Corresponds is minimal - semantic match or graph relationship"
+    },
+    {
+      "id": 237,
+      "query": "show aligned content",
+      "intent": "semantic",
+      "difficulty": "hard",
+      "difficulty_rationale": "Aligned is vague - semantic topical or metadata same-direction"
+    },
+    {
+      "id": 238,
+      "query": "find pertinent information",
+      "intent": "semantic",
+      "difficulty": "hard",
+      "difficulty_rationale": "Pertinent is subjective - semantic relevance or metadata category"
+    },
+    {
+      "id": 239,
+      "query": "show high value items",
+      "intent": "metadata",
+      "difficulty": "hard",
+      "difficulty_rationale": "High value is imprecise - metadata value > X or semantic important content"
+    },
+    {
+      "id": 240,
+      "query": "find important records",
+      "intent": "metadata",
+      "difficulty": "hard",
+      "difficulty_rationale": "Important is subjective - metadata priority or semantic significant"
+    },
+    {
+      "id": 241,
+      "query": "show main customers",
+      "intent": "metadata",
+      "difficulty": "hard",
+      "difficulty_rationale": "Main is imprecise - metadata top-tier or semantic key-accounts"
+    },
+    {
+      "id": 242,
+      "query": "find key projects",
+      "intent": "metadata",
+      "difficulty": "hard",
+      "difficulty_rationale": "Key is subjective - metadata priority or semantic strategic"
+    },
+    {
+      "id": 243,
+      "query": "show significant changes",
+      "intent": "metadata",
+      "difficulty": "hard",
+      "difficulty_rationale": "Significant could be metadata magnitude or temporal important-changes"
+    },
+    {
+      "id": 244,
+      "query": "find major incidents",
+      "intent": "metadata",
+      "difficulty": "hard",
+      "difficulty_rationale": "Major is imprecise - metadata severity or semantic impact-level"
+    },
+    {
+      "id": 245,
+      "query": "show primary resources",
+      "intent": "metadata",
+      "difficulty": "hard",
+      "difficulty_rationale": "Primary could be metadata main-category or graph top-hierarchy"
+    },
+    {
+      "id": 246,
+      "query": "find top performers",
+      "intent": "metadata",
+      "difficulty": "hard",
+      "difficulty_rationale": "Top is imprecise - metadata ranking or semantic high-quality"
+    },
+    {
+      "id": 247,
+      "query": "show critical systems",
+      "intent": "metadata",
+      "difficulty": "hard",
+      "difficulty_rationale": "Critical could be metadata importance or semantic essential"
+    },
+    {
+      "id": 248,
+      "query": "find essential documents",
+      "intent": "metadata",
+      "difficulty": "hard",
+      "difficulty_rationale": "Essential is subjective - metadata required or semantic must-have"
+    },
+    {
+      "id": 249,
+      "query": "show best practices",
+      "intent": "metadata",
+      "difficulty": "hard",
+      "difficulty_rationale": "Best could be metadata recommended-category or semantic high-quality"
+    },
+    {
+      "id": 250,
+      "query": "find notable achievements",
+      "intent": "metadata",
+      "difficulty": "hard",
+      "difficulty_rationale": "Notable is subjective - metadata milestone-type or semantic significant"
+    }
+  ]
+}
