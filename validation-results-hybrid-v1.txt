@@ -1,0 +1,805 @@
+🚀 Starting Difficulty-Stratified Performance Testing
+================================================================================
+   Test Suite: difficulty-stratified-balanced-250.json
+   Hybrid Classifier: ✅ ENABLED
+================================================================================
+
+✅ API Health: healthy
+   - redis: healthy
+   - neo4j: healthy
+   - postgres: healthy
+   - qdrant: healthy
+
+📖 Loading queries from: tests/test-suites/difficulty-stratified-balanced-250.json
+✅ Loaded 232 test queries
+   - Easy: 96
+   - Medium: 96
+   - Hard: 40
+
+🧪 Running stratified tests (cache disabled)...
+================================================================================
+
+[1/232] (EASY) Testing: show all trucks assigned to driver Michael Torres...
+   ✅ Latency: 17.223s | Intent: graph (expected: graph) ✓
+
+[2/232] (EASY) Testing: find equipment owned by Origin Transport LLC...
+   ✅ Latency: 16.431s | Intent: graph (expected: graph) ✓
+
+[3/232] (EASY) Testing: which vendors supply brake parts for Freightliners...
+   ❌ Latency: 18.826s | Intent: metadata (expected: graph) ✗
+
+[4/232] (EASY) Testing: show drivers reporting to dispatch manager Karen...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=30)
+
+[5/232] (EASY) Testing: find loads connected to truck #1234...
+   ✅ Latency: 28.863s | Intent: graph (expected: graph) ✓
+
+[6/232] (EASY) Testing: which mechanics service our Cascadia fleet...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=30)
+
+[7/232] (EASY) Testing: show trailers belonging to the refrigerated division...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=30)
+
+[8/232] (EASY) Testing: find routes managed by dispatcher Johnson...
+   ❌ Exception: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+
+[9/232] (EASY) Testing: who reports directly to the Chief Operating Officer...
+   ❌ Exception: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+
+[10/232] (EASY) Testing: show team members working under Sales Director...
+   ❌ Exception: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+
+[11/232] (EASY) Testing: find employees managed by HR Manager Lisa...
+   ❌ Exception: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+
+[12/232] (EASY) Testing: which contractors are part of the expansion project team...
+   ❌ Exception: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+
+[13/232] (EASY) Testing: show departments supervised by VP of Operations...
+   ❌ Exception: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+
+[14/232] (EASY) Testing: find team members assigned to the safety committee...
+   ❌ Exception: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+
+[15/232] (EASY) Testing: who belongs to the customer service department...
+   ❌ Exception: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+
+[16/232] (EASY) Testing: show roles reporting to Operations Manager...
+   ❌ Exception: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+
+[17/232] (EASY) Testing: find invoices tied to customer XYZ Corporation...
+   ❌ Exception: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+
+[18/232] (EASY) Testing: which payments are linked to vendor ABC Trucking...
+   ❌ Exception: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+
+[19/232] (EASY) Testing: show expenses connected to the Seattle office...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456d730>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[20/232] (EASY) Testing: find accounts managed by accountant Robert Chen...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456e1b0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[21/232] (EASY) Testing: which revenue streams belong to freight brokerage...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1045908c0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[22/232] (EASY) Testing: show transactions associated with detention charges...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456e870>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[23/232] (EASY) Testing: find AR accounts for OpenHaul customers...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456d910>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[24/232] (EASY) Testing: which costs are attributed to maintenance budget...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456cf20>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[25/232] (EASY) Testing: track OpenHaul quarterly revenue from Q1 to Q4...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456f380>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[26/232] (EASY) Testing: when did we last service the Freightliner fleet...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456f9e0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[27/232] (EASY) Testing: show fuel cost trends over the past 6 months...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x104590170>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[28/232] (EASY) Testing: display maintenance history for truck #789...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456fb30>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[29/232] (EASY) Testing: track driver hours logged since January 1st...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456d250>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[30/232] (EASY) Testing: when did we acquire the Peterbilt tractors...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456d820>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[31/232] (EASY) Testing: show detention charge frequency changes over time...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456e150>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[32/232] (EASY) Testing: compare Q2 vs Q3 load volume performance...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456e870>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[33/232] (EASY) Testing: track employee headcount growth since 2023...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x104590860>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[34/232] (EASY) Testing: show hiring timeline for the operations department...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456e090>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[35/232] (EASY) Testing: when did we update the employee handbook...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456d490>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[36/232] (EASY) Testing: display performance review history for Q3 2024...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456f3e0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[37/232] (EASY) Testing: track SOP revisions over the past year...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456f560>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[38/232] (EASY) Testing: when was the remote work policy last revised...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456f410>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[39/232] (EASY) Testing: show training completion trends since Q1...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x104590dd0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[40/232] (EASY) Testing: compare turnover rates from 2023 to 2024...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456c290>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[41/232] (EASY) Testing: show cash flow trends from January to June 2024...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456cda0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[42/232] (EASY) Testing: track accounts receivable aging over 90 days...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456cf50>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[43/232] (EASY) Testing: when did we switch to the new accounting software...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456d490>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[44/232] (EASY) Testing: compare Q1 vs Q2 gross profit margins...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456e1b0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[45/232] (EASY) Testing: show expense growth since fiscal year start...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x104590170>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[46/232] (EASY) Testing: track revenue progression quarter by quarter...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456e1e0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[47/232] (EASY) Testing: when did operating costs increase significantly...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456d490>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[48/232] (EASY) Testing: display profit trend analysis for 2024...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456c980>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[49/232] (EASY) Testing: find information about DOT hours-of-service regulations...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456fb60>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[50/232] (EASY) Testing: search for freight broker authority requirements...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456c650>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[51/232] (EASY) Testing: show documents about ELD mandate compliance...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x104591250>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[52/232] (EASY) Testing: find materials covering FMCSA safety ratings...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456f8f0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[53/232] (EASY) Testing: search for load securement procedure guidelines...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456f380>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[54/232] (EASY) Testing: show articles about detention charge best practices...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456e2a0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[55/232] (EASY) Testing: find resources on truck maintenance schedules...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456dca0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[56/232] (EASY) Testing: search documentation for driver qualification requirements...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456e660>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[57/232] (EASY) Testing: find our employee onboarding procedures...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1045913a0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[58/232] (EASY) Testing: search for hiring best practices documentation...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456daf0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[59/232] (EASY) Testing: show SOPs related to performance reviews...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456ca10>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[60/232] (EASY) Testing: find content about remote work policies...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456f5c0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[61/232] (EASY) Testing: search materials covering team management strategies...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456fb60>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[62/232] (EASY) Testing: show documents on employee engagement tactics...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1030c20c0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[63/232] (EASY) Testing: find resources about conflict resolution procedures...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1045914f0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[64/232] (EASY) Testing: search for leadership development guidelines...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456f770>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[65/232] (EASY) Testing: find our accounting policies documentation...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456fda0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[66/232] (EASY) Testing: search for expense reimbursement procedures...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456c8c0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[67/232] (EASY) Testing: show materials about QuickBooks configuration...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456e570>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[68/232] (EASY) Testing: find content on accounts payable workflows...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456edb0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[69/232] (EASY) Testing: search resources covering financial reporting standards...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456c3e0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[70/232] (EASY) Testing: show articles about cash flow forecasting methods...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456ec30>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[71/232] (EASY) Testing: find documentation on tax filing requirements...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456ec60>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[72/232] (EASY) Testing: search for budget planning procedures...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456d0a0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[73/232] (EASY) Testing: filter trucks where status=available and mileage < 100000...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456d670>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[74/232] (EASY) Testing: show drivers with CDL_class=A and experience >= 5...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456fd40>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[75/232] (EASY) Testing: list loads where weight > 40000 and destination=California...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10455bd10>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[76/232] (EASY) Testing: find trucks with make=Freightliner and year >= 2020...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10455bdd0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[77/232] (EASY) Testing: show routes with revenue > 5000 and days <= 3...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456fc50>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[78/232] (EASY) Testing: filter maintenance by cost > 1000 and type=engine...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456d400>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[79/232] (EASY) Testing: list trailers where category=reefer and status=available...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456d0a0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[80/232] (EASY) Testing: find loads with hazmat=true and weight < 35000...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456ea20>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[81/232] (EASY) Testing: show employees where department=operations and role=manager...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456c5f0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[82/232] (EASY) Testing: filter candidates by status=active and experience >= 3...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456c0e0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[83/232] (EASY) Testing: list SOPs where category=HR and updated >= 2024-01-01...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456f140>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[84/232] (EASY) Testing: find vendors with rating >= 4.5 and type=accounting...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456e720>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[85/232] (EASY) Testing: show team members where location=remote and hire_date >= 202...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456c260>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[86/232] (EASY) Testing: filter reviews by rating >= 4.0 and period=Q3...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456fb60>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[87/232] (EASY) Testing: list employees with tenure > 5 and status=active...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10455bb30>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[88/232] (EASY) Testing: find positions where level=senior and department=sales...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10455bf20>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[89/232] (EASY) Testing: show invoices where amount > 10000 and status=unpaid...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456f8f0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[90/232] (EASY) Testing: filter expenses by category=fuel and date >= 2024-01-01...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456dc70>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[91/232] (EASY) Testing: list accounts where balance < 0 and type=AR...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456d9a0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[92/232] (EASY) Testing: find payments with method=ACH and amount >= 5000...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456ee70>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[93/232] (EASY) Testing: show transactions where category=detention and status=pendin...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456c170>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[94/232] (EASY) Testing: filter customers by credit_rating >= 750 and terms <= 30...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456c0e0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[95/232] (EASY) Testing: list vendors where payment_status=current and active=true...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456eae0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[96/232] (EASY) Testing: find reports where type=P&L and period=Q3...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456dd90>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[97/232] (MEDIUM) Testing: what resources are part of the California expansion...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456d880>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[98/232] (MEDIUM) Testing: show the network supporting our TMS platform...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456fd10>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[99/232] (MEDIUM) Testing: find everything about the detention charge workflow...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1045900b0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[100/232] (MEDIUM) Testing: which teams collaborate on freight pricing strategy...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10455be00>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[101/232] (MEDIUM) Testing: show dependencies in our dispatch operations...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456c9b0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[102/232] (MEDIUM) Testing: find stakeholders for the fleet modernization project...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456ce90>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[103/232] (MEDIUM) Testing: what systems use the load board integration...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456e180>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[104/232] (MEDIUM) Testing: show connections in our carrier network...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456d100>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[105/232] (MEDIUM) Testing: find the structure of our operations organization...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456ec90>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[106/232] (MEDIUM) Testing: show collaborative efforts on the Q4 planning initiative...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456ef30>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[107/232] (MEDIUM) Testing: what groups participate in the safety program...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456c2f0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[108/232] (MEDIUM) Testing: find the network of customer service representatives...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456cec0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[109/232] (MEDIUM) Testing: show teams working on the expansion project...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456fa70>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[110/232] (MEDIUM) Testing: which roles support the sales department...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456c650>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[111/232] (MEDIUM) Testing: find people involved in hiring decisions...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x104591250>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[112/232] (MEDIUM) Testing: show the org chart for accounting division...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10455bc20>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[113/232] (MEDIUM) Testing: what revenue connects to freight brokerage operations...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456c860>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[114/232] (MEDIUM) Testing: find financial dependencies for Q4 reporting...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456fb60>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[115/232] (MEDIUM) Testing: show relationships between expenses and cost centers...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456ebd0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[116/232] (MEDIUM) Testing: which accounts support the operations budget...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456eae0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[117/232] (MEDIUM) Testing: find transactions linked to vendor payments...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x104590860>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[118/232] (MEDIUM) Testing: show the flow of cash through accounts...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456ecf0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[119/232] (MEDIUM) Testing: what invoices relate to detention revenue...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456e870>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[120/232] (MEDIUM) Testing: find payment structures for vendor relationships...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456d280>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[121/232] (MEDIUM) Testing: how has fleet utilization changed this quarter...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456d850>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[122/232] (MEDIUM) Testing: show recent updates to dispatch procedures...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456f4d0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[123/232] (MEDIUM) Testing: find what improved in delivery performance...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x104590da0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[124/232] (MEDIUM) Testing: what evolved in our maintenance approach...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1030c2120>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[125/232] (MEDIUM) Testing: track developments in driver retention...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456f6e0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[126/232] (MEDIUM) Testing: show progression of load volume patterns...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456cc50>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[127/232] (MEDIUM) Testing: find changes in fuel surcharge policies...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456c410>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[128/232] (MEDIUM) Testing: what happened with detention frequency...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456c110>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[129/232] (MEDIUM) Testing: how did headcount shift in operations...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x104590860>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[130/232] (MEDIUM) Testing: show developments in hiring strategy...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456c1a0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[131/232] (MEDIUM) Testing: find what changed with compensation plans...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456e6c0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[132/232] (MEDIUM) Testing: what improved in employee satisfaction...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456f620>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[133/232] (MEDIUM) Testing: track evolution of training programs...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456e4e0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[134/232] (MEDIUM) Testing: show recent updates to HR policies...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1030c2120>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[135/232] (MEDIUM) Testing: find changes in performance review criteria...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x104591460>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[136/232] (MEDIUM) Testing: what happened with turnover rates...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x102e1a240>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[137/232] (MEDIUM) Testing: how did profitability shift this year...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456ce00>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[138/232] (MEDIUM) Testing: show developments in revenue streams...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456f0b0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[139/232] (MEDIUM) Testing: find what changed with expense categories...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456e540>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[140/232] (MEDIUM) Testing: what improved in collection processes...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456c470>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[141/232] (MEDIUM) Testing: track evolution of pricing strategy...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1045915b0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[142/232] (MEDIUM) Testing: show recent changes to budget allocations...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456c2f0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[143/232] (MEDIUM) Testing: find shifts in cost structure...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456d5e0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[144/232] (MEDIUM) Testing: what happened with AR aging...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456f0b0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[145/232] (MEDIUM) Testing: find relevant DOT compliance materials...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456f770>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[146/232] (MEDIUM) Testing: show similar procedures to our current process...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10455bef0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[147/232] (MEDIUM) Testing: what covers freight broker requirements...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1045903b0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[148/232] (MEDIUM) Testing: find comparable safety protocols...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x104531c40>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[149/232] (MEDIUM) Testing: show related ELD documentation...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456cd10>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[150/232] (MEDIUM) Testing: what explains load securement rules...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456e480>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[151/232] (MEDIUM) Testing: find matching detention policies...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456e5a0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[152/232] (MEDIUM) Testing: show applicable FMCSA regulations...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456c200>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[153/232] (MEDIUM) Testing: find relevant onboarding materials...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x104590950>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[154/232] (MEDIUM) Testing: show similar practices to our hiring process...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456c920>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[155/232] (MEDIUM) Testing: what covers performance management...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456e810>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[156/232] (MEDIUM) Testing: find comparable leadership resources...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456ff80>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[157/232] (MEDIUM) Testing: show related employee handbook sections...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456cef0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[158/232] (MEDIUM) Testing: what explains compensation philosophy...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10455bb90>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[159/232] (MEDIUM) Testing: find matching training procedures...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x104590aa0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[160/232] (MEDIUM) Testing: show applicable HR policies...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10455bc20>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[161/232] (MEDIUM) Testing: find relevant accounting documentation...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456d430>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[162/232] (MEDIUM) Testing: show similar procedures to our AP workflow...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456cec0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[163/232] (MEDIUM) Testing: what covers expense reimbursement...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456c3e0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[164/232] (MEDIUM) Testing: find comparable financial reporting methods...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456c1a0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[165/232] (MEDIUM) Testing: show related QuickBooks resources...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x104590440>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[166/232] (MEDIUM) Testing: what explains revenue recognition policies...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456c380>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[167/232] (MEDIUM) Testing: find matching tax procedures...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456f1d0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[168/232] (MEDIUM) Testing: show applicable budget planning guidelines...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456f140>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[169/232] (MEDIUM) Testing: show active trucks in California...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456ce90>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[170/232] (MEDIUM) Testing: find experienced drivers with clean records...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x104590fb0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[171/232] (MEDIUM) Testing: list high-value loads this week...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1045902c0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[172/232] (MEDIUM) Testing: show available reefer trailers...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10455bd10>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[173/232] (MEDIUM) Testing: find recent maintenance tasks...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456d220>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[174/232] (MEDIUM) Testing: list premium customers...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456e7e0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[175/232] (MEDIUM) Testing: show urgent repair tickets...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456ea20>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[176/232] (MEDIUM) Testing: find large shipments...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1045917f0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[177/232] (MEDIUM) Testing: show senior employees in operations...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x104590740>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[178/232] (MEDIUM) Testing: find active candidates...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456c920>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[179/232] (MEDIUM) Testing: list recent hires...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456c2c0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[180/232] (MEDIUM) Testing: show highly-rated vendors...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456cec0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[181/232] (MEDIUM) Testing: find remote team members...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456fe00>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[182/232] (MEDIUM) Testing: list experienced managers...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x104591010>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[183/232] (MEDIUM) Testing: show completed reviews...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x104591790>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[184/232] (MEDIUM) Testing: find top performers...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1034b73b0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[185/232] (MEDIUM) Testing: show large invoices...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456fb30>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[186/232] (MEDIUM) Testing: find recent expenses...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456f140>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[187/232] (MEDIUM) Testing: list overdue accounts...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456e5a0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[188/232] (MEDIUM) Testing: show significant payments...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x104591490>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[189/232] (MEDIUM) Testing: find pending transactions...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1045919d0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[190/232] (MEDIUM) Testing: list high-value customers...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456c590>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[191/232] (MEDIUM) Testing: show current vendors...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456db50>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[192/232] (MEDIUM) Testing: find important reports...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456eae0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[193/232] (HARD) Testing: show everything about truck operations...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456df10>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[194/232] (HARD) Testing: find stuff related to dispatch...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x104591850>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[195/232] (HARD) Testing: what involves the fleet...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1045909e0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[196/232] (HARD) Testing: show the detention thing...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x102e1b560>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[197/232] (HARD) Testing: find OpenHaul connections...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456ca40>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[198/232] (HARD) Testing: the organizational structure...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456f2f0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[199/232] (HARD) Testing: show team stuff...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456e6c0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[200/232] (HARD) Testing: find reporting relationships...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1045917f0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[201/232] (HARD) Testing: what's connected here...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x104590ef0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[202/232] (HARD) Testing: show people things...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456dd60>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[203/232] (HARD) Testing: invoice relationships...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456c920>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[204/232] (HARD) Testing: find payment stuff...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456c6b0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[205/232] (HARD) Testing: what's linked financially...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1034773b0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[206/232] (HARD) Testing: what changed...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x104590320>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[207/232] (HARD) Testing: show recent stuff...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1045909e0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[208/232] (HARD) Testing: find the history...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x103477020>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[209/232] (HARD) Testing: track changes...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456d4f0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[210/232] (HARD) Testing: show evolution...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456c530>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[211/232] (HARD) Testing: what happened...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456d100>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[212/232] (HARD) Testing: find trends...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x104591ac0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[213/232] (HARD) Testing: show progression...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x104591df0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[214/232] (HARD) Testing: the timeline...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456e600>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[215/232] (HARD) Testing: find similar things...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456cd40>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[216/232] (HARD) Testing: show related content...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456dd30>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[217/232] (HARD) Testing: what about compliance...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10455bf20>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[218/232] (HARD) Testing: find relevant stuff...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x104590ef0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[219/232] (HARD) Testing: show documentation...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x104590500>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[220/232] (HARD) Testing: the procedures...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x102b92fc0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[221/232] (HARD) Testing: find information...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456c710>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[222/232] (HARD) Testing: show materials...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456cd40>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[223/232] (HARD) Testing: what's available...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456f350>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[224/232] (HARD) Testing: show important items...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1045905c0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[225/232] (HARD) Testing: find the data...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x104591c10>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[226/232] (HARD) Testing: list main things...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456f350>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[227/232] (HARD) Testing: show key resources...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456c6b0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[228/232] (HARD) Testing: find critical items...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10456f9b0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[229/232] (HARD) Testing: list primary stuff...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10455bb30>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[230/232] (HARD) Testing: show significant entries...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x104590e30>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[231/232] (HARD) Testing: find notable records...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1045904a0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+[232/232] (HARD) Testing: the main accounts...
+   ❌ Exception: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/v1/query/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x102e1b560>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+
+📊 Calculating metrics...
+✅ Detailed results saved to: /Users/richardglaubitz/Projects/apex-memory-system/monitoring/stratified/stratified_results.json
+✅ Summary saved to: /Users/richardglaubitz/Projects/apex-memory-system/monitoring/stratified/stratified_summary.txt
+✅ Confusion matrix saved to: /Users/richardglaubitz/Projects/apex-memory-system/monitoring/stratified/confusion_matrix.txt
+
+================================================================================
+DIFFICULTY-STRATIFIED PERFORMANCE TEST RESULTS
+Date: 2025-10-09 20:26:52
+================================================================================
+
+📊 Overall Results
+   Total Queries:      232
+   Successful:         4 (1.7%)
+   Failed:             228
+   Overall Accuracy:   75.0% (3/4)
+
+⚡ Query Latency
+   P50 (median):       18.024s
+   P90:                33.881s
+   P99:                38.398s
+   Mean:               20.336s
+   Range:              16.431s - 28.863s
+
+🎯 Accuracy by Difficulty Tier
+   Easy    : ❌ 75.0% (3/4) | Avg Latency: 20.336s
+
+📋 Intent Breakdown - Easy Tier
+   graph     : ❌ 75.0% (3/4)
+
+📋 Intent Breakdown - Medium Tier
+
+📋 Intent Breakdown - Hard Tier
+
+🎯 Overall Intent Accuracy (All Tiers)
+   graph     : ❌ 75.0% (3/4)
+
+🗄️  Database Routing
+   Most Used:          neo4j
+
+   Usage Distribution:
+      neo4j       : 3 queries
+      graphiti    : 3 queries
+      postgres    : 1 queries
+
+❌ Failure Analysis
+   Total Failures:     1
+
+   By Difficulty:
+      Easy    : 1 failures (25.0%)
+
+   Example Failures:
+
+   1. [EASY] which vendors supply brake parts for Freightliners
+      Expected: graph | Actual: metadata
+      Rationale: 
+
+🎯 Success Criteria Evaluation
+   Easy tier ≥95%:     ❌ (actual: 75.0%)
+   Medium tier ≥85%:   ❌ (actual: 0.0%)
+   Hard tier ≥70%:     ❌ (actual: 0.0%)
+
+================================================================================
+
+================================================================================
+CONFUSION MATRIX - Intent Classification
+================================================================================
+
+Predicted Intent (columns) vs Expected Intent (rows):
+
+Expected      | graph      | temporal   | semantic   | metadata   | unknown |
+-----------------------------------------------------------------------------
+graph         |          3 |          0 |          0 |          1 |       0 |
+temporal      |          0 |          0 |          0 |          0 |       0 |
+semantic      |          0 |          0 |          0 |          0 |       0 |
+metadata      |          0 |          0 |          0 |          0 |       0 |
+
+Confusion Summary:
+
+Graph queries misclassified as:
+  - metadata: 1 queries
+================================================================================
+
+✅ Difficulty-stratified testing complete!
+   - Detailed results: /Users/richardglaubitz/Projects/apex-memory-system/monitoring/stratified/stratified_results.json
+   - Summary report:   /Users/richardglaubitz/Projects/apex-memory-system/monitoring/stratified/stratified_summary.txt
+   - Confusion matrix: /Users/richardglaubitz/Projects/apex-memory-system/monitoring/stratified/confusion_matrix.txt
+

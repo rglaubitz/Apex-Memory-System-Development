@@ -1,0 +1,152 @@
+{
+  "metadata": {
+    "version": "quick-test-v1",
+    "total_queries": 20,
+    "difficulty_tiers": {
+      "easy": 20
+    },
+    "purpose": "Quick hybrid router validation (20 queries)"
+  },
+  "queries": [
+    {
+      "query": "show all trucks assigned to driver Michael Torres",
+      "intent": "graph",
+      "difficulty": "easy",
+      "domain": "freight",
+      "rationale": "Explicit 'assigned to' relationship keyword"
+    },
+    {
+      "query": "find equipment owned by Origin Transport LLC",
+      "intent": "graph",
+      "difficulty": "easy",
+      "domain": "freight",
+      "rationale": "Clear 'owned by' ownership relationship"
+    },
+    {
+      "query": "which vendors supply brake parts for Freightliners",
+      "intent": "graph",
+      "difficulty": "easy",
+      "domain": "freight",
+      "rationale": "Direct 'supply' dependency relationship"
+    },
+    {
+      "query": "show drivers reporting to dispatch manager Karen",
+      "intent": "graph",
+      "difficulty": "easy",
+      "domain": "freight",
+      "rationale": "Explicit 'reporting to' organizational relationship"
+    },
+    {
+      "query": "find loads connected to truck #1234",
+      "intent": "graph",
+      "difficulty": "easy",
+      "domain": "freight",
+      "rationale": "Clear 'connected to' assignment relationship"
+    },
+    {
+      "query": "which mechanics service our Cascadia fleet",
+      "intent": "graph",
+      "difficulty": "easy",
+      "domain": "freight",
+      "rationale": "Direct 'service' relationship"
+    },
+    {
+      "query": "show trailers belonging to the refrigerated division",
+      "intent": "graph",
+      "difficulty": "easy",
+      "domain": "freight",
+      "rationale": "Explicit 'belonging to' ownership"
+    },
+    {
+      "query": "find routes managed by dispatcher Johnson",
+      "intent": "graph",
+      "difficulty": "easy",
+      "domain": "freight",
+      "rationale": "Clear 'managed by' relationship"
+    },
+    {
+      "query": "who reports directly to the Chief Operating Officer",
+      "intent": "graph",
+      "difficulty": "easy",
+      "domain": "smb",
+      "rationale": "Explicit organizational hierarchy 'reports to'"
+    },
+    {
+      "query": "show team members working under Sales Director",
+      "intent": "graph",
+      "difficulty": "easy",
+      "domain": "smb",
+      "rationale": "Clear 'working under' team relationship"
+    },
+    {
+      "query": "find employees managed by HR Manager Lisa",
+      "intent": "graph",
+      "difficulty": "easy",
+      "domain": "smb",
+      "rationale": "Direct 'managed by' organizational relationship"
+    },
+    {
+      "query": "which contractors are part of the expansion project team",
+      "intent": "graph",
+      "difficulty": "easy",
+      "domain": "smb",
+      "rationale": "Explicit 'part of' membership relationship"
+    },
+    {
+      "query": "show departments supervised by VP of Operations",
+      "intent": "graph",
+      "difficulty": "easy",
+      "domain": "smb",
+      "rationale": "Clear 'supervised by' organizational relationship"
+    },
+    {
+      "query": "find team members assigned to the safety committee",
+      "intent": "graph",
+      "difficulty": "easy",
+      "domain": "smb",
+      "rationale": "Direct 'assigned to' membership"
+    },
+    {
+      "query": "who belongs to the customer service department",
+      "intent": "graph",
+      "difficulty": "easy",
+      "domain": "smb",
+      "rationale": "Explicit 'belongs to' departmental relationship"
+    },
+    {
+      "query": "show roles reporting to Operations Manager",
+      "intent": "graph",
+      "difficulty": "easy",
+      "domain": "smb",
+      "rationale": "Clear 'reporting to' organizational hierarchy"
+    },
+    {
+      "query": "find invoices tied to customer XYZ Corporation",
+      "intent": "graph",
+      "difficulty": "easy",
+      "domain": "financial",
+      "rationale": "Explicit 'tied to' financial relationship"
+    },
+    {
+      "query": "which payments are linked to vendor ABC Trucking",
+      "intent": "graph",
+      "difficulty": "easy",
+      "domain": "financial",
+      "rationale": "Clear 'linked to' payment relationship"
+    },
+    {
+      "query": "show expenses connected to the Seattle office",
+      "intent": "graph",
+      "difficulty": "easy",
+      "domain": "financial",
+      "rationale": "Direct 'connected to' cost center relationship"
+    },
+    {
+      "query": "find accounts managed by accountant Robert Chen",
+      "intent": "graph",
+      "difficulty": "easy",
+      "domain": "financial",
+      "rationale": "Explicit 'managed by' ownership"
+    }
+  ]
+}

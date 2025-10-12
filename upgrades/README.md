@@ -21,9 +21,8 @@ upgrades/
 │   └── IMPROVEMENT-PLAN.md  # Comprehensive 8-week plan
 ├── planned/               # Planned upgrades (research phase)
 │   ├── README.md         # Planned upgrades index
-│   ├── ingestion-pipeline-v2/      # 📝 Research
-│   ├── temporal-intelligence-enhancement/  # 📝 Research
-│   └── multi-modal-rag/           # 📝 Research
+│   ├── temporal-implementation/    # 📝 Planning Complete
+│   └── api-connections/            # 📝 Planning (FrontApp integration)
 ├── completed/             # Completed upgrades (historical)
 │   ├── README.md         # Completed upgrades index
 │   ├── documentation-system/      # ✅ Oct 2025

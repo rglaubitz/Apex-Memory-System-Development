@@ -6,7 +6,11 @@ Runs 250 queries across easy/medium/hard difficulty tiers through the query rout
 and collects stratified performance metrics with confusion matrix analysis.
 
 Usage:
-    python3 scripts/difficulty_stratified_test.py
+    python3 tests/analysis/difficulty_stratified_test.py [--test-suite PATH] [--use-hybrid]
+
+Arguments:
+    --test-suite PATH    Path to test suite JSON file (default: config/difficulty-stratified-queries.json)
+    --use-hybrid         Enable hybrid classifier (keyword + embeddings cascade)
 
 Outputs:
     - stratified_results.json: Detailed results for each query
@@ -14,6 +18,7 @@ Outputs:
     - confusion_matrix.txt: Intent prediction confusion analysis
 """
 
+import argparse
 import json
 import time
 import requests
@@ -29,9 +34,6 @@ QUERY_ENDPOINT = f"{API_BASE}/api/v1/query/"
 HEALTH_ENDPOINT = f"{API_BASE}/api/v1/query/health"
 RESULTS_DIR = Path("/Users/richardglaubitz/Projects/apex-memory-system/monitoring/stratified")
 RESULTS_DIR.mkdir(parents=True, exist_ok=True)
-
-# Load stratified queries
-QUERIES_PATH = Path("/Users/richardglaubitz/Projects/apex-memory-system/config/difficulty-stratified-queries.json")
 
 
 def check_api_health() -> bool:
@@ -52,7 +54,7 @@ def check_api_health() -> bool:
         return False
 
 
-def run_query(query_data: Dict[str, Any], query_index: int, total: int) -> Dict[str, Any]:
+def run_query(query_data: Dict[str, Any], query_index: int, total: int, use_hybrid: bool = False) -> Dict[str, Any]:
     """Execute a single query and collect metrics."""
     query_text = query_data['query']
     expected_intent = query_data['intent']
@@ -63,9 +65,18 @@ def run_query(query_data: Dict[str, Any], query_index: int, total: int) -> Dict[
     start_time = time.time()
 
     try:
+        # Note: use_hybrid flag is for test reporting only.
+        # Hybrid classification must be enabled at router initialization time.
+        # To test hybrid mode, start the API with enable_hybrid_classification=True
+        payload = {
+            "query": query_text,
+            "limit": 10,
+            "use_cache": False
+        }
+
         response = requests.post(
             QUERY_ENDPOINT,
-            json={"query": query_text, "limit": 10, "use_cache": False},
+            json=payload,
             timeout=30
         )
 
@@ -81,7 +92,7 @@ def run_query(query_data: Dict[str, Any], query_index: int, total: int) -> Dict[
             print(f"   {'✅' if correct else '❌'} Latency: {latency:.3f}s | Intent: {actual_intent} (expected: {expected_intent}) {'✓' if correct else '✗'}")
 
             return {
-                "query_id": query_data['id'],
+                "query_id": query_data.get('id', f"q{query_index}"),
                 "query": query_text,
                 "expected_intent": expected_intent,
                 "actual_intent": actual_intent,
@@ -98,7 +109,7 @@ def run_query(query_data: Dict[str, Any], query_index: int, total: int) -> Dict[
         else:
             print(f"   ❌ Error: {response.status_code}")
             return {
-                "query_id": query_data['id'],
+                "query_id": query_data.get('id', f"q{query_index}"),
                 "query": query_text,
                 "expected_intent": expected_intent,
                 "difficulty": difficulty,
@@ -112,7 +123,7 @@ def run_query(query_data: Dict[str, Any], query_index: int, total: int) -> Dict[
     except Exception as e:
         print(f"   ❌ Exception: {str(e)}")
         return {
-            "query_id": query_data['id'],
+            "query_id": query_data.get('id', f"q{query_index}"),
             "query": query_text,
             "expected_intent": expected_intent,
             "difficulty": difficulty,
@@ -415,8 +426,32 @@ def format_summary(metrics: Dict[str, Any]) -> str:
 
 def main():
     """Main test execution."""
+    # Parse arguments
+    parser = argparse.ArgumentParser(
+        description='Run difficulty-stratified query router performance tests'
+    )
+    parser.add_argument(
+        '--test-suite',
+        type=str,
+        default='/Users/richardglaubitz/Projects/Apex-Memory-System-Development/tests/test-suites/difficulty-stratified-balanced-250.json',
+        help='Path to test suite JSON file (default: difficulty-stratified-balanced-250.json)'
+    )
+    parser.add_argument(
+        '--use-hybrid',
+        action='store_true',
+        help='Enable hybrid classifier (keyword + embeddings cascade)'
+    )
+
+    args = parser.parse_args()
+    queries_path = Path(args.test_suite)
+    use_hybrid = args.use_hybrid
+
     print("🚀 Starting Difficulty-Stratified Performance Testing")
     print("="*80)
+    print(f"   Test Suite: {queries_path.name}")
+    print(f"   Hybrid Classifier: {'✅ ENABLED' if use_hybrid else '❌ DISABLED (semantic only)'}")
+    print("="*80)
+    print("")
 
     # Check API health
     if not check_api_health():
@@ -426,8 +461,13 @@ def main():
     print("")
 
     # Load queries
-    print(f"📖 Loading queries from: {QUERIES_PATH}")
-    with open(QUERIES_PATH, 'r') as f:
+    print(f"📖 Loading queries from: {queries_path}")
+
+    if not queries_path.exists():
+        print(f"❌ Test suite not found: {queries_path}")
+        return
+
+    with open(queries_path, 'r') as f:
         data = json.load(f)
 
     queries = data['queries']
@@ -443,7 +483,7 @@ def main():
     # Run tests
     results = []
     for i, query_data in enumerate(queries, 1):
-        result = run_query(query_data, i, len(queries))
+        result = run_query(query_data, i, len(queries), use_hybrid=use_hybrid)
         results.append(result)
 
         # Brief pause to avoid overwhelming API
@@ -461,6 +501,8 @@ def main():
             "test_run": {
                 "timestamp": datetime.now().isoformat(),
                 "total_queries": len(queries),
+                "test_suite": str(queries_path),
+                "hybrid_classifier_enabled": use_hybrid,
                 "api_endpoint": QUERY_ENDPOINT
             },
             "results": results,

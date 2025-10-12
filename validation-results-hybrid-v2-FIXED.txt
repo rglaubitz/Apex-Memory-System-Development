@@ -1,0 +1,856 @@
+🚀 Starting Difficulty-Stratified Performance Testing
+================================================================================
+   Test Suite: difficulty-stratified-balanced-250.json
+   Hybrid Classifier: ✅ ENABLED
+================================================================================
+
+✅ API Health: healthy
+   - redis: healthy
+   - neo4j: healthy
+   - postgres: healthy
+   - qdrant: healthy
+
+📖 Loading queries from: tests/test-suites/difficulty-stratified-balanced-250.json
+✅ Loaded 232 test queries
+   - Easy: 96
+   - Medium: 96
+   - Hard: 40
+
+🧪 Running stratified tests (cache disabled)...
+================================================================================
+
+[1/232] (EASY) Testing: show all trucks assigned to driver Michael Torres...
+   ✅ Latency: 0.484s | Intent: graph (expected: graph) ✓
+
+[2/232] (EASY) Testing: find equipment owned by Origin Transport LLC...
+   ✅ Latency: 0.494s | Intent: graph (expected: graph) ✓
+
+[3/232] (EASY) Testing: which vendors supply brake parts for Freightliners...
+   ✅ Latency: 0.455s | Intent: graph (expected: graph) ✓
+
+[4/232] (EASY) Testing: show drivers reporting to dispatch manager Karen...
+   ✅ Latency: 0.405s | Intent: graph (expected: graph) ✓
+
+[5/232] (EASY) Testing: find loads connected to truck #1234...
+   ✅ Latency: 0.491s | Intent: graph (expected: graph) ✓
+
+[6/232] (EASY) Testing: which mechanics service our Cascadia fleet...
+   ✅ Latency: 0.405s | Intent: graph (expected: graph) ✓
+
+[7/232] (EASY) Testing: show trailers belonging to the refrigerated division...
+   ❌ Latency: 0.227s | Intent: metadata (expected: graph) ✗
+
+[8/232] (EASY) Testing: find routes managed by dispatcher Johnson...
+   ✅ Latency: 0.426s | Intent: graph (expected: graph) ✓
+
+[9/232] (EASY) Testing: who reports directly to the Chief Operating Officer...
+   ✅ Latency: 0.403s | Intent: graph (expected: graph) ✓
+
+[10/232] (EASY) Testing: show team members working under Sales Director...
+   ✅ Latency: 0.442s | Intent: graph (expected: graph) ✓
+
+[11/232] (EASY) Testing: find employees managed by HR Manager Lisa...
+   ✅ Latency: 0.462s | Intent: graph (expected: graph) ✓
+
+[12/232] (EASY) Testing: which contractors are part of the expansion project team...
+   ✅ Latency: 0.362s | Intent: graph (expected: graph) ✓
+
+[13/232] (EASY) Testing: show departments supervised by VP of Operations...
+   ❌ Latency: 0.186s | Intent: metadata (expected: graph) ✗
+
+[14/232] (EASY) Testing: find team members assigned to the safety committee...
+   ✅ Latency: 0.372s | Intent: graph (expected: graph) ✓
+
+[15/232] (EASY) Testing: who belongs to the customer service department...
+   ✅ Latency: 0.482s | Intent: graph (expected: graph) ✓
+
+[16/232] (EASY) Testing: show roles reporting to Operations Manager...
+   ✅ Latency: 0.572s | Intent: graph (expected: graph) ✓
+
+[17/232] (EASY) Testing: find invoices tied to customer XYZ Corporation...
+   ✅ Latency: 0.475s | Intent: graph (expected: graph) ✓
+
+[18/232] (EASY) Testing: which payments are linked to vendor ABC Trucking...
+   ✅ Latency: 0.405s | Intent: graph (expected: graph) ✓
+
+[19/232] (EASY) Testing: show expenses connected to the Seattle office...
+   ✅ Latency: 0.584s | Intent: graph (expected: graph) ✓
+
+[20/232] (EASY) Testing: find accounts managed by accountant Robert Chen...
+   ✅ Latency: 0.477s | Intent: graph (expected: graph) ✓
+
+[21/232] (EASY) Testing: which revenue streams belong to freight brokerage...
+   ✅ Latency: 0.445s | Intent: graph (expected: graph) ✓
+
+[22/232] (EASY) Testing: show transactions associated with detention charges...
+   ❌ Latency: 0.363s | Intent: temporal (expected: graph) ✗
+
+[23/232] (EASY) Testing: find AR accounts for OpenHaul customers...
+   ✅ Latency: 0.505s | Intent: graph (expected: graph) ✓
+
+[24/232] (EASY) Testing: which costs are attributed to maintenance budget...
+   ✅ Latency: 0.489s | Intent: graph (expected: graph) ✓
+
+[25/232] (EASY) Testing: track OpenHaul quarterly revenue from Q1 to Q4...
+   ✅ Latency: 0.398s | Intent: temporal (expected: temporal) ✓
+
+[26/232] (EASY) Testing: when did we last service the Freightliner fleet...
+   ✅ Latency: 0.414s | Intent: temporal (expected: temporal) ✓
+
+[27/232] (EASY) Testing: show fuel cost trends over the past 6 months...
+   ✅ Latency: 0.353s | Intent: temporal (expected: temporal) ✓
+
+[28/232] (EASY) Testing: display maintenance history for truck #789...
+   ✅ Latency: 0.506s | Intent: temporal (expected: temporal) ✓
+
+[29/232] (EASY) Testing: track driver hours logged since January 1st...
+   ✅ Latency: 0.382s | Intent: temporal (expected: temporal) ✓
+
+[30/232] (EASY) Testing: when did we acquire the Peterbilt tractors...
+   ✅ Latency: 0.463s | Intent: temporal (expected: temporal) ✓
+
+[31/232] (EASY) Testing: show detention charge frequency changes over time...
+   ✅ Latency: 0.371s | Intent: temporal (expected: temporal) ✓
+
+[32/232] (EASY) Testing: compare Q2 vs Q3 load volume performance...
+   ❌ Latency: 0.182s | Intent: semantic (expected: temporal) ✗
+
+[33/232] (EASY) Testing: track employee headcount growth since 2023...
+   ✅ Latency: 0.351s | Intent: temporal (expected: temporal) ✓
+
+[34/232] (EASY) Testing: show hiring timeline for the operations department...
+   ✅ Latency: 0.315s | Intent: temporal (expected: temporal) ✓
+
+[35/232] (EASY) Testing: when did we update the employee handbook...
+   ✅ Latency: 0.399s | Intent: temporal (expected: temporal) ✓
+
+[36/232] (EASY) Testing: display performance review history for Q3 2024...
+   ✅ Latency: 0.344s | Intent: temporal (expected: temporal) ✓
+
+[37/232] (EASY) Testing: track SOP revisions over the past year...
+   ✅ Latency: 0.581s | Intent: temporal (expected: temporal) ✓
+
+[38/232] (EASY) Testing: when was the remote work policy last revised...
+   ✅ Latency: 0.843s | Intent: temporal (expected: temporal) ✓
+
+[39/232] (EASY) Testing: show training completion trends since Q1...
+   ✅ Latency: 1.144s | Intent: temporal (expected: temporal) ✓
+
+[40/232] (EASY) Testing: compare turnover rates from 2023 to 2024...
+   ✅ Latency: 0.403s | Intent: temporal (expected: temporal) ✓
+
+[41/232] (EASY) Testing: show cash flow trends from January to June 2024...
+   ✅ Latency: 0.332s | Intent: temporal (expected: temporal) ✓
+
+[42/232] (EASY) Testing: track accounts receivable aging over 90 days...
+   ❌ Latency: 0.193s | Intent: metadata (expected: temporal) ✗
+
+[43/232] (EASY) Testing: when did we switch to the new accounting software...
+   ✅ Latency: 0.359s | Intent: temporal (expected: temporal) ✓
+
+[44/232] (EASY) Testing: compare Q1 vs Q2 gross profit margins...
+   ✅ Latency: 0.397s | Intent: temporal (expected: temporal) ✓
+
+[45/232] (EASY) Testing: show expense growth since fiscal year start...
+   ✅ Latency: 0.401s | Intent: temporal (expected: temporal) ✓
+
+[46/232] (EASY) Testing: track revenue progression quarter by quarter...
+   ✅ Latency: 0.615s | Intent: temporal (expected: temporal) ✓
+
+[47/232] (EASY) Testing: when did operating costs increase significantly...
+   ✅ Latency: 0.422s | Intent: temporal (expected: temporal) ✓
+
+[48/232] (EASY) Testing: display profit trend analysis for 2024...
+   ✅ Latency: 0.375s | Intent: temporal (expected: temporal) ✓
+
+[49/232] (EASY) Testing: find information about DOT hours-of-service regulations...
+   ✅ Latency: 0.726s | Intent: semantic (expected: semantic) ✓
+
+[50/232] (EASY) Testing: search for freight broker authority requirements...
+   ✅ Latency: 0.443s | Intent: semantic (expected: semantic) ✓
+
+[51/232] (EASY) Testing: show documents about ELD mandate compliance...
+   ✅ Latency: 0.483s | Intent: semantic (expected: semantic) ✓
+
+[52/232] (EASY) Testing: find materials covering FMCSA safety ratings...
+   ✅ Latency: 0.467s | Intent: semantic (expected: semantic) ✓
+
+[53/232] (EASY) Testing: search for load securement procedure guidelines...
+   ✅ Latency: 0.587s | Intent: semantic (expected: semantic) ✓
+
+[54/232] (EASY) Testing: show articles about detention charge best practices...
+   ✅ Latency: 0.759s | Intent: semantic (expected: semantic) ✓
+
+[55/232] (EASY) Testing: find resources on truck maintenance schedules...
+   ✅ Latency: 0.183s | Intent: semantic (expected: semantic) ✓
+
+[56/232] (EASY) Testing: search documentation for driver qualification requirements...
+   ✅ Latency: 0.620s | Intent: semantic (expected: semantic) ✓
+
+[57/232] (EASY) Testing: find our employee onboarding procedures...
+   ❌ Latency: 0.419s | Intent: temporal (expected: semantic) ✗
+
+[58/232] (EASY) Testing: search for hiring best practices documentation...
+   ✅ Latency: 0.177s | Intent: semantic (expected: semantic) ✓
+
+[59/232] (EASY) Testing: show SOPs related to performance reviews...
+   ❌ Latency: 0.566s | Intent: temporal (expected: semantic) ✗
+
+[60/232] (EASY) Testing: find content about remote work policies...
+   ✅ Latency: 0.344s | Intent: semantic (expected: semantic) ✓
+
+[61/232] (EASY) Testing: search materials covering team management strategies...
+   ✅ Latency: 0.376s | Intent: semantic (expected: semantic) ✓
+
+[62/232] (EASY) Testing: show documents on employee engagement tactics...
+   ✅ Latency: 0.276s | Intent: semantic (expected: semantic) ✓
+
+[63/232] (EASY) Testing: find resources about conflict resolution procedures...
+   ✅ Latency: 0.148s | Intent: semantic (expected: semantic) ✓
+
+[64/232] (EASY) Testing: search for leadership development guidelines...
+   ✅ Latency: 0.478s | Intent: semantic (expected: semantic) ✓
+
+[65/232] (EASY) Testing: find our accounting policies documentation...
+   ❌ Latency: 0.465s | Intent: temporal (expected: semantic) ✗
+
+[66/232] (EASY) Testing: search for expense reimbursement procedures...
+   ✅ Latency: 0.211s | Intent: semantic (expected: semantic) ✓
+
+[67/232] (EASY) Testing: show materials about QuickBooks configuration...
+   ✅ Latency: 0.382s | Intent: semantic (expected: semantic) ✓
+
+[68/232] (EASY) Testing: find content on accounts payable workflows...
+   ❌ Latency: 0.340s | Intent: graph (expected: semantic) ✗
+
+[69/232] (EASY) Testing: search resources covering financial reporting standards...
+   ✅ Latency: 0.168s | Intent: semantic (expected: semantic) ✓
+
+[70/232] (EASY) Testing: show articles about cash flow forecasting methods...
+   ✅ Latency: 0.333s | Intent: semantic (expected: semantic) ✓
+
+[71/232] (EASY) Testing: find documentation on tax filing requirements...
+   ✅ Latency: 0.221s | Intent: semantic (expected: semantic) ✓
+
+[72/232] (EASY) Testing: search for budget planning procedures...
+   ✅ Latency: 0.519s | Intent: semantic (expected: semantic) ✓
+
+[73/232] (EASY) Testing: filter trucks where status=available and mileage < 100000...
+   ✅ Latency: 0.157s | Intent: metadata (expected: metadata) ✓
+
+[74/232] (EASY) Testing: show drivers with CDL_class=A and experience >= 5...
+   ✅ Latency: 0.254s | Intent: metadata (expected: metadata) ✓
+
+[75/232] (EASY) Testing: list loads where weight > 40000 and destination=California...
+   ✅ Latency: 0.217s | Intent: metadata (expected: metadata) ✓
+
+[76/232] (EASY) Testing: find trucks with make=Freightliner and year >= 2020...
+   ✅ Latency: 0.231s | Intent: metadata (expected: metadata) ✓
+
+[77/232] (EASY) Testing: show routes with revenue > 5000 and days <= 3...
+   ✅ Latency: 0.320s | Intent: metadata (expected: metadata) ✓
+
+[78/232] (EASY) Testing: filter maintenance by cost > 1000 and type=engine...
+   ✅ Latency: 0.179s | Intent: metadata (expected: metadata) ✓
+
+[79/232] (EASY) Testing: list trailers where category=reefer and status=available...
+   ✅ Latency: 0.202s | Intent: metadata (expected: metadata) ✓
+
+[80/232] (EASY) Testing: find loads with hazmat=true and weight < 35000...
+   ✅ Latency: 0.278s | Intent: metadata (expected: metadata) ✓
+
+[81/232] (EASY) Testing: show employees where department=operations and role=manager...
+   ✅ Latency: 0.199s | Intent: metadata (expected: metadata) ✓
+
+[82/232] (EASY) Testing: filter candidates by status=active and experience >= 3...
+   ✅ Latency: 0.219s | Intent: metadata (expected: metadata) ✓
+
+[83/232] (EASY) Testing: list SOPs where category=HR and updated >= 2024-01-01...
+   ✅ Latency: 0.177s | Intent: metadata (expected: metadata) ✓
+
+[84/232] (EASY) Testing: find vendors with rating >= 4.5 and type=accounting...
+   ✅ Latency: 0.453s | Intent: metadata (expected: metadata) ✓
+
+[85/232] (EASY) Testing: show team members where location=remote and hire_date >= 202...
+   ✅ Latency: 0.279s | Intent: metadata (expected: metadata) ✓
+
+[86/232] (EASY) Testing: filter reviews by rating >= 4.0 and period=Q3...
+   ✅ Latency: 0.166s | Intent: metadata (expected: metadata) ✓
+
+[87/232] (EASY) Testing: list employees with tenure > 5 and status=active...
+   ✅ Latency: 0.148s | Intent: metadata (expected: metadata) ✓
+
+[88/232] (EASY) Testing: find positions where level=senior and department=sales...
+   ✅ Latency: 0.200s | Intent: metadata (expected: metadata) ✓
+
+[89/232] (EASY) Testing: show invoices where amount > 10000 and status=unpaid...
+   ✅ Latency: 0.228s | Intent: metadata (expected: metadata) ✓
+
+[90/232] (EASY) Testing: filter expenses by category=fuel and date >= 2024-01-01...
+   ✅ Latency: 0.232s | Intent: metadata (expected: metadata) ✓
+
+[91/232] (EASY) Testing: list accounts where balance < 0 and type=AR...
+   ✅ Latency: 0.161s | Intent: metadata (expected: metadata) ✓
+
+[92/232] (EASY) Testing: find payments with method=ACH and amount >= 5000...
+   ✅ Latency: 0.190s | Intent: metadata (expected: metadata) ✓
+
+[93/232] (EASY) Testing: show transactions where category=detention and status=pendin...
+   ✅ Latency: 0.231s | Intent: metadata (expected: metadata) ✓
+
+[94/232] (EASY) Testing: filter customers by credit_rating >= 750 and terms <= 30...
+   ✅ Latency: 0.200s | Intent: metadata (expected: metadata) ✓
+
+[95/232] (EASY) Testing: list vendors where payment_status=current and active=true...
+   ✅ Latency: 0.212s | Intent: metadata (expected: metadata) ✓
+
+[96/232] (EASY) Testing: find reports where type=P&L and period=Q3...
+   ✅ Latency: 0.194s | Intent: metadata (expected: metadata) ✓
+
+[97/232] (MEDIUM) Testing: what resources are part of the California expansion...
+   ❌ Latency: 0.159s | Intent: semantic (expected: graph) ✗
+
+[98/232] (MEDIUM) Testing: show the network supporting our TMS platform...
+   ✅ Latency: 0.575s | Intent: graph (expected: graph) ✓
+
+[99/232] (MEDIUM) Testing: find everything about the detention charge workflow...
+   ✅ Latency: 0.399s | Intent: graph (expected: graph) ✓
+
+[100/232] (MEDIUM) Testing: which teams collaborate on freight pricing strategy...
+   ❌ Latency: 0.610s | Intent: temporal (expected: graph) ✗
+
+[101/232] (MEDIUM) Testing: show dependencies in our dispatch operations...
+   ✅ Latency: 0.455s | Intent: graph (expected: graph) ✓
+
+[102/232] (MEDIUM) Testing: find stakeholders for the fleet modernization project...
+   ✅ Latency: 0.439s | Intent: graph (expected: graph) ✓
+
+[103/232] (MEDIUM) Testing: what systems use the load board integration...
+   ✅ Latency: 0.448s | Intent: graph (expected: graph) ✓
+
+[104/232] (MEDIUM) Testing: show connections in our carrier network...
+   ✅ Latency: 0.596s | Intent: graph (expected: graph) ✓
+
+[105/232] (MEDIUM) Testing: find the structure of our operations organization...
+   ✅ Latency: 0.413s | Intent: graph (expected: graph) ✓
+
+[106/232] (MEDIUM) Testing: show collaborative efforts on the Q4 planning initiative...
+   ❌ Latency: 0.225s | Intent: semantic (expected: graph) ✗
+
+[107/232] (MEDIUM) Testing: what groups participate in the safety program...
+   ✅ Latency: 0.560s | Intent: graph (expected: graph) ✓
+
+[108/232] (MEDIUM) Testing: find the network of customer service representatives...
+   ✅ Latency: 0.418s | Intent: graph (expected: graph) ✓
+
+[109/232] (MEDIUM) Testing: show teams working on the expansion project...
+   ✅ Latency: 0.424s | Intent: graph (expected: graph) ✓
+
+[110/232] (MEDIUM) Testing: which roles support the sales department...
+   ✅ Latency: 0.407s | Intent: graph (expected: graph) ✓
+
+[111/232] (MEDIUM) Testing: find people involved in hiring decisions...
+   ❌ Latency: 0.186s | Intent: metadata (expected: graph) ✗
+
+[112/232] (MEDIUM) Testing: show the org chart for accounting division...
+   ✅ Latency: 0.468s | Intent: graph (expected: graph) ✓
+
+[113/232] (MEDIUM) Testing: what revenue connects to freight brokerage operations...
+   ✅ Latency: 0.380s | Intent: graph (expected: graph) ✓
+
+[114/232] (MEDIUM) Testing: find financial dependencies for Q4 reporting...
+   ❌ Latency: 0.486s | Intent: semantic (expected: graph) ✗
+
+[115/232] (MEDIUM) Testing: show relationships between expenses and cost centers...
+   ❌ Latency: 1.633s | Intent: temporal (expected: graph) ✗
+
+[116/232] (MEDIUM) Testing: which accounts support the operations budget...
+   ❌ Latency: 0.297s | Intent: metadata (expected: graph) ✗
+
+[117/232] (MEDIUM) Testing: find transactions linked to vendor payments...
+   ✅ Latency: 0.613s | Intent: graph (expected: graph) ✓
+
+[118/232] (MEDIUM) Testing: show the flow of cash through accounts...
+   ❌ Latency: 0.420s | Intent: temporal (expected: graph) ✗
+
+[119/232] (MEDIUM) Testing: what invoices relate to detention revenue...
+   ❌ Latency: 0.206s | Intent: metadata (expected: graph) ✗
+
+[120/232] (MEDIUM) Testing: find payment structures for vendor relationships...
+   ✅ Latency: 0.457s | Intent: graph (expected: graph) ✓
+
+[121/232] (MEDIUM) Testing: how has fleet utilization changed this quarter...
+   ✅ Latency: 0.433s | Intent: temporal (expected: temporal) ✓
+
+[122/232] (MEDIUM) Testing: show recent updates to dispatch procedures...
+   ✅ Latency: 0.393s | Intent: temporal (expected: temporal) ✓
+
+[123/232] (MEDIUM) Testing: find what improved in delivery performance...
+   ✅ Latency: 0.475s | Intent: temporal (expected: temporal) ✓
+
+[124/232] (MEDIUM) Testing: what evolved in our maintenance approach...
+   ❌ Latency: 0.183s | Intent: semantic (expected: temporal) ✗
+
+[125/232] (MEDIUM) Testing: track developments in driver retention...
+   ❌ Latency: 0.211s | Intent: semantic (expected: temporal) ✗
+
+[126/232] (MEDIUM) Testing: show progression of load volume patterns...
+   ✅ Latency: 0.523s | Intent: temporal (expected: temporal) ✓
+
+[127/232] (MEDIUM) Testing: find changes in fuel surcharge policies...
+   ✅ Latency: 0.428s | Intent: temporal (expected: temporal) ✓
+
+[128/232] (MEDIUM) Testing: what happened with detention frequency...
+   ✅ Latency: 0.447s | Intent: temporal (expected: temporal) ✓
+
+[129/232] (MEDIUM) Testing: how did headcount shift in operations...
+   ✅ Latency: 0.471s | Intent: temporal (expected: temporal) ✓
+
+[130/232] (MEDIUM) Testing: show developments in hiring strategy...
+   ✅ Latency: 0.358s | Intent: temporal (expected: temporal) ✓
+
+[131/232] (MEDIUM) Testing: find what changed with compensation plans...
+   ✅ Latency: 0.415s | Intent: temporal (expected: temporal) ✓
+
+[132/232] (MEDIUM) Testing: what improved in employee satisfaction...
+   ✅ Latency: 0.527s | Intent: temporal (expected: temporal) ✓
+
+[133/232] (MEDIUM) Testing: track evolution of training programs...
+   ✅ Latency: 3.227s | Intent: temporal (expected: temporal) ✓
+
+[134/232] (MEDIUM) Testing: show recent updates to HR policies...
+   ✅ Latency: 0.364s | Intent: temporal (expected: temporal) ✓
+
+[135/232] (MEDIUM) Testing: find changes in performance review criteria...
+   ✅ Latency: 0.360s | Intent: temporal (expected: temporal) ✓
+
+[136/232] (MEDIUM) Testing: what happened with turnover rates...
+   ✅ Latency: 0.337s | Intent: temporal (expected: temporal) ✓
+
+[137/232] (MEDIUM) Testing: how did profitability shift this year...
+   ✅ Latency: 0.539s | Intent: temporal (expected: temporal) ✓
+
+[138/232] (MEDIUM) Testing: show developments in revenue streams...
+   ✅ Latency: 0.387s | Intent: temporal (expected: temporal) ✓
+
+[139/232] (MEDIUM) Testing: find what changed with expense categories...
+   ✅ Latency: 0.484s | Intent: temporal (expected: temporal) ✓
+
+[140/232] (MEDIUM) Testing: what improved in collection processes...
+   ✅ Latency: 0.384s | Intent: temporal (expected: temporal) ✓
+
+[141/232] (MEDIUM) Testing: track evolution of pricing strategy...
+   ✅ Latency: 0.445s | Intent: temporal (expected: temporal) ✓
+
+[142/232] (MEDIUM) Testing: show recent changes to budget allocations...
+   ✅ Latency: 0.471s | Intent: temporal (expected: temporal) ✓
+
+[143/232] (MEDIUM) Testing: find shifts in cost structure...
+   ✅ Latency: 0.394s | Intent: temporal (expected: temporal) ✓
+
+[144/232] (MEDIUM) Testing: what happened with AR aging...
+   ✅ Latency: 0.392s | Intent: temporal (expected: temporal) ✓
+
+[145/232] (MEDIUM) Testing: find relevant DOT compliance materials...
+   ✅ Latency: 0.229s | Intent: semantic (expected: semantic) ✓
+
+[146/232] (MEDIUM) Testing: show similar procedures to our current process...
+   ✅ Latency: 0.220s | Intent: semantic (expected: semantic) ✓
+
+[147/232] (MEDIUM) Testing: what covers freight broker requirements...
+   ❌ Latency: 0.311s | Intent: metadata (expected: semantic) ✗
+
+[148/232] (MEDIUM) Testing: find comparable safety protocols...
+   ✅ Latency: 0.432s | Intent: semantic (expected: semantic) ✓
+
+[149/232] (MEDIUM) Testing: show related ELD documentation...
+   ✅ Latency: 0.433s | Intent: semantic (expected: semantic) ✓
+
+[150/232] (MEDIUM) Testing: what explains load securement rules...
+   ✅ Latency: 0.215s | Intent: semantic (expected: semantic) ✓
+
+[151/232] (MEDIUM) Testing: find matching detention policies...
+   ✅ Latency: 0.274s | Intent: semantic (expected: semantic) ✓
+
+[152/232] (MEDIUM) Testing: show applicable FMCSA regulations...
+   ✅ Latency: 0.257s | Intent: semantic (expected: semantic) ✓
+
+[153/232] (MEDIUM) Testing: find relevant onboarding materials...
+   ✅ Latency: 0.431s | Intent: semantic (expected: semantic) ✓
+
+[154/232] (MEDIUM) Testing: show similar practices to our hiring process...
+   ✅ Latency: 0.454s | Intent: semantic (expected: semantic) ✓
+
+[155/232] (MEDIUM) Testing: what covers performance management...
+   ✅ Latency: 0.184s | Intent: semantic (expected: semantic) ✓
+
+[156/232] (MEDIUM) Testing: find comparable leadership resources...
+   ✅ Latency: 0.238s | Intent: semantic (expected: semantic) ✓
+
+[157/232] (MEDIUM) Testing: show related employee handbook sections...
+   ❌ Latency: 0.396s | Intent: metadata (expected: semantic) ✗
+
+[158/232] (MEDIUM) Testing: what explains compensation philosophy...
+   ✅ Latency: 0.205s | Intent: semantic (expected: semantic) ✓
+
+[159/232] (MEDIUM) Testing: find matching training procedures...
+   ✅ Latency: 0.418s | Intent: semantic (expected: semantic) ✓
+
+[160/232] (MEDIUM) Testing: show applicable HR policies...
+   ❌ Latency: 0.401s | Intent: temporal (expected: semantic) ✗
+
+[161/232] (MEDIUM) Testing: find relevant accounting documentation...
+   ✅ Latency: 0.494s | Intent: semantic (expected: semantic) ✓
+
+[162/232] (MEDIUM) Testing: show similar procedures to our AP workflow...
+   ❌ Latency: 0.433s | Intent: graph (expected: semantic) ✗
+
+[163/232] (MEDIUM) Testing: what covers expense reimbursement...
+   ❌ Latency: 0.368s | Intent: graph (expected: semantic) ✗
+
+[164/232] (MEDIUM) Testing: find comparable financial reporting methods...
+   ✅ Latency: 0.428s | Intent: semantic (expected: semantic) ✓
+
+[165/232] (MEDIUM) Testing: show related QuickBooks resources...
+   ✅ Latency: 0.618s | Intent: semantic (expected: semantic) ✓
+
+[166/232] (MEDIUM) Testing: what explains revenue recognition policies...
+   ❌ Latency: 0.465s | Intent: temporal (expected: semantic) ✗
+
+[167/232] (MEDIUM) Testing: find matching tax procedures...
+   ❌ Latency: 0.454s | Intent: temporal (expected: semantic) ✗
+
+[168/232] (MEDIUM) Testing: show applicable budget planning guidelines...
+   ❌ Latency: 0.238s | Intent: metadata (expected: semantic) ✗
+
+[169/232] (MEDIUM) Testing: show active trucks in California...
+   ✅ Latency: 0.222s | Intent: metadata (expected: metadata) ✓
+
+[170/232] (MEDIUM) Testing: find experienced drivers with clean records...
+   ❌ Latency: 0.298s | Intent: semantic (expected: metadata) ✗
+
+[171/232] (MEDIUM) Testing: list high-value loads this week...
+   ✅ Latency: 0.213s | Intent: metadata (expected: metadata) ✓
+
+[172/232] (MEDIUM) Testing: show available reefer trailers...
+   ✅ Latency: 0.177s | Intent: metadata (expected: metadata) ✓
+
+[173/232] (MEDIUM) Testing: find recent maintenance tasks...
+   ✅ Latency: 0.561s | Intent: metadata (expected: metadata) ✓
+
+[174/232] (MEDIUM) Testing: list premium customers...
+   ❌ Latency: 0.589s | Intent: temporal (expected: metadata) ✗
+
+[175/232] (MEDIUM) Testing: show urgent repair tickets...
+   ✅ Latency: 0.900s | Intent: metadata (expected: metadata) ✓
+
+[176/232] (MEDIUM) Testing: find large shipments...
+   ✅ Latency: 0.447s | Intent: metadata (expected: metadata) ✓
+
+[177/232] (MEDIUM) Testing: show senior employees in operations...
+   ✅ Latency: 0.276s | Intent: metadata (expected: metadata) ✓
+
+[178/232] (MEDIUM) Testing: find active candidates...
+   ✅ Latency: 0.186s | Intent: metadata (expected: metadata) ✓
+
+[179/232] (MEDIUM) Testing: list recent hires...
+   ✅ Latency: 0.212s | Intent: metadata (expected: metadata) ✓
+
+[180/232] (MEDIUM) Testing: show highly-rated vendors...
+   ✅ Latency: 0.199s | Intent: metadata (expected: metadata) ✓
+
+[181/232] (MEDIUM) Testing: find remote team members...
+   ❌ Latency: 0.403s | Intent: graph (expected: metadata) ✗
+
+[182/232] (MEDIUM) Testing: list experienced managers...
+   ✅ Latency: 0.174s | Intent: metadata (expected: metadata) ✓
+
+[183/232] (MEDIUM) Testing: show completed reviews...
+   ❌ Latency: 0.550s | Intent: graph (expected: metadata) ✗
+
+[184/232] (MEDIUM) Testing: find top performers...
+   ✅ Latency: 0.350s | Intent: metadata (expected: metadata) ✓
+
+[185/232] (MEDIUM) Testing: show large invoices...
+   ✅ Latency: 0.154s | Intent: metadata (expected: metadata) ✓
+
+[186/232] (MEDIUM) Testing: find recent expenses...
+   ✅ Latency: 0.373s | Intent: metadata (expected: metadata) ✓
+
+[187/232] (MEDIUM) Testing: list overdue accounts...
+   ✅ Latency: 0.200s | Intent: metadata (expected: metadata) ✓
+
+[188/232] (MEDIUM) Testing: show significant payments...
+   ✅ Latency: 0.206s | Intent: metadata (expected: metadata) ✓
+
+[189/232] (MEDIUM) Testing: find pending transactions...
+   ✅ Latency: 0.212s | Intent: metadata (expected: metadata) ✓
+
+[190/232] (MEDIUM) Testing: list high-value customers...
+   ❌ Latency: 0.242s | Intent: semantic (expected: metadata) ✗
+
+[191/232] (MEDIUM) Testing: show current vendors...
+   ✅ Latency: 0.162s | Intent: metadata (expected: metadata) ✓
+
+[192/232] (MEDIUM) Testing: find important reports...
+   ❌ Latency: 0.396s | Intent: semantic (expected: metadata) ✗
+
+[193/232] (HARD) Testing: show everything about truck operations...
+   ✅ Latency: 0.408s | Intent: graph (expected: graph) ✓
+
+[194/232] (HARD) Testing: find stuff related to dispatch...
+   ❌ Latency: 0.445s | Intent: semantic (expected: graph) ✗
+
+[195/232] (HARD) Testing: what involves the fleet...
+   ❌ Latency: 0.389s | Intent: temporal (expected: graph) ✗
+
+[196/232] (HARD) Testing: show the detention thing...
+   ❌ Latency: 0.494s | Intent: temporal (expected: graph) ✗
+
+[197/232] (HARD) Testing: find OpenHaul connections...
+   ✅ Latency: 0.447s | Intent: graph (expected: graph) ✓
+
+[198/232] (HARD) Testing: the organizational structure...
+   ✅ Latency: 0.347s | Intent: graph (expected: graph) ✓
+
+[199/232] (HARD) Testing: show team stuff...
+   ❌ Latency: 0.239s | Intent: metadata (expected: graph) ✗
+
+[200/232] (HARD) Testing: find reporting relationships...
+   ✅ Latency: 0.431s | Intent: graph (expected: graph) ✓
+
+[201/232] (HARD) Testing: what's connected here...
+   ✅ Latency: 0.499s | Intent: graph (expected: graph) ✓
+
+[202/232] (HARD) Testing: show people things...
+   ❌ Latency: 0.186s | Intent: semantic (expected: graph) ✗
+
+[203/232] (HARD) Testing: invoice relationships...
+   ❌ Latency: 0.219s | Intent: metadata (expected: graph) ✗
+
+[204/232] (HARD) Testing: find payment stuff...
+   ❌ Latency: 0.385s | Intent: metadata (expected: graph) ✗
+
+[205/232] (HARD) Testing: what's linked financially...
+   ✅ Latency: 0.415s | Intent: graph (expected: graph) ✓
+
+[206/232] (HARD) Testing: what changed...
+   ✅ Latency: 0.732s | Intent: temporal (expected: temporal) ✓
+
+[207/232] (HARD) Testing: show recent stuff...
+   ✅ Latency: 0.508s | Intent: temporal (expected: temporal) ✓
+
+[208/232] (HARD) Testing: find the history...
+   ✅ Latency: 0.829s | Intent: temporal (expected: temporal) ✓
+
+[209/232] (HARD) Testing: track changes...
+   ✅ Latency: 0.622s | Intent: temporal (expected: temporal) ✓
+
+[210/232] (HARD) Testing: show evolution...
+   ✅ Latency: 0.493s | Intent: temporal (expected: temporal) ✓
+
+[211/232] (HARD) Testing: what happened...
+   ✅ Latency: 0.462s | Intent: temporal (expected: temporal) ✓
+
+[212/232] (HARD) Testing: find trends...
+   ❌ Latency: 0.429s | Intent: semantic (expected: temporal) ✗
+
+[213/232] (HARD) Testing: show progression...
+   ✅ Latency: 0.431s | Intent: temporal (expected: temporal) ✓
+
+[214/232] (HARD) Testing: the timeline...
+   ✅ Latency: 0.419s | Intent: temporal (expected: temporal) ✓
+
+[215/232] (HARD) Testing: find similar things...
+   ✅ Latency: 0.261s | Intent: semantic (expected: semantic) ✓
+
+[216/232] (HARD) Testing: show related content...
+   ✅ Latency: 0.564s | Intent: semantic (expected: semantic) ✓
+
+[217/232] (HARD) Testing: what about compliance...
+   ✅ Latency: 0.211s | Intent: semantic (expected: semantic) ✓
+
+[218/232] (HARD) Testing: find relevant stuff...
+   ✅ Latency: 0.234s | Intent: semantic (expected: semantic) ✓
+
+[219/232] (HARD) Testing: show documentation...
+   ✅ Latency: 0.211s | Intent: semantic (expected: semantic) ✓
+
+[220/232] (HARD) Testing: the procedures...
+   ❌ Latency: 0.664s | Intent: graph (expected: semantic) ✗
+
+[221/232] (HARD) Testing: find information...
+   ✅ Latency: 0.187s | Intent: semantic (expected: semantic) ✓
+
+[222/232] (HARD) Testing: show materials...
+   ✅ Latency: 0.160s | Intent: semantic (expected: semantic) ✓
+
+[223/232] (HARD) Testing: what's available...
+   ❌ Latency: 0.474s | Intent: graph (expected: semantic) ✗
+
+[224/232] (HARD) Testing: show important items...
+   ✅ Latency: 0.200s | Intent: metadata (expected: metadata) ✓
+
+[225/232] (HARD) Testing: find the data...
+   ❌ Latency: 0.410s | Intent: semantic (expected: metadata) ✗
+
+[226/232] (HARD) Testing: list main things...
+   ✅ Latency: 0.288s | Intent: metadata (expected: metadata) ✓
+
+[227/232] (HARD) Testing: show key resources...
+   ❌ Latency: 0.243s | Intent: semantic (expected: metadata) ✗
+
+[228/232] (HARD) Testing: find critical items...
+   ✅ Latency: 0.454s | Intent: metadata (expected: metadata) ✓
+
+[229/232] (HARD) Testing: list primary stuff...
+   ✅ Latency: 0.164s | Intent: metadata (expected: metadata) ✓
+
+[230/232] (HARD) Testing: show significant entries...
+   ✅ Latency: 0.229s | Intent: metadata (expected: metadata) ✓
+
+[231/232] (HARD) Testing: find notable records...
+   ✅ Latency: 0.374s | Intent: metadata (expected: metadata) ✓
+
+[232/232] (HARD) Testing: the main accounts...
+   ❌ Latency: 0.524s | Intent: temporal (expected: metadata) ✗
+
+
+📊 Calculating metrics...
+✅ Detailed results saved to: /Users/richardglaubitz/Projects/apex-memory-system/monitoring/stratified/stratified_results.json
+✅ Summary saved to: /Users/richardglaubitz/Projects/apex-memory-system/monitoring/stratified/stratified_summary.txt
+✅ Confusion matrix saved to: /Users/richardglaubitz/Projects/apex-memory-system/monitoring/stratified/confusion_matrix.txt
+
+================================================================================
+DIFFICULTY-STRATIFIED PERFORMANCE TEST RESULTS
+Date: 2025-10-09 21:30:17
+================================================================================
+
+📊 Overall Results
+   Total Queries:      232
+   Successful:         232 (100.0%)
+   Failed:             0
+   Overall Accuracy:   79.7% (185/232)
+
+⚡ Query Latency
+   P50 (median):       0.397s
+   P90:                0.570s
+   P99:                1.472s
+   Mean:               0.396s
+   Range:              0.148s - 3.227s
+
+🎯 Accuracy by Difficulty Tier
+   Easy    : ⚠️ 90.6% (87/96) | Avg Latency: 0.375s
+   Medium  : ❌ 74.0% (71/96) | Avg Latency: 0.419s
+   Hard    : ❌ 67.5% (27/40) | Avg Latency: 0.392s
+
+📋 Intent Breakdown - Easy Tier
+   graph     : ⚠️ 87.5% (21/24)
+   temporal  : ⚠️ 91.7% (22/24)
+   semantic  : ⚠️ 83.3% (20/24)
+   metadata  : ✅ 100.0% (24/24)
+
+📋 Intent Breakdown - Medium Tier
+   graph     : ❌ 62.5% (15/24)
+   temporal  : ⚠️ 91.7% (22/24)
+   semantic  : ❌ 66.7% (16/24)
+   metadata  : ❌ 75.0% (18/24)
+
+📋 Intent Breakdown - Hard Tier
+   graph     : ❌ 46.2% (6/13)
+   temporal  : ⚠️ 88.9% (8/9)
+   semantic  : ❌ 77.8% (7/9)
+   metadata  : ❌ 66.7% (6/9)
+
+🎯 Overall Intent Accuracy (All Tiers)
+   graph     : ❌ 68.9% (42/61)
+   temporal  : ⚠️ 91.2% (52/57)
+   semantic  : ❌ 75.4% (43/57)
+   metadata  : ⚠️ 84.2% (48/57)
+
+🗄️  Database Routing
+   Most Used:          graphiti
+
+   Usage Distribution:
+      graphiti    : 150 queries
+      postgres    : 117 queries
+      qdrant      : 57 queries
+      neo4j       : 49 queries
+
+❌ Failure Analysis
+   Total Failures:     47
+
+   By Difficulty:
+      Easy    : 9 failures (9.4%)
+      Medium  : 25 failures (26.0%)
+      Hard    : 13 failures (32.5%)
+
+   Example Failures:
+
+   1. [EASY] show trailers belonging to the refrigerated division
+      Expected: graph | Actual: metadata
+      Rationale: 
+
+   2. [EASY] show departments supervised by VP of Operations
+      Expected: graph | Actual: metadata
+      Rationale: 
+
+   3. [EASY] show transactions associated with detention charges
+      Expected: graph | Actual: temporal
+      Rationale: 
+
+   4. [EASY] compare Q2 vs Q3 load volume performance
+      Expected: temporal | Actual: semantic
+      Rationale: 
+
+   5. [EASY] track accounts receivable aging over 90 days
+      Expected: temporal | Actual: metadata
+      Rationale: 
+
+🎯 Success Criteria Evaluation
+   Easy tier ≥95%:     ❌ (actual: 90.6%)
+   Medium tier ≥85%:   ❌ (actual: 74.0%)
+   Hard tier ≥70%:     ❌ (actual: 67.5%)
+
+================================================================================
+
+================================================================================
+CONFUSION MATRIX - Intent Classification
+================================================================================
+
+Predicted Intent (columns) vs Expected Intent (rows):
+
+Expected      | graph      | temporal   | semantic   | metadata   | unknown |
+-----------------------------------------------------------------------------
+graph         |         42 |          6 |          5 |          8 |       0 |
+temporal      |          0 |         52 |          4 |          1 |       0 |
+semantic      |          5 |          6 |         43 |          3 |       0 |
+metadata      |          2 |          2 |          5 |         48 |       0 |
+
+Confusion Summary:
+
+Graph queries misclassified as:
+  - temporal: 6 queries
+  - semantic: 5 queries
+  - metadata: 8 queries
+
+Temporal queries misclassified as:
+  - semantic: 4 queries
+  - metadata: 1 queries
+
+Semantic queries misclassified as:
+  - graph: 5 queries
+  - temporal: 6 queries
+  - metadata: 3 queries
+
+Metadata queries misclassified as:
+  - graph: 2 queries
+  - temporal: 2 queries
+  - semantic: 5 queries
+================================================================================
+
+✅ Difficulty-stratified testing complete!
+   - Detailed results: /Users/richardglaubitz/Projects/apex-memory-system/monitoring/stratified/stratified_results.json
+   - Summary report:   /Users/richardglaubitz/Projects/apex-memory-system/monitoring/stratified/stratified_summary.txt
+   - Confusion matrix: /Users/richardglaubitz/Projects/apex-memory-system/monitoring/stratified/confusion_matrix.txt
+
