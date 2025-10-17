@@ -18,70 +18,35 @@ Unlike `planned/` upgrades (research phase) and `completed/` upgrades (archived)
 
 ## Current Active Projects
 
-### 1. Query Router Improvement Plan
+### 1. Temporal Workflow Orchestration
 
-**Status:** 🚀 Active Development | **Priority:** High | **Timeline:** 8 weeks
+**Status:** 🚀 Active Development | **Priority:** High | **Timeline:** 6-8 weeks
 
-Comprehensive upgrade bringing Apex query routing to 2025 standards based on latest RAG research.
+Replace custom saga pattern with Temporal.io workflow orchestration for durable, reliable distributed transaction management.
 
 **Expected Gains:**
-- +21-28 point relevance improvement (Microsoft benchmarks)
-- 99% precision on relationship queries (GraphRAG)
-- 90ms faster intent classification (Semantic Router)
-- 15-30% accuracy improvement (adaptive learning)
-- 90%+ cache hit rate (semantic caching)
+- 99.9% workflow reliability (Temporal SLA)
+- Automatic retries with exponential backoff
+- Complete workflow visibility in Temporal UI
+- Pause/resume/cancel long-running operations
+- Zero custom compensation logic (built-in)
 
 **Research Foundation:**
-- Semantic Router - 10ms intent classification
-- Query Rewriting - Microsoft +21 point improvement
-- Agentic RAG 2025 - Latest paradigm shift
-- Adaptive Routing - Learned weights
-- GraphRAG - 99% precision hybrid search
+- [Temporal.io Python SDK](https://docs.temporal.io/develop/python) - Official documentation
+- [Temporal Architecture](https://docs.temporal.io/concepts) - Core concepts
+- [ARCHITECTURE-ANALYSIS-2025.md](../../ARCHITECTURE-ANALYSIS-2025.md) - Analysis of workflow orchestration benefits
 
 **Implementation Phases:**
-1. Week 1-2: Foundation (semantic classification, query rewriting, analytics)
-2. Week 3-4: Intelligent routing (adaptive weights, GraphRAG, semantic caching)
-3. Week 5-6: Agentic evolution (complexity analysis, multi-router, self-correction)
-4. Week 7-8: Advanced features (multimodal, real-time adaptation)
+1. Week 1-2: Infrastructure setup (Temporal server, Python SDK, workers)
+2. Week 3-4: Ingestion workflow migration (with gradual rollout 10% → 100%)
+3. Week 5-6: Query workflow migration (including long-running query support)
+4. Week 7-8: Monitoring, observability, and Prometheus metrics export
 
-📂 **[Full Documentation](query-router/)**
-
----
-
-### 2. Fine-Tuned Embeddings for Logistics
-
-**Status:** 🚀 Just Started | **Priority:** High | **Timeline:** 1 week
-
-Domain-specific embedding model fine-tuned for freight logistics and query routing on M4 hardware.
-
-**Problem:**
-- Generic OpenAI embeddings don't understand freight terminology
-- Graph routes collapse on ambiguous queries (43.8% accuracy on medium tier)
-- Semantic gap between route definitions and training queries
-- Ultra-low learned thresholds cause false positives
-
-**Solution:**
-- Fine-tune BAAI/bge-base-en-v1.5 on logistics-specific queries
-- Use M4 Neural Engine for fast training (5-10 min)
-- Specialize for OpenHaul and Origin Transport business domains
-- Close semantic gap at embedding level
-
-**Expected Gains:**
-- Medium tier: 67.8% → 85%+ (+17 points)
-- Hard tier: 60.0% → 75%+ (+15 points)
-- Graph intent: 66.0% → 80%+ (+14 points)
-- Overall: 77.9% → 85-90% (+7-12 points)
-
-**M4 Advantage:**
-- Only way to fine-tune embeddings (OpenAI doesn't offer this)
-- 16-core Neural Engine (38 TOPS)
-- Fast iteration cycles (10 minutes per training run)
-
-📂 **[Full Documentation](fine-tuned-embeddings/)**
+📂 **[Full Documentation](temporal-implementation/)**
 
 ---
 
-### 3. Saga Pattern Enhancement
+### 2. Saga Pattern Enhancement
 
 **Status:** 📝 Planning | **Priority:** Medium | **Timeline:** TBD
 
@@ -161,8 +126,8 @@ project-name/
 
 **Related Documentation:**
 - [Upgrades Overview](../README.md) - Complete upgrade tracking system
-- [Planned Upgrades](../planned/README.md) - Projects in research phase
-- [Completed Upgrades](../completed/README.md) - Archived projects
+- [Planned Upgrades](../planned/README.md) - Projects in research phase (Fine-Tuned Embeddings, API Connections)
+- [Completed Upgrades](../completed/README.md) - Archived projects (Query Router, Documentation System, Cross-Reference System)
 
 **Research Foundation:**
 - [Query Routing Research](../../research/documentation/query-routing/) - 11 research documents (Semantic Router, GraphRAG, Query Rewriting, Agentic RAG, Adaptive Learning)
@@ -188,10 +153,9 @@ project-name/
 - [Semantic Classifier](../../apex-memory-system/src/apex_memory/query_router/semantic_classifier.py) - Query intent classification with semantic-router
 
 **Project Interconnections:**
-- **Query Router** ↔ **Fine-Tuned Embeddings** - Fine-tuned embeddings improve semantic classification accuracy
-- **Query Router** ↔ **Saga Pattern** - Consistent data writes enable reliable query routing
-- All projects share: `tests/`, `research/documentation/`, and `apex-memory-system/config/training-queries-v7.json`
+- **Temporal Workflow** ↔ **Saga Pattern** - Temporal replaces custom saga implementation
+- All projects share: `tests/`, `research/documentation/`, and database infrastructure
 
 ---
 
-*Last updated: 2025-10-09*
+*Last updated: 2025-10-16*

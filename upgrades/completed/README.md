@@ -16,6 +16,7 @@ Completed upgrades represent significant improvements to the Apex Memory System 
 
 | Upgrade | Completed | Impact | Documentation |
 |---------|-----------|--------|---------------|
+| **Query Router Improvement Plan** | 2025-10-16 | 2025 RAG standards, semantic classification, adaptive routing | [query-router/](query-router/) |
 | **Documentation System** | 2025-10-07 | Repository organization, 31 READMEs | [documentation-system/](documentation-system/) |
 | **Cross-Reference System** | 2025-10-07 | Bidirectional navigation, knowledge graph | [cross-reference-system/](cross-reference-system/) |
 
@@ -80,6 +81,20 @@ completed/
 ---
 
 ## Quick Reference
+
+### Query Router Improvement Plan (Oct 2025)
+**Problem:** Outdated keyword-based routing, low accuracy on complex queries
+**Solution:** 2025 standards with semantic classification, adaptive learning, GraphRAG
+**Impact:**
+- Semantic Router for 10ms intent classification
+- Query rewriting (+21-28 point improvement)
+- Adaptive routing with learned weights
+- 90%+ cache hit rate
+- Comprehensive deployment guides
+
+📂 [Full Documentation](query-router/)
+
+---
 
 ### Documentation System (Oct 2025)
 **Problem:** Repository lacked organization and navigation

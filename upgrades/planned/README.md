@@ -13,7 +13,7 @@ Planned upgrades represent identified improvement opportunities that have not ye
 | Upgrade | Priority | Status | Research Progress | Timeline | Directory |
 |---------|----------|--------|-------------------|----------|-----------|
 | **Security Layer** | High | 📝 Research | 0% | Before Production | [security-layer/](security-layer/) |
-| **Temporal Workflow Orchestration** | High | 📝 Planning Complete | 40% | 6-8 weeks | [temporal-implementation/](temporal-implementation/) |
+| **Fine-Tuned Embeddings** | High | 📝 Planning | 30% | 1 week | [fine-tuned-embeddings/](fine-tuned-embeddings/) |
 | **API Connections & External Integrations** | Medium | 📝 Planning | 20% | 4-6 weeks | [api-connections/](api-connections/) |
 
 ---
@@ -106,61 +106,56 @@ The Apex Memory System has ZERO security implementation:
 
 ---
 
-### 2. Temporal Workflow Orchestration
+### 2. Fine-Tuned Embeddings for Logistics
 
-**Priority:** High (Ready for Implementation)
-**Status:** 📝 Planning Complete → 🚀 Ready for POC
-**Timeline:** 6-8 weeks (4 phases)
-**Research Progress:** 40% (architecture analysis complete)
+**Priority:** High
+**Status:** 📝 Planning Phase
+**Timeline:** 1 week
+**Research Progress:** 30%
 
 **Problem Statement:**
 
-Current saga-based orchestration has limitations:
-- ❌ No visibility into workflow execution state
-- ❌ Manual compensation logic for each operation
-- ❌ No automatic retry with exponential backoff
-- ❌ Limited distributed tracing
-- ❌ Cannot pause/resume long-running workflows
+Generic OpenAI embeddings don't capture domain-specific semantics:
+- ❌ Poor understanding of freight/logistics terminology
+- ❌ Graph routes collapse on ambiguous queries (43.8% medium tier accuracy)
+- ❌ Semantic gap between route definitions and training queries
+- ❌ Ultra-low learned thresholds cause false positives
+- ❌ Cannot fine-tune OpenAI embeddings (API limitation)
 
 **Goals:**
 
-Replace custom saga pattern with Temporal.io workflow orchestration:
-- Durable workflows with automatic state management
-- Built-in retry, timeout, and compensation (saga pattern)
-- Distributed tracing and complete observability
-- Workflow versioning and migration support
+Fine-tune domain-specific embedding model for freight logistics:
+- Fine-tune BAAI/bge-base-en-v1.5 on logistics-specific queries
+- Use M4 Neural Engine for fast training (5-10 min)
+- Specialize for OpenHaul and Origin Transport business domains
+- Close semantic gap at embedding level
+- Improve graph route classification accuracy
 
 **Expected Gains:**
-- ✅ 99.9% workflow reliability (Temporal SLA)
-- ✅ Automatic retries with exponential backoff
-- ✅ Complete workflow visibility in Temporal UI
-- ✅ Pause/resume/cancel long-running operations
-- ✅ Zero custom compensation logic (built-in)
+- Medium tier: 67.8% → 85%+ (+17 points)
+- Hard tier: 60.0% → 75%+ (+15 points)
+- Graph intent: 66.0% → 80%+ (+14 points)
+- Overall: 77.9% → 85-90% (+7-12 points)
 
-**Research Foundation:**
-- [Temporal.io Python SDK](https://docs.temporal.io/develop/python) - Official documentation
-- [Temporal Architecture](https://docs.temporal.io/concepts) - Core concepts
-- [ARCHITECTURE-ANALYSIS-2025.md](../../ARCHITECTURE-ANALYSIS-2025.md) - Analysis of workflow orchestration benefits
+**M4 Advantage:**
+- Only way to fine-tune embeddings (OpenAI doesn't offer this)
+- 16-core Neural Engine (38 TOPS)
+- Fast iteration cycles (10 minutes per training run)
+- Local training (no data leaving machine)
 
-**Implementation Phases:**
-1. **Week 1-2:** Infrastructure setup (Temporal server, Python SDK, workers)
-2. **Week 3-4:** Ingestion workflow migration (with gradual rollout 10% → 100%)
-3. **Week 5-6:** Query workflow migration (including long-running query support)
-4. **Week 7-8:** Monitoring, observability, and Prometheus metrics export
-
-**Key Features:**
-- Durable execution (state persisted to database, survives crashes)
-- Automatic compensation (built-in saga pattern rollback)
-- Workflow history and replay (deterministic debugging)
-- Multi-datacenter replication support
+**Research Needed:**
+- Sentence Transformers fine-tuning best practices
+- Training data augmentation strategies
+- Evaluation metrics for embedding quality
+- Deployment patterns for custom embeddings
 
 **Next Steps:**
-1. Deploy Temporal server locally (Docker Compose)
-2. Implement single document ingestion workflow (POC)
-3. Validate retry and compensation behavior
-4. Plan gradual traffic migration strategy
+1. Review Sentence Transformers documentation
+2. Create training dataset from logistics queries
+3. Implement training script with M4 optimizations
+4. Validate on test suite (250+ queries)
 
-📂 **[Full Planning](temporal-implementation/)**
+📂 **[Full Planning](fine-tuned-embeddings/)**
 
 ---
 
@@ -452,9 +447,10 @@ An upgrade is ready to graduate from `planned/` to active when:
 ## Cross-References
 
 **Active Upgrades:**
-- [Query Router Improvement Plan](../query-router/) - Active implementation (8 weeks, 4 phases)
+- [Temporal Workflow Orchestration](../active/temporal-implementation/) - Active implementation (6-8 weeks, 4 phases)
 
 **Completed Upgrades:**
+- [Query Router Improvement Plan](../completed/query-router/) - ✅ Oct 2025
 - [Documentation System](../completed/documentation-system/) - ✅ Oct 2025
 - [Cross-Reference System](../completed/cross-reference-system/) - ✅ Oct 2025
 
@@ -474,24 +470,24 @@ An upgrade is ready to graduate from `planned/` to active when:
 ## Metrics
 
 **Current Pipeline Status:**
-- ✅ Completed: 2 upgrades (Documentation System, Cross-Reference System)
-- 🚀 Active: 1 upgrade (Query Router - 8 weeks)
-- 📝 Planned: 3 upgrades (Security Layer, Temporal, API Connections)
-- **Total**: 6 upgrades in pipeline
+- ✅ Completed: 3 upgrades (Query Router, Documentation System, Cross-Reference System)
+- 🚀 Active: 1 upgrade (Temporal Workflow Orchestration - 6-8 weeks)
+- 📝 Planned: 3 upgrades (Security Layer, Fine-Tuned Embeddings, API Connections)
+- **Total**: 7 upgrades in pipeline
 
 **Research Progress:**
 - Security Layer: 0% (needs OAuth2/OIDC research)
-- Temporal: 40% (architecture analysis complete)
+- Fine-Tuned Embeddings: 30% (training script planning)
 - API Connections: 20% (FrontApp spec complete)
 
 **Readiness for Graduation:**
-- Temporal Implementation: ✅ Ready for POC (planning complete)
+- Fine-Tuned Embeddings: ⏳ Needs Sentence Transformers research
 - API Connections: ⏳ Needs OAuth flow design
 - Security Layer: ⏳ Needs provider comparison (Auth0 vs Keycloak)
 
 ---
 
-**Last Updated:** 2025-10-10
-**Planned Upgrades:** 3 (1 high priority, 2 medium priority)
-**Total Pipeline:** 3 planned + 1 active + 2 completed = 6 upgrades
-**Next Graduation:** Temporal Implementation (ready for POC phase)
+**Last Updated:** 2025-10-16
+**Planned Upgrades:** 3 (2 high priority, 1 medium priority)
+**Total Pipeline:** 3 planned + 1 active + 3 completed = 7 upgrades
+**Next Graduation:** Fine-Tuned Embeddings (needs research phase)
