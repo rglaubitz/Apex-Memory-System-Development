@@ -53,20 +53,118 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ```
 Apex-Memory-System-Development/
 ├── apex-memory-system/        # Symlink to actual codebase (see apex-memory-system/CLAUDE.md)
+│   ├── src/apex_memory/
+│   │   ├── api/
+│   │   │   └── ingestion.py   # ✅ Temporal-integrated API (Section 9)
+│   │   ├── monitoring/
+│   │   │   └── metrics.py     # ✅ 27 Temporal metrics (Section 9)
+│   │   ├── temporal/          # ✅ Temporal.io integration
+│   │   │   ├── activities/
+│   │   │   │   └── ingestion.py   # ✅ 5 instrumented activities
+│   │   │   ├── workflows/
+│   │   │   │   └── ingestion.py   # ✅ DocumentIngestionWorkflow
+│   │   │   └── workers/
+│   │   │       └── dev_worker.py  # Worker implementation
+│   │   └── services/          # Legacy services (still used by activities)
+│   ├── monitoring/
+│   │   ├── dashboards/
+│   │   │   └── temporal-ingestion.json  # ✅ 33-panel dashboard (Section 9)
+│   │   └── alerts/
+│   │       └── rules.yml      # ✅ 12 Temporal alerts (Section 9)
+│   └── scripts/
+│       └── temporal/          # ✅ Debugging scripts (Section 9)
+│           ├── check-workflow-status.py
+│           ├── list-failed-workflows.py
+│           ├── compare-metrics.py
+│           └── worker-health-check.sh
+│
 ├── research/                  # Research-first organized documentation
 │   ├── documentation/         # Official docs (Tier 1 sources)
-│   │   └── query-routing/    # Query routing research (Oct 2025)
+│   │   ├── query-routing/    # Query routing research (Oct 2025)
+│   │   └── temporal/         # Temporal.io research
 │   ├── examples/              # Verified code samples (Tier 2 sources)
 │   └── architecture-decisions/ # ADRs with research citations
+│
 ├── upgrades/                  # Upgrade tracking system
-│   ├── query-router/          # Active: Query router (8-week plan)
+│   ├── active/
+│   │   └── temporal-implementation/  # 🚀 ACTIVE: Sections 1-9 complete (82%)
+│   │       ├── PROJECT-STATUS-SNAPSHOT.md      # ⭐ Current project state
+│   │       ├── SECTION-9-COMPLETE.md           # ⭐ Section 9 summary
+│   │       ├── SECTION-9-IMPLEMENTATION-COMPLETE.md
+│   │       ├── HANDOFF-SECTION-9.md
+│   │       ├── EXECUTION-ROADMAP.md            # ⭐ Overall plan
+│   │       ├── research/                       # RDF documentation
+│   │       ├── tests/                          # Test artifacts
+│   │       │   ├── section-5-hello-world/      # ✅ 3 tests
+│   │       │   ├── section-6-worker/           # ✅ 4 tests
+│   │       │   ├── section-7-ingestion-activities/  # ✅ 19 tests
+│   │       │   └── section-8-ingestion-workflow/    # ✅ 15 tests
+│   │       └── examples/                       # Working examples
 │   ├── planned/               # Planned upgrades (research phase)
 │   └── completed/             # Completed upgrades (archive)
+│
 ├── workflow/                  # Workflow management (phases, approvals)
 └── .claude/                   # Claude Code configuration
-    ├── agents/                # Custom agent definitions
+    ├── agents/                # Custom agent definitions (20 agents)
     └── settings.local.json    # Local settings
 ```
+
+## 🎯 Quick Reference: Temporal Implementation (Current Work)
+
+**Currently Active:** Section 9 just completed! Review these key documents:
+
+### Essential Documentation (Start Here)
+
+1. **[PROJECT-STATUS-SNAPSHOT.md](upgrades/active/temporal-implementation/PROJECT-STATUS-SNAPSHOT.md)**
+   - Complete macro view of project
+   - Current status: 82% complete (Sections 1-9 done)
+   - All 27 metrics documented
+   - Test coverage: 162/162 passing
+   - Next steps clearly outlined
+
+2. **[SECTION-9-COMPLETE.md](upgrades/active/temporal-implementation/SECTION-9-COMPLETE.md)**
+   - Detailed Section 9 implementation summary
+   - 6-layer monitoring architecture
+   - All deliverables with code examples
+   - Success metrics and achievements
+   - Handoff to Section 10
+
+3. **[EXECUTION-ROADMAP.md](upgrades/active/temporal-implementation/EXECUTION-ROADMAP.md)**
+   - Overall 11-section implementation plan
+   - Phase-by-phase breakdown
+   - Timeline and dependencies
+   - Testing strategy
+
+### Implementation Artifacts
+
+**Code Locations:**
+- **Metrics:** `apex-memory-system/src/apex_memory/monitoring/metrics.py` (27 metrics)
+- **Activities:** `apex-memory-system/src/apex_memory/temporal/activities/ingestion.py` (5 instrumented)
+- **Workflow:** `apex-memory-system/src/apex_memory/temporal/workflows/ingestion.py`
+- **API:** `apex-memory-system/src/apex_memory/api/ingestion.py` (Temporal-integrated)
+- **Dashboard:** `apex-memory-system/monitoring/dashboards/temporal-ingestion.json` (33 panels)
+- **Alerts:** `apex-memory-system/monitoring/alerts/rules.yml` (12 alerts)
+
+**Scripts:**
+- `apex-memory-system/scripts/temporal/check-workflow-status.py`
+- `apex-memory-system/scripts/temporal/list-failed-workflows.py`
+- `apex-memory-system/scripts/temporal/compare-metrics.py`
+- `apex-memory-system/scripts/temporal/worker-health-check.sh`
+
+**Test Artifacts:**
+- `upgrades/active/temporal-implementation/tests/section-5-hello-world/` (3 tests)
+- `upgrades/active/temporal-implementation/tests/section-6-worker/` (4 tests)
+- `upgrades/active/temporal-implementation/tests/section-7-ingestion-activities/` (19 tests)
+- `upgrades/active/temporal-implementation/tests/section-8-ingestion-workflow/` (15 tests)
+
+### Monitoring Endpoints
+
+- **Grafana Dashboard:** http://localhost:3001/d/temporal-ingestion
+- **Temporal UI:** http://localhost:8088
+- **Prometheus:** http://localhost:9090
+- **API Docs:** http://localhost:8000/docs
+
+---
 
 ## Working with This Repository
 
@@ -178,37 +276,55 @@ python -m uvicorn apex_memory.main:app --reload --port 8000
 
 The `upgrades/` directory tracks the complete upgrade lifecycle with research-backed improvement plans.
 
-**Current Status:** 2 completed ✅ | 1 active 🚀 | 3 planned 📝
+**Current Status:** 2 completed ✅ | 1 active 🚀 (82% complete) | 3 planned 📝
 
-### Active Upgrade: Query Router Improvement Plan
+---
 
-**Status:** 🚀 Planning Complete → Implementation Ready
-**Timeline:** 8 weeks (4 phases)
-**Priority:** High
+### 🚀 Active Upgrade: Temporal.io Integration
 
-Comprehensive upgrade bringing Apex query routing to 2025 standards based on latest RAG research.
+**Status:** ✅ **Section 9 Complete** (82% overall progress)
+**Timeline:** 11 sections total (Sections 1-9 done, 10-11 remaining)
+**Priority:** Critical - Production Infrastructure
 
-**Expected Gains:**
-- +21-28 point relevance improvement (Microsoft benchmarks)
-- 99% precision on relationship queries (GraphRAG)
-- 90ms faster intent classification (Semantic Router)
-- 15-30% accuracy improvement (adaptive learning)
-- 90%+ cache hit rate (semantic caching)
+**Complete Temporal.io workflow orchestration for document ingestion with 6-layer monitoring.**
 
-**Plan Location:** [`upgrades/query-router/IMPROVEMENT-PLAN.md`](upgrades/query-router/IMPROVEMENT-PLAN.md)
+**Sections Completed (1-9):**
+- ✅ Section 1-4: Foundation (Docker, CLI, Worker, Hello World)
+- ✅ Section 5: Hello World Workflow (3 tests passing)
+- ✅ Section 6: Worker Setup (4 tests passing)
+- ✅ Section 7: Ingestion Activities (19 tests passing)
+- ✅ Section 8: Document Ingestion Workflow (15 tests passing)
+- ✅ **Section 9: Temporal Integration + Monitoring** (JUST COMPLETED)
+  - 27 Temporal metrics across 6 layers
+  - ALL 5 activities instrumented
+  - 100% Temporal API integration
+  - 33-panel Grafana dashboard
+  - 12 critical alerts
+  - 4 debugging scripts
 
-**Research Foundation:**
-- [Semantic Router](research/documentation/query-routing/semantic-router.md) - 10ms intent classification
-- [Query Rewriting](research/documentation/query-routing/query-rewriting-rag.md) - Microsoft +21 point improvement
-- [Agentic RAG 2025](research/documentation/query-routing/agentic-rag-2025.md) - Latest paradigm shift
-- [Adaptive Routing](research/documentation/query-routing/adaptive-routing-learning.md) - Learned weights
-- [GraphRAG](research/documentation/query-routing/graphrag-hybrid-search.md) - 99% precision hybrid search
+**Key Achievements:**
+- 100% Temporal integration (no legacy path)
+- Complete observability (workflow → activity → data quality → infrastructure → business → logs)
+- Silent failure detection (zero chunks/entities alerts)
+- Production-ready monitoring and alerting
+- 162 tests passing (Enhanced Saga preserved: 121/121)
 
-**Implementation Phases:**
-1. **Week 1-2:** Foundation (semantic classification, query rewriting, analytics)
-2. **Week 3-4:** Intelligent routing (adaptive weights, GraphRAG, semantic caching)
-3. **Week 5-6:** Agentic evolution (complexity analysis, multi-router, self-correction)
-4. **Week 7-8:** Advanced features (multimodal, real-time adaptation)
+**📂 Key Documentation:**
+- ⭐ **[PROJECT-STATUS-SNAPSHOT.md](upgrades/active/temporal-implementation/PROJECT-STATUS-SNAPSHOT.md)** - Complete project state
+- ⭐ **[SECTION-9-COMPLETE.md](upgrades/active/temporal-implementation/SECTION-9-COMPLETE.md)** - Section 9 detailed summary
+- ⭐ **[EXECUTION-ROADMAP.md](upgrades/active/temporal-implementation/EXECUTION-ROADMAP.md)** - Overall implementation plan
+
+**Remaining Sections (10-11):**
+- Section 10: Ingestion Testing & Rollout Validation
+- Section 11: Production Readiness & Documentation
+
+**Modified Files (Section 9):**
+- `apex-memory-system/src/apex_memory/monitoring/metrics.py` (+450 lines)
+- `apex-memory-system/src/apex_memory/temporal/activities/ingestion.py` (+300 lines)
+- `apex-memory-system/src/apex_memory/api/ingestion.py` (rewritten for Temporal)
+- `apex-memory-system/monitoring/dashboards/temporal-ingestion.json` (NEW)
+- `apex-memory-system/monitoring/alerts/rules.yml` (+12 alerts)
+- `apex-memory-system/scripts/temporal/*.py` (4 new scripts)
 
 ---
 
