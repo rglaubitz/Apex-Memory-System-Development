@@ -43,21 +43,23 @@ Implement Temporal.io workflow orchestration to replace saga-based orchestration
 
 **✅ Phase 1 RDF Complete (2025-10-17)**
 
+**📂 All Research Artifacts:** [research/README.md](research/README.md)
+
 **Comprehensive Research Documentation:**
-- [Temporal.io Overview](../../research/documentation/temporal/temporal-io-overview.md) - Core concepts, architecture, benefits
-- [Python SDK Guide](../../research/documentation/temporal/python-sdk-guide.md) - Detailed SDK usage, patterns, best practices
-- [Deployment Guide](../../research/documentation/temporal/deployment-guide.md) - Docker Compose, Kubernetes, production setup
-- [Integration Patterns](../../research/documentation/temporal/integration-patterns.md) - Hybrid architecture with Enhanced Saga
-- [Migration Strategy](../../research/documentation/temporal/migration-strategy.md) - Gradual rollout, versioning, rollback
-- [Monitoring & Observability](../../research/documentation/temporal/monitoring-observability.md) - Prometheus, Grafana, OpenTelemetry
+- [Temporal.io Overview](research/documentation/temporal-io-overview.md) - Core concepts, architecture, benefits
+- [Python SDK Guide](research/documentation/python-sdk-guide.md) - Detailed SDK usage, patterns, best practices
+- [Deployment Guide](research/documentation/deployment-guide.md) - Docker Compose, Kubernetes, production setup
+- [Integration Patterns](research/documentation/integration-patterns.md) - Hybrid architecture with Enhanced Saga
+- [Migration Strategy](research/documentation/migration-strategy.md) - Gradual rollout, versioning, rollback
+- [Monitoring & Observability](research/documentation/monitoring-observability.md) - Prometheus, Grafana, OpenTelemetry
 
 **Code Examples:**
-- [Hello World Workflow](../../research/examples/temporal/hello-world-workflow.py) - Basic workflow example
-- [Ingestion Workflow](../../research/examples/temporal/ingestion-workflow-example.py) - Production pattern with Enhanced Saga
-- [Testing Examples](../../research/examples/temporal/testing-example.py) - Unit and integration tests
+- [Hello World Workflow](research/examples/hello-world-workflow.py) - Basic workflow example
+- [Ingestion Workflow](research/examples/ingestion-workflow-example.py) - Production pattern with Enhanced Saga
+- [Testing Examples](research/examples/testing-example.py) - Unit and integration tests
 
 **Architecture Decision:**
-- [ADR-003: Temporal Orchestration](../../research/architecture-decisions/ADR-003-temporal-orchestration.md) - Complete decision rationale
+- [ADR-003: Temporal Orchestration](research/architecture-decisions/ADR-003-temporal-orchestration.md) - Complete decision rationale
 
 **Official Documentation:**
 - [Temporal.io Python SDK](https://docs.temporal.io/develop/python) - Official Python SDK docs
@@ -324,25 +326,40 @@ client = await Client.connect(
 
 ## Next Steps
 
-1. **Research Phase (Week 0):**
-   - Review Temporal Python SDK examples
-   - Design workflow schemas
-   - Prototype simple ingestion workflow
+**✅ Research Complete** → Ready for Phase 1 Implementation
 
-2. **POC Phase (Week 1-2):**
-   - Deploy Temporal locally
-   - Implement single document ingestion workflow
-   - Validate retry and compensation behavior
+### Phase 1: Infrastructure Setup (Week 1-2)
 
-3. **Production Rollout (Week 3-6):**
-   - Gradual traffic migration (10% → 50% → 100%)
-   - Monitor metrics and error rates
-   - Iterate based on production feedback
+**📋 Follow the detailed checklist:** [PHASE-1-CHECKLIST.md](PHASE-1-CHECKLIST.md)
 
-4. **Optimization Phase (Week 7-8):**
-   - Tune worker pools for throughput
-   - Configure retention policies
-   - Document operational runbooks
+**Quick Start:**
+1. Review all [research documentation](research/README.md)
+2. Study [ADR-003](research/architecture-decisions/ADR-003-temporal-orchestration.md) decision rationale
+3. Run [hello-world example](research/examples/hello-world-workflow.py) locally
+4. Follow Phase 1 checklist for Docker Compose deployment
+
+**Implementation Phases:**
+
+1. **Phase 1 (Week 1-2): Infrastructure Setup** ← START HERE
+   - Deploy Temporal Server via Docker Compose
+   - Install temporalio Python SDK (1.11.0+)
+   - Create worker infrastructure
+   - Validate with "Hello World" workflow
+   - **Checklist:** [PHASE-1-CHECKLIST.md](PHASE-1-CHECKLIST.md)
+
+2. **Phase 2 (Week 3-4): Ingestion Migration**
+   - Convert ingestion pipeline to Temporal workflows
+   - Delegate database writes to Enhanced Saga (unchanged)
+   - Gradual rollout: 10% → 50% → 100%
+
+3. **Phase 3 (Week 5-6): Multi-Source Integration**
+   - Implement 9 source workflows (webhook, poll, stream, batch)
+   - Priority-based execution (P0 → P1 → P2)
+
+4. **Phase 4 (Week 7-8): Monitoring & Observability**
+   - Temporal UI integration
+   - Prometheus + Grafana dashboards
+   - OpenTelemetry distributed tracing
 
 ## Cross-References
 
