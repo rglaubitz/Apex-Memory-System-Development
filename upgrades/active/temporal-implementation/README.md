@@ -326,40 +326,50 @@ client = await Client.connect(
 
 ## Next Steps
 
-**✅ Research Complete** → Ready for Phase 1 Implementation
+**✅ Research Complete** → **✅ Execution Plan Ready** → Ready for Implementation
 
-### Phase 1: Infrastructure Setup (Week 1-2)
+### 🚀 Start Here: Execution Roadmap
 
-**📋 Follow the detailed checklist:** [PHASE-1-CHECKLIST.md](PHASE-1-CHECKLIST.md)
+**📋 Follow the 17-section execution plan:** [EXECUTION-ROADMAP.md](EXECUTION-ROADMAP.md)
 
-**Quick Start:**
-1. Review all [research documentation](research/README.md)
-2. Study [ADR-003](research/architecture-decisions/ADR-003-temporal-orchestration.md) decision rationale
-3. Run [hello-world example](research/examples/hello-world-workflow.py) locally
-4. Follow Phase 1 checklist for Docker Compose deployment
+The implementation is broken into **17 numbered sections** aligned with the `/execute` command pattern:
 
-**Implementation Phases:**
+**Section 1-6 (Phase 1): Infrastructure Setup** (Week 1-2)
+- Section 1: Pre-Flight & Setup
+- Section 2: Docker Compose Infrastructure
+- Section 3: Python SDK & Configuration
+- Section 4: Worker Infrastructure
+- Section 5: Hello World Validation
+- Section 6: Monitoring & Testing
 
-1. **Phase 1 (Week 1-2): Infrastructure Setup** ← START HERE
-   - Deploy Temporal Server via Docker Compose
-   - Install temporalio Python SDK (1.11.0+)
-   - Create worker infrastructure
-   - Validate with "Hello World" workflow
-   - **Checklist:** [PHASE-1-CHECKLIST.md](PHASE-1-CHECKLIST.md)
+**Section 7-10 (Phase 2): Ingestion Migration** (Week 3-4)
+- Section 7: Ingestion Activities
+- Section 8: Ingestion Workflow
+- Section 9: Gradual Rollout
+- Section 10: Ingestion Testing & Rollout
 
-2. **Phase 2 (Week 3-4): Ingestion Migration**
-   - Convert ingestion pipeline to Temporal workflows
-   - Delegate database writes to Enhanced Saga (unchanged)
-   - Gradual rollout: 10% → 50% → 100%
+**Section 11-13 (Phase 3): Multi-Source Integration** (Week 5-6)
+- Section 11: Webhook Workflows
+- Section 12: Polling Workflows
+- Section 13: Streaming & Batch Workflows
 
-3. **Phase 3 (Week 5-6): Multi-Source Integration**
-   - Implement 9 source workflows (webhook, poll, stream, batch)
-   - Priority-based execution (P0 → P1 → P2)
+**Section 14-17 (Phase 4): Monitoring & Observability** (Week 7-8)
+- Section 14: Temporal UI & Search
+- Section 15: Prometheus & Grafana
+- Section 16: OpenTelemetry & Documentation
+- Section 17: Testing Strategy & Rollback
 
-4. **Phase 4 (Week 7-8): Monitoring & Observability**
-   - Temporal UI integration
-   - Prometheus + Grafana dashboards
-   - OpenTelemetry distributed tracing
+### Quick Start
+
+1. **Review Research:** [research/README.md](research/README.md) - All research artifacts
+2. **Study Decision:** [ADR-003](research/architecture-decisions/ADR-003-temporal-orchestration.md) - Decision rationale
+3. **Read Implementation Guide:** [IMPLEMENTATION-GUIDE.md](IMPLEMENTATION-GUIDE.md) - Complete step-by-step guide
+4. **Start Section 1:** Use `/execute` command to begin first section
+
+### Additional Resources
+
+- **Detailed Implementation:** [IMPLEMENTATION-GUIDE.md](IMPLEMENTATION-GUIDE.md) - Complete 3,110-line guide
+- **Phase 1 Checklist:** [PHASE-1-CHECKLIST.md](PHASE-1-CHECKLIST.md) - Day-by-day Phase 1 tasks
 
 ## Cross-References
 
