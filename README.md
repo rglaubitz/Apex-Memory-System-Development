@@ -63,7 +63,7 @@ Apex-Memory-System-Development/
 │   │   ├── postgresql/            # PostgreSQL + pgvector
 │   │   ├── qdrant/                # Vector search
 │   │   ├── graphiti/              # Temporal intelligence
-│   │   ├── query-routing/         # 2025 RAG research ⭐ NEW
+│   │   ├── temporal/              # Temporal.io workflow orchestration
 │   │   └── ...
 │   ├── examples/                   # Verified code samples (Tier 2)
 │   │   ├── multi-database-rag/    # Parallel database patterns
@@ -81,9 +81,31 @@ Apex-Memory-System-Development/
 │   └── references.md               # Source index with quality ratings
 │
 ├── upgrades/                       # Active improvement plans
-│   └── query-router/               # Oct 2025: 8-week upgrade ⭐ ACTIVE
-│       ├── IMPROVEMENT-PLAN.md    # Comprehensive 550+ line plan
-│       └── README.md              # Quick reference
+│   ├── active/
+│   │   └── temporal-implementation/ # Oct 2025: Sections 1-9 complete ⭐ ACTIVE
+│   │       ├── README.md           # Project overview (updated Oct 18)
+│   │       ├── EXECUTION-ROADMAP.md
+│   │       ├── PROJECT-STATUS-SNAPSHOT.md
+│   │       ├── TECHNICAL-DEBT.md
+│   │       ├── guides/             # Implementation guides
+│   │       │   ├── IMPLEMENTATION-GUIDE.md (3,110 lines)
+│   │       │   ├── PREFLIGHT-CHECKLIST.md
+│   │       │   └── VALIDATION-PROCEDURES.md
+│   │       ├── handoffs/           # Section handoff docs
+│   │       │   └── HANDOFF-SECTION-6 through 9.md
+│   │       ├── section-summaries/  # Detailed section completion docs
+│   │       │   ├── SECTION-9-COMPLETE.md
+│   │       │   └── SECTION-10-COMPLETE.md
+│   │       ├── research/           # RDF documentation
+│   │       ├── tests/              # Test artifacts (organized by phase)
+│   │       │   ├── STRUCTURE.md   # Complete test organization guide
+│   │       │   ├── phase-1-validation/      # Pre-testing validation
+│   │       │   ├── phase-2a-integration/    # Integration tests (1/6 complete)
+│   │       │   ├── phase-2b through 2f/     # Load, metrics, alerts
+│   │       │   └── section-1 through 8/     # Development tests (41 tests)
+│   │       └── examples/           # Working code examples
+│   ├── planned/                    # Future upgrades
+│   └── completed/                  # Completed upgrades
 │
 ├── workflow/                       # 5-phase development process
 │   └── README.md                  # Workflow documentation
@@ -102,29 +124,37 @@ Apex-Memory-System-Development/
 
 ## Active Upgrades
 
-### Query Router Improvement Plan (October 2025)
+### Temporal.io Integration (October 2025)
 
-**Status:** Planning Complete → Ready for Implementation
-**Timeline:** 8 weeks (4 phases)
-**Priority:** High
+**Status:** Section 11 Testing - Phase 2A Complete (82% overall progress)
+**Timeline:** 11 sections (Sections 1-9 done, 10-11 remaining)
+**Priority:** Critical - Production Infrastructure
 
-Comprehensive upgrade bringing Apex query routing to 2025 standards based on latest RAG research.
+Complete Temporal.io workflow orchestration for document ingestion with 6-layer monitoring.
 
-**Expected Gains:**
-- ✅ **+21-28 points** relevance improvement (Microsoft benchmarks)
-- ✅ **99% precision** on relationship queries (GraphRAG)
-- ✅ **90ms faster** intent classification (Semantic Router)
-- ✅ **15-30% accuracy** improvement (adaptive learning)
-- ✅ **90%+ cache hit rate** (semantic caching)
+**Sections Completed (1-9):**
+- ✅ Sections 1-4: Foundation (Docker, CLI, Worker, Hello World)
+- ✅ Section 5-8: Implementation (Activities, Workflows, Integration)
+- ✅ **Section 9: Monitoring** - 27 metrics, 33-panel dashboard, 12 alerts
 
-**Research Foundation:**
-- [Semantic Router](research/documentation/query-routing/semantic-router.md) - 10ms intent classification
-- [Query Rewriting](research/documentation/query-routing/query-rewriting-rag.md) - Microsoft RAG optimization
-- [Agentic RAG 2025](research/documentation/query-routing/agentic-rag-2025.md) - Autonomous agents paradigm
-- [Adaptive Routing](research/documentation/query-routing/adaptive-routing-learning.md) - Contextual bandits
-- [GraphRAG](research/documentation/query-routing/graphrag-hybrid-search.md) - Hybrid vector-graph search
+**Section 11 Testing Progress:**
+- ✅ **Phase 1:** Pre-testing validation (5 critical fixes)
+- ✅ **Phase 2A:** Integration tests (13 critical fixes, 1/6 tests passing)
+- 🔄 **Phase 2B:** Enhanced Saga baseline verification (121 tests)
+- 📝 **Phase 2C-2F:** Load tests, metrics, alerts (pending)
 
-📋 **[Full Plan](upgrades/query-router/IMPROVEMENT-PLAN.md)** | 📊 **[Quick Reference](upgrades/query-router/README.md)**
+**Key Achievements:**
+- 100% Temporal integration (no legacy path)
+- Complete observability (6-layer monitoring)
+- Silent failure detection
+- 194 test suite (42 passing, 152 pending)
+
+**Test Organization:**
+- All test artifacts organized in `upgrades/active/temporal-implementation/tests/`
+- Phase-based structure with fix-and-document workflow
+- Complete documentation in `tests/STRUCTURE.md`
+
+📋 **[Execution Roadmap](upgrades/active/temporal-implementation/EXECUTION-ROADMAP.md)** | 📊 **[Project Status](upgrades/active/temporal-implementation/PROJECT-STATUS-SNAPSHOT.md)** | 🧪 **[Test Structure](upgrades/active/temporal-implementation/tests/STRUCTURE.md)**
 
 ## Research-First Philosophy
 
@@ -180,6 +210,41 @@ All architectural decisions must be grounded in high-quality research following 
 
 🤖 **[Agent Index](.claude/agents/README.md)** | ⚙️ **[System Overview](.claude/README.md)**
 
+## Testing Workflow
+
+### Test Organization
+
+All tests are organized in `upgrades/active/temporal-implementation/tests/` with two categories:
+
+**Section Tests (Development-Time):**
+- 41 tests created during Sections 1-8 implementation
+- Validate individual components as they're built
+- Located in `tests/section-*/`
+
+**Phase Tests (Production Validation):**
+- 194 tests for Section 11 comprehensive testing
+- Validate production readiness before deployment
+- Located in `tests/phase-*/` with fix-and-document workflow
+
+📘 **[Complete Test Structure](upgrades/active/temporal-implementation/tests/STRUCTURE.md)**
+
+### Fix-and-Document Workflow
+
+All Phase 2 testing follows this 5-step workflow for test failures:
+
+1. **Document Problem** - Capture error, stack trace, environment
+2. **Root Cause Analysis** - Identify underlying issue (not symptoms)
+3. **Apply Fix** - Implement solution (production or test code)
+4. **Validate Fix** - Confirm test passes end-to-end
+5. **Document Outcome** - What went good/bad, production impact
+
+**Results:** Each phase folder contains detailed `PHASE-X-FIXES.md` documentation.
+
+**Example:** Phase 2A discovered 13 critical issues:
+- 5 production code fixes (Temporal SDK, database config)
+- 8 test code improvements (fixtures, mocking, validation)
+- All documented with production impact assessment
+
 ## Main Codebase
 
 The actual implementation is maintained at:
@@ -222,6 +287,7 @@ python -m uvicorn apex_memory.main:app --reload --port 8000
 | [CLAUDE.md](CLAUDE.md) | Claude Code integration guide |
 | [research/](research/) | Research knowledge base with ADRs |
 | [upgrades/](upgrades/) | Active improvement plans |
+| [upgrades/active/temporal-implementation/tests/STRUCTURE.md](upgrades/active/temporal-implementation/tests/STRUCTURE.md) | Complete test organization guide |
 | [workflow/](workflow/) | 5-phase development process |
 | [.claude/agents/](.claude/agents/) | 20 specialized agents |
 

@@ -17,8 +17,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `workflow/README.md`
 - `upgrades/completed/README.md` (if working with completed upgrades)
 - `upgrades/planned/README.md` (if working with planned upgrades)
+- `upgrades/active/temporal-implementation/tests/STRUCTURE.md` (if working with Temporal testing)
 
-**Purpose:** Understand project structure, current state, and upgrade lifecycle before making any changes.
+**Purpose:** Understand project structure, current state, upgrade lifecycle, and test organization before making any changes.
 
 ### Rule 2: Read Framework-Specific READMEs Before Implementation
 
@@ -94,11 +95,25 @@ Apex-Memory-System-Development/
 │   │       ├── HANDOFF-SECTION-9.md
 │   │       ├── EXECUTION-ROADMAP.md            # ⭐ Overall plan
 │   │       ├── research/                       # RDF documentation
-│   │       ├── tests/                          # Test artifacts
-│   │       │   ├── section-5-hello-world/      # ✅ 3 tests
-│   │       │   ├── section-6-worker/           # ✅ 4 tests
-│   │       │   ├── section-7-ingestion-activities/  # ✅ 19 tests
-│   │       │   └── section-8-ingestion-workflow/    # ✅ 15 tests
+│   │       ├── tests/                          # ⭐ Test artifacts (organized by phase)
+│   │       │   ├── STRUCTURE.md               # Complete test organization guide
+│   │       │   ├── Phase Tests (Section 11)
+│   │       │   │   ├── phase-1-validation/    # ✅ Pre-testing validation (5 fixes)
+│   │       │   │   ├── phase-2a-integration/  # ✅ Integration tests (13 fixes, 1/6 tests)
+│   │       │   │   ├── phase-2b-saga-baseline/ # Enhanced Saga baseline (121 tests)
+│   │       │   │   ├── phase-2c-load-mocked/  # Load tests - mocked DBs (5 tests)
+│   │       │   │   ├── phase-2d-load-real/    # Load tests - real DBs (5 tests)
+│   │       │   │   ├── phase-2e-metrics/      # Metrics validation (8 tests)
+│   │       │   │   └── phase-2f-alerts/       # Alert validation (13 tests)
+│   │       │   └── Section Tests (Development)
+│   │       │       ├── section-1-preflight/      # ✅ 1 test
+│   │       │       ├── section-2-infrastructure/ # ✅ 1 test
+│   │       │       ├── section-3-config/         # ✅ 1 test
+│   │       │       ├── section-4-worker/         # ✅ 4 tests
+│   │       │       ├── section-5-hello-world/    # ✅ 3 tests
+│   │       │       ├── section-6-monitoring/     # No tests
+│   │       │       ├── section-7-ingestion-activities/ # ✅ 19 tests
+│   │       │       └── section-8-ingestion-workflow/   # ✅ 15 tests
 │   │       └── examples/                       # Working examples
 │   ├── planned/               # Planned upgrades (research phase)
 │   └── completed/             # Completed upgrades (archive)
@@ -152,10 +167,25 @@ Apex-Memory-System-Development/
 - `apex-memory-system/scripts/temporal/worker-health-check.sh`
 
 **Test Artifacts:**
-- `upgrades/active/temporal-implementation/tests/section-5-hello-world/` (3 tests)
-- `upgrades/active/temporal-implementation/tests/section-6-worker/` (4 tests)
-- `upgrades/active/temporal-implementation/tests/section-7-ingestion-activities/` (19 tests)
-- `upgrades/active/temporal-implementation/tests/section-8-ingestion-workflow/` (15 tests)
+
+⭐ **For complete test organization, see:** `upgrades/active/temporal-implementation/tests/STRUCTURE.md`
+
+**Section 11 Testing (Phase-Based):**
+- `tests/phase-1-validation/` - Pre-testing validation (5 critical fixes documented)
+- `tests/phase-2a-integration/` - Integration tests (13 critical fixes, 1/6 tests passing)
+- `tests/phase-2b-saga-baseline/` - Enhanced Saga baseline verification (121 tests)
+- `tests/phase-2c-load-mocked/` - Load tests with mocked DBs (5 tests)
+- `tests/phase-2d-load-real/` - Load tests with real DBs (5 tests)
+- `tests/phase-2e-metrics/` - Metrics validation (8 tests)
+- `tests/phase-2f-alerts/` - Alert validation (13 tests)
+
+**Development Tests (Section-Based):**
+- `tests/section-1-preflight/` through `tests/section-8-ingestion-workflow/` (41 tests total)
+
+**Each phase folder contains:**
+- `INDEX.md` - Phase overview and achievements
+- `PHASE-X-FIXES.md` - Detailed fix documentation (fix-and-document workflow)
+- Test files and execution results
 
 ### Monitoring Endpoints
 
@@ -241,6 +271,71 @@ mypy src/                        # Type check
 # Start API
 python -m uvicorn apex_memory.main:app --reload --port 8000
 # API docs: http://localhost:8000/docs
+```
+
+## Testing Organization
+
+### Test Structure
+
+All test artifacts are organized under `upgrades/active/temporal-implementation/tests/` with two categories:
+
+**1. Section Tests (Development-Time)**
+- Created during feature implementation (Sections 1-8)
+- Validate individual components as they're built
+- 41 tests total (all passing)
+- Located in: `tests/section-*/`
+
+**2. Phase Tests (Production Validation)**
+- Created for Section 11 comprehensive testing
+- Validate production readiness before deployment
+- 194 tests total across 6 phases
+- Located in: `tests/phase-*/`
+
+**Complete organization guide:** `tests/STRUCTURE.md`
+
+### Fix-and-Document Workflow
+
+All Phase 2 testing follows this workflow for any test failures:
+
+**1. Document Problem** - Capture error, stack trace, environment context
+**2. Root Cause Analysis** - Identify underlying issue (not just symptoms)
+**3. Apply Fix** - Implement solution (production code or test code)
+**4. Validate Fix** - Confirm test now passes end-to-end
+**5. Document Outcome**:
+   - What went good (successful aspects of fix)
+   - What went bad (challenges, multiple attempts needed)
+   - Production impact (was production code affected?)
+   - Future considerations
+
+**Documentation Location:** Each phase folder contains `PHASE-X-FIXES.md` with comprehensive fix documentation.
+
+**Example:** Phase 2A documented 13 critical fixes (5 production code, 8 test code) including:
+- Temporal SDK API migration (affected production workflow)
+- Database configuration for local development
+- Test fixture quality improvements
+
+### Running Tests
+
+**Section-specific tests:**
+```bash
+cd upgrades/active/temporal-implementation/tests/section-X/
+./RUN_TESTS.sh
+```
+
+**Integration test suite:**
+```bash
+cd apex-memory-system
+pytest tests/integration/test_temporal_ingestion_workflow.py -v -m integration
+```
+
+**Load tests:**
+```bash
+pytest tests/load/ -v -m load
+```
+
+**All Enhanced Saga tests (baseline validation):**
+```bash
+pytest tests/ -v --ignore=tests/load/
 ```
 
 ## Architecture Overview
