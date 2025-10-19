@@ -46,7 +46,40 @@ Replace custom saga pattern with Temporal.io workflow orchestration for durable,
 
 ---
 
-### 2. Saga Pattern Enhancement
+### 2. OpenAI GPT-5 + graphiti-core 0.22.0 Upgrade
+
+**Status:** 🔴 **CRITICAL - Active (Not Yet Started)** | **Priority:** High | **Timeline:** 3-4 days
+
+Fix critical model name issue: Replace non-existent OpenAI models (`gpt-4.1-mini/nano`) with correct models (`gpt-5-mini/nano`) and upgrade graphiti-core to latest stable version.
+
+**Current Impact:**
+- ❌ Using non-existent model names in production code
+- ❌ 1 test failing: `test_orphaned_episode_cleanup`
+- ❌ False documentation claims about "GPT-4.1 being latest 2025 models"
+- ❌ Version mismatch: requirements.txt (0.21.0) vs installed (0.20.4)
+
+**Expected Gains:**
+- ✅ 161/161 tests passing (currently 160/161)
+- ✅ Correct OpenAI model names (verified via official docs)
+- ✅ graphiti-core 0.22.0 with OpenTelemetry support
+- ✅ Accurate documentation throughout codebase
+
+**Research Foundation:**
+- [OpenAI Platform - Models](https://platform.openai.com/docs/models) - Official model list (screenshot verified)
+- [graphiti-core 0.22.0 Release](https://github.com/getzep/graphiti/releases) - Latest stable release
+- 20+ files affected across codebase
+
+**Implementation Phases:**
+1. Day 1: Model name updates + graphiti-core upgrade
+2. Day 2-3: Comprehensive testing (161 tests)
+3. Day 3: Integration validation (real documents)
+4. Day 3-4: Documentation updates
+
+📂 **[Full Documentation](gpt5-graphiti-upgrade/)**
+
+---
+
+### 3. Saga Pattern Enhancement
 
 **Status:** 📝 Planning | **Priority:** Medium | **Timeline:** TBD
 
@@ -158,4 +191,4 @@ project-name/
 
 ---
 
-*Last updated: 2025-10-16*
+*Last updated: 2025-10-19*
