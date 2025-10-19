@@ -716,6 +716,63 @@ The project includes 17 specialized research agents for continuous knowledge acq
 
 **All research agents located in:** `.claude/agents/`
 
+### Handoff Workflow Format
+
+**This project uses a proven handoff format for multi-day/multi-week development with Claude Code.**
+
+**Documentation:** [`workflow/HANDOFF-WORKFLOW-FORMAT.md`](workflow/HANDOFF-WORKFLOW-FORMAT.md)
+
+**Purpose:** Enable zero context loss across sessions with complete traceability of decisions, fixes, and patterns.
+
+**Key Components:**
+
+1. **Handoff Documents** (`upgrades/active/{project}/handoffs/HANDOFF-*.md`)
+   - Complete session-to-session continuity
+   - "What Was Accomplished" (completed work with file locations, line numbers)
+   - "Architectural Decisions" (WHY decisions were made)
+   - "Implementation Patterns" (reusable code templates)
+   - "What's Next" (upcoming work with estimates)
+   - **"Start Command"** (copy-paste to resume next session instantly)
+
+2. **Quick Reference** (`upgrades/active/{project}/CLAUDE-QUICK-REFERENCE.md`)
+   - Fast pattern/command lookup
+   - Common code templates
+   - Test execution commands
+   - Key file locations
+
+3. **Progress Tracking** (`upgrades/active/{project}/PROGRESS.md`)
+   - Updated after each day
+   - Current vs. expected test counts
+   - Phase completion tracking
+
+4. **Handoff Index** (`upgrades/active/{project}/handoffs/INDEX.md`)
+   - Chronological list of all handoffs
+   - Phase progression tracking
+
+**When to Create Handoffs:**
+- End of phase/week (natural break points)
+- After completing 2-3 days of work
+- Before expected context compact
+- Before major architectural shifts
+
+**Success Example:** Graphiti + JSON Integration Week 3
+- 3-day handoff created (HANDOFF-WEEK3-DAYS1-3.md)
+- Next session: Instant continuation using "Start Command"
+- 11 tests created, 100% pass rate, ~1,017 lines of code
+- All architectural decisions preserved
+- Zero time re-discovering context
+
+**Format Strengths:**
+- ✅ Zero context loss across sessions
+- ✅ Copy-paste continuation (Start Command)
+- ✅ Complete traceability (decisions, fixes, patterns)
+- ✅ Baseline test preservation tracking
+- ✅ Architecture documentation (WHY not just WHAT)
+
+**Current Handoffs:**
+- [handoffs/INDEX.md](upgrades/active/temporal-implementation/handoffs/INDEX.md) - Complete list
+- [handoffs/HANDOFF-WEEK3-DAYS1-3.md](upgrades/active/temporal-implementation/handoffs/HANDOFF-WEEK3-DAYS1-3.md) - Latest
+
 ## Important Notes
 
 1. **Main codebase is symlinked** - All source code lives in `apex-memory-system/`

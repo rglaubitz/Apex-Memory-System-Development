@@ -192,6 +192,27 @@ All architectural decisions must be grounded in high-quality research following 
 
 📋 **[Workflow Details](workflow/README.md)**
 
+### Session Continuity & Handoffs
+
+**Handoff Workflow Format** - Zero context loss across multi-day/multi-week development
+
+**Key Features:**
+- ✅ Complete session-to-session continuity (What Was Accomplished, What's Next)
+- ✅ Copy-paste "Start Command" for instant continuation
+- ✅ Architectural decisions documented (WHY not just WHAT)
+- ✅ Implementation patterns (reusable code templates)
+- ✅ Baseline test preservation tracking
+
+**Components:**
+1. **Handoff Documents** - Complete work summaries with file locations, line numbers
+2. **Quick Reference** - Fast pattern/command lookup
+3. **Progress Tracking** - Updated after each day (current vs. expected)
+4. **Handoff Index** - Chronological progression
+
+**Example:** Week 3 Staging Lifecycle handoff enabled instant continuation with 11 tests (100% pass), ~1,017 lines of code, zero context loss.
+
+📖 **[Handoff Format Guide](workflow/HANDOFF-WORKFLOW-FORMAT.md)** | 📂 **[Current Handoffs](upgrades/active/temporal-implementation/handoffs/INDEX.md)**
+
 ## Agent System
 
 20 specialized agents for development coordination:
