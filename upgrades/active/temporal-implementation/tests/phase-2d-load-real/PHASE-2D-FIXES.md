@@ -215,41 +215,118 @@ temporal_client.execute_workflow(
 
 ---
 
+### Fix #6: Temp File Extension Bug (PRODUCTION BUG - CRITICAL)
+
+**Problem:**
+```
+Parse failed: Unsupported format: .txt-c6cqzeua. Supported: .pdf, .docx, .pptx, .html, .htm, .md, .txt
+```
+
+**Root Cause:**
+- `download_from_s3_activity` creates temp files with random suffix: `/tmp/load-test-doc-5.txt-c6cqzeua`
+- S3 objects missing Content-Type metadata, so extension = ""
+- tempfile.NamedTemporaryFile adds random suffix to prefix, creating `.txt-c6cqzeua`
+- Parser rejects these files
+
+**Impact:** **All 270 workflows failed at parse step** (0% success rate during initial run)
+
+**Fix:**
+Added fallback to derive extension from document_id filename:
+```python
+# Fallback: derive extension from document_id if not found in Content-Type
+if not extension and "." in document_id:
+    # Extract extension from document_id (e.g., "doc.txt" → ".txt")
+    extension = "." + document_id.rsplit(".", 1)[1]
+```
+
+**File Modified:**
+- `src/apex_memory/temporal/activities/ingestion.py:163-166`
+
+**Production Impact:** ✅ **PRODUCTION CODE** (critical bug fix)
+
+**Status:** ✅ RESOLVED
+
+---
+
+### Fix #7: PostgreSQL UUID LIKE Operator Error
+
+**Problem:**
+```
+psycopg2.errors.UndefinedFunction: operator does not exist: uuid ~~ unknown
+LINE 1: SELECT COUNT(*) FROM documents WHERE uuid LIKE '%load-test-d...
+HINT:  No operator matches the given name and argument types. You might need to add explicit type casts.
+```
+
+**Root Cause:**
+PostgreSQL doesn't allow LIKE operator on UUID columns. Tests were querying `WHERE uuid LIKE '%...'` but uuid is a UUID type, not TEXT.
+
+**Fix:**
+Changed SQL queries to use file_name column instead of uuid:
+```python
+# Before
+cursor.execute("SELECT COUNT(*) FROM documents WHERE uuid LIKE %s", ('%load-test-doc%',))
+
+# After
+cursor.execute("SELECT COUNT(*) FROM documents WHERE file_name LIKE %s", ('%load-test-doc%',))
+```
+
+**Files Modified:**
+- `tests/load/test_temporal_ingestion_integration.py:323, 423` (2 locations)
+
+**Production Impact:** ❌ None (test code only)
+
+**Status:** ✅ RESOLVED
+
+---
+
 ## 📊 Test Execution Results
 
-### Current Status: ALL FIXES COMPLETE ✅
+### Final Status: ✅ ALL 5 TESTS PASSING
 
-**✅ S3 Infrastructure:**
-- LocalStack running and healthy
-- Test fixture successfully uploaded 100 test documents to LocalStack
-- S3 endpoints configured correctly
+**Test Results:**
+```
+✅ test_concurrent_ingestion_real_databases - PASSED (50 workflows)
+✅ test_saga_under_load - PASSED (20 workflows)
+✅ test_database_write_concurrency - PASSED (30 workflows)
+✅ test_end_to_end_latency - PASSED (50 workflows)
+✅ test_sustained_throughput_real_db - PASSED (100 workflows)
+```
 
-**✅ Temporal SDK API Migration:**
-- All 5 test locations updated to args=[] format
-- Test collection successful (5 tests collected)
-- No syntax errors
+**Performance:**
+- **Total workflows:** 250 workflows with REAL databases + OpenAI API
+- **Duration:** 85 seconds (1:25)
+- **Throughput:** ~2.9 workflows/second (lower than Phase 2C mocked: 21/sec)
+- **Success rate:** 100%
 
-**⏳ Next Step:**
-- Run Phase 2D tests with real databases
-- Tests may take 10-30 minutes due to real I/O (OpenAI, databases, S3)
-- Expect different performance than Phase 2C mocked tests
+**Infrastructure Used:**
+- ✅ LocalStack S3 (port 4566)
+- ✅ Temporal server (port 7233)
+- ✅ Neo4j (port 7474)
+- ✅ PostgreSQL (port 5432)
+- ✅ Qdrant (port 6333)
+- ✅ Redis (port 6379)
+- ✅ Temporal worker (dev_worker.py)
+- ✅ OpenAI API (real API calls for embeddings)
 
 ---
 
 ## 🎯 What Went Good
 
-1. ✅ **LocalStack setup successful** - S3 emulation working
-2. ✅ **Volume issue quickly diagnosed** - Fixed on second attempt
+1. ✅ **LocalStack setup successful** - S3 emulation working (after volume fix)
+2. ✅ **Critical production bug found** - Temp file extension fallback missing (would have caused 100% workflow failure in production with misconfigured S3)
 3. ✅ **Activity updated for LocalStack** - Production code now supports both LocalStack and real AWS
 4. ✅ **Learned from Phase 2C** - Recognized Temporal SDK API pattern immediately
+5. ✅ **Systematic debugging** - Found and fixed 7 bugs through methodical testing
+6. ✅ **100% test pass rate** - All 5 Phase 2D tests passing with 250 workflows
 
 ---
 
 ## 🔴 What Went Bad
 
-1. ⚠️ **Initial LocalStack config failed** - Volume mount issue on macOS
-2. ⚠️ **Activity needed production code change** - Not just test code
-3. ℹ️ **Same Temporal SDK migration needed** - Recurring pattern across all test suites
+1. ⚠️ **Initial LocalStack config failed** - Volume mount issue on macOS (fixed on second attempt)
+2. ⚠️ **Multiple production bugs** - Found 2 production code bugs (temp file extension, S3 endpoint)
+3. ⚠️ **Multiple test bugs** - Found 5 test code bugs (Temporal SDK migration, database access, SQL queries)
+4. ℹ️ **Schema knowledge gap** - Tests initially queried wrong columns (uuid vs file_name)
 
 ---
 
@@ -265,55 +342,68 @@ temporal_client.execute_workflow(
    - Added S3 configuration for LocalStack
    - **Impact:** Test configuration only
 
-3. **src/apex_memory/temporal/activities/ingestion.py** (+4 lines)
+3. **src/apex_memory/temporal/activities/ingestion.py** (+8 lines)
    - Updated download_from_s3_activity to support LocalStack endpoint
-   - **Impact:** ✅ **PRODUCTION CODE** - Activity now works with both LocalStack and real AWS
+   - Added extension fallback from document_id (CRITICAL BUG FIX)
+   - **Impact:** ✅ **PRODUCTION CODE** - 2 critical fixes (LocalStack support + extension fallback)
 
-**Summary:** 1 production code file modified (backwards compatible change)
+**Summary:** 2 production code changes in 1 file (both backwards compatible)
 
 ---
 
 ## 🔮 Future Considerations
 
-### Infrastructure Requirements
-
-**For Phase 2D Tests:**
-- ✅ LocalStack running (port 4566)
-- ✅ Temporal server running (port 7233)
-- ⏳ Neo4j running (port 7474)
-- ⏳ PostgreSQL running (port 5432)
-- ⏳ Qdrant running (port 6333)
-- ⏳ Redis running (port 6379)
-- ⏳ Temporal worker running (dev_worker.py)
-- ⏳ OpenAI API key configured
-
 ### Performance Expectations
 
-With REAL databases (vs mocked):
-- **Throughput:** Lower than Phase 2C (mocked was 21 workflows/sec)
-- **Latency:** Higher due to real I/O (expect P99 < 30s vs 114ms)
-- **Resource Usage:** Significant DB, OpenAI, and S3 I/O
+**Test Performance (tiny 416-byte text files):**
+- **Throughput:** ~2.9 workflows/sec (250 workflows in 85 seconds)
+- **Latency:** <1 second per workflow (minimal parsing)
+- **Resource Usage:** Light (tiny files, simple parsing)
+
+**Production Performance (10-page PDFs):**
+- **Throughput:** Much lower (~0.1-0.2 workflows/sec per worker)
+- **Latency:** 10-20 seconds per workflow (Docling parsing, OpenAI API)
+- **Resource Usage:** Heavy (large PDFs, complex parsing, API calls)
+
+### Technical Debt Items Created
+
+**TD-004: Temp File Extension Fallback** (RESOLVED in this session)
+- Added fallback to derive extension from document_id
+- Prevents workflow failures when S3 Content-Type missing
+
+**See TECHNICAL-DEBT.md for:**
+- TD-001: S3 download interim solution
+- TD-002: No validation of FrontApp → S3 upload (CRITICAL)
+- TD-003: S3 not orchestrated by Temporal (ARCHITECTURAL)
 
 ---
 
-## 📌 Next Steps
+## 📌 Phase 2D Summary
 
-1. ✅ LocalStack configured and running
-2. ✅ Activity updated to support LocalStack
-3. ✅ Apply Temporal SDK API migration (5 locations)
-4. ✅ Commit fixes to both repositories
-5. ⏳ Run all 5 Phase 2D tests (requires user approval - long-running)
-6. ⏳ Document results
-7. ⏳ Create INDEX.md summary
+**Status:** ✅ COMPLETE - All 5 tests passing
 
----
+**Achievements:**
+1. ✅ LocalStack S3 configured and working
+2. ✅ 7 bugs found and fixed (2 production, 5 test)
+3. ✅ All 5 Phase 2D tests passing (250 workflows, 100% success)
+4. ✅ Critical production bug discovered (temp file extension fallback)
+5. ✅ Real database integration validated (Neo4j, PostgreSQL, Qdrant, Redis)
+6. ✅ OpenAI API integration validated
+7. ✅ Enhanced Saga pattern preserved (121 baseline tests still passing)
 
-**Phase 2D Status:** ✅ FIXES COMPLETE - Ready to run tests
+**Production Bugs Fixed:**
+- **Fix #4:** S3 endpoint support for LocalStack (ingestion.py:137-141)
+- **Fix #6:** Temp file extension fallback (ingestion.py:163-166) - CRITICAL
 
-**Test Execution:** Tests ready but NOT yet run (require 10-30 minutes with real DBs + OpenAI)
+**Test Fixes:**
+- **Fix #5:** Temporal SDK API migration (5 locations)
+- **Fix #5:** Database connection access (2 tests)
+- **Fix #7:** SQL column name (uuid → file_name, 2 locations)
 
-**Summary of Fixes:**
-- 5 fixes applied (S3 infrastructure, LocalStack setup, activity update, API migration)
-- 1 production code change (download_from_s3_activity supports LocalStack)
-- 5 test code changes (Temporal SDK API migration)
-- All changes committed and ready
+**Total Changes:**
+- Production code: 2 fixes in 1 file (ingestion.py)
+- Test code: 5 fixes across 1 file
+- Infrastructure: LocalStack added to docker-compose.yml
+- Configuration: S3 environment variables added to .env
+
+**Next Phase:** Phase 2E - Metrics Validation
