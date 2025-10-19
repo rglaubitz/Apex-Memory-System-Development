@@ -17,6 +17,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `workflow/README.md`
 - `upgrades/completed/README.md` (if working with completed upgrades)
 - `upgrades/planned/README.md` (if working with planned upgrades)
+- `upgrades/active/temporal-implementation/graphiti-json-integration/README.md` ⭐ **CURRENT ACTIVE WORK**
 - `upgrades/active/temporal-implementation/tests/STRUCTURE.md` (if working with Temporal testing)
 
 **Purpose:** Understand project structure, current state, upgrade lifecycle, and test organization before making any changes.
@@ -88,12 +89,19 @@ Apex-Memory-System-Development/
 │
 ├── upgrades/                  # Upgrade tracking system
 │   ├── active/
-│   │   └── temporal-implementation/  # 🚀 ACTIVE: Sections 1-9 complete (82%)
-│   │       ├── PROJECT-STATUS-SNAPSHOT.md      # ⭐ Current project state
-│   │       ├── SECTION-9-COMPLETE.md           # ⭐ Section 9 summary
+│   │   └── temporal-implementation/  # 🚀 ACTIVE: Graphiti + JSON Integration (Planning Complete)
+│   │       ├── graphiti-json-integration/      # ⭐ CURRENT ACTIVE WORK (4-week plan)
+│   │       │   ├── README.md                   # Entry point and quick start
+│   │       │   ├── PLANNING.md                 # Unified 4-week plan (700+ lines)
+│   │       │   ├── IMPLEMENTATION.md           # Step-by-step Tier 1 guide (1,500+ lines)
+│   │       │   ├── TESTING.md                  # 35 test specifications (600+ lines)
+│   │       │   ├── TROUBLESHOOTING.md          # Common issues (500+ lines)
+│   │       │   └── RESEARCH-REFERENCES.md      # Complete bibliography (600+ lines)
+│   │       ├── PROJECT-STATUS-SNAPSHOT.md      # Previous work: Section 9 (82%)
+│   │       ├── SECTION-9-COMPLETE.md           # Section 9 summary
 │   │       ├── SECTION-9-IMPLEMENTATION-COMPLETE.md
 │   │       ├── HANDOFF-SECTION-9.md
-│   │       ├── EXECUTION-ROADMAP.md            # ⭐ Overall plan
+│   │       ├── EXECUTION-ROADMAP.md            # Overall 11-section plan
 │   │       ├── research/                       # RDF documentation
 │   │       ├── tests/                          # ⭐ Test artifacts (organized by phase)
 │   │       │   ├── STRUCTURE.md               # Complete test organization guide
@@ -126,7 +134,42 @@ Apex-Memory-System-Development/
 
 ## 🎯 Quick Reference: Temporal Implementation (Current Work)
 
-**Currently Active:** Section 9 just completed! Review these key documents:
+**Currently Active:** 🚀 **Graphiti + JSON Integration** (4-week implementation - Planning Complete)
+
+**NEW ACTIVE WORK:** See [`graphiti-json-integration/README.md`](upgrades/active/temporal-implementation/graphiti-json-integration/README.md) for complete documentation suite.
+
+### Current Phase: Graphiti + JSON Integration
+
+**Status:** 📝 Planning Complete | 🚀 Ready for Implementation
+**Timeline:** 4 weeks (4 phases)
+**Location:** `upgrades/active/temporal-implementation/graphiti-json-integration/`
+
+**Complete Documentation Suite (5 documents, 5,700+ lines):**
+
+1. **[README.md](upgrades/active/temporal-implementation/graphiti-json-integration/README.md)** - Entry point and quick start
+2. **[PLANNING.md](upgrades/active/temporal-implementation/graphiti-json-integration/PLANNING.md)** - Unified 4-week plan (700+ lines)
+3. **[IMPLEMENTATION.md](upgrades/active/temporal-implementation/graphiti-json-integration/IMPLEMENTATION.md)** - Step-by-step Tier 1 guide (1,500+ lines)
+4. **[TESTING.md](upgrades/active/temporal-implementation/graphiti-json-integration/TESTING.md)** - 35 test specifications (600+ lines)
+5. **[TROUBLESHOOTING.md](upgrades/active/temporal-implementation/graphiti-json-integration/TROUBLESHOOTING.md)** - Common issues (500+ lines)
+6. **[RESEARCH-REFERENCES.md](upgrades/active/temporal-implementation/graphiti-json-integration/RESEARCH-REFERENCES.md)** - Complete bibliography (600+ lines)
+
+**What This Upgrade Delivers:**
+
+- **Graphiti Integration** - Replace regex EntityExtractor with LLM extraction (90% accuracy)
+- **JSON Support** - StructuredData models with PostgreSQL JSONB storage
+- **Local Staging** - `/tmp/apex-staging/` replacing S3
+- **Two Workflows** - Separate DocumentIngestionWorkflow + StructuredDataIngestionWorkflow
+- **35 New Tests** - Preserving 121 Enhanced Saga baseline = 156 total tests
+
+**Start Here:** [`graphiti-json-integration/README.md`](upgrades/active/temporal-implementation/graphiti-json-integration/README.md)
+
+---
+
+### Previous Work: Section 9 Completed
+
+**Status:** ✅ Section 9 Complete (82% overall progress)
+
+Review these key documents:
 
 ### Essential Documentation (Start Here)
 
@@ -375,11 +418,48 @@ The `upgrades/` directory tracks the complete upgrade lifecycle with research-ba
 
 ---
 
-### 🚀 Active Upgrade: Temporal.io Integration
+### 🚀 Active Upgrade: Graphiti + JSON Integration
+
+**Status:** 📝 **Planning Complete** | 🚀 **Ready for Implementation**
+**Timeline:** 4 weeks (4 phases)
+**Priority:** Critical - Core Architecture Enhancement
+
+**Unified architecture upgrade: LLM-powered entity extraction, structured data ingestion, and local staging infrastructure.**
+
+**📂 Complete Documentation Suite:** [`graphiti-json-integration/README.md`](upgrades/active/temporal-implementation/graphiti-json-integration/README.md)
+
+**Implementation Phases:**
+
+- **Week 1: Graphiti Integration** - Replace regex EntityExtractor with LLM extraction (10 tests)
+- **Week 2: JSON Support** - StructuredData models + database writers (15 tests)
+- **Week 3: Staging Lifecycle** - Local `/tmp/apex-staging/` infrastructure (10 tests)
+- **Week 4: Two Workflows** - DocumentIngestionWorkflow + StructuredDataIngestionWorkflow
+
+**Key Deliverables:**
+
+- 90%+ entity extraction accuracy (vs. 60% regex baseline)
+- PostgreSQL JSONB storage for structured data
+- Local staging replacing S3 (faster dev iteration)
+- Two separate workflows for documents vs. structured data
+- 35 new tests + 121 Enhanced Saga baseline = 156 total tests
+- Zero breaking changes (feature flag: `ENABLE_GRAPHITI_EXTRACTION`)
+
+**Architecture Documents:**
+
+- **saga-graphiti-integration-plan.md** - Original Graphiti + JSON plan
+- **TD-003-ARCHITECTURE-REDESIGN.md** - Full architectural redesign
+- **PLANNING.md** - Unified 4-week implementation plan
+- **IMPLEMENTATION.md** - Step-by-step Tier 1-founded guide
+
+**Next Step:** Begin Week 1 - Graphiti Integration (see IMPLEMENTATION.md)
+
+---
+
+### ✅ Completed: Temporal.io Integration (Section 9)
 
 **Status:** ✅ **Section 9 Complete** (82% overall progress)
 **Timeline:** 11 sections total (Sections 1-9 done, 10-11 remaining)
-**Priority:** Critical - Production Infrastructure
+**Completion Date:** 2025-10-19
 
 **Complete Temporal.io workflow orchestration for document ingestion with 6-layer monitoring.**
 
