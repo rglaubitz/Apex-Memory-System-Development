@@ -79,6 +79,69 @@ This folder contains handoff documentation between implementation sections, ensu
 
 ---
 
+### HANDOFF-WEEK3-DAYS1-3.md
+**From:** Week 3 Days 1-3 (Staging Lifecycle Infrastructure)
+**To:** Week 3 Days 4-5 (Cleanup Activity + Metrics)
+**Date:** October 19, 2025
+**Upgrade:** Graphiti + JSON Integration
+
+**Key Handoffs:**
+- Local staging infrastructure implemented
+- 2 new Temporal activities (pull_and_stage, fetch_structured_data)
+- StagingManager service created
+- 11 tests passing (3 Day 1 + 3 Day 2 + 5 Day 3)
+- 175 total tests passing
+- Ready for cleanup activity and metrics
+
+**Activities Completed:**
+- Activity 8: pull_and_stage_document_activity
+- Activity 9: fetch_structured_data_activity
+
+**Services Created:**
+- StagingManager (directory creation, metadata tracking, TTL cleanup, disk monitoring)
+
+**Next Steps:**
+- Day 4: cleanup_staging_activity (Activity 10)
+- Day 5: Staging metrics (3 new Prometheus metrics + Grafana panel)
+
+---
+
+### HANDOFF-WEEK4-DAY1-PARTIAL.md
+**From:** Week 3 Complete (90% overall)
+**To:** Week 4 Day 1 Continuation
+**Date:** October 19, 2025
+**Upgrade:** Graphiti + JSON Integration
+**Status:** ⚠️ **PARTIAL/INCOMPLETE** - Context window limit approaching
+
+**Key Handoffs:**
+- Week 3 100% complete (Staging Lifecycle finished)
+- Week 4 Day 1 started but INCOMPLETE (~20% done)
+- DocumentIngestionWorkflow partially updated (Step 6 NOT added)
+- Tests NOT created yet
+- 179 baseline tests passing
+
+**Work Completed:**
+- ✅ Updated workflow imports (pull_and_stage, cleanup_staging)
+- ✅ Updated workflow signature (source_location instead of bucket/prefix)
+- ✅ Updated Step 1 (S3 download → staging)
+- ✅ Updated step numbers (1/6 through 5/6)
+
+**Work Remaining (CRITICAL):**
+- ⏳ Add Step 6: cleanup_staging_activity (code provided in handoff)
+- ⏳ Update success return (add staging_cleaned field)
+- ⏳ Update error handler (cleanup failed staging)
+- ⏳ Create 3 integration tests
+- ⏳ Run tests and verify baseline
+
+**Next Session:**
+- Continue Day 1 completion (~2 hours remaining)
+- Read HANDOFF-WEEK4-DAY1-PARTIAL.md for exact code to add
+- Use "Start Command" from handoff for instant continuation
+
+**⚠️ CRITICAL:** This handoff was created due to context window limits. The work is INCOMPLETE and must be finished in next session.
+
+---
+
 ## Purpose
 
 Handoff documents ensure:
