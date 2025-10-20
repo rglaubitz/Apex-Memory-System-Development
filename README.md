@@ -249,6 +249,23 @@ All tests are organized in `upgrades/active/temporal-implementation/tests/` with
 
 📘 **[Complete Test Structure](upgrades/active/temporal-implementation/tests/STRUCTURE.md)**
 
+### Pre-Deployment Testing Kit ⭐ NEW
+
+**Comprehensive validation suite** before moving to production:
+
+- **Testing Kit** - Complete pre-deployment validation in 3-4 hours
+- **6 Architectural Layers** - Database writers → Services → Activities → Workflows → API → Query Router
+- **Bottom-Up Testing** - Validate foundation before higher layers
+- **GO/NO-GO Decision** - Clear deployment criteria based on test results
+
+🧪 **[Testing Kit Guide](testing-kit/)** | 📋 **[Implementation Steps](testing-kit/IMPLEMENTATION.md)** | 📊 **[Results Template](testing-kit/results/RESULTS-TEMPLATE.md)**
+
+**What You'll Know After Testing:**
+- ✅/❌ System health at all 6 layers
+- ✅/❌ Integration points working correctly
+- ✅/❌ Performance metrics vs. targets (throughput, latency, cache hit rate)
+- ✅/❌ Production readiness (enhanced saga 121/121, metrics recording, zero critical errors)
+
 ### Fix-and-Document Workflow
 
 All Phase 2 testing follows this 5-step workflow for test failures:
@@ -306,6 +323,7 @@ python -m uvicorn apex_memory.main:app --reload --port 8000
 | Resource | Description |
 |----------|-------------|
 | [CLAUDE.md](CLAUDE.md) | Claude Code integration guide |
+| [testing-kit/](testing-kit/) ⭐ NEW | Pre-deployment testing kit (3-4 hours comprehensive validation) |
 | [research/](research/) | Research knowledge base with ADRs |
 | [upgrades/](upgrades/) | Active improvement plans |
 | [upgrades/active/temporal-implementation/tests/STRUCTURE.md](upgrades/active/temporal-implementation/tests/STRUCTURE.md) | Complete test organization guide |
