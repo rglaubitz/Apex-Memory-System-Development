@@ -1,0 +1,52 @@
+[project]
+name = "apex-mcp-server"
+version = "0.1.0"
+description = "Model Context Protocol server for Apex Memory System - Intelligent conversational memory with multi-query orchestration"
+authors = [
+    {name = "Apex Memory System", email = "noreply@apex-memory.com"}
+]
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+
+dependencies = [
+    "mcp>=1.2.1",
+    "httpx>=0.27.0",
+    "pydantic>=2.0.0",
+    "python-dotenv>=1.0.0",
+    "anthropic>=0.39.0",  # For ask_apex() LLM orchestration
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.23.0",
+    "pytest-cov>=4.1.0",
+    "black>=24.0.0",
+    "ruff>=0.1.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatchling.build.targets.wheel]
+packages = ["src/apex_mcp_server"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+
+[tool.black]
+line-length = 100
+target-version = ['py311']
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[project.scripts]
+apex-mcp-server = "apex_mcp_server.server:main"

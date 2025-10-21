@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "apex-memory": {
+      "command": "python",
+      "args": [
+        "-m",
+        "apex_mcp_server.server"
+      ],
+      "env": {
+        "APEX_API_URL": "http://localhost:8000",
+        "ANTHROPIC_API_KEY": "your-anthropic-api-key-here",
+        "DEFAULT_USER_ID": "default",
+        "DEFAULT_GROUP_ID": "default",
+        "ASK_APEX_MAX_QUERIES": "6"
+      }
+    }
+  }
+}
