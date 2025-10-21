@@ -1,0 +1,12 @@
+{
+  "query": "Detect anomalies in CAT 950 loader usage",
+  "description": "Test temporal analytics - anomaly detection feature",
+  "expected_features": [
+    "anomalies array present",
+    "each anomaly has timestamp, value, severity",
+    "severity in [low, medium, high]",
+    "precision >= 0.90"
+  ],
+  "intent": "temporal",
+  "databases": ["graphiti"]
+}

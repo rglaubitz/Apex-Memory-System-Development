@@ -1,0 +1,11 @@
+{
+  "query": "Find all equipment communities",
+  "description": "Test community detection feature - should return communities with entity type Equipment",
+  "expected_features": [
+    "communities array present",
+    "each community has name, member_count, summary",
+    "summaries are LLM-generated (not empty)"
+  ],
+  "intent": "graph",
+  "databases": ["neo4j", "graphiti"]
+}

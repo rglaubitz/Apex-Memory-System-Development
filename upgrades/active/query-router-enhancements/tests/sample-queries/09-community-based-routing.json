@@ -1,0 +1,11 @@
+{
+  "query": "Find equipment issues in Heavy Equipment community",
+  "description": "Test community-based routing - route using community context",
+  "expected_features": [
+    "communities array includes Heavy Equipment",
+    "results filtered by community membership",
+    "community summary referenced in explanation"
+  ],
+  "intent": "graph",
+  "databases": ["neo4j", "graphiti"]
+}

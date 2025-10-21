@@ -1,0 +1,12 @@
+{
+  "query": "What is the connection between CAT loaders and shipment delays?",
+  "description": "Test graph analytics - shortest path between entities",
+  "expected_features": [
+    "shortest_path object present",
+    "nodes array with entity UUIDs",
+    "relationships array with relationship types",
+    "path_length >= 1"
+  ],
+  "intent": "graph",
+  "databases": ["neo4j"]
+}

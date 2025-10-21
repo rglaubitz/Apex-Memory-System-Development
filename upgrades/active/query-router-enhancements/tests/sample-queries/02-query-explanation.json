@@ -1,0 +1,13 @@
+{
+  "query": "Show me all CAT loaders",
+  "description": "Test query explanation feature - should return explanation with reasoning steps",
+  "expected_features": [
+    "explanation object present",
+    "why_these_results field populated",
+    "reasoning_steps array (3-5 steps)",
+    "alternative_queries array (3 suggestions)",
+    "confidence > 0.8"
+  ],
+  "intent": "semantic",
+  "databases": ["qdrant", "postgres", "neo4j"]
+}

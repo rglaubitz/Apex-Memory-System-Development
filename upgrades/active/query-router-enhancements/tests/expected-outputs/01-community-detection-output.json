@@ -1,0 +1,25 @@
+{
+  "query": "Find all equipment communities",
+  "results": [],
+  "communities": [
+    {
+      "id": "c-001",
+      "name": "Heavy Equipment",
+      "member_count": 12,
+      "summary": "This community represents heavy construction equipment manufactured by Caterpillar (CAT). The entities are primarily loaders and excavators used in mining and construction operations. Common characteristics include diesel engines, hydraulic systems, and high load capacity."
+    },
+    {
+      "id": "c-002",
+      "name": "Vehicle Maintenance",
+      "member_count": 8,
+      "summary": "This community focuses on vehicle and equipment maintenance activities. Entities include maintenance records, service intervals, and parts inventory related to heavy equipment upkeep."
+    }
+  ],
+  "explanation": null,
+  "metadata": {
+    "intent": "graph",
+    "databases_queried": ["neo4j", "graphiti"],
+    "query_time_ms": 1850,
+    "cache_hit": false
+  }
+}

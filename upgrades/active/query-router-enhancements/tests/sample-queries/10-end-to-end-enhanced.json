@@ -1,0 +1,13 @@
+{
+  "query": "Show me equipment-related maintenance patterns and explain why these results are relevant",
+  "description": "Test complete enhanced query flow - all features together",
+  "expected_features": [
+    "communities array present",
+    "explanation object with reasoning",
+    "patterns array with temporal insights",
+    "graph_analytics object",
+    "confidence >= 0.85"
+  ],
+  "intent": "hybrid",
+  "databases": ["neo4j", "graphiti", "qdrant", "postgres"]
+}

@@ -1,0 +1,12 @@
+{
+  "query": "What patterns exist across all equipment maintenance issues?",
+  "description": "Test GraphRAG - multi-hop reasoning with community context",
+  "expected_features": [
+    "communities array present",
+    "subgraph object with nodes and edges",
+    "answer field with LLM-generated response",
+    "cross-community insights"
+  ],
+  "intent": "graph",
+  "databases": ["neo4j", "graphiti"]
+}

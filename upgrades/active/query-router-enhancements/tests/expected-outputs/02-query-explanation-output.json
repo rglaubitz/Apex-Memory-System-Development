@@ -1,0 +1,42 @@
+{
+  "query": "Show me all CAT loaders",
+  "results": [
+    {
+      "uuid": "e-001",
+      "name": "CAT 950 Loader",
+      "type": "Equipment",
+      "summary": "Heavy loader for construction",
+      "score": 0.92
+    },
+    {
+      "uuid": "e-002",
+      "name": "CAT 966 Loader",
+      "type": "Equipment",
+      "summary": "Medium loader for mining",
+      "score": 0.88
+    }
+  ],
+  "communities": [],
+  "explanation": {
+    "why_these_results": "These results were returned because they directly match your query for CAT loaders. The system identified 'CAT' as a brand name and 'loader' as an equipment type, then performed a hybrid search combining semantic similarity and metadata filtering. Both results have high confidence scores (>0.85) indicating strong relevance to your query.",
+    "reasoning_steps": [
+      "Intent Classification: Semantic search (confidence: 0.95)",
+      "Brand Extraction: Identified 'CAT' as Caterpillar equipment",
+      "Entity Type Detection: Detected 'loader' as equipment type",
+      "Database Routing: Queried Qdrant (vector) + PostgreSQL (metadata) + Neo4j (relationships)",
+      "Result Ranking: Sorted by semantic similarity score"
+    ],
+    "alternative_queries": [
+      "Show me Caterpillar equipment used in construction",
+      "Find all heavy loaders manufactured by CAT",
+      "What are the specifications of CAT 950 and CAT 966 loaders?"
+    ],
+    "confidence": 0.92
+  },
+  "metadata": {
+    "intent": "semantic",
+    "databases_queried": ["qdrant", "postgres", "neo4j"],
+    "query_time_ms": 450,
+    "cache_hit": false
+  }
+}

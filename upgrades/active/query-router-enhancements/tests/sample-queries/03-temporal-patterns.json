@@ -1,0 +1,12 @@
+{
+  "query": "Predict equipment maintenance patterns for next quarter",
+  "description": "Test temporal analytics - pattern prediction feature",
+  "expected_features": [
+    "patterns array present",
+    "each pattern has description, confidence, type",
+    "confidence >= 0.85",
+    "pattern types include trend/seasonal"
+  ],
+  "intent": "temporal",
+  "databases": ["graphiti"]
+}

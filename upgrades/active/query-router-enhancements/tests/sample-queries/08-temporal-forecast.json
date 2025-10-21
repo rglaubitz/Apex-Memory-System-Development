@@ -1,0 +1,12 @@
+{
+  "query": "Forecast equipment maintenance costs for next 30 days",
+  "description": "Test temporal analytics - trend forecasting (ARIMA)",
+  "expected_features": [
+    "forecast object present",
+    "predicted_values array with 30 entries",
+    "each value has date, value, confidence_lower, confidence_upper",
+    "accuracy >= 0.75"
+  ],
+  "intent": "temporal",
+  "databases": ["graphiti"]
+}

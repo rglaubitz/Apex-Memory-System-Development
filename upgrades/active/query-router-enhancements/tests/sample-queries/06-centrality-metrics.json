@@ -1,0 +1,12 @@
+{
+  "query": "Which equipment is most critical in the knowledge graph?",
+  "description": "Test graph analytics - centrality metrics (PageRank)",
+  "expected_features": [
+    "graph_analytics object present",
+    "centrality scores for top entities",
+    "pagerank values between 0 and 1",
+    "sorted by importance (descending)"
+  ],
+  "intent": "graph",
+  "databases": ["neo4j"]
+}

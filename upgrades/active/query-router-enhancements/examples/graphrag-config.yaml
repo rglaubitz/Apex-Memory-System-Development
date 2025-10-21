@@ -1,0 +1,195 @@
+# GraphRAG Configuration
+# Purpose: Configure Graph Retrieval-Augmented Generation features
+
+graphrag:
+  # Enable/disable GraphRAG feature
+  enabled: true
+
+  # Context Construction
+  context:
+    # Max communities in context
+    # Recommendation: 3-5 communities for optimal token usage
+    max_communities: 5
+
+    # Max entities in context
+    # Recommendation: 10-15 entities with full descriptions
+    max_entities: 15
+
+    # Max relationships in context
+    # Recommendation: 10 key relationships
+    max_relationships: 10
+
+    # Include temporal patterns
+    # Adds pattern detection results to context
+    include_temporal_patterns: true
+
+    # Include graph analytics
+    # Adds centrality metrics and shortest paths
+    include_graph_analytics: true
+
+  # Multi-Hop Traversal
+  traversal:
+    # Max hops from seed entities
+    # Higher = more comprehensive but slower
+    # Recommendation: 2-3 hops for most queries
+    max_hops: 3
+
+    # Max nodes in subgraph
+    # Prevents context window overflow
+    max_nodes: 50
+
+    # Ranking method for node importance
+    # Options: degree, pagerank, betweenness
+    node_ranking: "degree"
+
+  # LLM Generation
+  llm:
+    # Model for answer generation
+    # Options: claude-3-5-sonnet-20241022, claude-3-opus-20240229
+    model: "claude-3-5-sonnet-20241022"
+
+    # Temperature (0.0-1.0)
+    # Lower = more factual/deterministic
+    # Higher = more creative
+    # Recommendation: 0.3 for factual queries
+    temperature: 0.3
+
+    # Max tokens for answer
+    # Recommendation: 500-1000 for detailed answers
+    max_tokens: 1000
+
+    # System prompt template
+    # File path to custom system prompt
+    # Leave null to use default
+    system_prompt_template: null
+
+  # Community-Based Retrieval
+  community_retrieval:
+    # Enable community-based retrieval
+    enabled: true
+
+    # Ranking method for communities
+    # Options: semantic_similarity, size, diversity
+    ranking_method: "semantic_similarity"
+
+    # Min community size to consider
+    min_community_size: 5
+
+    # Max seed entities per community
+    # Used for multi-hop traversal starting points
+    max_seeds_per_community: 5
+
+  # Temporal GraphRAG
+  temporal:
+    # Enable temporal GraphRAG features
+    enabled: true
+
+    # Default lookback window (days)
+    # Used when query doesn't specify time range
+    default_lookback_days: 90
+
+    # Enable pattern detection
+    # Adds temporal patterns to context
+    enable_pattern_detection: true
+
+    # Enable anomaly detection
+    # Flags unusual temporal behavior
+    enable_anomaly_detection: true
+
+  # Cross-Community Reasoning
+  cross_community:
+    # Enable cross-community path finding
+    enabled: true
+
+    # Max paths between communities
+    # Prevents explosion of results
+    max_paths: 10
+
+    # Max path length
+    # Shorter paths = stronger connections
+    max_path_length: 5
+
+# Caching
+cache:
+  # Cache GraphRAG results
+  enabled: true
+
+  # Cache TTL (seconds)
+  # GraphRAG is expensive, long TTL recommended
+  ttl: 3600  # 1 hour
+
+  # Cache key includes:
+  # - Query text
+  # - Max communities
+  # - Max hops
+  # - Temporal window
+  cache_key_components:
+    - query
+    - max_communities
+    - max_hops
+    - temporal_window
+
+# Performance Tuning
+performance:
+  # Parallel retrieval
+  # Fetch communities, embeddings, and graph data in parallel
+  parallel_retrieval: true
+
+  # Batch community summaries
+  # Generate summaries for multiple communities at once
+  batch_summaries: true
+
+  # Max concurrent LLM calls
+  max_concurrent_llm: 3
+
+  # Timeout for graph traversal (ms)
+  # Prevents slow queries from blocking
+  graph_traversal_timeout_ms: 5000
+
+  # Timeout for LLM generation (ms)
+  llm_generation_timeout_ms: 10000
+
+# Token Budgeting
+token_budget:
+  # Max tokens for context
+  # Claude 3.5 Sonnet: 200k context window
+  # Recommendation: Use 15-20% for context
+  max_context_tokens: 3000
+
+  # Token allocation by component
+  allocation:
+    communities: 500      # Community summaries
+    entities: 1500        # Entity descriptions
+    relationships: 500    # Relationship descriptions
+    patterns: 500         # Temporal patterns
+
+# Quality Assurance
+quality:
+  # Minimum confidence threshold
+  # GraphRAG results below threshold are flagged
+  min_confidence: 0.75
+
+  # Require minimum context
+  # Fail gracefully if insufficient context
+  min_communities: 1
+  min_entities: 5
+
+  # Confidence calculation weights
+  confidence_weights:
+    community_coverage: 0.4   # More communities = higher confidence
+    subgraph_size: 0.4        # Larger subgraph = higher confidence
+    pattern_detection: 0.2    # Patterns detected = higher confidence
+
+# Feature Flags
+feature_flags:
+  # Enable query explanation
+  # Adds explanation of how GraphRAG reasoned
+  enable_explanations: true
+
+  # Enable alternative query suggestions
+  # Suggests 3 related queries
+  enable_alternatives: true
+
+  # Enable confidence scoring
+  # Calculates and returns confidence level
+  enable_confidence: true

@@ -1,0 +1,108 @@
+# Community Detection Configuration
+# Purpose: Configure community detection and summary generation
+
+community_detection:
+  # Enable/disable community detection feature
+  enabled: true
+
+  # Minimum community size (filter out small clusters)
+  # Development: 2-3 (see all communities)
+  # Production: 5-10 (meaningful communities only)
+  min_community_size: 5
+
+  # Enable hierarchical community structure
+  # Note: Increases complexity, disable unless needed
+  enable_hierarchical: false
+
+  # Cache configuration
+  cache:
+    # Cache TTL for community detection results (seconds)
+    # Communities change infrequently, so long TTL is safe
+    detection_ttl: 3600  # 1 hour
+
+    # Cache TTL for community summaries (seconds)
+    # Summaries are expensive to generate (GPT-5 calls)
+    summary_ttl: 86400  # 24 hours
+
+# LLM Configuration for Community Summaries
+llm:
+  # Model for summary generation
+  # Options: gpt-5, gpt-4-turbo
+  model: "gpt-5"
+
+  # Temperature (0.0-1.0)
+  # Lower = more consistent summaries
+  # Higher = more creative summaries
+  temperature: 0.3
+
+  # Max tokens per summary
+  # Recommendation: 100-200 for concise summaries
+  max_tokens: 150
+
+  # Truncate member list in prompts
+  # GPT-5 doesn't need to see all members
+  # 20-30 provides sufficient context
+  max_members_in_prompt: 20
+
+# GraphRAG Integration
+graphrag:
+  # Enable GraphRAG features
+  enabled: true
+
+  # Max communities to include in context
+  # More communities = better context but higher token usage
+  max_communities_in_context: 5
+
+  # Max hops for multi-hop graph traversal
+  # Higher = more comprehensive but slower
+  max_hops: 3
+
+  # Max nodes in subgraph extraction
+  # Prevents context window overflow
+  max_nodes: 50
+
+  # Community ranking method
+  # Options: semantic_similarity, degree_centrality, pagerank
+  ranking_method: "semantic_similarity"
+
+# Performance Tuning
+performance:
+  # Batch size for parallel summary generation
+  # Higher = faster but more API load
+  parallel_summary_batch_size: 5
+
+  # Enable async processing
+  async_enabled: true
+
+  # Max concurrent GPT-5 API calls
+  # Stay within rate limits
+  max_concurrent_llm_calls: 5
+
+# Feature Flags
+feature_flags:
+  # Enable community summaries
+  # Can disable to use communities without LLM summaries
+  enable_summaries: true
+
+  # Enable cross-community path finding
+  # Useful for GraphRAG multi-community reasoning
+  enable_cross_community_paths: true
+
+  # Enable community insights
+  # Calculate additional metadata (avg age, common attributes, etc.)
+  enable_insights: true
+
+# Graphiti Integration
+graphiti:
+  # Enable community updates during ingestion
+  # Note: Only works with graphiti-core 0.23.0+
+  update_communities: true
+
+  # Community detection algorithm
+  # Options: louvain, label_propagation, leiden
+  # Recommendation: louvain (default, proven)
+  algorithm: "louvain"
+
+  # Group ID for communities
+  # Use "default" unless multi-tenant setup
+  group_id: "default"
