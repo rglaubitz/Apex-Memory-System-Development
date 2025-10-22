@@ -1057,51 +1057,114 @@ npx shadcn@latest add progress
 
 ---
 
-## Phase 3: Engagement Layer (Weeks 4-5)
+## Phase 3: Engagement Layer (Weeks 4-5) - Apple Minimalist Design
 
 **Priority:** 🟡 HIGH for user retention
 
-**Goal:** Make the UI "addictive" and "employees would use at all times"
+**Goal:** Intelligent engagement through Apple-level minimalist design
+
+**Design Philosophy:** Steve Jobs Apple aesthetic - sleek, simple, gorgeous, expensive-looking. **Not busy.**
 
 ### Why This Matters
 
 **User Behavior Problem:**
 - Users upload documents and don't return
-- No incentive to explore knowledge graph
-- No personalization or recommendations
-- System doesn't "pull" users back
+- No personalized intelligence surfaced
+- System doesn't guide discovery
+- No retention mechanism
 
-**Solution:**
-- Gamification (achievements, streaks, leaderboards)
-- Smart recommendations ("You might be interested in...")
-- Personalized dashboard
-- AI-generated daily briefings
+**Apple Minimalist Solution:**
+- **Hidden intelligence** - System learns, but UI stays clean
+- **Subtle notifications** - Small badges, no popups/toasts
+- **Integrated recommendations** - Invisible, woven into search results
+- **Minimal gamification** - Monochrome icons, profile-only, text-based
+- **Conversation-first** - iMessage-style home screen (not dashboard)
 
 **Impact:**
-- 80%+ daily active users
-- Users check system daily for insights
-- Increased knowledge discovery
-- "I can't imagine working without this tool"
+- 80%+ daily active users (through elegant design, not busy widgets)
+- Users check system daily for insights (via subtle notifications)
+- Increased knowledge discovery (through invisible intelligence)
+- "This feels like a premium Apple product"
 
 ### Deliverables
 
-#### Week 3: Gamification & Recommendations
+#### Week 4: Apple Minimalist Design System
 
-**3.1 Gamification System**
+**3.0 Design System Foundation**
 
-**Achievement Types:**
+**Core Principles:**
+1. **Spacious** - 2-3x typical spacing, breathing room
+2. **Monochrome** - 90% grayscale, single accent color
+3. **Typography-first** - Let text do the heavy lifting
+4. **Subtle depth** - Shadows, frosted glass (macOS Big Sur style)
+5. **One focal point** - Remove competing elements
 
-| Achievement | Trigger | Badge |
-|-------------|---------|-------|
-| Knowledge Explorer | Explore 10 documents | 🔍 Bronze Explorer |
-| Deep Diver | View 5+ graph hops | 🤿 Deep Diver |
-| Pattern Detective | Discover 3+ patterns | 🕵️ Detective |
-| Conversation Master | 50+ conversation messages | 💬 Master Chatter |
-| Team Player | Share 10+ documents | 🤝 Team Player |
-| Streak Keeper | 7-day streak | 🔥 Week Warrior |
-| Super Streaker | 30-day streak | 🏆 Month Master |
+**Color Palette:**
+```typescript
+const colors = {
+  // Primary (90% of UI)
+  background: '#FFFFFF',
+  surface: '#F5F5F7', // Apple gray
+  text: '#1D1D1F',     // Almost black
+  textSecondary: '#86868B', // System gray
 
-**Database Schema:**
+  // Accent (10% of UI)
+  accent: '#007AFF',   // Apple blue
+
+  // Depth
+  shadow: 'rgba(0, 0, 0, 0.08)',
+  glass: 'rgba(255, 255, 255, 0.8)'
+};
+```
+
+**Typography:**
+```typescript
+// SF Pro or Inter
+const typography = {
+  display: { size: 32, weight: 600, lineHeight: 1.2 },
+  headline: { size: 24, weight: 600, lineHeight: 1.3 },
+  body: { size: 16, weight: 400, lineHeight: 1.6 },
+  caption: { size: 14, weight: 400, lineHeight: 1.5 }
+};
+```
+
+**Spacing Scale:**
+```typescript
+const spacing = {
+  xs: 8,
+  sm: 16,
+  md: 24,
+  lg: 32,
+  xl: 48,
+  xxl: 64
+};
+```
+
+#### Week 4: Minimal Gamification & Hidden Intelligence
+
+**3.1 Minimal Gamification System (Apple Style)**
+
+**Achievement Types (Monochrome Icons Only):**
+
+| Achievement | Trigger | Icon | Display |
+|-------------|---------|------|---------|
+| Knowledge Explorer | Explore 10 documents | ⬡ | Profile only |
+| Deep Diver | View 5+ graph hops | ⬢ | Profile only |
+| Pattern Detective | Discover 3+ patterns | ⬣ | Profile only |
+| Conversation Master | 50+ conversation messages | ⬤ | Profile only |
+| Team Player | Share 10+ documents | ⬥ | Profile only |
+| Streak Keeper | 7-day streak | Text: "7 days" | Profile only |
+
+**Key Design Changes:**
+- ❌ No emoji badges (🔍🤿🕵️)
+- ❌ No popups/toasts when earned
+- ❌ No leaderboards (unless user opts in via settings)
+- ✅ Monochrome SF Symbols / Lucide icons
+- ✅ Shown only in profile menu (hidden by default)
+- ✅ Simple list: "Knowledge Explorer • Earned Oct 21"
+- ✅ Subtle fade animation (no bounce)
+
+**Database Schema (unchanged):**
 
 ```sql
 CREATE TABLE user_achievements (
@@ -1109,13 +1172,13 @@ CREATE TABLE user_achievements (
     user_uuid UUID REFERENCES users(uuid),
     achievement_type VARCHAR(100) NOT NULL,
     achieved_at TIMESTAMP DEFAULT NOW(),
-    metadata JSONB -- Additional context (e.g., streak count)
+    metadata JSONB
 );
 
 CREATE TABLE user_activity (
     uuid UUID PRIMARY KEY,
     user_uuid UUID REFERENCES users(uuid),
-    activity_type VARCHAR(100) NOT NULL, -- 'document_view' | 'graph_explore' | 'message_sent'
+    activity_type VARCHAR(100) NOT NULL,
     metadata JSONB,
     created_at TIMESTAMP DEFAULT NOW()
 );
@@ -1130,30 +1193,32 @@ CREATE TABLE user_streaks (
 ```
 
 **Frontend Components:**
-- `AchievementBadge.tsx` - Badge UI with animations
-- `AchievementToast.tsx` - "You earned a badge!" notification
-- `StreakCounter.tsx` - Current streak display
-- `Leaderboard.tsx` - Team leaderboard (optional)
-- `AchievementsPanel.tsx` - Full achievement gallery
+- `AchievementsPanel.tsx` - Profile-only view, monochrome icons, clean list
+- `StreakIndicator.tsx` - Text-only: "7 days" (small, gray text)
+- ~~`AchievementToast.tsx`~~ - REMOVED (no popups)
+- ~~`Leaderboard.tsx`~~ - REMOVED (opt-in only, not default)
 
-**3.2 Smart Recommendations Engine**
+**3.2 Invisible Intelligence (Integrated Recommendations)**
 
-**Recommendation Types:**
+**Design Philosophy:** Recommendations exist but are **invisible** - woven into existing UI, not separate widgets.
 
-1. **"You might be interested in..."** - Content-based filtering
-   - Based on recently viewed documents
-   - Based on search history
-   - Based on graph exploration patterns
+**Integration Points:**
 
-2. **"New connections discovered"** - Graph-based recommendations
-   - New relationships added since last visit
-   - Trending entities in your teams
+1. **Search Results (Top Result)**
+   - If user searches "equipment", top result is recommended document
+   - Subtle gray text: "Based on your recent activity"
+   - No separate "Recommendations" section
 
-3. **"Trending topics"** - Collaborative filtering
-   - Popular documents in your team
-   - Most explored graph nodes this week
+2. **Conversation Suggestions**
+   - When opening conversation: "Continue your discussion about..."
+   - Single suggestion, not multiple cards
+   - Dismissible with X
 
-**Implementation:**
+3. **Graph Exploration**
+   - "Related nodes you haven't explored" (small badge count)
+   - Only shown when relevant, not always visible
+
+**Implementation (Backend unchanged):**
 
 ```python
 # apex-memory-system/src/apex_memory/services/recommendation_service.py
@@ -1182,64 +1247,106 @@ class Recommendation(BaseModel):
     confidence_score: float
 ```
 
-**Frontend Components:**
-- `RecommendationCard.tsx` - Single recommendation UI
-- `RecommendationFeed.tsx` - Scrollable feed
-- `TrendingTopics.tsx` - Sidebar widget
+**Frontend Components (Redesigned):**
+- ~~`RecommendationCard.tsx`~~ - REMOVED (integrated into search)
+- ~~`RecommendationFeed.tsx`~~ - REMOVED (no separate feed)
+- ~~`TrendingTopics.tsx`~~ - REMOVED (no sidebar widgets)
+- `SearchResultsWithIntelligence.tsx` - Search results + top recommended result (seamless)
 
-**3.3 Personalized Dashboard**
+**3.3 Hidden Dashboard (Not Default Landing)**
 
-**Dashboard Layout:**
+**Design Philosophy:** Dashboard exists but is **hidden by default**. Home screen is **Conversation** (iMessage-style).
+
+**Dashboard Access:**
+- Not default landing screen
+- Accessible via menu icon (top-right)
+- User navigates to it explicitly
+
+**Minimal Dashboard Layout (When Shown):**
 
 ```
-┌──────────────────────────────────────────────────────────────┐
-│ Good morning, [User]! Here's what's new in your knowledge   │
-│ base...                                                       │
-├───────────────────┬──────────────────────┬───────────────────┤
-│                   │                      │                   │
-│ Your Stats        │ Recent Activity      │ Recommendations   │
-│                   │                      │                   │
-│ 🔥 7-day streak   │ • Viewed "CAT 950"  │ You might be      │
-│ 🏆 5 achievements │ • Searched "hydraul" │ interested in:    │
-│ 📊 127 docs       │ • Exported graph    │                   │
-│    explored       │                      │ • "Maintenance    │
-│                   │ [View All]           │    Schedules"     │
-│ [View Profile]    │                      │ • "Equipment DB"  │
-│                   │                      │                   │
-│                   │                      │ [More]            │
-├───────────────────┴──────────────────────┴───────────────────┤
-│ AI-Generated Daily Briefing                                  │
-│ ────────────────────────────────────────────────────────────│
-│ "Based on your recent activity, here are key insights:      │
-│                                                              │
-│ 1. New maintenance patterns detected for CAT equipment      │
-│ 2. 3 colleagues also exploring hydraulic systems            │
-│ 3. 12 new documents added to your favorite topics"          │
-│                                                              │
-│ [Read Full Briefing]                                         │
-└──────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────┐
+│                                                         │
+│                     Welcome Back                        │
+│                                                         │
+│                     ───────────                         │
+│                                                         │
+│                    127 documents explored               │
+│                                                         │
+│                                                         │
+│                    [Start Conversation]                 │
+│                                                         │
+│                                                         │
+│                    Recent Activity                      │
+│                    • Viewed "CAT 950 Loader"           │
+│                    • 2 hours ago                        │
+│                                                         │
+│                                                         │
+│                    [View Profile]                       │
+│                                                         │
+└─────────────────────────────────────────────────────────┘
 ```
 
-**Components:**
-- `PersonalDashboard.tsx` - Main dashboard layout
-- `UserStatsWidget.tsx` - Achievements, streaks, stats
-- `RecentActivityWidget.tsx` - Timeline of recent actions
-- `AIBriefingWidget.tsx` - Daily AI-generated summary
-- `QuickActionsWidget.tsx` - Favorite queries, saved filters
+**Key Design Principles:**
+- Single column (no grid layout)
+- Generous spacing (3x typical)
+- Show 1 key metric at a time
+- No widgets/cards competing for attention
+- Typography-driven (no icons/graphics)
+- Pagination for more insights (swipe/arrows)
 
-#### Week 4: AI Briefings & Analytics
+**Components (Redesigned):**
+- `MinimalDashboard.tsx` - Single-column, spacious layout
+- ~~`UserStatsWidget.tsx`~~ - REMOVED (stats shown as simple text)
+- ~~`RecentActivityWidget.tsx`~~ - SIMPLIFIED (single recent item)
+- ~~`AIBriefingWidget.tsx`~~ - MOVED to notification badge (see 3.4)
+- ~~`QuickActionsWidget.tsx`~~ - REMOVED (conversation is primary action)
 
-**3.4 AI-Generated Daily Briefings**
+#### Week 5: Subtle Briefings & Analytics
 
-**Briefing Content:**
+**3.4 AI-Generated Daily Briefings (Subtle Notification)**
 
-1. **New Documents** - Documents added since last login
-2. **Trending Topics** - Popular topics in your team
-3. **Pattern Detection** - New patterns discovered
-4. **Activity Summary** - Your knowledge graph growth
-5. **Recommendations** - Top 3 documents to explore
+**Design Philosophy:** Briefings exist but don't interrupt. Small badge on menu icon, user clicks when ready.
 
-**Implementation:**
+**Notification Pattern:**
+1. Briefing generates overnight (cron job)
+2. When user opens app: Small blue badge on menu icon (no popup, no toast)
+3. User clicks menu icon → sees "New Insights" item with badge
+4. Clicks "New Insights" → Full-screen elegant text view
+
+**Briefing View (Typography-Focused):**
+
+```
+┌──────────────────────────────────────────────────────┐
+│                                                      │
+│                                                      │
+│                Today's Insights                      │
+│                October 21                            │
+│                                                      │
+│         ─────────────────────────────                │
+│                                                      │
+│                                                      │
+│  New patterns detected in your knowledge graph.     │
+│  3 colleagues explored similar topics this week.    │
+│                                                      │
+│                                                      │
+│                [View Details]                        │
+│                                                      │
+│                                                      │
+│                  [Dismiss]                           │
+│                                                      │
+│                                                      │
+└──────────────────────────────────────────────────────┘
+```
+
+**Key Design Elements:**
+- Serif font for headlines (elegant, premium)
+- Generous line-height (1.8)
+- Centered text (Apple-style)
+- No cards, no widgets, pure typography
+- White space dominant
+
+**Implementation (Backend unchanged):**
 
 ```python
 # apex-memory-system/src/apex_memory/services/briefing_service.py
@@ -1267,21 +1374,30 @@ class DailyBriefing(BaseModel):
     generated_at: datetime
 ```
 
-**Frontend Components:**
-- `DailyBriefing.tsx` - Full briefing page
-- `BriefingCard.tsx` - Collapsed briefing card
-- `BriefingNotification.tsx` - "New briefing available"
+**Frontend Components (Redesigned):**
+- `BriefingView.tsx` - Full-screen elegant typography view
+- `MenuBadge.tsx` - Small blue badge on menu icon
+- ~~`BriefingCard.tsx`~~ - REMOVED (full-screen only, no cards)
+- ~~`BriefingNotification.tsx`~~ - REMOVED (badge replaces notification)
 
-**3.5 User Analytics & Tracking**
+**3.5 User Analytics & Tracking (Privacy-First)**
 
-**Tracked Metrics:**
+**Design Philosophy:** Track for improvement, respect privacy. Opt-in, not opt-out.
 
-- Documents viewed
-- Graph nodes explored
-- Messages sent (conversation)
-- Searches performed
-- Time spent in system
-- Knowledge graph growth (personal)
+**Tracked Metrics (Privacy-First):**
+- Documents viewed (count only, no content)
+- Graph nodes explored (count only, no data)
+- Messages sent (count only, no text)
+- Searches performed (count only, no queries)
+- Time spent in system (aggregate only)
+- Knowledge graph growth (personal stats only)
+
+**Privacy Controls:**
+- Analytics opt-in during onboarding (not hidden in settings)
+- Clear explanation: "Help us improve" (not mandatory)
+- User can disable anytime
+- No third-party analytics (Google Analytics, etc.)
+- Data stored locally (PostgreSQL, not external)
 
 **Implementation:**
 
@@ -1292,9 +1408,12 @@ export function trackActivity(
   activityType: string,
   metadata?: Record<string, any>
 ) {
+  // Only track if user opted in
+  if (!user.analyticsEnabled) return;
+
   api.post('/api/v1/analytics/track', {
     activity_type: activityType,
-    metadata,
+    metadata,  // Minimal metadata (counts, not content)
     timestamp: new Date().toISOString()
   });
 }
@@ -1307,120 +1426,139 @@ trackActivity('message_sent', { conversation_uuid: '...' });
 
 ### Technical Tasks
 
-**Week 3: Gamification & Recommendations**
+**Week 4: Apple Design System & Minimal Gamification**
 
-**Day 1: Gamification Backend**
-1. Create achievement database schema
-2. Implement achievement tracking service
-3. Create streak tracking logic
-4. Add activity logging system
+**Day 1: Design System Foundation**
+1. Create design system file (`design-system.ts`)
+2. Define color palette (monochrome + accent)
+3. Define typography scale (4 sizes max)
+4. Define spacing scale (6 values)
+5. Add shadow/depth utilities (subtle)
+6. Create frosted glass effect utility
 
-**Day 2: Gamification Frontend**
-5. Create AchievementBadge.tsx component
-6. Create StreakCounter.tsx component
-7. Add achievement toast notifications
-8. Create AchievementsPanel.tsx (full gallery)
+**Day 2: Minimal Gamification Backend**
+7. Create achievement database schema (unchanged)
+8. Implement achievement tracking service (unchanged)
+9. Create streak tracking logic (unchanged)
+10. Add activity logging system (unchanged)
 
-**Day 3: Recommendations Backend**
-9. Implement recommendation service
-10. Add content-based filtering logic
-11. Add collaborative filtering logic
-12. Create recommendation API endpoints
+**Day 3: Minimal Gamification Frontend**
+11. Create `AchievementsPanel.tsx` (profile-only, monochrome icons)
+12. Create `StreakIndicator.tsx` (text-only: "7 days")
+13. Remove all achievement popups/toasts
+14. Add subtle fade animation for achievements
 
-**Day 4: Recommendations Frontend**
-13. Create RecommendationCard.tsx
-14. Create RecommendationFeed.tsx
-15. Add "You might be interested in..." section
-16. Create TrendingTopics.tsx sidebar
-
-**Day 5: Testing Week 3**
-17. Write 12 gamification tests
-18. Write 8 recommendation tests
-19. Test achievement triggering
-20. Test streak counting accuracy
-21. Polish animations and UI
-
-**Week 4: Briefings & Dashboard**
-
-**Day 1: AI Briefings Backend**
-22. Implement briefing generation service
-23. Add pattern detection integration
-24. Create briefing API endpoints
-25. Schedule daily briefing generation (cron job)
-
-**Day 2: AI Briefings Frontend**
-26. Create DailyBriefing.tsx page
-27. Create BriefingCard.tsx widget
-28. Add briefing notifications
-29. Create "Read Full Briefing" modal
-
-**Day 3: Personalized Dashboard**
-30. Create PersonalDashboard.tsx layout
-31. Create UserStatsWidget.tsx
-32. Create RecentActivityWidget.tsx
-33. Create QuickActionsWidget.tsx
-34. Add widget customization (drag & drop)
-
-**Day 4: Analytics & Tracking**
-35. Implement analytics tracking service
-36. Add frontend tracking calls
-37. Create analytics dashboard (admin only)
-38. Add privacy controls (opt-out)
+**Day 4: Integrated Recommendations**
+15. Implement recommendation service (backend unchanged)
+16. Create `SearchResultsWithIntelligence.tsx` (seamless integration)
+17. Add "Based on your recent activity" subtle text
+18. Remove separate recommendation feed/cards
 
 **Day 5: Testing Week 4**
-39. Write 10 briefing tests
-40. Write 5 dashboard tests
-41. Test analytics tracking accuracy
-42. End-to-end testing of engagement features
-43. Performance testing (dashboard load time)
-44. Polish and bug fixes
+19. Write 20 tests (10 gamification + 10 recommendations)
+20. Test minimal design adherence (no busy widgets)
+21. Test integrated recommendations in search
+22. Polish animations (fade/slide only, no bounce)
+
+**Week 5: Subtle Briefings & Hidden Dashboard**
+
+**Day 1: Briefing Backend + Notification**
+23. Implement briefing generation service (backend unchanged)
+24. Schedule daily briefing generation (cron job)
+25. Create menu badge notification system
+26. Add briefing API endpoints
+
+**Day 2: Elegant Briefing View**
+27. Create `BriefingView.tsx` (full-screen typography-focused)
+28. Create `MenuBadge.tsx` (small blue badge)
+29. Add serif font for headlines (elegant)
+30. Remove all briefing cards/widgets/popups
+
+**Day 3: Hidden Dashboard**
+31. Create `MinimalDashboard.tsx` (single-column, spacious)
+32. Remove dashboard from default landing (Conversation is home)
+33. Add dashboard to menu navigation
+34. Show 1 metric at a time (pagination for more)
+
+**Day 4: Analytics & iMessage-Style Home**
+35. Implement analytics tracking service (privacy-first opt-in)
+36. Add frontend tracking calls
+37. Create opt-in onboarding flow
+38. Create `ConversationHome.tsx` (iMessage-style default landing)
+
+**Day 5: Testing Week 5 + Final Polish**
+39. Write 15 tests (5 briefing + 5 dashboard + 5 analytics)
+40. End-to-end testing of Apple minimalist design
+41. Verify no busy widgets/popups
+42. Test home screen is Conversation (not Dashboard)
+43. Performance testing (Lighthouse >90)
+44. Final design polish (spacing, shadows, typography)
 
 ### Testing Checklist
 
-**Gamification Tests (12 tests):**
-- ✅ Achievement unlocked when criteria met
-- ✅ Achievement toast displays correctly
-- ✅ Streak increments daily
-- ✅ Streak resets after missed day
-- ✅ Leaderboard displays top users
+**Minimal Gamification Tests (10 tests):**
+- ✅ Achievement unlocked when criteria met (backend)
+- ✅ Achievement displays in profile (monochrome icon)
+- ✅ No achievement popups/toasts appear
+- ✅ Streak increments daily (text-only)
+- ✅ Streak displays as "7 days" (no graphics)
 - ✅ Activity tracking records events
-- (+ 6 more, see TESTING.md)
+- ✅ Achievements use monochrome icons only
+- ✅ Fade animation is subtle (no bounce)
+- ✅ Leaderboard opt-in only (not default)
+- ✅ Profile view is clean (no busy widgets)
 
-**Recommendations Tests (8 tests):**
-- ✅ Content-based recommendations generated
-- ✅ Collaborative filtering works
+**Integrated Recommendations Tests (10 tests):**
+- ✅ Content-based recommendations generated (backend)
+- ✅ Recommendations integrated into search results (top result)
+- ✅ "Based on your recent activity" text displays (gray, subtle)
+- ✅ No separate recommendation feed/cards exist
+- ✅ Collaborative filtering works (backend)
+- ✅ Single recommendation max (not multiple cards)
+- ✅ Recommendation dismissible
+- ✅ No "Trending Topics" sidebar
 - ✅ Recommendations update with user activity
-- ✅ "You might be interested in" displays
-- ✅ Trending topics accurate
-- (+ 3 more, see TESTING.md)
+- ✅ UI remains clean (no visual clutter)
 
-**Briefings Tests (10 tests):**
-- ✅ Daily briefing generated
-- ✅ Briefing includes new documents
-- ✅ Briefing includes patterns
-- ✅ Briefing notification appears
-- ✅ Briefing exports to PDF
-- (+ 5 more, see TESTING.md)
+**Subtle Briefings Tests (5 tests):**
+- ✅ Daily briefing generates overnight (cron job)
+- ✅ Menu badge appears (small blue dot)
+- ✅ No popup/toast on briefing generation
+- ✅ Briefing view is typography-focused (elegant)
+- ✅ Badge disappears after dismissal
 
-**Dashboard Tests (5 tests):**
-- ✅ Dashboard loads user stats
-- ✅ Widgets customizable
-- ✅ Recent activity displays
-- ✅ Quick actions work
+**Hidden Dashboard Tests (5 tests):**
+- ✅ Home screen is Conversation (not Dashboard)
+- ✅ Dashboard accessible via menu
+- ✅ Dashboard is single-column with generous spacing
+- ✅ Shows 1 metric at a time (not multiple widgets)
 - ✅ Dashboard responsive on mobile
+
+**Apple Minimalist Design Tests (5 tests):**
+- ✅ No busy widgets on any screen
+- ✅ Color palette is monochrome + single accent
+- ✅ Typography follows scale (4 sizes max)
+- ✅ Spacing is generous (2-3x typical)
+- ✅ Animations are subtle (fade/slide only, no bounce)
 
 ### Success Criteria
 
 **Phase 3 Complete When:**
-- ✅ All 35 tests passing (12 + 8 + 10 + 5)
-- ✅ Achievements unlock and display
-- ✅ Streaks track accurately
-- ✅ Recommendations personalized per user
-- ✅ Daily briefing generates automatically
-- ✅ Personalized dashboard customizable
-- ✅ Analytics tracking working
-- ✅ UI is polished and engaging
-- ✅ Users report system as "addictive"
+- ✅ All 35 tests passing (10 + 10 + 5 + 5 + 5)
+- ✅ **Apple minimalist aesthetic achieved** ("expensive-looking, not busy")
+- ✅ Home screen is Conversation (iMessage-style)
+- ✅ No busy widgets, popups, or toasts on any screen
+- ✅ Color palette is monochrome (90%) + single accent (10%)
+- ✅ Achievements unlock (backend) but no visual clutter (profile-only, monochrome)
+- ✅ Streaks track accurately (text-only: "7 days")
+- ✅ Recommendations invisible (integrated into search results)
+- ✅ Daily briefing generates overnight (subtle badge notification)
+- ✅ Dashboard hidden by default (accessible via menu)
+- ✅ Analytics tracking working (privacy-first opt-in)
+- ✅ Typography-focused design (generous line-height, 4 sizes max)
+- ✅ Generous spacing (2-3x typical, breathing room)
+- ✅ Subtle animations only (fade/slide, no bounce)
+- ✅ Users report system as "feels like a premium Apple product"
 
 ---
 
