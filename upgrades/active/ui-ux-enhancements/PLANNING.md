@@ -1,7 +1,7 @@
 # UI/UX Enhancements - Implementation Planning
 
 **Upgrade:** UI/UX Enhancements
-**Duration:** 6 weeks (4 implementation phases + 2 polish)
+**Duration:** 7 weeks (5 implementation phases + 2 polish)
 **Start Date:** TBD
 **Target Completion:** TBD
 **Status:** 📝 Planning Complete
@@ -14,12 +14,13 @@
 2. [Timeline Overview](#timeline-overview)
 3. [Phase 1: Authentication Foundation (Week 1)](#phase-1-authentication-foundation-week-1)
 4. [Phase 2: AI Conversation Hub (Week 2)](#phase-2-ai-conversation-hub-week-2)
-5. [Phase 3: Engagement Layer (Weeks 3-4)](#phase-3-engagement-layer-weeks-3-4)
-6. [Phase 4: Collaboration & Polish (Weeks 5-6)](#phase-4-collaboration--polish-weeks-5-6)
-7. [Dependencies & Prerequisites](#dependencies--prerequisites)
-8. [Risk Mitigation](#risk-mitigation)
-9. [Success Criteria](#success-criteria)
-10. [Resource Requirements](#resource-requirements)
+5. [Phase 2.5: Claude Agents SDK Integration (Week 3)](#phase-25-claude-agents-sdk-integration-week-3)
+6. [Phase 3: Engagement Layer (Weeks 4-5)](#phase-3-engagement-layer-weeks-4-5)
+7. [Phase 4: Collaboration & Polish (Weeks 6-7)](#phase-4-collaboration--polish-weeks-6-7)
+8. [Dependencies & Prerequisites](#dependencies--prerequisites)
+9. [Risk Mitigation](#risk-mitigation)
+10. [Success Criteria](#success-criteria)
+11. [Resource Requirements](#resource-requirements)
 
 ---
 
@@ -56,16 +57,17 @@
 
 ### Implementation Approach
 
-**6 Weeks, 4 Phases:**
+**7 Weeks, 5 Phases:**
 
 | Phase | Timeline | Focus | Priority | Tests |
 |-------|----------|-------|----------|-------|
 | 1 | Week 1 | Authentication Foundation | BLOCKER | 12 |
 | 2 | Week 2 | AI Conversation Hub | CRITICAL | 15 |
-| 3 | Weeks 3-4 | Engagement Layer (Gamification, Personalization) | HIGH | 25 |
-| 4 | Weeks 5-6 | Collaboration & Polish | MEDIUM | 23 |
+| 2.5 | Week 3 | Claude Agents SDK Integration | CRITICAL | 20 |
+| 3 | Weeks 4-5 | Engagement Layer (Gamification, Personalization) | HIGH | 35 |
+| 4 | Weeks 6-7 | Collaboration & Polish | MEDIUM | 23 |
 
-**Total:** 75 new tests, 6-week timeline
+**Total:** 105 new tests, 7-week timeline
 
 ---
 
@@ -85,22 +87,28 @@ Week 2: AI Conversation Hub (CRITICAL)
 ├── Day 4: Conversation history + Citations
 └── Day 5: Voice input + Testing
 
-Weeks 3-4: Engagement Layer (HIGH)
-├── Week 3:
+Week 3: Claude Agents SDK Integration (CRITICAL)
+├── Day 1-2: Vercel AI SDK integration (useChat hook + streaming)
+├── Day 3: Claude tool use implementation (knowledge graph queries)
+├── Day 4: Artifacts sidebar (Sheet component + visualizations)
+└── Day 5: Tool visualization + Testing
+
+Weeks 4-5: Engagement Layer (HIGH)
+├── Week 4:
 │   ├── Day 1-2: Gamification system (achievements, streaks)
 │   ├── Day 3-4: Smart recommendations engine
 │   └── Day 5: Personalized dashboard
-└── Week 4:
+└── Week 5:
     ├── Day 1-2: AI-generated briefings
     ├── Day 3-4: Analytics and tracking
     └── Day 5: Testing and polish
 
-Weeks 5-6: Collaboration & Polish (MEDIUM)
-├── Week 5:
+Weeks 6-7: Collaboration & Polish (MEDIUM)
+├── Week 6:
 │   ├── Day 1-2: Document sharing + Annotations
 │   ├── Day 3-4: Team activity feed
 │   └── Day 5: Collaborative graph exploration
-└── Week 6:
+└── Week 7:
     ├── Day 1-2: Advanced visualizations (3D, timeline, heatmaps)
     ├── Day 3: Performance optimization
     ├── Day 4: Accessibility audit (WCAG 2.1 AA)
@@ -599,7 +607,457 @@ export function useSpeechRecognition() {
 
 ---
 
-## Phase 3: Engagement Layer (Weeks 3-4)
+## Phase 2.5: Claude Agents SDK Integration (Week 3)
+
+**Priority:** 🟠 CRITICAL for modern AI experience
+
+**Goal:** Transform basic chat into AI-native interface with streaming, tool use, and artifacts
+
+### Why This Matters
+
+**Current State (Post-Phase 2):**
+- Basic conversation interface functional
+- Standard request/response pattern
+- Citations in text format
+- No visibility into Claude's reasoning
+- No visual artifacts for code/data
+
+**Problems:**
+- Users don't see "what Claude is doing"
+- No modern streaming experience (ChatGPT-like)
+- Tool calls are invisible to users
+- No artifacts sidebar for visualizations
+- Feels like "old-style chatbot"
+
+**Solution (Phase 2.5):**
+- **Vercel AI SDK** for modern streaming (useChat hook)
+- **Claude tool use** for knowledge graph queries
+- **Artifacts sidebar** for visualizing results (Sheet component from Shadcn/ui)
+- **Tool visualization** showing Claude's reasoning steps
+
+**Impact:**
+- Modern "ChatGPT for your knowledge graph" experience
+- Visual transparency (see Claude query the knowledge graph)
+- Rich artifact display (code, charts, documents in sidebar)
+- 10-20% higher user satisfaction vs. basic chat
+
+### Research Foundation
+
+This phase implements patterns from our comprehensive research:
+
+**Documentation References:**
+- Vercel AI SDK: `research/documentation/vercel-ai-sdk-overview.md`
+- useChat hook: `research/documentation/usechat-hook.md`
+- Claude tool use: `research/documentation/tool-use-api.md` + `apex-tool-definitions.md`
+- Artifacts layout: `research/documentation/artifacts-layout.md`
+- Sheet component: `research/documentation/sheet-component.md`
+- Tool visualization: `research/documentation/tool-visualization.md`
+- Streaming patterns: `research/documentation/streaming-ui-patterns.md`
+
+**Key Insight from Research:**
+> There is NO separate "Claude Agents SDK" - agentic workflows are built by combining:
+> 1. Tool use (Claude decides when to use tools)
+> 2. Streaming (progressive response rendering)
+> 3. Orchestration (multi-step workflows in application layer)
+
+### Deliverables
+
+#### 2.5.1 Vercel AI SDK Integration
+
+**Replace basic fetch with useChat hook:**
+
+```typescript
+// Before (Phase 2):
+const response = await fetch('/api/v1/conversation/query', {
+  method: 'POST',
+  body: JSON.stringify({ query, conversation_uuid })
+});
+
+// After (Phase 2.5):
+import { useChat } from 'ai/react';
+
+const {
+  messages,
+  input,
+  handleSubmit,
+  isLoading,
+  stop
+} = useChat({
+  api: '/api/apex/conversation',
+  onToolCall: async (toolCall) => {
+    // Execute Apex tools (search, query graph, etc.)
+    return await executeApexTool(toolCall);
+  },
+  onFinish: (message) => {
+    // Save conversation
+    saveConversation(messages);
+  }
+});
+```
+
+**Implementation:**
+- `apex-memory-system/src/apex_memory/frontend/src/hooks/useApexChat.ts` (new)
+- Update `ConversationHub.tsx` to use useChat
+- Add streaming message rendering
+- Add "Stop generation" button
+
+**Key Features:**
+- Progressive text streaming (word-by-word)
+- Automatic message state management
+- Built-in error handling and retry
+- Tool execution integration
+- Status tracking (idle → loading → streaming → error)
+
+#### 2.5.2 Claude Tool Use Implementation
+
+**Define 5 Apex-specific tools:**
+
+```typescript
+// apex-memory-system/src/apex_memory/api/tools.ts (new)
+
+export const apexTools = [
+  {
+    name: "search_apex_documents",
+    description: "Search the Apex knowledge base for documents",
+    input_schema: {
+      type: "object",
+      properties: {
+        query: { type: "string", description: "Search query" },
+        filters: {
+          type: "object",
+          properties: {
+            document_type: { type: "string", enum: ["pdf", "docx", "txt"] },
+            date_range: { type: "object" }
+          }
+        }
+      },
+      required: ["query"]
+    }
+  },
+  {
+    name: "query_knowledge_graph",
+    description: "Query the Neo4j knowledge graph for entities and relationships",
+    input_schema: {
+      type: "object",
+      properties: {
+        entity_name: { type: "string" },
+        relationship_type: { type: "string" },
+        depth: { type: "number", minimum: 1, maximum: 3 }
+      },
+      required: ["entity_name"]
+    }
+  },
+  {
+    name: "get_entity_timeline",
+    description: "Get temporal history of an entity from Graphiti",
+    input_schema: {
+      type: "object",
+      properties: {
+        entity_uuid: { type: "string" },
+        time_range: { type: "string", enum: ["1d", "7d", "30d", "all"] }
+      },
+      required: ["entity_uuid"]
+    }
+  },
+  {
+    name: "semantic_search",
+    description: "Semantic vector search across documents using Qdrant",
+    input_schema: {
+      type: "object",
+      properties: {
+        query: { type: "string" },
+        limit: { type: "number", default: 10 },
+        min_score: { type: "number", default: 0.7 }
+      },
+      required: ["query"]
+    }
+  },
+  {
+    name: "get_graph_stats",
+    description: "Get statistics about the knowledge graph",
+    input_schema: {
+      type: "object",
+      properties: {
+        stat_type: { type: "string", enum: ["node_count", "relationship_count", "communities", "centrality"] }
+      },
+      required: ["stat_type"]
+    }
+  }
+];
+```
+
+**Tool Execution Router:**
+
+```python
+# apex-memory-system/src/apex_memory/api/tool_executor.py (new)
+
+async def execute_tool(
+    tool_name: str,
+    tool_input: dict,
+    user_uuid: UUID
+) -> dict:
+    """
+    Execute Apex tool and return result.
+
+    Routes to appropriate service:
+    - search_apex_documents → PostgreSQL + Qdrant
+    - query_knowledge_graph → Neo4j
+    - get_entity_timeline → Graphiti
+    - semantic_search → Qdrant
+    - get_graph_stats → Neo4j
+    """
+    if tool_name == "search_apex_documents":
+        return await search_service.search_documents(**tool_input)
+
+    elif tool_name == "query_knowledge_graph":
+        return await graph_service.query_graph(**tool_input)
+
+    elif tool_name == "get_entity_timeline":
+        return await graphiti_service.get_timeline(**tool_input)
+
+    elif tool_name == "semantic_search":
+        return await qdrant_service.semantic_search(**tool_input)
+
+    elif tool_name == "get_graph_stats":
+        return await graph_service.get_stats(**tool_input)
+
+    else:
+        raise ValueError(f"Unknown tool: {tool_name}")
+```
+
+#### 2.5.3 Artifacts Sidebar (Sheet Component)
+
+**Implement side-by-side layout:**
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│ Conversation with Apex Knowledge Graph              [Export]│
+├──────────────────────────────┬──────────────────────────────┤
+│                              │                              │
+│ Conversation Area (60%)      │ Artifacts Sidebar (40%)      │
+│                              │                              │
+│ User: "Show me CAT loaders"  │ ┌──────────────────────────┐│
+│ ─────────────────────────    │ │ 📊 Query Results         ││
+│ Assistant: "I'll search the  │ │                          ││
+│ knowledge graph..."          │ │ [Tool: query_kg]         ││
+│                              │ │                          ││
+│ [Tool: query_knowledge_graph]│ │ Found 5 CAT loaders:     ││
+│ ✓ Complete                   │ │                          ││
+│                              │ │ • CAT 950 Wheel Loader   ││
+│ Here are 5 CAT loaders:      │ │   └─ 3 relationships     ││
+│ • CAT 950 Wheel Loader       │ │                          ││
+│ • CAT 962M Wheel Loader      │ │ • CAT 962M Wheel Loader  ││
+│ ...                          │ │   └─ 2 relationships     ││
+│                              │ │                          ││
+│ [View in sidebar →]          │ │ [View Full Graph]        ││
+│                              │ └──────────────────────────┘│
+│                              │                              │
+│ Chat Input: "Type here..."   │                              │
+└──────────────────────────────┴──────────────────────────────┘
+```
+
+**Implementation:**
+
+```typescript
+// apex-memory-system/src/apex_memory/frontend/src/components/conversation/ConversationHub.tsx
+
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+
+export function ConversationHub() {
+  const [showArtifacts, setShowArtifacts] = useState(false);
+  const [currentArtifact, setCurrentArtifact] = useState<Artifact | null>(null);
+
+  return (
+    <div className="flex h-screen">
+      {/* Main conversation area */}
+      <main className="flex-1 flex flex-col min-w-0">
+        <ConversationArea
+          onArtifactGenerated={(artifact) => {
+            setCurrentArtifact(artifact);
+            setShowArtifacts(true);
+          }}
+        />
+      </main>
+
+      {/* Artifacts sidebar (Sheet component) */}
+      <Sheet open={showArtifacts} onOpenChange={setShowArtifacts}>
+        <SheetContent
+          side="right"
+          className="w-2/5 sm:max-w-2xl"
+        >
+          <SheetHeader>
+            <SheetTitle>Artifacts</SheetTitle>
+          </SheetHeader>
+          <ArtifactViewer artifact={currentArtifact} />
+        </SheetContent>
+      </Sheet>
+    </div>
+  );
+}
+```
+
+**Artifact Types:**
+- **Code** - Cypher queries, Python code
+- **Charts** - Knowledge graph visualizations (force-directed, bar charts)
+- **Documents** - Structured data displays (entity timelines, document lists)
+- **Data Tables** - Query results in table format
+
+**Components:**
+- `ArtifactsSidebar.tsx` - Sheet-based sidebar container
+- `ArtifactViewer.tsx` - Router for artifact types
+- `CodeArtifact.tsx` - Syntax-highlighted code display
+- `ChartArtifact.tsx` - Recharts visualizations
+- `DocumentArtifact.tsx` - Structured document display
+- `TableArtifact.tsx` - Data table with sorting/filtering
+
+#### 2.5.4 Tool Visualization
+
+**Show Claude's reasoning process:**
+
+```typescript
+// Tool call indicator in conversation
+
+┌────────────────────────────────────────────┐
+│ 🔧 Using tool: query_knowledge_graph      │
+│                                            │
+│ Parameters:                                │
+│ • entity_name: "CAT Equipment"            │
+│ • depth: 2                                │
+│                                            │
+│ [Executing...] ████████░░ 80%             │
+└────────────────────────────────────────────┘
+
+// After completion:
+┌────────────────────────────────────────────┐
+│ ✅ Tool completed: query_knowledge_graph   │
+│                                            │
+│ Found 5 entities, 12 relationships        │
+│ Execution time: 1.2s                      │
+│                                            │
+│ [View Results in Sidebar →]               │
+└────────────────────────────────────────────┘
+```
+
+**Implementation:**
+- `ToolUseIndicator.tsx` - Collapsible tool call display
+- `ToolStatusBadge.tsx` - Status indicator (pending, running, complete, error)
+- `ToolParameters.tsx` - Display tool input parameters
+- `ToolResults.tsx` - Summary of tool results
+
+**UI Patterns:**
+- Expand/collapse tool details
+- Progress animation during execution
+- Error handling with retry option
+- Link to artifact sidebar when results available
+
+### Technical Tasks
+
+**Day 1: Vercel AI SDK Backend**
+1. Install Vercel AI SDK (`npm install ai`)
+2. Create `/api/apex/conversation` endpoint (streaming support)
+3. Implement Claude API streaming with Server-Sent Events
+4. Add tool definitions to API request
+5. Test streaming response in Postman
+
+**Day 2: Vercel AI SDK Frontend**
+6. Install `ai/react` package
+7. Create `useApexChat` hook wrapping useChat
+8. Update ConversationHub.tsx to use useApexChat
+9. Add progressive message rendering
+10. Add "Stop generation" button
+11. Test streaming in UI
+
+**Day 3: Claude Tool Use**
+12. Define 5 Apex tools (search, query graph, timeline, semantic search, stats)
+13. Create tool execution router
+14. Implement tool execution for each tool type
+15. Add tool result formatting
+16. Test tool execution from conversation
+
+**Day 4: Artifacts Sidebar**
+17. Install Shadcn/ui Sheet component (`npx shadcn@latest add sheet`)
+18. Create ArtifactsSidebar.tsx with Sheet component
+19. Create ArtifactViewer.tsx (router for artifact types)
+20. Implement CodeArtifact.tsx (syntax highlighting)
+21. Implement ChartArtifact.tsx (Recharts integration)
+22. Add artifact generation from tool results
+23. Test sidebar open/close animation
+
+**Day 5: Tool Visualization & Testing**
+24. Create ToolUseIndicator.tsx component
+25. Add tool status tracking
+26. Create ToolParameters.tsx display
+27. Add tool result summary
+28. Write 20 Phase 2.5 tests (see TESTING.md)
+29. Test complete flow: query → tool use → artifact display
+30. Polish animations and transitions
+31. Update documentation
+
+### Testing Checklist
+
+**Backend Tests (8 tests):**
+- ✅ Streaming endpoint sends SSE events
+- ✅ Tool definitions included in Claude API request
+- ✅ Tool execution router calls correct service
+- ✅ search_apex_documents returns valid results
+- ✅ query_knowledge_graph returns graph data
+- ✅ get_entity_timeline returns temporal data
+- ✅ Tool errors handled gracefully
+- ✅ Streaming continues after tool execution
+
+**Frontend Tests (12 tests):**
+- ✅ useApexChat hook streams messages progressively
+- ✅ Stop button halts streaming
+- ✅ Tool call displays in conversation
+- ✅ Tool parameters visible
+- ✅ Tool status updates (pending → running → complete)
+- ✅ Tool results summary displays
+- ✅ Artifacts sidebar opens with Sheet animation
+- ✅ CodeArtifact renders with syntax highlighting
+- ✅ ChartArtifact renders Recharts visualization
+- ✅ Sidebar closes with Escape key
+- ✅ Conversation continues after tool use
+- ✅ Error handling displays user-friendly message
+
+### Success Criteria
+
+**Phase 2.5 Complete When:**
+- ✅ All 20 tests passing
+- ✅ Vercel AI SDK useChat hook functional
+- ✅ Messages stream progressively (word-by-word)
+- ✅ Claude tool use working (all 5 tools)
+- ✅ Tool calls visible in conversation
+- ✅ Artifacts sidebar opens with Sheet animation
+- ✅ Code artifacts render with syntax highlighting
+- ✅ Chart artifacts display visualizations
+- ✅ Tool visualization shows reasoning process
+- ✅ Escape key closes sidebar
+- ✅ UI polished and responsive
+- ✅ Feels like "ChatGPT for knowledge graph"
+
+### Dependencies Added
+
+**npm packages:**
+```json
+{
+  "dependencies": {
+    "ai": "^3.0.0",
+    "react-syntax-highlighter": "^15.5.0",
+    "recharts": "^2.10.4"
+  }
+}
+```
+
+**Shadcn/ui components:**
+```bash
+npx shadcn@latest add sheet
+npx shadcn@latest add badge
+npx shadcn@latest add progress
+```
+
+---
+
+## Phase 3: Engagement Layer (Weeks 4-5)
 
 **Priority:** 🟡 HIGH for user retention
 
@@ -1544,10 +2002,11 @@ websockets==12.0
 |------|-------|-------|-------|
 | 1 | Phase 1 | Authentication Foundation | 12 |
 | 2 | Phase 2 | AI Conversation Hub | 15 |
-| 3-4 | Phase 3 | Engagement Layer | 35 |
-| 5-6 | Phase 4 | Collaboration & Polish | 23 |
+| 3 | Phase 2.5 | Claude Agents SDK Integration | 20 |
+| 4-5 | Phase 3 | Engagement Layer | 35 |
+| 6-7 | Phase 4 | Collaboration & Polish | 23 |
 
-**Total:** 85 tests, 6 weeks, production-ready UI
+**Total:** 105 tests, 7 weeks, production-ready AI-native UI
 
 ---
 
@@ -1555,6 +2014,6 @@ websockets==12.0
 
 ---
 
-**Last Updated:** 2025-10-20
-**Version:** 1.0.0
+**Last Updated:** 2025-10-21
+**Version:** 2.0.0 (added Phase 2.5: Claude Agents SDK Integration)
 **Maintainer:** Claude Code
