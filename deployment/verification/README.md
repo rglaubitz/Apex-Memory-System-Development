@@ -11,14 +11,15 @@
 1. [Overview](#overview)
 2. [Why This System Exists](#why-this-system-exists)
 3. [Workflow Automation](#workflow-automation)
-4. [Directory Structure](#directory-structure)
-5. [Creating Unverified Theories](#creating-unverified-theories)
-6. [Research Methodology](#research-methodology)
-7. [Verification Decision](#verification-decision)
-8. [Auto-Trigger Rules](#auto-trigger-rules)
-9. [File Naming Conventions](#file-naming-conventions)
-10. [Examples](#examples)
-11. [Success Criteria](#success-criteria)
+4. [Known Issues Tracking](#known-issues-tracking)
+5. [Directory Structure](#directory-structure)
+6. [Creating Unverified Theories](#creating-unverified-theories)
+7. [Research Methodology](#research-methodology)
+8. [Verification Decision](#verification-decision)
+9. [Auto-Trigger Rules](#auto-trigger-rules)
+10. [File Naming Conventions](#file-naming-conventions)
+11. [Examples](#examples)
+12. [Success Criteria](#success-criteria)
 
 ---
 
@@ -123,11 +124,133 @@ When a feature moves from `verified/missing/` to implemented:
 Deployment is **BLOCKED** if:
 - Any theories remain in `unverified/` (not researched)
 - Any critical features remain in `verified/missing/` (not implemented)
+- Any 🔴 CRITICAL issues exist in `KNOWN-ISSUES.md` (unresolved bugs)
 
 Deployment is **GO** if:
 - All theories verified
 - All critical features in `verified/implemented/`
 - All blockers resolved
+- All CRITICAL issues in `KNOWN-ISSUES.md` resolved or downgraded
+
+---
+
+## Known Issues Tracking
+
+### Purpose
+
+During verification and testing, bugs and issues are discovered that must be resolved before production deployment. The `KNOWN-ISSUES.md` file tracks all discovered issues with evidence, investigation plans, and resolution status.
+
+### Issue Severity Levels
+
+- **🔴 CRITICAL** - Blocks deployment, must be fixed
+  - Complete feature failure
+  - Data loss or corruption risk
+  - Security vulnerabilities
+  - Core value proposition broken
+
+- **🟡 HIGH** - Should be fixed before deployment, has workarounds
+  - Degraded user experience
+  - Performance issues
+  - Non-critical features broken
+  - Workarounds exist but suboptimal
+
+- **🟢 LOW** - Can be deferred to post-deployment, minimal impact
+  - Minor UI glitches
+  - Edge cases
+  - Nice-to-have features
+  - Minimal user impact
+
+### When to Create an Issue
+
+**Create an issue in KNOWN-ISSUES.md when:**
+
+1. **During Verification Research**
+   - Feature exists but has critical bugs
+   - Feature exists but doesn't work as expected
+   - Integration failures discovered during testing
+
+2. **During Implementation**
+   - Bugs discovered while building new features
+   - Regression bugs introduced by changes
+   - Integration issues with existing systems
+
+3. **During Testing**
+   - Test failures reveal underlying bugs
+   - Performance issues discovered under load
+   - Edge cases cause failures
+
+**Do NOT create an issue for:**
+- Missing features (use `verified/missing/` instead)
+- Feature requests (use `upgrades/planned/` instead)
+- Research theories (use `unverified/` instead)
+
+### Issue Documentation Requirements
+
+Every issue in KNOWN-ISSUES.md must include:
+
+1. **Description** - Clear explanation of the problem
+2. **User Impact** - How this affects users (with ❌ bullet points)
+3. **Evidence Gathered** - Database checks, logs, test results
+4. **Fixes Already Applied** - What's been tried (with ✅/❌ status)
+5. **Root Cause Hypothesis** - Likely causes with evidence
+6. **Investigation Steps** - Systematic debugging plan with time estimates
+7. **Workaround** - Temporary solution (if available)
+8. **Priority Justification** - Why this severity level
+
+### Issue Resolution Workflow
+
+```
+1. ISSUE DISCOVERED
+   └─ Add to KNOWN-ISSUES.md with CRITICAL/HIGH/LOW severity
+   └─ Document evidence and investigation plan
+
+2. INVESTIGATION
+   └─ Follow investigation steps documented in issue
+   └─ Update issue with findings
+   └─ Document attempted fixes (successful or failed)
+
+3. RESOLUTION
+   └─ Fix is implemented and tested
+   └─ Move issue from severity section to "Resolved Issues"
+   └─ Document resolution method and verification
+
+4. VERIFICATION
+   └─ Confirm fix works in production-like environment
+   └─ Update deployment readiness status
+```
+
+### Deployment Impact
+
+**CRITICAL issues block deployment:**
+- Deployment cannot proceed until resolved
+- Must be fixed or downgraded to HIGH/LOW
+- Requires full investigation and resolution
+
+**HIGH issues should be resolved:**
+- Deployment can proceed with documented workarounds
+- Should be fixed before production if possible
+- Post-deployment fix acceptable if risk is low
+
+**LOW issues can be deferred:**
+- Deployment proceeds without blocking
+- Can be fixed post-deployment
+- Tracked for future sprints
+
+### Current Status
+
+Check `KNOWN-ISSUES.md` for:
+- Open CRITICAL issues (deployment blockers)
+- Open HIGH issues (should fix before deployment)
+- Open LOW issues (can defer)
+- Resolved issues (for historical reference)
+
+**Deployment Readiness Check:**
+```bash
+# Count CRITICAL issues
+grep -c "🔴 ISSUE-" deployment/verification/KNOWN-ISSUES.md
+
+# If count > 0, deployment is BLOCKED
+```
 
 ---
 
@@ -137,6 +260,7 @@ Deployment is **GO** if:
 verifications-for-deployment/
 ├── README.md                          # This file
 ├── WORKFLOW-CHECKLIST.md              # Process enforcement
+├── KNOWN-ISSUES.md                    # 🔴 Discovered bugs blocking deployment
 │
 ├── unverified/                        # Theories awaiting research
 │   ├── phase-1-llm-conversation-integration.md

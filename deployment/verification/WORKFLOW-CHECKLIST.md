@@ -385,6 +385,37 @@ If feature is partially implemented:
 
 ---
 
+### Gate 5: Known Issues Check
+
+**During testing and verification, check for critical bugs:**
+
+- [ ] Feature tested manually (if applicable)
+- [ ] Feature works as expected (no critical failures)
+- [ ] All test failures documented in `KNOWN-ISSUES.md` (if found)
+- [ ] Bug severity assessed (CRITICAL/HIGH/LOW)
+- [ ] Investigation plan created for CRITICAL issues
+
+**If CRITICAL bugs found:**
+- Create issue in `KNOWN-ISSUES.md` immediately
+- Document evidence, user impact, and investigation plan
+- Mark feature as "IMPLEMENTED but BLOCKED" until resolved
+- CRITICAL issues block deployment
+
+**If HIGH/LOW bugs found:**
+- Document in `KNOWN-ISSUES.md`
+- Feature can still be marked IMPLEMENTED
+- Bugs tracked for resolution before/after deployment
+
+**Special Case: Feature Implemented but Critically Broken**
+
+If feature code exists but has CRITICAL bugs:
+- Verification decision: IMPLEMENTED ✅ (code exists)
+- Known issues: CRITICAL 🔴 (blocks deployment)
+- Both can be true simultaneously
+- Deployment blocked until bug resolved OR feature disabled
+
+---
+
 ## Sign-Off Process
 
 ### Researcher Sign-Off
@@ -398,6 +429,8 @@ If feature is partially implemented:
 - [ ] I documented all findings in the research log
 - [ ] I compiled evidence supporting the decision
 - [ ] I followed the decision matrix
+- [ ] I tested the feature (if IMPLEMENTED)
+- [ ] I checked for critical bugs and documented in `KNOWN-ISSUES.md` (if found)
 - [ ] I updated the theory file with findings
 - [ ] I triggered appropriate auto-actions
 
