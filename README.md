@@ -107,6 +107,32 @@ Apex-Memory-System-Development/
 │   ├── planned/                    # Future upgrades
 │   └── completed/                  # Completed upgrades
 │
+├── deployment/                     # All deployment documentation ⭐ NEW
+│   ├── README.md                  # Master deployment guide
+│   ├── mcp-server/                # MCP Server PyPI deployment (82% complete)
+│   │   ├── DEPLOYMENT-CHECKLIST.md
+│   │   └── PUBLISHING.md
+│   ├── production/                # Production cloud deployment (planned)
+│   │   ├── README.md
+│   │   ├── GCP-DEPLOYMENT-GUIDE.md
+│   │   ├── ARCHITECTURE.md
+│   │   ├── scripts/               # Deployment automation
+│   │   └── terraform/             # Infrastructure as code
+│   ├── verification/              # Pre-deployment verification (complete)
+│   │   ├── README.md
+│   │   ├── WORKFLOW-CHECKLIST.md
+│   │   └── verified/              # Verification results
+│   ├── testing/                   # Pre-deployment testing (complete)
+│   │   ├── README.md
+│   │   ├── TESTING-KIT.md
+│   │   └── scripts/               # Test automation
+│   └── components/                # Component-specific deployment
+│       └── query-router/          # Query router deployment (complete)
+│           ├── DEPLOYMENT-GUIDE.md
+│           ├── PRODUCTION-ROLLOUT.md
+│           ├── TESTING.md
+│           └── TROUBLESHOOTING.md
+│
 ├── workflow/                       # 5-phase development process
 │   └── README.md                  # Workflow documentation
 │
@@ -317,6 +343,58 @@ python -m uvicorn apex_memory.main:app --reload --port 8000
 ```
 
 📖 **[Full Development Guide](apex-memory-system/CLAUDE.md)**
+
+## MCP Server (Claude Desktop Integration)
+
+**Apex MCP Server** enables Claude Desktop to interact directly with your Apex Memory System through conversational memory.
+
+🔗 **[apex-mcp-server/](apex-mcp-server/)** - Complete MCP server implementation
+
+### Key Features
+
+- **🧠 Intelligent Orchestration** - `ask_apex()` orchestrates 3-6 queries and synthesizes narrative answers
+- **5 Basic Memory Operations** - Add, search, list, and manage memories with LLM entity extraction
+- **4 Advanced Features** - Temporal search, entity timelines, community detection, graph analytics
+- **Multi-Database Integration** - Seamless access to Neo4j, PostgreSQL, Qdrant, Redis through unified API
+
+### Quick Start
+
+```bash
+# Install and configure
+cd apex-mcp-server
+./install-apex-mcp.sh
+
+# Restart Claude Desktop
+# Start talking: "Remember that I prefer Python for backend development"
+```
+
+### What Makes It Different
+
+Unlike OpenMemory (simple storage) or Graphiti MCP (single database), Apex MCP provides:
+
+- ✅ **Multi-query orchestration** - Claude plans and executes 3-6 queries automatically
+- ✅ **Narrative synthesis** - Transforms JSON data into coherent stories with insights
+- ✅ **4-database intelligence** - Routes queries to optimal database (Neo4j, Qdrant, PostgreSQL, Redis)
+- ✅ **Bi-temporal tracking** - Query your knowledge graph as it existed at any point in time
+- ✅ **Pattern detection** - Discovers trends, communities, and relationships automatically
+
+**Example conversation:**
+```
+You: "Tell me everything about ACME Corporation"
+
+Claude: [Orchestrates 6 queries across graph, temporal layer, communities]
+
+       I've analyzed ACME Corporation across your entire knowledge graph.
+       Here's what I found:
+
+       📊 OVERVIEW: 12 documents, 8 connected entities, 3 months tracked
+       🔗 KEY RELATIONSHIPS: Primary supplier Bosch (83% of orders)
+       📈 PATTERNS: Recurring orders every 3-4 weeks (89% consistency)
+       📍 TEMPORAL: Added Brembo in March (supplier diversification)
+       💡 INSIGHT: Stable customer with strategic risk management
+```
+
+📚 **Documentation:** [INSTALLATION.md](apex-mcp-server/INSTALLATION.md) | [EXAMPLES.md](apex-mcp-server/EXAMPLES.md) | [TROUBLESHOOTING.md](apex-mcp-server/TROUBLESHOOTING.md)
 
 ## Documentation
 

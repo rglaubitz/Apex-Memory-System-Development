@@ -538,7 +538,7 @@ npm run dev
 **Questions about architecture?**
 
 - Read research/architecture-decisions/ ADRs
-- Review verified implementation: verifications-for-deployment/verified/implemented/phase-5-ui-enhancements.md
+- Review verified implementation: deployment/verification/verified/implemented/phase-5-ui-enhancements.md
 
 ---
 

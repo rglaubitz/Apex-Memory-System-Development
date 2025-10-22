@@ -2,41 +2,74 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## ⚠️ IMPORTANT RULES - MUST ALWAYS FOLLOW
+---
 
-**These rules are critical and must be followed in every session:**
+## 📊 Project Status Snapshot
 
-### Rule 1: Read Key Structural READMEs First
+**Current Active Work:** Graphiti + JSON Integration (Week 3 complete)
+**Status:** 📝 Planning Complete | 🚀 Implementation in Progress
+**Test Status:** 121/121 Enhanced Saga baseline passing | 11 new tests added (100% pass rate)
+**Next Up:** Week 4 - Two Workflows (DocumentIngestionWorkflow + StructuredDataIngestionWorkflow)
 
-**BEFORE beginning any work with the user**, you MUST read these key structural files:
+**Quick Resume:**
+1. Read [handoffs/HANDOFF-WEEK3-DAYS1-3.md](upgrades/active/temporal-implementation/handoffs/HANDOFF-WEEK3-DAYS1-3.md)
+2. Copy-paste "Start Command" from handoff
+3. Continue from documented checkpoint
 
+**Research Status:** SDK verification complete | All Tier 1 sources validated
+**Agent System:** 20 agents active | C-suite review board configured
+
+---
+
+# ⚠️ CRITICAL RULES - MUST ALWAYS FOLLOW
+
+## 🔴 Rule 1: Read Key Structural READMEs First
+
+**BEFORE beginning ANY work with the user**, you MUST read these key structural files:
+
+### Always Read (Every Session):
 - `README.md` (root)
-- `CLAUDE.md` (project-local, this file)
-- `upgrades/README.md`
-- `research/README.md`
-- `workflow/README.md`
-- `upgrades/completed/README.md` (if working with completed upgrades)
-- `upgrades/planned/README.md` (if working with planned upgrades)
+- `CLAUDE.md` (this file)
 - `upgrades/active/temporal-implementation/graphiti-json-integration/README.md` ⭐ **CURRENT ACTIVE WORK**
+
+### Read When Relevant:
+- `upgrades/README.md` (if working with upgrade system)
+- `research/README.md` (if researching architecture decisions)
+- `workflow/README.md` (if working with phased workflow)
 - `upgrades/active/temporal-implementation/tests/STRUCTURE.md` (if working with Temporal testing)
 
 **Purpose:** Understand project structure, current state, upgrade lifecycle, and test organization before making any changes.
 
-### Rule 2: Read Framework-Specific READMEs Before Implementation
+## 🔴 Rule 2: Read Framework-Specific READMEs Before Implementation
 
 **BEFORE executing any implementation task from a plan**, you MUST read the applicable framework-specific documentation:
 
-**Examples:**
-- Implementing Neo4j features → Read `research/documentation/neo4j/README.md`
-- Working with PostgreSQL/pgvector → Read `research/documentation/postgresql/README.md` and `research/documentation/pgvector/README.md`
-- Query routing implementation → Read `research/documentation/query-routing/README.md`
-- Qdrant integration → Read `research/documentation/qdrant/README.md`
-- Graphiti temporal features → Read `research/documentation/graphiti/README.md`
-- FastAPI endpoints → Read `research/documentation/fastapi/README.md`
+**Framework → Documentation Mapping:**
+- Neo4j features → `research/documentation/neo4j/README.md`
+- PostgreSQL/pgvector → `research/documentation/postgresql/README.md` and `research/documentation/pgvector/README.md`
+- Query routing → `research/documentation/query-routing/README.md`
+- Qdrant integration → `research/documentation/qdrant/README.md`
+- Graphiti temporal → `research/documentation/graphiti/README.md`
+- FastAPI endpoints → `research/documentation/fastapi/README.md`
+- Temporal.io workflows → `research/documentation/temporal/README.md`
 
 **Purpose:** Ensure implementation follows research-backed best practices and uses documented patterns.
 
 **⚠️ DO NOT skip these reads to save tokens. Research-first principles require you to be informed before implementing.**
+
+## 📑 Navigation Guide
+
+**Quick Links:**
+- [🚀 Quick Start](#-quick-start---working-today) - Commands to start working immediately
+- [📂 Directory Structure](#directory-structure) - Project organization
+- [🎯 Current Active Work](#current-phase-graphiti--json-integration) - Graphiti + JSON Integration
+- [🧪 Testing Organization](#testing-organization) - Test structure and fix-and-document workflow
+- [🔬 Research Management](#research-management) - Adding docs and creating ADRs
+- [🤖 Agent System](#executive-suite-review-board) - C-suite executives and research team
+- [⚙️ Configuration](#configuration) - Environment, databases, MCP servers
+
+**For Main Codebase Development:**
+- See `apex-memory-system/CLAUDE.md` for implementation details, architecture, and testing commands
 
 ---
 
@@ -49,6 +82,67 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **Symlinked codebase** at `apex-memory-system/` (actual implementation)
 
 **The main codebase is located at:** `apex-memory-system/` (symlink to `/Users/richardglaubitz/Projects/apex-memory-system`)
+
+---
+
+## 🚀 Quick Start - Working Today
+
+### Starting New Development Session
+
+```bash
+# 1. Navigate to main codebase
+cd apex-memory-system
+
+# 2. Activate virtual environment
+source venv/bin/activate
+
+# 3. Start all services (Neo4j, PostgreSQL, Qdrant, Redis, Temporal, Prometheus, Grafana)
+cd docker && docker-compose up -d && cd ..
+
+# 4. Start Temporal worker (REQUIRED for document ingestion)
+python src/apex_memory/temporal/workers/dev_worker.py &
+
+# 5. Start API server
+python -m uvicorn apex_memory.main:app --reload --port 8000
+```
+
+### Most Common Commands
+
+```bash
+# Run all tests (from apex-memory-system/)
+pytest
+
+# Run specific test categories
+pytest tests/unit/ -v                    # Unit tests only
+pytest tests/integration/ -v             # Integration tests
+PYTHONPATH=src:$PYTHONPATH pytest tests/unit/test_graphiti_extraction_activity.py -v  # Single test file
+
+# Code quality checks
+black src/ tests/ && isort src/ tests/ && flake8 src/ tests/ --max-line-length=100
+
+# Check service health
+python scripts/dev/health_check.py -v
+
+# View Temporal workflows
+# http://localhost:8233
+
+# View API documentation
+# http://localhost:8000/docs
+```
+
+### Current Active Work
+
+**Location:** `upgrades/active/temporal-implementation/graphiti-json-integration/`
+
+**Quick Navigation:**
+- **Start Here:** [graphiti-json-integration/README.md](upgrades/active/temporal-implementation/graphiti-json-integration/README.md)
+- **Implementation Steps:** [IMPLEMENTATION.md](upgrades/active/temporal-implementation/graphiti-json-integration/IMPLEMENTATION.md)
+- **Testing Specs:** [TESTING.md](upgrades/active/temporal-implementation/graphiti-json-integration/TESTING.md)
+- **Latest Handoff:** [handoffs/HANDOFF-WEEK3-DAYS1-3.md](upgrades/active/temporal-implementation/handoffs/HANDOFF-WEEK3-DAYS1-3.md)
+
+**To Resume Work:** Check the latest handoff document for the "Start Command" - copy and paste to continue exactly where you left off.
+
+---
 
 ## Directory Structure
 
@@ -144,7 +238,25 @@ Apex-Memory-System-Development/
 **Timeline:** 4 weeks (4 phases)
 **Location:** `upgrades/active/temporal-implementation/graphiti-json-integration/`
 
-**Complete Documentation Suite (5 documents, 5,700+ lines):**
+**📋 To Resume Work Today:**
+
+1. **Check Latest Handoff:** [handoffs/HANDOFF-WEEK3-DAYS1-3.md](upgrades/active/temporal-implementation/handoffs/HANDOFF-WEEK3-DAYS1-3.md)
+   - Contains "Start Command" to copy-paste for instant continuation
+   - Documents all architectural decisions and implementation patterns
+   - Shows exactly where you left off
+
+2. **Consult Implementation Guide:** [IMPLEMENTATION.md](upgrades/active/temporal-implementation/graphiti-json-integration/IMPLEMENTATION.md)
+   - 1,500+ lines of step-by-step instructions
+   - Current progress markers and next steps
+   - Code templates for common patterns
+
+3. **Run Baseline Tests:** Verify Enhanced Saga baseline (121 tests) still passes
+   ```bash
+   cd apex-memory-system
+   pytest tests/ -v --ignore=tests/load/
+   ```
+
+**Complete Documentation Suite (6 documents, 5,700+ lines):**
 
 1. **[README.md](upgrades/active/temporal-implementation/graphiti-json-integration/README.md)** - Entry point and quick start
 2. **[PLANNING.md](upgrades/active/temporal-implementation/graphiti-json-integration/PLANNING.md)** - Unified 4-week plan (700+ lines)
@@ -160,8 +272,6 @@ Apex-Memory-System-Development/
 - **Local Staging** - `/tmp/apex-staging/` replacing S3
 - **Two Workflows** - Separate DocumentIngestionWorkflow + StructuredDataIngestionWorkflow
 - **35 New Tests** - Preserving 121 Enhanced Saga baseline = 156 total tests
-
-**Start Here:** [`graphiti-json-integration/README.md`](upgrades/active/temporal-implementation/graphiti-json-integration/README.md)
 
 ---
 
@@ -801,12 +911,121 @@ The project includes 17 specialized research agents for continuous knowledge acq
 | Prometheus | http://localhost:9090 | (no auth) |
 | API Docs | http://localhost:8000/docs | (no auth) |
 
+### MCP (Model Context Protocol) Servers
+
+**What are MCP Servers?**
+MCP servers provide Claude Code with extended capabilities for interacting with external services and tools.
+
+**Configured Servers:** (see `.claude/.mcp.json`)
+
+1. **GitHub MCP** - Repository management, code search, PR operations
+   - Search repositories, create issues/PRs
+   - Read file contents, search code across GitHub
+   - Required for: Research phase (finding code examples), review board validation
+
+2. **PostgreSQL MCP** - Database queries and analysis
+   - Run read-only SQL queries against project databases
+   - Required for: Data validation, test result analysis, metrics queries
+
+3. **Exa MCP** - Advanced web search and code context
+   - High-quality web search for technical documentation
+   - Code context retrieval from verified sources (1.5k+ stars)
+   - Required for: Research-first validation, SDK verification
+
+4. **Chrome DevTools MCP** - Browser automation and testing
+   - Take screenshots, navigate pages, execute JavaScript
+   - Required for: UI/UX verification (Phase 5 testing), visual regression testing
+
+**Setup:** MCP servers are automatically configured via `.claude/.mcp.json`. No manual setup required for this project.
+
+**Usage:** Claude Code automatically uses these servers during research, validation, and testing phases.
+
+### Apex MCP Server (Claude Desktop)
+
+**Different from above** - While the MCP servers above are for Claude Code, Apex MCP Server enables **Claude Desktop** to interact directly with the Apex Memory System.
+
+📂 **Location:** `apex-mcp-server/` (root directory)
+
+**What it provides:**
+
+- **10 Conversational Tools** - Add memories, search, temporal queries, entity timelines, communities, graph stats
+- **🧠 Intelligent Orchestration** - `ask_apex()` orchestrates 3-6 queries and synthesizes narrative answers
+- **Multi-Database Integration** - Seamless access to Neo4j, PostgreSQL, Qdrant, Redis through unified API
+
+**Key Differentiator:**
+
+Unlike OpenMemory (simple storage) or Graphiti MCP (single database), Apex MCP provides multi-query orchestration where Claude automatically plans and executes multiple queries, then synthesizes coherent narrative answers with insights.
+
+**Quick Setup:**
+
+```bash
+cd apex-mcp-server
+./install-apex-mcp.sh
+# Restart Claude Desktop
+```
+
+**Example conversation:**
+```
+You: "Tell me everything about ACME Corporation"
+
+Claude Desktop: [Orchestrates 6 queries: graph search, relationships,
+                 temporal evolution, patterns, communities, analytics]
+
+                Then synthesizes multi-paragraph narrative with:
+                - Entity overview (12 docs, 8 connections, 3 months)
+                - Key relationships (Bosch 83% supplier)
+                - Patterns detected (orders every 3-4 weeks)
+                - Temporal insights (supplier diversification in March)
+                - Strategic insights (risk management focus)
+```
+
+📚 **Full Documentation:** [apex-mcp-server/README.md](apex-mcp-server/README.md)
+
 ## Performance Targets
 
 - **Query latency:** <1s for 90% of queries (P90)
 - **Cache hit rate:** >70% for repeat queries
 - **Ingestion throughput:** 10+ documents/second parallel processing
 - **Test coverage:** 80% minimum code coverage
+
+## Deployment
+
+All deployment documentation has been consolidated into the **`deployment/`** folder.
+
+📂 **Master Guide:** [deployment/README.md](deployment/README.md)
+
+### Available Deployment Paths
+
+**MCP Server (PyPI/Claude Desktop)**
+- **Path:** [deployment/mcp-server/](deployment/mcp-server/)
+- **Status:** 🟡 Pre-Production (82% complete - Phase 2 manual testing)
+- **Goal:** Enable npm-style installation (`uvx apex-mcp-server`)
+- **Docs:** [DEPLOYMENT-CHECKLIST.md](deployment/mcp-server/DEPLOYMENT-CHECKLIST.md) | [PUBLISHING.md](deployment/mcp-server/PUBLISHING.md)
+
+**Production Cloud Deployment (GCP)**
+- **Path:** [deployment/production/](deployment/production/)
+- **Status:** 📝 Planned (architecture complete)
+- **Timeline:** 4-6 weeks | **Cost:** $500-$1,500/month
+- **Docs:** [GCP-DEPLOYMENT-GUIDE.md](deployment/production/GCP-DEPLOYMENT-GUIDE.md) | [ARCHITECTURE.md](deployment/production/ARCHITECTURE.md)
+
+**Pre-Deployment Verification**
+- **Path:** [deployment/verification/](deployment/verification/)
+- **Status:** ✅ Complete (23/23 verifications passing)
+- **Timeline:** 3-4 hours
+- **Docs:** [WORKFLOW-CHECKLIST.md](deployment/verification/WORKFLOW-CHECKLIST.md)
+
+**Pre-Deployment Testing**
+- **Path:** [deployment/testing/](deployment/testing/)
+- **Status:** ✅ Complete (230+ tests passing)
+- **Timeline:** 3-4 hours
+- **Docs:** [TESTING-KIT.md](deployment/testing/TESTING-KIT.md)
+
+**Component-Specific Deployment**
+- **Path:** [deployment/components/](deployment/components/)
+- **Available:** Query Router (✅ deployed, 90% accuracy)
+- **Docs:** [query-router/DEPLOYMENT-GUIDE.md](deployment/components/query-router/DEPLOYMENT-GUIDE.md)
+
+**Decision Tree:** See [deployment/README.md](deployment/README.md) for deployment path selection guide.
 
 ## Getting Help
 

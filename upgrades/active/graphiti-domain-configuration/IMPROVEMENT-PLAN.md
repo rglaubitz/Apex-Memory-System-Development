@@ -454,7 +454,7 @@ Now extract entities and relationships from the following document:
   - Document final results
 
 - [ ] Mark Phase 3 IMPLEMENTED
-  - Update `verifications-for-deployment/phase-3-structured-data-ingestion.md`
+  - Update `deployment/verification/phase-3-structured-data-ingestion.md`
   - Move to `verified/implemented/`
   - Git commit all documentation
 
