@@ -935,6 +935,40 @@ task-manager/
 # Estimated: 8-12 hours breakdown, saves 20-30 hours during implementation
 ```
 
+**Integration with /execute:**
+
+After /breakdown completes, use /execute for systematic implementation:
+
+```bash
+# 1. /breakdown creates task-manager/ structure
+/breakdown IMPLEMENTATION.md ui-ux-enhancements
+# → Outputs: "Ready to start Phase 1? Run: /execute 1"
+
+# 2. /execute guides through implementation
+/execute 1
+# → Auto-detects task-manager/
+# → Reads phase-1-*/ task files
+# → Uses subtasks as checklist
+# → Updates task-manager/README.md with progress
+
+# 3. Continue through all phases
+# Context compact → /execute 2 → compact → /execute 3 → ...
+```
+
+**Seamless handoff:**
+- /breakdown final message says: "Run: /execute 1"
+- /execute Step 0 auto-detects task-manager/
+- /execute Step 2 reads all task files for current phase
+- /execute Step 10 updates master README with completion stats
+- Master progress always current in task-manager/README.md
+
+**Documentation:**
+- Auto-generated: `task-manager/INTEGRATION-GUIDE.md`
+- Command reference: `workflow/commands/execute.md`
+- Integration analysis: `workflow/BREAKDOWN-EXECUTE-INTEGRATION.md`
+
+---
+
 ## Important Notes
 
 1. **Main codebase is symlinked** - All source code lives in `apex-memory-system/`
