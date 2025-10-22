@@ -883,6 +883,58 @@ The project includes 17 specialized research agents for continuous knowledge acq
 - [handoffs/INDEX.md](upgrades/active/temporal-implementation/handoffs/INDEX.md) - Complete list
 - [handoffs/HANDOFF-WEEK3-DAYS1-3.md](upgrades/active/temporal-implementation/handoffs/HANDOFF-WEEK3-DAYS1-3.md) - Latest
 
+### Implementation Task Breakdown
+
+**Command:** `/breakdown <implementation-file> <project-name>`
+**Repository:** https://github.com/rglaubitz/Claude-Commands
+
+**Purpose:** Transform large implementation guides into systematic task hierarchies with progress tracking.
+
+**When to use:**
+- Multi-week projects (4-7 weeks)
+- Large implementation guides (1,000+ lines like IMPLEMENTATION.md)
+- Complex dependency management
+- Need systematic progress tracking across phases
+
+**What it creates:**
+```
+task-manager/
+├── README.md (master navigation, progress tracking)
+├── phase-1-<name>/
+│   ├── README.md (phase overview, task list)
+│   ├── task-1.1-<name>.md (dependencies, tests, subtasks)
+│   └── task-1.2-<name>.md
+└── phase-2-<name>/...
+```
+
+**5-Phase Workflow:**
+1. **Initialize** (30 min) - Create directory structure
+2. **Extract Tasks** (4-6 hrs) - Analyze guide, create task files (with compacts)
+3. **Flow Review** (1-2 hrs) - Validate dependencies, identify gaps
+4. **Subtask Breakdown** (3-4 hrs) - Create 2-4 hour actionable chunks (with compacts)
+5. **Master README** (30 min) - Aggregate metrics, create navigation
+
+**Each task includes:**
+- Dependencies (what blocks this, what this enables)
+- Success criteria (specific, measurable)
+- Research references (ADRs, documentation chunks)
+- Test specifications (TESTING.md lines → test files)
+- Subtasks (2-4 hour chunks with validation commands)
+
+**Benefits:**
+- Clear progress metrics (X/Y tasks, Z% complete)
+- Safe context compacts (resume exactly where you left off)
+- Gap detection (missing error handling, deployment, etc.)
+- Critical path identification
+- Test linkage throughout
+
+**Example:**
+```bash
+/breakdown IMPLEMENTATION.md ui-ux-enhancements
+# Creates task-manager/ with 14 tasks, 42 subtasks
+# Estimated: 8-12 hours breakdown, saves 20-30 hours during implementation
+```
+
 ## Important Notes
 
 1. **Main codebase is symlinked** - All source code lives in `apex-memory-system/`
