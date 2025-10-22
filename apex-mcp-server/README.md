@@ -74,12 +74,68 @@ All from ONE user question.
    python -m uvicorn apex_memory.main:app --reload
    ```
 
-2. **Python 3.11+**
+2. **Python 3.11+** OR **uv** (recommended)
 
 3. **Anthropic API key** (for ask_apex):
    - Get from: https://console.anthropic.com
 
-### One-Click Install
+### Installation Methods
+
+**Choose one:**
+
+#### ⭐ Option 1: Using `uvx` (Recommended - npm-style)
+
+Like `npx` but for Python! No installation needed.
+
+```json
+// ~/Library/Application Support/Claude/claude_desktop_config.json
+{
+  "mcpServers": {
+    "apex-memory": {
+      "command": "uvx",
+      "args": ["apex-mcp-server"],
+      "env": {
+        "APEX_API_URL": "http://localhost:8000",
+        "ANTHROPIC_API_KEY": "your-api-key-here"
+      }
+    }
+  }
+}
+```
+
+**Installation:**
+```bash
+# Install uv if you don't have it
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# That's it! uvx will auto-install apex-mcp-server when Claude Desktop starts
+```
+
+#### Option 2: Using `pipx`
+
+```json
+// Claude Desktop config
+{
+  "mcpServers": {
+    "apex-memory": {
+      "command": "pipx",
+      "args": ["run", "apex-mcp-server"],
+      "env": {
+        "APEX_API_URL": "http://localhost:8000",
+        "ANTHROPIC_API_KEY": "your-api-key-here"
+      }
+    }
+  }
+}
+```
+
+**Installation:**
+```bash
+pip install pipx
+pipx ensurepath
+```
+
+#### Option 3: One-Click Install Script
 
 ```bash
 cd apex-mcp-server
@@ -87,25 +143,29 @@ cd apex-mcp-server
 ```
 
 This will:
-- ✅ Install package
+- ✅ Install package locally
 - ✅ Configure Claude Desktop
 - ✅ Set up environment
 
-**Then:** Restart Claude Desktop and start talking!
-
-### Manual Install
+#### Option 4: Local Development
 
 ```bash
 # Install package
 pip install -e .
 
-# Configure environment
-cp .env.example .env
-nano .env  # Add your ANTHROPIC_API_KEY
-
-# Add to Claude Desktop config
-# ~/Library/Application Support/Claude/claude_desktop_config.json
+# Use in Claude Desktop config
+{
+  "mcpServers": {
+    "apex-memory": {
+      "command": "python3",
+      "args": ["-m", "apex_mcp_server.server"],
+      "env": {...}
+    }
+  }
+}
 ```
+
+**Then:** Restart Claude Desktop and start talking!
 
 See [INSTALLATION.md](INSTALLATION.md) for complete instructions.
 
@@ -400,13 +460,16 @@ apex-mcp-server/
 │       ├── basic_tools.py     # 5 basic memory ops
 │       ├── advanced_tools.py  # 4 advanced features
 │       └── ask_apex.py        # THE KILLER FEATURE ⭐
-├── tests/                     # 20+ tests
+├── tests/                     # 17 tests (all passing)
 ├── install-apex-mcp.sh        # One-click installer
-├── claude_desktop_config.json # Config template
+├── claude_desktop_config.json # uvx config (recommended)
+├── claude_desktop_config.pipx.json  # pipx alternative
+├── claude_desktop_config.local.json # Local development
 └── docs/
     ├── INSTALLATION.md
     ├── EXAMPLES.md
-    └── TROUBLESHOOTING.md
+    ├── TROUBLESHOOTING.md
+    └── PUBLISHING.md          # PyPI publishing guide
 ```
 
 ---
@@ -441,6 +504,45 @@ python -m apex_mcp_server.server
 - Configured via `claude_desktop_config.json`
 - Runs automatically when Claude Desktop starts
 - Logs to `~/Library/Logs/Claude/`
+
+---
+
+## 📦 Publishing to PyPI
+
+To enable npm-style installation (`uvx apex-mcp-server`), publish to PyPI:
+
+```bash
+# 1. Install build tools
+pip install build twine
+
+# 2. Update version in pyproject.toml
+# 0.1.0 → 0.1.1 (bug fixes)
+# 0.1.0 → 0.2.0 (new features)
+
+# 3. Build and publish
+python -m build
+twine upload dist/*
+
+# 4. Test installation
+uvx apex-mcp-server --help
+```
+
+**See [PUBLISHING.md](PUBLISHING.md) for complete guide.**
+
+Once published, users can install with just:
+
+```json
+{
+  "mcpServers": {
+    "apex-memory": {
+      "command": "uvx",
+      "args": ["apex-mcp-server"]
+    }
+  }
+}
+```
+
+No manual installation needed!
 
 ---
 

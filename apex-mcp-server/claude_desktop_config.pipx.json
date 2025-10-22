@@ -1,8 +1,9 @@
 {
   "mcpServers": {
     "apex-memory": {
-      "command": "uvx",
+      "command": "pipx",
       "args": [
+        "run",
         "apex-mcp-server"
       ],
       "env": {

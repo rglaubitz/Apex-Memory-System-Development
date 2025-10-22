@@ -1,9 +1,10 @@
 {
   "mcpServers": {
     "apex-memory": {
-      "command": "uvx",
+      "command": "python3",
       "args": [
-        "apex-mcp-server"
+        "-m",
+        "apex_mcp_server.server"
       ],
       "env": {
         "APEX_API_URL": "http://localhost:8000",
