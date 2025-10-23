@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apex Memory System - Visual Diagrams</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }        
+        .diagram-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .diagram {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        /* System Architecture Diagram Styles */
+        .architecture-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }        
+        .layer {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+        }
+        
+        .component {
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            padding: 15px 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .component:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0,0,0,0.2);
+            background: #667eea;
+            color: white;
+        }
+        
+        .database {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            border: none;
+            min-width: 150px;
+            text-align: center;
+        }        
+        .cache {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: white;
+            border: none;
+        }
+        
+        .router {
+            background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            font-weight: bold;
+        }
+        
+        .arrow {
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-top: 30px solid #667eea;
+            margin: 0 auto;
+        }
+        
+        /* Flow Diagram Styles */
+        .flow-diagram {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            overflow-x: auto;
+            padding: 20px;
+        }        
+        .flow-step {
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            padding: 20px;
+            min-width: 150px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .flow-step::after {
+            content: '→';
+            position: absolute;
+            right: -30px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            color: #667eea;
+        }
+        
+        .flow-step:last-child::after {
+            display: none;
+        }
+        
+        /* Performance Metrics Table */
+        .metrics-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }        
+        .metrics-table th {
+            background: #667eea;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        .metrics-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .metrics-table tr:hover {
+            background: #f5f5f5;
+        }
+        
+        .status-pass {
+            color: green;
+            font-weight: bold;
+        }
+        
+        .status-exceed {
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        /* Competitive Matrix */
+        .competitive-matrix {
+            width: 100%;
+            min-width: 800px;
+            border-collapse: collapse;
+        }        
+        .competitive-matrix th {
+            background: #667eea;
+            color: white;
+            padding: 12px;
+            text-align: center;
+        }
+        
+        .competitive-matrix td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        
+        .check { color: green; font-size: 20px; }
+        .cross { color: red; font-size: 20px; }
+        .partial { color: orange; font-size: 20px; }
+        
+        /* Interactive Elements */
+        .interactive-note {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            color: #856404;
+        }
+        
+        canvas { max-width: 100%; }
+    </style>
+</head><body>
+    <div class="container">
+        <h1>Apex Memory System - Visual Diagrams</h1>
+        
+        <!-- Diagram 1: System Architecture Overview -->
+        <div class="diagram-section">
+            <h2>1. System Architecture Overview</h2>
+            <div class="diagram">
+                <div class="architecture-diagram">
+                    <div class="component">AI Assistant (Claude/GPT)</div>
+                    <div class="arrow"></div>
+                    <div class="component router">Query Router<br><small>Intent Classification</small></div>
+                    <div class="arrow"></div>
+                    <div class="layer">
+                        <div class="component database">Neo4j<br><small>Graph Data</small></div>
+                        <div class="component database">Graphiti<br><small>Temporal</small></div>
+                        <div class="component database">Qdrant<br><small>Vector</small></div>
+                        <div class="component database">PostgreSQL<br><small>+ pgvector</small></div>
+                        <div class="component cache">Redis<br><small>Cache Layer</small></div>
+                    </div>
+                    <div class="arrow"></div>
+                    <div class="component">Result Aggregator<br><small>Weighted Scoring & Cross-validation</small></div>
+                    <div class="arrow"></div>
+                    <div class="component">Ranked Results</div>
+                </div>
+            </div>
+        </div>
+        <!-- Diagram 2: Query Processing Pipeline -->
+        <div class="diagram-section">
+            <h2>2. Query Processing Pipeline</h2>
+            <div class="diagram">
+                <div class="flow-diagram">
+                    <div class="flow-step">User Query</div>
+                    <div class="flow-step">Intent Analysis</div>
+                    <div class="flow-step" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; border: none;">
+                        Query Type?<br>
+                        <small>• Graph<br>• Temporal<br>• Semantic<br>• Metadata<br>• Hybrid</small>
+                    </div>
+                    <div class="flow-step">Database Selection</div>
+                    <div class="flow-step">Parallel Execution</div>
+                    <div class="flow-step">Aggregation</div>
+                    <div class="flow-step">Top N Results</div>
+                </div>
+            </div>
+        </div>
+        <!-- Diagram 3: Document Ingestion Pipeline -->
+        <div class="diagram-section">
+            <h2>3. Document Ingestion Pipeline</h2>
+            <div class="diagram">
+                <div class="architecture-diagram">
+                    <div class="component">Document Upload</div>
+                    <div class="arrow"></div>
+                    <div class="component">Docling Parser<br><small>PDF/DOC/TXT</small></div>
+                    <div class="arrow"></div>
+                    <div class="component">Chunking<br><small>1000 tokens + 200 overlap</small></div>
+                    <div class="arrow"></div>
+                    <div class="component">OpenAI Embeddings<br><small>text-embedding-ada-002</small></div>
+                    <div class="arrow"></div>
+                    <div class="layer">
+                        <div class="component database">PostgreSQL<br><small>Metadata + Vector</small></div>
+                        <div class="component database">Qdrant<br><small>Vector Chunks</small></div>
+                        <div class="component database">Neo4j<br><small>Document Graph</small></div>
+                        <div class="component database">Graphiti<br><small>Episode Creation</small></div>
+                    </div>
+                    <div class="arrow"></div>
+                    <div class="component" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; border: none;">
+                        All Success?<br>
+                        <small>✓ Commit Transaction<br>✗ Rollback + Cleanup</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Diagram 6: Performance Metrics -->
+        <div class="diagram-section">
+            <h2>4. Performance Metrics & Benchmarks</h2>
+            <div class="diagram">
+                <table class="metrics-table">
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Target</th>
+                            <th>Actual</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>P90 Latency</td>
+                            <td>&lt;1s</td>
+                            <td>~800ms</td>
+                            <td class="status-pass">✓ PASS</td>
+                        </tr>
+                        <tr>
+                            <td>Cache Hit Rate</td>
+                            <td>&gt;70%</td>
+                            <td>95% (steady state)</td>
+                            <td class="status-exceed">✓✓ EXCEED</td>
+                        </tr>
+                        <tr>
+                            <td>Concurrent Requests</td>
+                            <td>10+</td>
+                            <td>10/10 success</td>
+                            <td class="status-pass">✓ PASS</td>
+                        </tr>                        <tr>
+                            <td>Code Coverage</td>
+                            <td>80%+</td>
+                            <td>80%+</td>
+                            <td class="status-pass">✓ PASS</td>
+                        </tr>
+                        <tr>
+                            <td>Query Accuracy</td>
+                            <td>90%+</td>
+                            <td>94-95%</td>
+                            <td class="status-exceed">✓✓ EXCEED</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Diagram 9: Competitive Analysis Matrix -->
+        <div class="diagram-section">
+            <h2>5. Competitive Analysis Matrix</h2>
+            <div class="diagram">
+                <table class="competitive-matrix">
+                    <thead>
+                        <tr>
+                            <th>Capability</th>
+                            <th style="background: #667eea;">Apex</th>
+                            <th>Mem0</th>
+                            <th>Zep</th>
+                            <th>Letta</th>
+                            <th>Traditional RAG</th>
+                        </tr>
+                    </thead>                    <tbody>
+                        <tr>
+                            <td><strong>Temporal Reasoning</strong></td>
+                            <td class="check">✓</td>
+                            <td class="cross">✗</td>
+                            <td class="check">✓</td>
+                            <td class="cross">✗</td>
+                            <td class="cross">✗</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Graph Relationships</strong></td>
+                            <td class="check">✓</td>
+                            <td class="partial">~</td>
+                            <td class="check">✓</td>
+                            <td class="cross">✗</td>
+                            <td class="cross">✗</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Vector Similarity</strong></td>
+                            <td class="check">✓</td>
+                            <td class="check">✓</td>
+                            <td class="check">✓</td>
+                            <td class="cross">✗</td>
+                            <td class="check">✓</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cache Layer (95% hit)</strong></td>
+                            <td class="check">✓</td>
+                            <td class="cross">✗</td>
+                            <td class="cross">✗</td>
+                            <td class="cross">✗</td>
+                            <td class="cross">✗</td>
+                        </tr>                        <tr>
+                            <td><strong>Latency (P50)</strong></td>
+                            <td style="color: green; font-weight: bold;">~600ms</td>
+                            <td>1.4s</td>
+                            <td>1.3s</td>
+                            <td>Variable</td>
+                            <td>~200ms</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Accuracy</strong></td>
+                            <td style="color: green; font-weight: bold;">94-95%</td>
+                            <td>66.9%</td>
+                            <td>94.8%</td>
+                            <td>74%</td>
+                            <td>70-75%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- Diagram 11: Database Query Patterns -->
+        <div class="diagram-section">
+            <h2>6. Query Type to Database Mapping</h2>
+            <div class="diagram">
+                <table class="metrics-table">
+                    <thead>
+                        <tr>
+                            <th>Query Type</th>
+                            <th>Keywords</th>
+                            <th>Databases Used</th>
+                            <th>Example Query</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>GRAPH</strong></td>
+                            <td>"related", "connected", "links"</td>
+                            <td style="color: #4facfe;">Neo4j</td>
+                            <td>"What is connected to ACME?"</td>
+                        </tr>
+                        <tr>
+                            <td><strong>TEMPORAL</strong></td>
+                            <td>"changed", "evolved", "over time"</td>
+                            <td style="color: #4facfe;">Graphiti, Neo4j</td>
+                            <td>"How has X changed?"</td>
+                        </tr>
+                        <tr>
+                            <td><strong>SEMANTIC</strong></td>
+                            <td>"similar", "like", "about"</td>
+                            <td style="color: #4facfe;">Qdrant, PostgreSQL</td>
+                            <td>"Find similar documents"</td>
+                        </tr>                        <tr>
+                            <td><strong>METADATA</strong></td>
+                            <td>"type", "status", "created", "filter"</td>
+                            <td style="color: #4facfe;">PostgreSQL</td>
+                            <td>"Show overdue invoices"</td>
+                        </tr>
+                        <tr>
+                            <td><strong>HYBRID</strong></td>
+                            <td>Multiple keywords</td>
+                            <td style="color: #4facfe;">Multiple DBs</td>
+                            <td>"Related invoices from last month"</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Note about interactive features -->
+        <div class="diagram-section">
+            <h2>Notes</h2>
+            <div class="interactive-note">
+                📊 This HTML file contains all the visual diagrams from the Apex Memory System document<br><br>
+                ✨ Features include:<br>
+                • System Architecture Overview<br>
+                • Query Processing Pipeline<br>
+                • Document Ingestion Flow<br>
+                • Performance Metrics<br>
+                • Competitive Analysis Matrix<br>
+                • Query Type to Database Mapping<br><br>
+                💡 Hover over components to see interactive effects!
+            </div>
+        </div>
+    </div>
+</body>
+</html>
