@@ -60,8 +60,8 @@ The Apex Memory System is a **parallel multi-database intelligence platform** bu
 - OpenAPI documentation (Swagger UI)
 
 **[08 - Frontend Application](08-Frontend-Application/)**
-- React 18.3 + TypeScript 5 + Vite 5
-- Streaming chat with Claude (Vercel AI SDK)
+- React 19.2 + TypeScript 5.9 + Vite 7.1 (upgraded Oct 2025)
+- Streaming chat with Claude (Vercel AI SDK 5.0)
 - 27 components, 6 custom hooks
 - JWT authentication with protected routes
 - 5 artifact types: table, markdown, JSON, graph, timeline

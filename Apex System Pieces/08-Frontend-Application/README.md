@@ -6,12 +6,12 @@ Provides modern web interface for document upload, intelligent querying, streami
 
 ## 🛠 Technical Stack
 
-- **React 18.3:** UI framework
-- **TypeScript 5:** Type safety
-- **Vite 5:** Build tool (fast HMR)
+- **React 19.2:** UI framework (upgraded October 2025)
+- **TypeScript 5.9:** Type safety (upgraded October 2025)
+- **Vite 7.1:** Build tool (fast HMR, upgraded October 2025)
 - **Tailwind CSS:** Utility-first styling
 - **shadcn/ui:** Component library
-- **Vercel AI SDK:** Streaming chat
+- **Vercel AI SDK 5.0:** Streaming chat
 - **React Router 6:** Client-side routing
 - **Axios:** HTTP client with interceptors
 
