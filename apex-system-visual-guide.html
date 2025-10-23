@@ -1,0 +1,2392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apex Memory System - Visual Architecture Guide</title>
+    <style>
+        /* ===== ROOT VARIABLES ===== */
+        :root {
+            --bg-primary: #1a1a2e;
+            --bg-secondary: #16213e;
+            --bg-card: #0f3460;
+            --text-primary: #eaeaea;
+            --text-secondary: #a0a0a0;
+
+            /* Layer Colors */
+            --foundation: #3498db;
+            --application: #2ecc71;
+            --intelligence: #9b59b6;
+            --services: #e67e22;
+            --operations: #e74c3c;
+            --connections: #95a5a6;
+            --highlight: #f39c12;
+
+            --border: #2c3e50;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ===== LAYOUT ===== */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            background: var(--bg-secondary);
+            border-bottom: 2px solid var(--highlight);
+            padding: 30px 0;
+            text-align: center;
+            box-shadow: 0 4px 6px var(--shadow);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--highlight), var(--intelligence));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.1em;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: var(--highlight);
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ===== NAVIGATION TABS ===== */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin: 30px 0;
+            border-bottom: 2px solid var(--border);
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 15px 25px;
+            background: var(--bg-secondary);
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            border-radius: 8px 8px 0 0;
+            position: relative;
+        }
+
+        .tab:hover {
+            background: var(--bg-card);
+            color: var(--text-primary);
+        }
+
+        .tab.active {
+            background: var(--bg-card);
+            color: var(--highlight);
+            border-bottom: 3px solid var(--highlight);
+        }
+
+        /* ===== SECTION CONTAINERS ===== */
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== COMPONENT CARDS ===== */
+        .layer-group {
+            margin-bottom: 40px;
+        }
+
+        .layer-title {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-left: 10px;
+            border-left: 4px solid var(--highlight);
+        }
+
+        .layer-title.foundation { border-left-color: var(--foundation); }
+        .layer-title.application { border-left-color: var(--application); }
+        .layer-title.intelligence { border-left-color: var(--intelligence); }
+        .layer-title.services { border-left-color: var(--services); }
+        .layer-title.operations { border-left-color: var(--operations); }
+
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+        }
+
+        .component-card {
+            background: var(--bg-card);
+            border-radius: 10px;
+            padding: 25px;
+            border-left: 5px solid var(--connections);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 2px 4px var(--shadow);
+        }
+
+        .component-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px var(--shadow);
+        }
+
+        .component-card.foundation { border-left-color: var(--foundation); }
+        .component-card.application { border-left-color: var(--application); }
+        .component-card.intelligence { border-left-color: var(--intelligence); }
+        .component-card.services { border-left-color: var(--services); }
+        .component-card.operations { border-left-color: var(--operations); }
+
+        .component-number {
+            font-size: 3em;
+            font-weight: bold;
+            opacity: 0.2;
+            line-height: 0.8;
+        }
+
+        .component-name {
+            font-size: 1.3em;
+            margin: 10px 0;
+            color: var(--text-primary);
+        }
+
+        .component-description {
+            color: var(--text-secondary);
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        .component-tech {
+            margin-top: 15px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tech-badge {
+            background: var(--bg-secondary);
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            color: var(--text-secondary);
+        }
+
+        .component-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border);
+        }
+
+        .component-card.expanded .component-details {
+            max-height: 500px;
+        }
+
+        .detail-item {
+            margin: 8px 0;
+            font-size: 0.9em;
+            color: var(--text-secondary);
+        }
+
+        .detail-label {
+            color: var(--highlight);
+            font-weight: bold;
+        }
+
+        /* ===== DATA FLOW VISUALIZATION ===== */
+        .flow-container {
+            background: var(--bg-secondary);
+            border-radius: 10px;
+            padding: 40px;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .flow-stage {
+            background: var(--bg-card);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            position: relative;
+            border-left: 4px solid var(--connections);
+        }
+
+        .flow-stage.active {
+            border-left-color: var(--highlight);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(243, 156, 18, 0.4); }
+            50% { box-shadow: 0 0 0 10px rgba(243, 156, 18, 0); }
+        }
+
+        .flow-title {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            color: var(--highlight);
+        }
+
+        .flow-description {
+            color: var(--text-secondary);
+            font-size: 0.95em;
+        }
+
+        .flow-code {
+            background: var(--bg-primary);
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            overflow-x: auto;
+        }
+
+        .flow-arrow {
+            text-align: center;
+            font-size: 2em;
+            color: var(--highlight);
+            margin: 10px 0;
+        }
+
+        /* ===== SVG ANIMATIONS ===== */
+        .svg-container {
+            background: var(--bg-secondary);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .animated-token {
+            animation: travel 5s linear infinite;
+        }
+
+        @keyframes travel {
+            0% { offset-distance: 0%; }
+            100% { offset-distance: 100%; }
+        }
+
+        /* ===== SAGA PATTERN VISUALIZATION ===== */
+        .saga-phase {
+            background: var(--bg-card);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 5px solid var(--intelligence);
+        }
+
+        .saga-phase-title {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            color: var(--intelligence);
+        }
+
+        .parallel-writes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .db-write {
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            border: 2px solid var(--connections);
+        }
+
+        .db-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .circuit-breaker {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.75em;
+            background: var(--services);
+            color: white;
+            margin-top: 5px;
+        }
+
+        /* ===== DECISION TREE ===== */
+        .tree-container {
+            padding: 30px;
+            background: var(--bg-secondary);
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .tree-node {
+            background: var(--bg-card);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px;
+            display: inline-block;
+            border: 2px solid var(--intelligence);
+            position: relative;
+        }
+
+        .tree-tier {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .tier-card {
+            background: var(--bg-card);
+            border-radius: 8px;
+            padding: 20px;
+            flex: 1;
+            min-width: 250px;
+            margin: 10px;
+            border-left: 4px solid var(--intelligence);
+        }
+
+        .tier-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .tier-stat {
+            text-align: center;
+        }
+
+        .tier-stat-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: var(--highlight);
+        }
+
+        .tier-stat-label {
+            font-size: 0.85em;
+            color: var(--text-secondary);
+        }
+
+        /* ===== MATRIX GRID ===== */
+        .matrix-container {
+            background: var(--bg-secondary);
+            border-radius: 10px;
+            padding: 30px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+
+        .matrix-grid {
+            display: grid;
+            grid-template-columns: 150px repeat(4, 1fr);
+            gap: 2px;
+            background: var(--border);
+        }
+
+        .matrix-cell {
+            background: var(--bg-card);
+            padding: 20px;
+            text-align: center;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .matrix-cell.header {
+            background: var(--bg-secondary);
+            font-weight: bold;
+            color: var(--highlight);
+        }
+
+        .matrix-cell.strong {
+            background: rgba(52, 152, 219, 0.3);
+        }
+
+        .matrix-cell.medium {
+            background: rgba(52, 152, 219, 0.15);
+        }
+
+        .matrix-cell:hover:not(.header) {
+            background: rgba(243, 156, 18, 0.2);
+            transform: scale(1.05);
+        }
+
+        /* ===== NETWORK GRAPH ===== */
+        .network-container {
+            background: var(--bg-secondary);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            height: 600px;
+            position: relative;
+        }
+
+        .network-node {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 3px solid var(--foundation);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 0.85em;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 4px 8px var(--shadow);
+        }
+
+        .network-node:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 16px var(--shadow);
+        }
+
+        .network-node.foundation { border-color: var(--foundation); }
+        .network-node.application { border-color: var(--application); }
+        .network-node.intelligence { border-color: var(--intelligence); }
+        .network-node.services { border-color: var(--services); }
+        .network-node.operations { border-color: var(--operations); }
+
+        /* ===== TECH STACK PYRAMID ===== */
+        .pyramid-container {
+            padding: 40px;
+            background: var(--bg-secondary);
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .pyramid-layer {
+            background: var(--bg-card);
+            border-radius: 8px;
+            padding: 25px;
+            margin: 15px auto;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .pyramid-layer:hover {
+            transform: scale(1.02);
+        }
+
+        .pyramid-layer:nth-child(1) { width: 95%; }
+        .pyramid-layer:nth-child(2) { width: 85%; }
+        .pyramid-layer:nth-child(3) { width: 75%; }
+        .pyramid-layer:nth-child(4) { width: 65%; }
+        .pyramid-layer:nth-child(5) { width: 55%; }
+        .pyramid-layer:nth-child(6) { width: 45%; }
+
+        .pyramid-layer-title {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            color: var(--highlight);
+            text-align: center;
+        }
+
+        .tech-items {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .tech-item {
+            background: var(--bg-secondary);
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .tech-version {
+            font-size: 0.8em;
+            color: var(--text-secondary);
+            margin-left: 8px;
+        }
+
+        /* ===== METRICS DASHBOARD ===== */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 20px 0;
+        }
+
+        .metric-card {
+            background: var(--bg-card);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            border-top: 4px solid var(--highlight);
+            box-shadow: 0 4px 6px var(--shadow);
+        }
+
+        .metric-card.foundation { border-top-color: var(--foundation); }
+        .metric-card.application { border-top-color: var(--application); }
+        .metric-card.intelligence { border-top-color: var(--intelligence); }
+
+        .metric-value {
+            font-size: 3em;
+            font-weight: bold;
+            color: var(--highlight);
+            margin: 15px 0;
+        }
+
+        .metric-label {
+            font-size: 1.1em;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .metric-description {
+            margin-top: 15px;
+            font-size: 0.9em;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .progress-bar {
+            background: var(--bg-secondary);
+            border-radius: 10px;
+            height: 20px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, var(--highlight), var(--intelligence));
+            height: 100%;
+            transition: width 1s ease;
+            border-radius: 10px;
+        }
+
+        /* ===== GAUGES ===== */
+        .gauge-container {
+            width: 200px;
+            height: 200px;
+            margin: 20px auto;
+            position: relative;
+        }
+
+        .gauge-circle {
+            transform: rotate(-90deg);
+        }
+
+        .gauge-background {
+            fill: none;
+            stroke: var(--bg-secondary);
+            stroke-width: 15;
+        }
+
+        .gauge-progress {
+            fill: none;
+            stroke: var(--highlight);
+            stroke-width: 15;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 1s ease;
+        }
+
+        .gauge-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2em;
+            font-weight: bold;
+            color: var(--highlight);
+        }
+
+        /* ===== CONTROLS ===== */
+        .controls {
+            background: var(--bg-card);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: var(--highlight);
+            color: var(--bg-primary);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px var(--shadow);
+        }
+
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        /* ===== TOOLTIPS ===== */
+        .tooltip {
+            position: fixed;
+            background: var(--bg-primary);
+            border: 2px solid var(--highlight);
+            border-radius: 8px;
+            padding: 15px;
+            max-width: 300px;
+            z-index: 1000;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            box-shadow: 0 4px 8px var(--shadow);
+        }
+
+        .tooltip.show {
+            opacity: 1;
+        }
+
+        /* ===== LEGEND ===== */
+        .legend {
+            background: var(--bg-card);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .legend-title {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            color: var(--highlight);
+        }
+
+        .legend-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .stats-bar {
+                gap: 20px;
+            }
+
+            .component-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tabs {
+                overflow-x: auto;
+                flex-wrap: nowrap;
+            }
+
+            .network-container {
+                height: 400px;
+            }
+        }
+
+        /* ===== PRINT STYLES ===== */
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+
+            .tabs, .controls, .btn {
+                display: none;
+            }
+
+            .section {
+                display: block !important;
+                page-break-after: always;
+            }
+        }
+
+        /* ===== CODE HIGHLIGHTING ===== */
+        .code-keyword { color: #e67e22; }
+        .code-string { color: #2ecc71; }
+        .code-comment { color: #95a5a6; font-style: italic; }
+        .code-function { color: #3498db; }
+
+        /* ===== BADGES ===== */
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .badge-success {
+            background: var(--application);
+            color: white;
+        }
+
+        .badge-warning {
+            background: var(--highlight);
+            color: var(--bg-primary);
+        }
+
+        .badge-danger {
+            background: var(--operations);
+            color: white;
+        }
+
+        .badge-info {
+            background: var(--intelligence);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <h1>🚀 Apex Memory System</h1>
+        <p class="subtitle">Visual Architecture Guide - Interactive Documentation</p>
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div class="stat-value">13</div>
+                <div class="stat-label">Components</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">4</div>
+                <div class="stat-label">Databases</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">90%</div>
+                <div class="stat-label">Accuracy</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">95%</div>
+                <div class="stat-label">Cache Hit</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">600ms</div>
+                <div class="stat-label">P50 Latency</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- NAVIGATION TABS -->
+        <div class="tabs">
+            <button class="tab active" onclick="showSection('architecture')">📊 Architecture</button>
+            <button class="tab" onclick="showSection('ingestion')">📥 Document Ingestion</button>
+            <button class="tab" onclick="showSection('saga')">🔄 Saga Pattern</button>
+            <button class="tab" onclick="showSection('query')">🔍 Query Execution</button>
+            <button class="tab" onclick="showSection('matrix')">🔗 DB Synchronization</button>
+            <button class="tab" onclick="showSection('network')">🌐 Component Network</button>
+            <button class="tab" onclick="showSection('stack')">⚙️ Tech Stack</button>
+            <button class="tab" onclick="showSection('metrics')">📈 Metrics</button>
+        </div>
+
+        <!-- SECTION 1: ARCHITECTURE DASHBOARD -->
+        <div id="architecture" class="section active">
+            <h2 style="margin: 30px 0 20px 0; font-size: 2em;">System Architecture Dashboard</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 30px;">
+                The Apex Memory System is a parallel multi-database intelligence platform with 13 major components
+                organized into 5 architectural layers. Click any component to expand details.
+            </p>
+
+            <!-- Foundation Layer -->
+            <div class="layer-group">
+                <h3 class="layer-title foundation">🏗️ Foundation Layer</h3>
+                <div class="component-grid">
+                    <div class="component-card foundation" onclick="toggleExpand(this)">
+                        <div class="component-number">01</div>
+                        <h4 class="component-name">Database Infrastructure</h4>
+                        <p class="component-description">
+                            Multi-database architecture with PostgreSQL, Neo4j, Qdrant, and Redis. Each database
+                            optimized for specific query types.
+                        </p>
+                        <div class="component-tech">
+                            <span class="tech-badge">PostgreSQL 16</span>
+                            <span class="tech-badge">Neo4j 2025.09.0</span>
+                            <span class="tech-badge">Qdrant</span>
+                            <span class="tech-badge">Redis 8.2</span>
+                        </div>
+                        <div class="component-details">
+                            <div class="detail-item"><span class="detail-label">Purpose:</span> Foundation for all data storage and retrieval</div>
+                            <div class="detail-item"><span class="detail-label">Key Features:</span> pgvector hybrid search, graph relationships, vector similarity, 95% cache hit rate</div>
+                            <div class="detail-item"><span class="detail-label">Location:</span> docker/docker-compose.yml</div>
+                        </div>
+                    </div>
+
+                    <div class="component-card foundation" onclick="toggleExpand(this)">
+                        <div class="component-number">02</div>
+                        <h4 class="component-name">Workflow Orchestration</h4>
+                        <p class="component-description">
+                            Temporal.io workflows for fault-tolerant document processing. 3 workflows with 11 activities.
+                        </p>
+                        <div class="component-tech">
+                            <span class="tech-badge">Temporal.io</span>
+                            <span class="tech-badge">3 Workflows</span>
+                            <span class="tech-badge">11 Activities</span>
+                        </div>
+                        <div class="component-details">
+                            <div class="detail-item"><span class="detail-label">Workflows:</span> DocumentIngestion, StructuredDataIngestion, Greeting</div>
+                            <div class="detail-item"><span class="detail-label">Key Features:</span> Automatic retries, workflow history, durable execution</div>
+                            <div class="detail-item"><span class="detail-label">Location:</span> src/apex_memory/temporal/</div>
+                        </div>
+                    </div>
+
+                    <div class="component-card foundation" onclick="toggleExpand(this)">
+                        <div class="component-number">11</div>
+                        <h4 class="component-name">Configuration Management</h4>
+                        <p class="component-description">
+                            Type-safe configuration using Pydantic Settings. Environment variable management with validation.
+                        </p>
+                        <div class="component-tech">
+                            <span class="tech-badge">Pydantic</span>
+                            <span class="tech-badge">.env Files</span>
+                        </div>
+                        <div class="component-details">
+                            <div class="detail-item"><span class="detail-label">Features:</span> Type validation, defaults, database connection strings</div>
+                            <div class="detail-item"><span class="detail-label">Configuration:</span> Database URLs, API keys, feature flags</div>
+                            <div class="detail-item"><span class="detail-label">Location:</span> src/apex_memory/config/settings.py</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Application Layer -->
+            <div class="layer-group">
+                <h3 class="layer-title application">🖥️ Application Layer</h3>
+                <div class="component-grid">
+                    <div class="component-card application" onclick="toggleExpand(this)">
+                        <div class="component-number">03</div>
+                        <h4 class="component-name">Backend API</h4>
+                        <p class="component-description">
+                            FastAPI application with 13 routers. High-performance async API with OpenAPI documentation.
+                        </p>
+                        <div class="component-tech">
+                            <span class="tech-badge">FastAPI</span>
+                            <span class="tech-badge">13 Routers</span>
+                            <span class="tech-badge">Uvicorn</span>
+                        </div>
+                        <div class="component-details">
+                            <div class="detail-item"><span class="detail-label">Routers:</span> ingestion, query, auth, chat, conversations, users, etc.</div>
+                            <div class="detail-item"><span class="detail-label">Features:</span> CORS, security headers, health checks, metrics</div>
+                            <div class="detail-item"><span class="detail-label">Location:</span> src/apex_memory/main.py (313 lines)</div>
+                        </div>
+                    </div>
+
+                    <div class="component-card application" onclick="toggleExpand(this)">
+                        <div class="component-number">08</div>
+                        <h4 class="component-name">Frontend Application</h4>
+                        <p class="component-description">
+                            React 18.3 SPA with streaming chat. 27 components with JWT authentication.
+                        </p>
+                        <div class="component-tech">
+                            <span class="tech-badge">React 18.3</span>
+                            <span class="tech-badge">TypeScript 5</span>
+                            <span class="tech-badge">Vite 5</span>
+                        </div>
+                        <div class="component-details">
+                            <div class="detail-item"><span class="detail-label">Features:</span> Streaming chat with Claude, 5 artifact types, protected routes</div>
+                            <div class="detail-item"><span class="detail-label">Components:</span> 27 React components, 6 custom hooks</div>
+                            <div class="detail-item"><span class="detail-label">Location:</span> src/apex_memory/frontend/</div>
+                        </div>
+                    </div>
+
+                    <div class="component-card application" onclick="toggleExpand(this)">
+                        <div class="component-number">12</div>
+                        <h4 class="component-name">Authentication & Security</h4>
+                        <p class="component-description">
+                            JWT-based authentication with bcrypt. OWASP security headers for all responses.
+                        </p>
+                        <div class="component-tech">
+                            <span class="tech-badge">JWT</span>
+                            <span class="tech-badge">bcrypt</span>
+                            <span class="tech-badge">OWASP</span>
+                        </div>
+                        <div class="component-details">
+                            <div class="detail-item"><span class="detail-label">Features:</span> 24h token expiration, password hashing, CSP headers</div>
+                            <div class="detail-item"><span class="detail-label">Security:</span> HSTS, X-Frame-Options, X-Content-Type-Options</div>
+                            <div class="detail-item"><span class="detail-label">Location:</span> src/apex_memory/services/auth_service.py</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Intelligence Layer -->
+            <div class="layer-group">
+                <h3 class="layer-title intelligence">🧠 Intelligence Layer</h3>
+                <div class="component-grid">
+                    <div class="component-card intelligence" onclick="toggleExpand(this)">
+                        <div class="component-number">04</div>
+                        <h4 class="component-name">Query Intelligence<span class="badge badge-success">90% Accuracy</span></h4>
+                        <p class="component-description">
+                            3-tier intent classification with RRF result fusion. Routes queries to optimal databases.
+                        </p>
+                        <div class="component-tech">
+                            <span class="tech-badge">3-Tier Classification</span>
+                            <span class="tech-badge">RRF Algorithm</span>
+                            <span class="tech-badge">Claude Haiku</span>
+                        </div>
+                        <div class="component-details">
+                            <div class="detail-item"><span class="detail-label">Tiers:</span> Keyword (60%, <10ms), Hybrid (35%, <100ms), LLM (5%, 300-500ms)</div>
+                            <div class="detail-item"><span class="detail-label">Features:</span> Intent mapping, result fusion, semantic caching</div>
+                            <div class="detail-item"><span class="detail-label">Location:</span> src/apex_memory/query_router/router.py (43KB)</div>
+                        </div>
+                    </div>
+
+                    <div class="component-card intelligence" onclick="toggleExpand(this)">
+                        <div class="component-number">09</div>
+                        <h4 class="component-name">Cache Layer<span class="badge badge-success">95% Hit Rate</span></h4>
+                        <p class="component-description">
+                            Redis-based semantic caching with <10ms hit latency. SHA256 cache key generation.
+                        </p>
+                        <div class="component-tech">
+                            <span class="tech-badge">Redis</span>
+                            <span class="tech-badge">Semantic Similarity</span>
+                            <span class="tech-badge">1h TTL</span>
+                        </div>
+                        <div class="component-details">
+                            <div class="detail-item"><span class="detail-label">Performance:</span> <10ms cache hit, 95% steady-state hit rate</div>
+                            <div class="detail-item"><span class="detail-label">Features:</span> Semantic similarity 0.90+ threshold, automatic invalidation</div>
+                            <div class="detail-item"><span class="detail-label">Location:</span> src/apex_memory/query_router/semantic_cache.py</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Services Layer -->
+            <div class="layer-group">
+                <h3 class="layer-title services">⚙️ Services Layer</h3>
+                <div class="component-grid">
+                    <div class="component-card services" onclick="toggleExpand(this)">
+                        <div class="component-number">05</div>
+                        <h4 class="component-name">Core Services</h4>
+                        <p class="component-description">
+                            14 reusable business logic services. Document parsing, entity extraction, embeddings.
+                        </p>
+                        <div class="component-tech">
+                            <span class="tech-badge">14 Services</span>
+                            <span class="tech-badge">Docling 2.55.1</span>
+                            <span class="tech-badge">GPT-4o</span>
+                        </div>
+                        <div class="component-details">
+                            <div class="detail-item"><span class="detail-label">Services:</span> document_parser, entity_extractor, embedding_service, graphiti_service, etc.</div>
+                            <div class="detail-item"><span class="detail-label">Features:</span> PDF/DOCX/PPTX parsing, LLM entity extraction, OpenAI embeddings</div>
+                            <div class="detail-item"><span class="detail-label">Location:</span> src/apex_memory/services/</div>
+                        </div>
+                    </div>
+
+                    <div class="component-card services" onclick="toggleExpand(this)">
+                        <div class="component-number">06</div>
+                        <h4 class="component-name">Data Models</h4>
+                        <p class="component-description">
+                            9 Pydantic models with type-safe validation. Document, User, Conversation, etc.
+                        </p>
+                        <div class="component-tech">
+                            <span class="tech-badge">9 Models</span>
+                            <span class="tech-badge">Pydantic</span>
+                            <span class="tech-badge">UUID</span>
+                        </div>
+                        <div class="component-details">
+                            <div class="detail-item"><span class="detail-label">Models:</span> Document, StructuredData, User, Conversation, Briefing, Achievement, etc.</div>
+                            <div class="detail-item"><span class="detail-label">Features:</span> JSON serialization, validation, UUID identifiers</div>
+                            <div class="detail-item"><span class="detail-label">Location:</span> src/apex_memory/models/</div>
+                        </div>
+                    </div>
+
+                    <div class="component-card services" onclick="toggleExpand(this)">
+                        <div class="component-number">07</div>
+                        <h4 class="component-name">Database Writers<span class="badge badge-info">Saga Pattern</span></h4>
+                        <p class="component-description">
+                            Atomic multi-database writes with saga pattern. Parallel writes with rollback guarantee.
+                        </p>
+                        <div class="component-tech">
+                            <span class="tech-badge">4 Writers</span>
+                            <span class="tech-badge">Saga Pattern</span>
+                            <span class="tech-badge">Circuit Breakers</span>
+                        </div>
+                        <div class="component-details">
+                            <div class="detail-item"><span class="detail-label">Writers:</span> Neo4jWriter, PostgresWriter, QdrantWriter, RedisWriter</div>
+                            <div class="detail-item"><span class="detail-label">Features:</span> Distributed locking, idempotency, parallel execution</div>
+                            <div class="detail-item"><span class="detail-label">Location:</span> src/apex_memory/services/database_writer.py</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Operations Layer -->
+            <div class="layer-group">
+                <h3 class="layer-title operations">🔧 Operations Layer</h3>
+                <div class="component-grid">
+                    <div class="component-card operations" onclick="toggleExpand(this)">
+                        <div class="component-number">10</div>
+                        <h4 class="component-name">Monitoring & Observability</h4>
+                        <p class="component-description">
+                            Prometheus + Grafana with 40+ metrics. 33-panel Temporal ingestion dashboard.
+                        </p>
+                        <div class="component-tech">
+                            <span class="tech-badge">Prometheus</span>
+                            <span class="tech-badge">Grafana</span>
+                            <span class="tech-badge">40+ Metrics</span>
+                        </div>
+                        <div class="component-details">
+                            <div class="detail-item"><span class="detail-label">Features:</span> Workflow metrics, activity tracking, 12 alert rules</div>
+                            <div class="detail-item"><span class="detail-label">Dashboards:</span> Temporal ingestion (33 panels), health checks</div>
+                            <div class="detail-item"><span class="detail-label">Location:</span> monitoring/dashboards/, src/apex_memory/monitoring/</div>
+                        </div>
+                    </div>
+
+                    <div class="component-card operations" onclick="toggleExpand(this)">
+                        <div class="component-number">13</div>
+                        <h4 class="component-name">Utilities & Scripts</h4>
+                        <p class="component-description">
+                            Development tools and debugging scripts. Health checks, Temporal debugging, maintenance.
+                        </p>
+                        <div class="component-tech">
+                            <span class="tech-badge">Python</span>
+                            <span class="tech-badge">Bash</span>
+                            <span class="tech-badge">tctl</span>
+                        </div>
+                        <div class="component-details">
+                            <div class="detail-item"><span class="detail-label">Scripts:</span> 5 Temporal debugging scripts, health checks, maintenance ops</div>
+                            <div class="detail-item"><span class="detail-label">Tools:</span> Workflow status checker, failed workflow lister, metrics comparison</div>
+                            <div class="detail-item"><span class="detail-label">Location:</span> scripts/temporal/, scripts/dev/, scripts/maintenance/</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Legend -->
+            <div class="legend">
+                <h3 class="legend-title">Component Layer Legend</h3>
+                <div class="legend-items">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: var(--foundation);"></div>
+                        <span>Foundation Layer (Databases, Workflows, Config)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: var(--application);"></div>
+                        <span>Application Layer (API, Frontend, Auth)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: var(--intelligence);"></div>
+                        <span>Intelligence Layer (Query Router, Cache)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: var(--services);"></div>
+                        <span>Services Layer (Business Logic, Models, Writers)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: var(--operations);"></div>
+                        <span>Operations Layer (Monitoring, Utilities)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 2: DOCUMENT INGESTION FLOW -->
+        <div id="ingestion" class="section">
+            <h2 style="margin: 30px 0 20px 0; font-size: 2em;">Document Ingestion Flow</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 30px;">
+                Complete data flow from user upload to atomic multi-database writes. The saga pattern ensures
+                all 4 databases are synchronized or none are written.
+            </p>
+
+            <div class="controls">
+                <button class="btn" onclick="animateIngestion()">▶️ Animate Flow</button>
+                <button class="btn btn-secondary" onclick="resetIngestion()">🔄 Reset</button>
+                <span style="color: var(--text-secondary); margin-left: 20px;">Watch the document travel through each stage</span>
+            </div>
+
+            <div class="flow-container" id="ingestionFlow">
+                <!-- Stage 1: Upload -->
+                <div class="flow-stage" data-stage="1">
+                    <div class="flow-title">Stage 1: User Upload (Frontend)</div>
+                    <div class="flow-description">
+                        User uploads document through React frontend. File saved to multipart/form-data.
+                    </div>
+                    <div class="flow-code">
+<span class="code-comment">// File: ConversationsPage.tsx</span>
+<span class="code-keyword">const</span> handleFileUpload = <span class="code-keyword">async</span> (file: File) => {
+  <span class="code-keyword">const</span> formData = <span class="code-keyword">new</span> FormData();
+  formData.append(<span class="code-string">'file'</span>, file);
+  <span class="code-keyword">await</span> <span class="code-function">fetch</span>(<span class="code-string">'/api/v1/ingestion/ingest'</span>, {
+    method: <span class="code-string">'POST'</span>, body: formData
+  });
+};</div>
+                </div>
+
+                <div class="flow-arrow">⬇️</div>
+
+                <!-- Stage 2: FastAPI -->
+                <div class="flow-stage" data-stage="2">
+                    <div class="flow-title">Stage 2: FastAPI Endpoint</div>
+                    <div class="flow-description">
+                        Backend receives upload, generates UUID, saves to staging (/tmp/apex-staging/), starts Temporal workflow.
+                    </div>
+                    <div class="flow-code">
+<span class="code-comment"># File: api/ingestion.py:148</span>
+@router.post(<span class="code-string">"/ingest"</span>)
+<span class="code-keyword">async def</span> <span class="code-function">ingest_document</span>(file: UploadFile):
+    doc_uuid = UUIDService.generate()
+    staging_path = staging_manager.create_staging(<span class="code-string">"local_upload"</span>, doc_uuid)
+
+    <span class="code-comment"># Start Temporal workflow</span>
+    workflow_handle = <span class="code-keyword">await</span> client.start_workflow(
+        DocumentIngestionWorkflow.run,
+        args=[{<span class="code-string">"document_id"</span>: doc_uuid}],
+        id=<span class="code-string">f"doc-ingestion-{doc_uuid}"</span>
+    )</div>
+                </div>
+
+                <div class="flow-arrow">⬇️</div>
+
+                <!-- Stage 3: Temporal -->
+                <div class="flow-stage" data-stage="3">
+                    <div class="flow-title">Stage 3: Temporal Workflow (Orchestration)</div>
+                    <div class="flow-description">
+                        DocumentIngestionWorkflow executes 6 activities in sequence with automatic retries and durable execution.
+                    </div>
+                    <div class="flow-code">
+<span class="code-comment"># File: temporal/workflows/ingestion.py</span>
+@workflow.defn
+<span class="code-keyword">class</span> DocumentIngestionWorkflow:
+    @workflow.run
+    <span class="code-keyword">async def</span> <span class="code-function">run</span>(self, params: dict):
+        <span class="code-comment"># Activity 1: Parse document</span>
+        parsed = <span class="code-keyword">await</span> workflow.execute_activity(parse_document_activity)
+
+        <span class="code-comment"># Activity 2: Extract entities</span>
+        entities = <span class="code-keyword">await</span> workflow.execute_activity(extract_entities_activity)
+
+        <span class="code-comment"># Activity 3: Generate embeddings</span>
+        embeddings = <span class="code-keyword">await</span> workflow.execute_activity(generate_embeddings_activity)
+
+        <span class="code-comment"># Activity 4: Write to all databases (SAGA)</span>
+        result = <span class="code-keyword">await</span> workflow.execute_activity(write_to_databases_activity)</div>
+                </div>
+
+                <div class="flow-arrow">⬇️</div>
+
+                <!-- Stage 4: Parse -->
+                <div class="flow-stage" data-stage="4">
+                    <div class="flow-title">Activity 1: Parse Document</div>
+                    <div class="flow-description">
+                        Docling parser extracts text, tables, images from PDF/DOCX/PPTX. Returns structured ParsedDocument.
+                    </div>
+                    <div class="flow-code">
+<span class="code-comment"># Uses: Docling 2.55.1</span>
+parsed_doc = parser.parse_document(Path(file_path))
+<span class="code-comment"># Output: {uuid, content, metadata, chunks[]}</span></div>
+                </div>
+
+                <div class="flow-arrow">⬇️</div>
+
+                <!-- Stage 5: Entities -->
+                <div class="flow-stage" data-stage="5">
+                    <div class="flow-title">Activity 2: Extract Entities</div>
+                    <div class="flow-description">
+                        OpenAI GPT-4o extracts named entities (people, organizations, locations) with confidence scores.
+                    </div>
+                    <div class="flow-code">
+<span class="code-comment"># Uses: OpenAI GPT-4o</span>
+entities = entity_extractor.extract(parsed_doc.content)
+<span class="code-comment"># Output: [{name, type, confidence}]</span></div>
+                </div>
+
+                <div class="flow-arrow">⬇️</div>
+
+                <!-- Stage 6: Embeddings -->
+                <div class="flow-stage" data-stage="6">
+                    <div class="flow-title">Activity 3: Generate Embeddings</div>
+                    <div class="flow-description">
+                        OpenAI text-embedding-3-large generates 1536-dimensional vectors for each chunk.
+                    </div>
+                    <div class="flow-code">
+<span class="code-comment"># Uses: OpenAI embeddings</span>
+embeddings = embedding_service.generate_embedding(chunks)
+<span class="code-comment"># Output: [[0.123, -0.456, ...]] (1536 dims)</span></div>
+                </div>
+
+                <div class="flow-arrow">⬇️</div>
+
+                <!-- Stage 7: SAGA -->
+                <div class="flow-stage" data-stage="7" style="border-left-color: var(--highlight);">
+                    <div class="flow-title">Activity 4: Write to Databases (SAGA PATTERN) ⭐</div>
+                    <div class="flow-description">
+                        DatabaseWriteOrchestrator coordinates atomic writes to all 4 databases. See "Saga Pattern" tab for details.
+                    </div>
+                    <div class="flow-code">
+<span class="code-comment"># File: services/database_writer.py</span>
+result = database_orchestrator.write_document(
+    document=parsed_doc,
+    entities=entities,
+    embeddings=embeddings
+)
+<span class="code-comment"># Guarantees: All 4 databases OR none (atomic)</span></div>
+                </div>
+
+                <div class="flow-arrow">⬇️</div>
+
+                <!-- Stage 8: Complete -->
+                <div class="flow-stage" data-stage="8" style="border-left-color: var(--application);">
+                    <div class="flow-title">Result: Document in All 4 Databases</div>
+                    <div class="flow-description">
+                        ✅ <strong>PostgreSQL:</strong> documents + chunks tables (with pgvector)<br>
+                        ✅ <strong>Neo4j:</strong> Document + Entity nodes + MENTIONED_IN relationships<br>
+                        ✅ <strong>Qdrant:</strong> Vector points in 'documents' collection<br>
+                        ✅ <strong>Redis:</strong> Cached metadata (TTL: 1 hour)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 3: SAGA PATTERN -->
+        <div id="saga" class="section">
+            <h2 style="margin: 30px 0 20px 0; font-size: 2em;">Saga Pattern Deep Dive</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 30px;">
+                The DatabaseWriteOrchestrator ensures atomic writes across 4 independent databases using the saga pattern.
+                If any write fails, all successful writes are rolled back to maintain consistency.
+            </p>
+
+            <div class="controls">
+                <button class="btn" onclick="triggerSuccess()">✅ Simulate Success</button>
+                <button class="btn btn-secondary" onclick="triggerFailure()">❌ Simulate Failure</button>
+                <span style="color: var(--text-secondary); margin-left: 20px;" id="sagaStatus">Ready to simulate</span>
+            </div>
+
+            <!-- Phase 1: Lock -->
+            <div class="saga-phase">
+                <h3 class="saga-phase-title">Phase 1: Distributed Lock (Redis)</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 15px;">
+                    Acquire Redis lock to prevent concurrent writes to the same document. Ensures only one workflow can modify the document at a time.
+                </p>
+                <div class="flow-code">
+<span class="code-comment"># File: services/database_writer.py:85-92</span>
+lock_acquired = distributed_lock.acquire(
+    key=<span class="code-string">f"document:{uuid}"</span>,
+    timeout=<span class="code-string">30</span>,  <span class="code-comment"># 30 seconds</span>
+    retry_delay=<span class="code-string">0.1</span>,
+    max_retries=<span class="code-string">50</span>
+)
+
+<span class="code-keyword">if not</span> lock_acquired:
+    <span class="code-keyword">raise</span> LockAcquisitionError(<span class="code-string">"Could not acquire lock"</span>)</div>
+                <p style="margin-top: 15px; color: var(--text-secondary);">
+                    <strong>Purpose:</strong> Prevent race conditions when multiple users upload same document simultaneously.
+                </p>
+            </div>
+
+            <!-- Phase 2: Idempotency -->
+            <div class="saga-phase">
+                <h3 class="saga-phase-title">Phase 2: Idempotency Check (Redis)</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 15px;">
+                    Check if document was already processed. Prevents duplicate writes if workflow retries.
+                </p>
+                <div class="flow-code">
+<span class="code-comment"># File: services/database_writer.py:95-101</span>
+idempotency_key = <span class="code-string">f"idempotency:ingest:{uuid}"</span>
+cached_result = redis.get(idempotency_key)
+
+<span class="code-keyword">if</span> cached_result:
+    <span class="code-comment"># Already processed, return cached result</span>
+    <span class="code-keyword">return</span> WriteStatus.ALREADY_PROCESSED
+
+<span class="code-comment"># Continue to writes...</span></div>
+                <p style="margin-top: 15px; color: var(--text-secondary);">
+                    <strong>Purpose:</strong> Ensure exactly-once semantics even with Temporal retries.
+                </p>
+            </div>
+
+            <!-- Phase 3: Parallel Writes -->
+            <div class="saga-phase">
+                <h3 class="saga-phase-title">Phase 3: Parallel Database Writes (ThreadPoolExecutor)</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 15px;">
+                    Execute writes to all 4 databases in parallel using ThreadPoolExecutor. Each write protected by circuit breaker.
+                </p>
+
+                <div class="parallel-writes">
+                    <div class="db-write">
+                        <div class="db-icon">🗄️</div>
+                        <h4>Neo4j</h4>
+                        <p style="font-size: 0.85em; color: var(--text-secondary); margin: 10px 0;">
+                            Document + Entity nodes<br>
+                            MENTIONED_IN relationships
+                        </p>
+                        <div class="circuit-breaker">CB: 5 failures</div>
+                    </div>
+
+                    <div class="db-write">
+                        <div class="db-icon">🐘</div>
+                        <h4>PostgreSQL</h4>
+                        <p style="font-size: 0.85em; color: var(--text-secondary); margin: 10px 0;">
+                            documents + chunks tables<br>
+                            pgvector embeddings
+                        </p>
+                        <div class="circuit-breaker">CB: 5 failures</div>
+                    </div>
+
+                    <div class="db-write">
+                        <div class="db-icon">🔍</div>
+                        <h4>Qdrant</h4>
+                        <p style="font-size: 0.85em; color: var(--text-secondary); margin: 10px 0;">
+                            Vector points<br>
+                            'documents' collection
+                        </p>
+                        <div class="circuit-breaker">CB: 5 failures</div>
+                    </div>
+
+                    <div class="db-write">
+                        <div class="db-icon">🔴</div>
+                        <h4>Redis</h4>
+                        <p style="font-size: 0.85em; color: var(--text-secondary); margin: 10px 0;">
+                            Cached metadata<br>
+                            TTL: 1 hour
+                        </p>
+                        <div class="circuit-breaker">CB: 3 failures</div>
+                    </div>
+                </div>
+
+                <div class="flow-code" style="margin-top: 20px;">
+<span class="code-comment"># Parallel execution with ThreadPoolExecutor</span>
+<span class="code-keyword">with</span> ThreadPoolExecutor(max_workers=<span class="code-string">4</span>) <span class="code-keyword">as</span> executor:
+    futures = {
+        <span class="code-string">'neo4j'</span>: executor.submit(self._write_neo4j, doc, entities),
+        <span class="code-string">'postgres'</span>: executor.submit(self._write_postgres, doc, chunks),
+        <span class="code-string">'qdrant'</span>: executor.submit(self._write_qdrant, doc, embeddings),
+        <span class="code-string">'redis'</span>: executor.submit(self._write_redis, doc),
+    }
+
+    results = {db: future.result() <span class="code-keyword">for</span> db, future <span class="code-keyword">in</span> futures.items()}</div>
+
+                <p style="margin-top: 15px; color: var(--text-secondary);">
+                    <strong>Circuit Breakers:</strong> Track failures per database. Open circuit after threshold to prevent cascading failures.
+                </p>
+            </div>
+
+            <!-- Phase 4: Aggregation -->
+            <div class="saga-phase">
+                <h3 class="saga-phase-title">Phase 4: Result Aggregation & Decision</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 15px;">
+                    Analyze results from all 4 database writes. Decide: commit all or rollback all.
+                </p>
+                <div class="flow-code">
+<span class="code-comment"># Check if ALL writes succeeded</span>
+<span class="code-keyword">if</span> <span class="code-function">all</span>(r.success <span class="code-keyword">for</span> r <span class="code-keyword">in</span> results.values()):
+    <span class="code-comment"># SUCCESS PATH</span>
+    redis.set(idempotency_key, <span class="code-string">"SUCCESS"</span>, ex=<span class="code-string">3600</span>)
+    distributed_lock.release()
+    <span class="code-keyword">return</span> WriteStatus.SUCCESS
+
+<span class="code-keyword">else</span>:
+    <span class="code-comment"># FAILURE PATH - ROLLBACK ALL</span>
+    self._rollback_all(results)
+
+    <span class="code-comment"># Delete from each database that succeeded</span>
+    <span class="code-keyword">if</span> results[<span class="code-string">'neo4j'</span>].success:
+        neo4j_writer.delete_document(doc_uuid)
+    <span class="code-keyword">if</span> results[<span class="code-string">'postgres'</span>].success:
+        postgres_writer.delete_document(doc_uuid)
+    <span class="code-keyword">if</span> results[<span class="code-string">'qdrant'</span>].success:
+        qdrant_writer.delete_vectors(doc_uuid)
+    <span class="code-keyword">if</span> results[<span class="code-string">'redis'</span>].success:
+        redis_writer.delete_cache(doc_uuid)
+
+    <span class="code-comment"># Write to Dead Letter Queue for investigation</span>
+    dlq.write({<span class="code-string">"doc_uuid"</span>: doc_uuid, <span class="code-string">"failures"</span>: results})
+
+    distributed_lock.release()
+    <span class="code-keyword">return</span> WriteStatus.FAILED</div>
+
+                <div style="margin-top: 20px; padding: 20px; background: var(--bg-secondary); border-radius: 8px;">
+                    <h4 style="color: var(--highlight); margin-bottom: 10px;">🎯 Saga Guarantee</h4>
+                    <p style="color: var(--text-secondary);">
+                        <strong>Atomic Consistency:</strong> The saga pattern ensures that a document either exists in ALL 4 databases or in NONE.
+                        There is no intermediate state where a document exists in some databases but not others. This prevents data inconsistency
+                        and ensures the system always has a coherent view of the data.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 4: QUERY EXECUTION -->
+        <div id="query" class="section">
+            <h2 style="margin: 30px 0 20px 0; font-size: 2em;">Query Execution Flow</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 30px;">
+                Query routing with 3-tier intent classification. 90% accuracy achieved through keyword patterns,
+                hybrid classification, and LLM fallback.
+            </p>
+
+            <div class="tree-container">
+                <h3 style="color: var(--highlight); margin-bottom: 20px; text-align: center;">Query Processing Pipeline</h3>
+
+                <!-- Step 1: Cache -->
+                <div style="text-align: center; margin: 20px 0;">
+                    <div class="tree-node" style="background: var(--application);">
+                        <strong>1. Cache Check</strong><br>
+                        <span style="font-size: 0.85em; color: var(--text-secondary);">Semantic Similarity<br><10ms if hit</span>
+                    </div>
+                    <div style="margin: 10px 0; color: var(--highlight);">⬇️ Cache Miss</div>
+                </div>
+
+                <!-- Step 2: Classification -->
+                <div style="text-align: center;">
+                    <div class="tree-node" style="background: var(--intelligence);">
+                        <strong>2. Intent Classification</strong><br>
+                        <span style="font-size: 0.85em; color: var(--text-secondary);">3-Tier Fallback</span>
+                    </div>
+                </div>
+
+                <!-- Tier Details -->
+                <div class="tree-tier">
+                    <div class="tier-card">
+                        <h4 style="color: var(--highlight); margin-bottom: 10px;">Tier 1: Keyword</h4>
+                        <p style="font-size: 0.9em; color: var(--text-secondary); margin-bottom: 15px;">
+                            Pattern matching with confidence scoring. Fastest path for common queries.
+                        </p>
+                        <div class="tier-stats">
+                            <div class="tier-stat">
+                                <div class="tier-stat-value">60%</div>
+                                <div class="tier-stat-label">Coverage</div>
+                            </div>
+                            <div class="tier-stat">
+                                <div class="tier-stat-value"><10ms</div>
+                                <div class="tier-stat-label">Latency</div>
+                            </div>
+                            <div class="tier-stat">
+                                <div class="tier-stat-value">95%</div>
+                                <div class="tier-stat-label">Accuracy</div>
+                            </div>
+                        </div>
+                        <div class="flow-code" style="margin-top: 15px; font-size: 0.8em;">
+<span class="code-comment"># Pattern examples:</span>
+<span class="code-string">"connected"</span> → Intent: graph
+<span class="code-string">"when did"</span> → Intent: temporal
+<span class="code-string">"find documents"</span> → Intent: vector</div>
+                    </div>
+
+                    <div class="tier-card">
+                        <h4 style="color: var(--highlight); margin-bottom: 10px;">Tier 2: Hybrid</h4>
+                        <p style="font-size: 0.9em; color: var(--text-secondary); margin-bottom: 15px;">
+                            Keywords + embeddings. Balanced speed/accuracy for ambiguous queries.
+                        </p>
+                        <div class="tier-stats">
+                            <div class="tier-stat">
+                                <div class="tier-stat-value">35%</div>
+                                <div class="tier-stat-label">Coverage</div>
+                            </div>
+                            <div class="tier-stat">
+                                <div class="tier-stat-value"><100ms</div>
+                                <div class="tier-stat-label">Latency</div>
+                            </div>
+                            <div class="tier-stat">
+                                <div class="tier-stat-value">85-90%</div>
+                                <div class="tier-stat-label">Accuracy</div>
+                            </div>
+                        </div>
+                        <div class="flow-code" style="margin-top: 15px; font-size: 0.8em;">
+<span class="code-comment"># Combines:</span>
+<span class="code-keyword">1.</span> Keyword patterns
+<span class="code-keyword">2.</span> Embedding similarity
+<span class="code-keyword">3.</span> Weighted scoring</div>
+                    </div>
+
+                    <div class="tier-card">
+                        <h4 style="color: var(--highlight); margin-bottom: 10px;">Tier 3: LLM</h4>
+                        <p style="font-size: 0.9em; color: var(--text-secondary); margin-bottom: 15px;">
+                            Claude Haiku fallback. Highest accuracy for complex/ambiguous queries.
+                        </p>
+                        <div class="tier-stats">
+                            <div class="tier-stat">
+                                <div class="tier-stat-value">5%</div>
+                                <div class="tier-stat-label">Coverage</div>
+                            </div>
+                            <div class="tier-stat">
+                                <div class="tier-stat-value">300-500ms</div>
+                                <div class="tier-stat-label">Latency</div>
+                            </div>
+                            <div class="tier-stat">
+                                <div class="tier-stat-value">High</div>
+                                <div class="tier-stat-label">Accuracy</div>
+                            </div>
+                        </div>
+                        <div class="flow-code" style="margin-top: 15px; font-size: 0.8em;">
+<span class="code-comment"># Uses: Claude Haiku</span>
+prompt = <span class="code-string">f"Classify: {query}"</span>
+intent = claude.complete(prompt)</div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Database Selection -->
+                <div style="text-align: center; margin: 30px 0;">
+                    <div style="margin: 10px 0; color: var(--highlight);">⬇️ Intent Determined</div>
+                    <div class="tree-node">
+                        <strong>3. Database Selection</strong><br>
+                        <span style="font-size: 0.85em; color: var(--text-secondary);">Intent → Database Mapping</span>
+                    </div>
+                </div>
+
+                <!-- Intent Mapping -->
+                <div style="background: var(--bg-card); border-radius: 8px; padding: 20px; margin: 20px 0;">
+                    <h4 style="color: var(--highlight); margin-bottom: 15px;">Intent → Database Mapping</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                        <div style="background: var(--bg-secondary); padding: 15px; border-radius: 6px;">
+                            <strong>graph</strong> → Neo4j<br>
+                            <span style="font-size: 0.85em; color: var(--text-secondary);">Relationships, connections, networks</span>
+                        </div>
+                        <div style="background: var(--bg-secondary); padding: 15px; border-radius: 6px;">
+                            <strong>vector</strong> → Qdrant<br>
+                            <span style="font-size: 0.85em; color: var(--text-secondary);">Semantic similarity, find similar</span>
+                        </div>
+                        <div style="background: var(--bg-secondary); padding: 15px; border-radius: 6px;">
+                            <strong>temporal</strong> → Graphiti<br>
+                            <span style="font-size: 0.85em; color: var(--text-secondary);">Time-based, "when", trends</span>
+                        </div>
+                        <div style="background: var(--bg-secondary); padding: 15px; border-radius: 6px;">
+                            <strong>hybrid</strong> → PostgreSQL + Qdrant<br>
+                            <span style="font-size: 0.85em; color: var(--text-secondary);">Metadata + semantic search</span>
+                        </div>
+                        <div style="background: var(--bg-secondary); padding: 15px; border-radius: 6px;">
+                            <strong>metadata</strong> → PostgreSQL<br>
+                            <span style="font-size: 0.85em; color: var(--text-secondary);">Filters, structured queries</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4: Execution -->
+                <div style="text-align: center; margin: 30px 0;">
+                    <div style="margin: 10px 0; color: var(--highlight);">⬇️ Execute Queries</div>
+                    <div class="tree-node">
+                        <strong>4. Database Query</strong><br>
+                        <span style="font-size: 0.85em; color: var(--text-secondary);">Parallel execution if multiple DBs</span>
+                    </div>
+                    <div style="margin: 10px 0; color: var(--highlight);">⬇️</div>
+                    <div class="tree-node" style="background: var(--application);">
+                        <strong>5. Result Fusion (RRF)</strong><br>
+                        <span style="font-size: 0.85em; color: var(--text-secondary);">Reciprocal Rank Fusion<br>+20-30% quality</span>
+                    </div>
+                    <div style="margin: 10px 0; color: var(--highlight);">⬇️</div>
+                    <div class="tree-node" style="background: var(--application);">
+                        <strong>6. Response</strong><br>
+                        <span style="font-size: 0.85em; color: var(--text-secondary);">Cache result + return</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RRF Algorithm -->
+            <div style="background: var(--bg-secondary); border-radius: 10px; padding: 25px; margin: 30px 0;">
+                <h3 style="color: var(--highlight); margin-bottom: 15px;">Reciprocal Rank Fusion (RRF) Algorithm</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 15px;">
+                    When queries hit multiple databases, RRF combines results by considering rank position rather than raw scores.
+                    This provides a 20-30% quality improvement over simple score-based merging.
+                </p>
+                <div class="flow-code">
+<span class="code-comment"># File: query_router/result_fusion.py</span>
+<span class="code-keyword">def</span> <span class="code-function">reciprocal_rank_fusion</span>(results: List[List[Result]], k=<span class="code-string">60</span>):
+    <span class="code-string">"""Combine results from multiple databases using RRF."""</span>
+    scores = {}
+
+    <span class="code-keyword">for</span> result_list <span class="code-keyword">in</span> results:
+        <span class="code-keyword">for</span> rank, result <span class="code-keyword">in</span> <span class="code-function">enumerate</span>(result_list, <span class="code-string">1</span>):
+            doc_id = result.document_id
+            <span class="code-comment"># RRF score = 1 / (k + rank)</span>
+            scores[doc_id] = scores.get(doc_id, <span class="code-string">0</span>) + <span class="code-string">1</span> / (k + rank)
+
+    <span class="code-comment"># Sort by combined score</span>
+    <span class="code-keyword">return</span> <span class="code-function">sorted</span>(scores.items(), key=<span class="code-keyword">lambda</span> x: x[<span class="code-string">1</span>], reverse=<span class="code-keyword">True</span>)</div>
+
+                <div style="margin-top: 20px; padding: 15px; background: var(--bg-card); border-radius: 8px; border-left: 4px solid var(--highlight);">
+                    <strong>Why RRF works:</strong> Documents appearing in top positions across multiple databases get higher combined scores,
+                    even if their raw similarity scores differ. This is more robust than score-based fusion which can be biased by
+                    database-specific scoring functions.
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 5: DATABASE SYNCHRONIZATION MATRIX -->
+        <div id="matrix" class="section">
+            <h2 style="margin: 30px 0 20px 0; font-size: 2em;">Database Synchronization Matrix</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 30px;">
+                How the 4 databases stay synchronized through saga coordination, shared connections, and cache synchronization.
+                Click any cell to see the connection mechanism.
+            </p>
+
+            <div class="matrix-container">
+                <div class="matrix-grid">
+                    <!-- Header Row -->
+                    <div class="matrix-cell header"></div>
+                    <div class="matrix-cell header">PostgreSQL</div>
+                    <div class="matrix-cell header">Neo4j</div>
+                    <div class="matrix-cell header">Qdrant</div>
+                    <div class="matrix-cell header">Redis</div>
+
+                    <!-- PostgreSQL Row -->
+                    <div class="matrix-cell header">PostgreSQL</div>
+                    <div class="matrix-cell" style="background: var(--bg-secondary);">—</div>
+                    <div class="matrix-cell strong" onclick="showConnection('pg-neo4j')">
+                        🔒 Saga<br>
+                        <span style="font-size: 0.8em;">Atomic Writes</span>
+                    </div>
+                    <div class="matrix-cell strong" onclick="showConnection('pg-qdrant')">
+                        🔒 Saga<br>
+                        <span style="font-size: 0.8em;">Atomic Writes</span>
+                    </div>
+                    <div class="matrix-cell medium" onclick="showConnection('pg-redis')">
+                        💾 Cache<br>
+                        <span style="font-size: 0.8em;">Metadata Sync</span>
+                    </div>
+
+                    <!-- Neo4j Row -->
+                    <div class="matrix-cell header">Neo4j</div>
+                    <div class="matrix-cell strong" onclick="showConnection('neo4j-pg')">
+                        🔒 Saga<br>
+                        <span style="font-size: 0.8em;">Atomic Writes</span>
+                    </div>
+                    <div class="matrix-cell" style="background: var(--bg-secondary);">—</div>
+                    <div class="matrix-cell strong" onclick="showConnection('neo4j-qdrant')">
+                        🔒 Saga<br>
+                        <span style="font-size: 0.8em;">Atomic Writes</span>
+                    </div>
+                    <div class="matrix-cell medium" onclick="showConnection('neo4j-redis')">
+                        💾 Cache<br>
+                        <span style="font-size: 0.8em;">Entity Cache</span>
+                    </div>
+
+                    <!-- Qdrant Row -->
+                    <div class="matrix-cell header">Qdrant</div>
+                    <div class="matrix-cell strong" onclick="showConnection('qdrant-pg')">
+                        🔒 Saga<br>
+                        <span style="font-size: 0.8em;">Atomic Writes</span>
+                    </div>
+                    <div class="matrix-cell strong" onclick="showConnection('qdrant-neo4j')">
+                        🔒 Saga<br>
+                        <span style="font-size: 0.8em;">Atomic Writes</span>
+                    </div>
+                    <div class="matrix-cell" style="background: var(--bg-secondary);">—</div>
+                    <div class="matrix-cell medium" onclick="showConnection('qdrant-redis')">
+                        💾 Cache<br>
+                        <span style="font-size: 0.8em;">Vector Cache</span>
+                    </div>
+
+                    <!-- Redis Row -->
+                    <div class="matrix-cell header">Redis</div>
+                    <div class="matrix-cell medium" onclick="showConnection('redis-pg')">
+                        💾 Cache<br>
+                        <span style="font-size: 0.8em;">Query Cache</span>
+                    </div>
+                    <div class="matrix-cell medium" onclick="showConnection('redis-neo4j')">
+                        💾 Cache<br>
+                        <span style="font-size: 0.8em;">Graph Cache</span>
+                    </div>
+                    <div class="matrix-cell medium" onclick="showConnection('redis-qdrant')">
+                        💾 Cache<br>
+                        <span style="font-size: 0.8em;">Vector Cache</span>
+                    </div>
+                    <div class="matrix-cell" style="background: var(--bg-secondary);">—</div>
+                </div>
+            </div>
+
+            <div class="legend">
+                <h3 class="legend-title">Connection Type Legend</h3>
+                <div class="legend-items">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: rgba(52, 152, 219, 0.3);"></div>
+                        <span><strong>Strong:</strong> Saga pattern ensures atomic writes (all or none)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: rgba(52, 152, 219, 0.15);"></div>
+                        <span><strong>Medium:</strong> Cache synchronization (eventual consistency)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Connection Details (hidden by default) -->
+            <div id="connectionDetails" style="display: none; margin-top: 30px; background: var(--bg-card); border-radius: 10px; padding: 25px;">
+                <h3 id="connectionTitle" style="color: var(--highlight); margin-bottom: 15px;"></h3>
+                <p id="connectionDescription" style="color: var(--text-secondary); margin-bottom: 15px;"></p>
+                <div id="connectionCode" class="flow-code"></div>
+            </div>
+
+            <!-- Key Synchronization Mechanisms -->
+            <div style="background: var(--bg-secondary); border-radius: 10px; padding: 25px; margin: 30px 0;">
+                <h3 style="color: var(--highlight); margin-bottom: 20px;">🔑 Key Synchronization Mechanisms</h3>
+
+                <div style="display: grid; gap: 20px;">
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px; border-left: 4px solid var(--intelligence);">
+                        <h4 style="color: var(--highlight); margin-bottom: 10px;">1. Saga Pattern Coordination</h4>
+                        <p style="color: var(--text-secondary); margin-bottom: 10px;">
+                            DatabaseWriteOrchestrator ensures ALL databases receive the same document data or NONE do.
+                            This prevents inconsistencies where a document exists in some databases but not others.
+                        </p>
+                        <div class="flow-code" style="font-size: 0.85em; margin-top: 10px;">
+<span class="code-comment"># File: services/database_writer.py:41</span>
+<span class="code-keyword">class</span> DatabaseWriteOrchestrator:
+    <span class="code-string">"""Coordinates atomic writes across 4 databases."""</span></div>
+                    </div>
+
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px; border-left: 4px solid var(--application);">
+                        <h4 style="color: var(--highlight); margin-bottom: 10px;">2. Shared Database Connections</h4>
+                        <p style="color: var(--text-secondary); margin-bottom: 10px;">
+                            QueryRouter receives the SAME database driver instances used by the ingestion orchestrator.
+                            This ensures queries see writes immediately without connection pooling delays.
+                        </p>
+                        <div class="flow-code" style="font-size: 0.85em; margin-top: 10px;">
+<span class="code-comment"># File: main.py:145-183</span>
+router_instance = QueryRouter(
+    neo4j_driver=ingestion_orchestrator.neo4j.driver,  <span class="code-comment"># SHARED</span>
+    postgres_conn=ingestion_orchestrator.postgres.pool,
+    qdrant_client=ingestion_orchestrator.qdrant.client,
+)</div>
+                    </div>
+
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px; border-left: 4px solid var(--services);">
+                        <h4 style="color: var(--highlight); margin-bottom: 10px;">3. Redis as Single Source of Truth</h4>
+                        <p style="color: var(--text-secondary); margin-bottom: 10px;">
+                            Redis caches metadata after successful writes to all databases. Queries check Redis first.
+                            If cached, the document MUST exist in all databases (saga guarantee).
+                        </p>
+                        <div class="flow-code" style="font-size: 0.85em; margin-top: 10px;">
+<span class="code-comment"># Cache after successful saga</span>
+<span class="code-keyword">if</span> all_writes_succeeded:
+    redis.set(<span class="code-string">f"doc:{uuid}"</span>, metadata, ex=<span class="code-string">3600</span>)</div>
+                    </div>
+
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px; border-left: 4px solid var(--operations);">
+                        <h4 style="color: var(--highlight); margin-bottom: 10px;">4. Distributed Locking</h4>
+                        <p style="color: var(--text-secondary); margin-bottom: 10px;">
+                            Redis distributed locks prevent concurrent modifications. Only one workflow can write to a document at a time,
+                            preventing race conditions that could cause inconsistencies.
+                        </p>
+                        <div class="flow-code" style="font-size: 0.85em; margin-top: 10px;">
+<span class="code-comment"># Acquire lock before any writes</span>
+lock_acquired = distributed_lock.acquire(<span class="code-string">f"document:{uuid}"</span>)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 6: COMPONENT NETWORK (Placeholder for force-directed graph) -->
+        <div id="network" class="section">
+            <h2 style="margin: 30px 0 20px 0; font-size: 2em;">Component Interaction Network</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 30px;">
+                Visual network showing how all 13 components connect and interact. Nodes colored by architectural layer.
+            </p>
+
+            <div class="network-container">
+                <!-- Positioned nodes (simplified layout) -->
+                <div class="network-node foundation" style="top: 10px; left: 50%; transform: translateX(-50%);">
+                    01<br>Databases
+                </div>
+                <div class="network-node foundation" style="top: 10px; left: 20%;">
+                    02<br>Temporal
+                </div>
+                <div class="network-node foundation" style="top: 10px; left: 80%;">
+                    11<br>Config
+                </div>
+
+                <div class="network-node application" style="top: 150px; left: 30%;">
+                    03<br>Backend
+                </div>
+                <div class="network-node application" style="top: 150px; left: 50%; transform: translateX(-50%);">
+                    08<br>Frontend
+                </div>
+                <div class="network-node application" style="top: 150px; left: 70%;">
+                    12<br>Auth
+                </div>
+
+                <div class="network-node intelligence" style="top: 300px; left: 40%;">
+                    04<br>Query Router
+                </div>
+                <div class="network-node intelligence" style="top: 300px; left: 60%;">
+                    09<br>Cache
+                </div>
+
+                <div class="network-node services" style="top: 450px; left: 25%;">
+                    05<br>Services
+                </div>
+                <div class="network-node services" style="top: 450px; left: 50%; transform: translateX(-50%);">
+                    06<br>Models
+                </div>
+                <div class="network-node services" style="top: 450px; left: 75%;">
+                    07<br>Writers
+                </div>
+
+                <div class="network-node operations" style="top: 520px; left: 35%;">
+                    10<br>Monitoring
+                </div>
+                <div class="network-node operations" style="top: 520px; left: 65%;">
+                    13<br>Utilities
+                </div>
+            </div>
+
+            <div style="background: var(--bg-card); border-radius: 10px; padding: 20px; margin: 30px 0;">
+                <h3 style="color: var(--highlight); margin-bottom: 15px;">Connection Types</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div style="width: 30px; height: 3px; background: var(--foundation);"></div>
+                        <span>API Calls (REST endpoints)</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div style="width: 30px; height: 3px; background: var(--application);"></div>
+                        <span>Dependency Injection (service passing)</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div style="width: 30px; height: 3px; background: var(--intelligence);"></div>
+                        <span>Shared Database Connections</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div style="width: 30px; height: 3px; background: var(--services);"></div>
+                        <span>Event-Driven (Temporal workflows)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Connection Points -->
+            <div style="background: var(--bg-secondary); border-radius: 10px; padding: 25px; margin: 30px 0;">
+                <h3 style="color: var(--highlight); margin-bottom: 20px;">🔗 Critical Connection Points</h3>
+
+                <div style="background: var(--bg-card); padding: 20px; border-radius: 8px; margin-bottom: 15px;">
+                    <h4 style="color: var(--application); margin-bottom: 10px;">main.py:145-183 - QueryRouter Initialization</h4>
+                    <p style="color: var(--text-secondary); margin-bottom: 10px;">
+                        Most critical connection point in the system. QueryRouter receives shared database connections,
+                        embedding service, and Graphiti service. This ensures queries see the same data as ingestion.
+                    </p>
+                    <div class="flow-code" style="font-size: 0.85em;">
+<span class="code-comment"># CRITICAL: Shared connections ensure consistency</span>
+router_instance = QueryRouter(
+    neo4j_driver=ingestion_orchestrator.neo4j.driver,
+    postgres_conn=ingestion_orchestrator.postgres.pool,
+    qdrant_client=ingestion_orchestrator.qdrant.client,
+    embedding_service=embedding_service,
+    graphiti_service=graphiti_service,
+)</div>
+                </div>
+
+                <div style="background: var(--bg-card); padding: 20px; border-radius: 8px;">
+                    <h4 style="color: var(--intelligence); margin-bottom: 10px;">api/dependencies.py - JWT Authentication Flow</h4>
+                    <p style="color: var(--text-secondary); margin-bottom: 10px;">
+                        FastAPI dependency injection propagates User object to all protected endpoints. Single auth check
+                        at API boundary, then User passed through call chain.
+                    </p>
+                    <div class="flow-code" style="font-size: 0.85em;">
+<span class="code-comment"># JWT → User object conversion</span>
+<span class="code-keyword">async def</span> <span class="code-function">get_current_user</span>(token: str = Depends(oauth2_scheme)) -> User:
+    payload = jwt.decode(token, SECRET_KEY)
+    user = <span class="code-keyword">await</span> auth_service.get_user(payload[<span class="code-string">"sub"</span>])
+    <span class="code-keyword">return</span> user</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 7: TECH STACK PYRAMID -->
+        <div id="stack" class="section">
+            <h2 style="margin: 30px 0 20px 0; font-size: 2em;">Technology Stack Breakdown</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 30px;">
+                Complete technology stack organized by layer. From infrastructure to frontend, showing versions and key libraries.
+            </p>
+
+            <div class="pyramid-container">
+                <div class="pyramid-layer">
+                    <h3 class="pyramid-layer-title">🎨 Frontend Layer</h3>
+                    <div class="tech-items">
+                        <div class="tech-item">React <span class="tech-version">18.3</span></div>
+                        <div class="tech-item">TypeScript <span class="tech-version">5</span></div>
+                        <div class="tech-item">Vite <span class="tech-version">5</span></div>
+                        <div class="tech-item">Vercel AI SDK</div>
+                        <div class="tech-item">Tailwind CSS</div>
+                    </div>
+                </div>
+
+                <div class="pyramid-layer">
+                    <h3 class="pyramid-layer-title">🖥️ Backend Application</h3>
+                    <div class="tech-items">
+                        <div class="tech-item">FastAPI</div>
+                        <div class="tech-item">Python <span class="tech-version">3.11</span></div>
+                        <div class="tech-item">Pydantic <span class="tech-version">2.x</span></div>
+                        <div class="tech-item">Uvicorn</div>
+                        <div class="tech-item">python-jose (JWT)</div>
+                        <div class="tech-item">passlib (bcrypt)</div>
+                    </div>
+                </div>
+
+                <div class="pyramid-layer">
+                    <h3 class="pyramid-layer-title">⚙️ Services & AI</h3>
+                    <div class="tech-items">
+                        <div class="tech-item">OpenAI <span class="tech-version">GPT-4o</span></div>
+                        <div class="tech-item">Anthropic <span class="tech-version">Claude 3.5 Sonnet</span></div>
+                        <div class="tech-item">Graphiti-core <span class="tech-version">0.22.0</span></div>
+                        <div class="tech-item">Docling <span class="tech-version">2.55.1</span></div>
+                        <div class="tech-item">Sentence-Transformers</div>
+                    </div>
+                </div>
+
+                <div class="pyramid-layer">
+                    <h3 class="pyramid-layer-title">🔄 Orchestration</h3>
+                    <div class="tech-items">
+                        <div class="tech-item">Temporal.io</div>
+                        <div class="tech-item">Temporal Python SDK</div>
+                    </div>
+                </div>
+
+                <div class="pyramid-layer">
+                    <h3 class="pyramid-layer-title">🗄️ Databases</h3>
+                    <div class="tech-items">
+                        <div class="tech-item">PostgreSQL <span class="tech-version">16</span></div>
+                        <div class="tech-item">pgvector <span class="tech-version">0.5.1</span></div>
+                        <div class="tech-item">Neo4j <span class="tech-version">2025.09.0</span></div>
+                        <div class="tech-item">Qdrant</div>
+                        <div class="tech-item">Redis <span class="tech-version">8.2</span></div>
+                    </div>
+                </div>
+
+                <div class="pyramid-layer">
+                    <h3 class="pyramid-layer-title">🏗️ Infrastructure & Monitoring</h3>
+                    <div class="tech-items">
+                        <div class="tech-item">Docker</div>
+                        <div class="tech-item">Docker Compose</div>
+                        <div class="tech-item">Prometheus</div>
+                        <div class="tech-item">Grafana</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Libraries Details -->
+            <div style="background: var(--bg-secondary); border-radius: 10px; padding: 25px; margin: 30px 0;">
+                <h3 style="color: var(--highlight); margin-bottom: 20px;">📦 Key Library Details</h3>
+
+                <div style="display: grid; gap: 20px;">
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px;">
+                        <h4 style="color: var(--services); margin-bottom: 10px;">Docling 2.55.1 - Document Parser</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.95em;">
+                            <strong>Purpose:</strong> Multi-format document parsing (PDF, DOCX, PPTX, HTML, Markdown)<br>
+                            <strong>Features:</strong> Table extraction, image handling, metadata preservation<br>
+                            <strong>Location:</strong> services/document_parser.py
+                        </p>
+                    </div>
+
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px;">
+                        <h4 style="color: var(--intelligence); margin-bottom: 10px;">Graphiti-core 0.22.0 - Temporal Intelligence</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.95em;">
+                            <strong>Purpose:</strong> Time-aware entity tracking and pattern detection<br>
+                            <strong>Features:</strong> Bi-temporal versioning, episode search, cross-encoder reranking<br>
+                            <strong>Location:</strong> services/graphiti_service.py
+                        </p>
+                    </div>
+
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px;">
+                        <h4 style="color: var(--foundation); margin-bottom: 10px;">pgvector 0.5.1 - PostgreSQL Vector Extension</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.95em;">
+                            <strong>Purpose:</strong> Native vector similarity search in PostgreSQL<br>
+                            <strong>Features:</strong> Cosine similarity, L2 distance, HNSW indexing<br>
+                            <strong>Location:</strong> database/postgres_writer.py
+                        </p>
+                    </div>
+
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px;">
+                        <h4 style="color: var(--application); margin-bottom: 10px;">Vercel AI SDK - Streaming Chat</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.95em;">
+                            <strong>Purpose:</strong> React hooks for streaming AI responses<br>
+                            <strong>Features:</strong> useChat hook, Server-Sent Events (SSE), token streaming<br>
+                            <strong>Location:</strong> frontend/src/components/chat/
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 8: METRICS DASHBOARD -->
+        <div id="metrics" class="section">
+            <h2 style="margin: 30px 0 20px 0; font-size: 2em;">Performance Metrics Dashboard</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 30px;">
+                Key performance indicators showing system health, accuracy, and scale. All metrics from October 2025 production data.
+            </p>
+
+            <div class="metrics-grid">
+                <!-- Query Latency -->
+                <div class="metric-card intelligence">
+                    <h3 class="metric-label">Query Latency (P50)</h3>
+                    <div class="gauge-container">
+                        <svg class="gauge-circle" width="200" height="200">
+                            <circle class="gauge-background" cx="100" cy="100" r="80"></circle>
+                            <circle class="gauge-progress" cx="100" cy="100" r="80"
+                                    stroke-dasharray="502.65"
+                                    stroke-dashoffset="125.66"></circle>
+                        </svg>
+                        <div class="gauge-text">600ms</div>
+                    </div>
+                    <p class="metric-description">
+                        Median query execution time. 90th percentile: 1000ms. Includes intent classification,
+                        database query, and result fusion.
+                    </p>
+                </div>
+
+                <!-- Cache Hit Rate -->
+                <div class="metric-card application">
+                    <h3 class="metric-label">Cache Hit Rate</h3>
+                    <div class="metric-value">95%</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 95%;"></div>
+                    </div>
+                    <p class="metric-description">
+                        Steady-state cache hit rate with semantic similarity matching. <10ms latency on cache hits.
+                        Redis-based with 1-hour TTL.
+                    </p>
+                </div>
+
+                <!-- Query Accuracy -->
+                <div class="metric-card intelligence">
+                    <h3 class="metric-label">Query Accuracy</h3>
+                    <div class="metric-value">90%</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 90%;"></div>
+                    </div>
+                    <p class="metric-description">
+                        Intent classification accuracy achieved after 5-day optimization sprint. 3-tier fallback
+                        with keyword, hybrid, and LLM classification.
+                    </p>
+                </div>
+
+                <!-- Concurrent Requests -->
+                <div class="metric-card foundation">
+                    <h3 class="metric-label">Concurrent Requests</h3>
+                    <div class="metric-value">100+</div>
+                    <p class="metric-description">
+                        Production configuration supports 100+ concurrent requests. Uvicorn workers with async I/O.
+                        Database connection pooling ensures efficient resource usage.
+                    </p>
+                </div>
+
+                <!-- Test Coverage -->
+                <div class="metric-card application">
+                    <h3 class="metric-label">Test Coverage</h3>
+                    <div class="metric-value">80%</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 80%;"></div>
+                    </div>
+                    <p class="metric-description">
+                        Code coverage across unit, integration, and load tests. 230+ tests passing.
+                        Temporal workflow testing included.
+                    </p>
+                </div>
+
+                <!-- Total Tests -->
+                <div class="metric-card">
+                    <h3 class="metric-label">Total Tests</h3>
+                    <div class="metric-value">230+</div>
+                    <p class="metric-description">
+                        Comprehensive test suite including unit (140), integration (60), and load tests (30).
+                        All tests passing with CI/CD integration.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Intent Distribution Chart -->
+            <div style="background: var(--bg-secondary); border-radius: 10px; padding: 30px; margin: 30px 0;">
+                <h3 style="color: var(--highlight); margin-bottom: 20px; text-align: center;">Query Intent Distribution</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 3em; font-weight: bold; color: var(--foundation);">30%</div>
+                        <div style="color: var(--text-secondary); margin-top: 10px;">Graph Queries</div>
+                        <div style="font-size: 0.85em; color: var(--text-secondary); margin-top: 5px;">Relationships, connections</div>
+                    </div>
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 3em; font-weight: bold; color: var(--intelligence);">25%</div>
+                        <div style="color: var(--text-secondary); margin-top: 10px;">Vector Queries</div>
+                        <div style="font-size: 0.85em; color: var(--text-secondary); margin-top: 5px;">Semantic similarity</div>
+                    </div>
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 3em; font-weight: bold; color: var(--services);">20%</div>
+                        <div style="color: var(--text-secondary); margin-top: 10px;">Hybrid Queries</div>
+                        <div style="font-size: 0.85em; color: var(--text-secondary); margin-top: 5px;">Metadata + semantic</div>
+                    </div>
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 3em; font-weight: bold; color: var(--application);">15%</div>
+                        <div style="color: var(--text-secondary); margin-top: 10px;">Temporal Queries</div>
+                        <div style="font-size: 0.85em; color: var(--text-secondary); margin-top: 5px;">Time-based patterns</div>
+                    </div>
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 3em; font-weight: bold; color: var(--operations);">10%</div>
+                        <div style="color: var(--text-secondary); margin-top: 10px;">Metadata Queries</div>
+                        <div style="font-size: 0.85em; color: var(--text-secondary); margin-top: 5px;">Filters, structured</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Database Performance -->
+            <div style="background: var(--bg-secondary); border-radius: 10px; padding: 30px; margin: 30px 0;">
+                <h3 style="color: var(--highlight); margin-bottom: 20px;">Per-Database Performance</h3>
+
+                <div style="display: grid; gap: 20px;">
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <h4 style="color: var(--text-primary);">🐘 PostgreSQL</h4>
+                            <span style="color: var(--highlight); font-size: 1.3em; font-weight: bold;">~300ms</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 30%; background: var(--foundation);"></div>
+                        </div>
+                        <p style="color: var(--text-secondary); font-size: 0.85em; margin-top: 10px;">
+                            Hybrid search (metadata + pgvector). Excellent for filtered semantic queries.
+                        </p>
+                    </div>
+
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <h4 style="color: var(--text-primary);">🗄️ Neo4j</h4>
+                            <span style="color: var(--highlight); font-size: 1.3em; font-weight: bold;">~400ms</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 40%; background: var(--intelligence);"></div>
+                        </div>
+                        <p style="color: var(--text-secondary); font-size: 0.85em; margin-top: 10px;">
+                            Graph traversal queries. Excellent for relationship and connection queries.
+                        </p>
+                    </div>
+
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <h4 style="color: var(--text-primary);">🔍 Qdrant</h4>
+                            <span style="color: var(--highlight); font-size: 1.3em; font-weight: bold;">~200ms</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 20%; background: var(--services);"></div>
+                        </div>
+                        <p style="color: var(--text-secondary); font-size: 0.85em; margin-top: 10px;">
+                            Pure vector similarity. Fastest for semantic search without filters.
+                        </p>
+                    </div>
+
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <h4 style="color: var(--text-primary);">🔴 Redis</h4>
+                            <span style="color: var(--highlight); font-size: 1.3em; font-weight: bold;"><10ms</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 1%; background: var(--application);"></div>
+                        </div>
+                        <p style="color: var(--text-secondary); font-size: 0.85em; margin-top: 10px;">
+                            Cache hits. Sub-10ms for repeat queries with semantic similarity matching.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tooltip (hidden by default) -->
+    <div id="tooltip" class="tooltip"></div>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // ===== TAB NAVIGATION =====
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+
+            // Highlight active tab
+            event.target.classList.add('active');
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ===== COMPONENT CARD EXPAND =====
+        function toggleExpand(card) {
+            card.classList.toggle('expanded');
+        }
+
+        // ===== INGESTION FLOW ANIMATION =====
+        let currentStage = 0;
+        let animationInterval = null;
+
+        function animateIngestion() {
+            // Reset
+            resetIngestion();
+
+            // Get all stages
+            const stages = document.querySelectorAll('.flow-stage');
+
+            // Animate each stage in sequence
+            animationInterval = setInterval(() => {
+                if (currentStage < stages.length) {
+                    stages[currentStage].classList.add('active');
+                    currentStage++;
+                } else {
+                    clearInterval(animationInterval);
+                }
+            }, 1000); // 1 second per stage
+        }
+
+        function resetIngestion() {
+            clearInterval(animationInterval);
+            currentStage = 0;
+            document.querySelectorAll('.flow-stage').forEach(stage => {
+                stage.classList.remove('active');
+            });
+        }
+
+        // ===== SAGA SIMULATION =====
+        function triggerSuccess() {
+            document.getElementById('sagaStatus').textContent = '✅ Simulation: All writes succeeded! Document in all 4 databases.';
+            document.getElementById('sagaStatus').style.color = 'var(--application)';
+        }
+
+        function triggerFailure() {
+            document.getElementById('sagaStatus').textContent = '❌ Simulation: Write failed! All databases rolled back to maintain consistency.';
+            document.getElementById('sagaStatus').style.color = 'var(--operations)';
+        }
+
+        // ===== MATRIX CONNECTION DETAILS =====
+        const connectionData = {
+            'pg-neo4j': {
+                title: 'PostgreSQL ↔️ Neo4j: Saga Pattern',
+                description: 'The saga pattern ensures both PostgreSQL and Neo4j receive the same document data atomically. If Neo4j write fails, PostgreSQL write is rolled back.',
+                code: `# Both writes coordinated by DatabaseWriteOrchestrator
+with ThreadPoolExecutor(max_workers=4) as executor:
+    pg_future = executor.submit(postgres_writer.write_document, doc)
+    neo4j_future = executor.submit(neo4j_writer.write_graph, doc, entities)
+
+    # If either fails, both are rolled back
+    if not (pg_future.result().success and neo4j_future.result().success):
+        postgres_writer.delete_document(doc_uuid)
+        neo4j_writer.delete_graph(doc_uuid)`
+            },
+            'pg-redis': {
+                title: 'PostgreSQL ↔️ Redis: Cache Synchronization',
+                description: 'Redis caches PostgreSQL query results for faster repeat queries. Cache is populated after successful PostgreSQL writes.',
+                code: `# After successful PostgreSQL write
+redis.set(f"doc:{uuid}", metadata, ex=3600)  # 1 hour TTL
+
+# Query path checks cache first
+cached = redis.get(f"query:{query_hash}")
+if cached:
+    return cached  # <10ms
+else:
+    result = postgres.query(...)
+    redis.set(f"query:{query_hash}", result, ex=3600)`
+            }
+            // Add more connections as needed
+        };
+
+        function showConnection(connectionKey) {
+            const data = connectionData[connectionKey];
+            if (!data) {
+                alert('Connection details not yet implemented for this pair.');
+                return;
+            }
+
+            const detailsDiv = document.getElementById('connectionDetails');
+            document.getElementById('connectionTitle').textContent = data.title;
+            document.getElementById('connectionDescription').textContent = data.description;
+            document.getElementById('connectionCode').textContent = data.code;
+
+            detailsDiv.style.display = 'block';
+            detailsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // ===== INITIALIZE =====
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Apex Memory System Visual Guide loaded successfully!');
+        });
+    </script>
+</body>
+</html>
