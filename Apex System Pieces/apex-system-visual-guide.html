@@ -870,6 +870,7 @@
             <button class="tab" onclick="showSection('network')">🌐 Component Network</button>
             <button class="tab" onclick="showSection('stack')">⚙️ Tech Stack</button>
             <button class="tab" onclick="showSection('metrics')">📈 Metrics</button>
+            <button class="tab" onclick="showSection('schemas')">🗄️ Database Schemas</button>
         </div>
 
         <!-- SECTION 1: ARCHITECTURE DASHBOARD -->
@@ -2260,6 +2261,897 @@ router_instance = QueryRouter(
                 </div>
             </div>
         </div>
+
+        <!-- SECTION 9: DATABASE SCHEMAS -->
+        <div id="schemas" class="section">
+            <h2 style="margin: 30px 0 20px 0; font-size: 2em;">🗄️ Database Schemas</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 30px;">
+                Complete schema documentation for all 5 databases in the Apex Memory System.
+                Click each database card to expand detailed table structures, field types, and relationships.
+            </p>
+
+            <!-- Database Overview Cards -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 40px;">
+                <!-- PostgreSQL Card -->
+                <div class="component-card foundation" style="cursor: pointer;" onclick="toggleSchemaSection('postgresql-schema')">
+                    <div class="component-number">🐘</div>
+                    <h4 class="component-name">PostgreSQL + pgvector</h4>
+                    <p class="component-description">
+                        Primary storage with 18 tables. Documents, chunks, entities, users, conversations, and caching.
+                    </p>
+                    <div class="component-tech">
+                        <span class="tech-badge">18 Tables</span>
+                        <span class="tech-badge">1536-dim Vectors</span>
+                        <span class="tech-badge">JSONB Support</span>
+                    </div>
+                </div>
+
+                <!-- Neo4j Card -->
+                <div class="component-card intelligence" style="cursor: pointer;" onclick="toggleSchemaSection('neo4j-schema')">
+                    <div class="component-number">🗄️</div>
+                    <h4 class="component-name">Neo4j Graph Database</h4>
+                    <p class="component-description">
+                        Graph relationships with Entity and Community nodes. 12+ relationship types for graph analytics.
+                    </p>
+                    <div class="component-tech">
+                        <span class="tech-badge">2 Node Types</span>
+                        <span class="tech-badge">12+ Relationships</span>
+                        <span class="tech-badge">Cypher Queries</span>
+                    </div>
+                </div>
+
+                <!-- Qdrant Card -->
+                <div class="component-card services" style="cursor: pointer;" onclick="toggleSchemaSection('qdrant-schema')">
+                    <div class="component-number">🔍</div>
+                    <h4 class="component-name">Qdrant Vector DB</h4>
+                    <p class="component-description">
+                        High-performance vector search with apex_documents collection. Optimized for cosine similarity.
+                    </p>
+                    <div class="component-tech">
+                        <span class="tech-badge">1 Collection</span>
+                        <span class="tech-badge">1536-dim Vectors</span>
+                        <span class="tech-badge">Payload Metadata</span>
+                    </div>
+                </div>
+
+                <!-- Redis Card -->
+                <div class="component-card application" style="cursor: pointer;" onclick="toggleSchemaSection('redis-schema')">
+                    <div class="component-number">🔴</div>
+                    <h4 class="component-name">Redis Cache</h4>
+                    <p class="component-description">
+                        Sub-10ms caching layer. Query results, semantic cache, document/entity cache, feature flags.
+                    </p>
+                    <div class="component-tech">
+                        <span class="tech-badge">4 Cache Types</span>
+                        <span class="tech-badge">TTL-based</span>
+                        <span class="tech-badge">SHA256 Keys</span>
+                    </div>
+                </div>
+
+                <!-- Graphiti Card -->
+                <div class="component-card operations" style="cursor: pointer;" onclick="toggleSchemaSection('graphiti-schema')">
+                    <div class="component-number">🧠</div>
+                    <h4 class="component-name">Graphiti (Neo4j-based)</h4>
+                    <p class="component-description">
+                        Temporal reasoning with custom entity types. LLM-powered extraction with 90% accuracy.
+                    </p>
+                    <div class="component-tech">
+                        <span class="tech-badge">5 Entity Types</span>
+                        <span class="tech-badge">12 Edge Types</span>
+                        <span class="tech-badge">Temporal Props</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PostgreSQL Schema Details -->
+            <div id="postgresql-schema" class="schema-details" style="display: none; background: var(--bg-secondary); border-radius: 10px; padding: 30px; margin-bottom: 30px; border-left: 5px solid var(--foundation);">
+                <h3 style="color: var(--foundation); margin-bottom: 20px;">🐘 PostgreSQL + pgvector Schema</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 20px;">
+                    Primary relational database with 18 tables. Stores documents, chunks, entities, users, and operational data.
+                    Uses pgvector extension for 1536-dimensional embeddings (OpenAI text-embedding-3-small).
+                </p>
+
+                <!-- Core Tables -->
+                <div style="margin-bottom: 30px;">
+                    <h4 style="color: var(--highlight); margin-bottom: 15px;">📄 Core Document Tables</h4>
+
+                    <!-- documents table -->
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px; margin-bottom: 15px;">
+                        <h5 style="color: var(--text-primary); margin-bottom: 10px;">documents</h5>
+                        <p style="color: var(--text-secondary); font-size: 0.9em; margin-bottom: 15px;">
+                            Primary storage for document metadata and full-text content
+                        </p>
+                        <div style="font-family: monospace; font-size: 0.85em;">
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                                <strong>Column</strong>
+                                <strong>Type</strong>
+                                <strong>Description</strong>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                                <span style="color: var(--highlight);">uuid</span>
+                                <span>UUID</span>
+                                <span>Primary key, unique document ID</span>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                                <span style="color: var(--highlight);">title</span>
+                                <span>TEXT</span>
+                                <span>Document title from metadata or filename</span>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                                <span style="color: var(--highlight);">content</span>
+                                <span>TEXT</span>
+                                <span>Full extracted text content</span>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                                <span style="color: var(--highlight);">doc_type</span>
+                                <span>VARCHAR(50)</span>
+                                <span>File type: pdf, docx, pptx, html, markdown, etc.</span>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                                <span style="color: var(--highlight);">embedding</span>
+                                <span>vector(1536)</span>
+                                <span>Document-level embedding (pgvector)</span>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                                <span style="color: var(--highlight);">file_size</span>
+                                <span>BIGINT</span>
+                                <span>File size in bytes</span>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                                <span style="color: var(--highlight);">author</span>
+                                <span>VARCHAR(255)</span>
+                                <span>Document author (nullable)</span>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                                <span style="color: var(--highlight);">chunk_count</span>
+                                <span>INTEGER</span>
+                                <span>Number of chunks (default 0)</span>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                                <span style="color: var(--highlight);">metadata</span>
+                                <span>JSONB</span>
+                                <span>Additional metadata key-value pairs</span>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px;">
+                                <span style="color: var(--highlight);">created_at</span>
+                                <span>TIMESTAMP</span>
+                                <span>Document creation timestamp (auto)</span>
+                            </div>
+                        </div>
+                        <div style="margin-top: 15px; padding: 10px; background: rgba(52, 152, 219, 0.1); border-radius: 5px;">
+                            <strong style="color: var(--foundation);">Indexes:</strong>
+                            <div style="font-size: 0.85em; margin-top: 5px; font-family: monospace;">
+                                • idx_documents_embedding_ivfflat (vector_cosine_ops, IVFFlat with 100 lists)<br>
+                                • idx_documents_doc_type, idx_documents_created_at, idx_documents_author
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- chunks table -->
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px; margin-bottom: 15px;">
+                        <h5 style="color: var(--text-primary); margin-bottom: 10px;">chunks</h5>
+                        <p style="color: var(--text-secondary); font-size: 0.9em; margin-bottom: 15px;">
+                            Document content split into chunks for embedding and retrieval
+                        </p>
+                        <div style="font-family: monospace; font-size: 0.85em;">
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                                <strong>Column</strong>
+                                <strong>Type</strong>
+                                <strong>Description</strong>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                                <span style="color: var(--highlight);">uuid</span>
+                                <span>UUID</span>
+                                <span>Primary key, unique chunk ID</span>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                                <span style="color: var(--highlight);">document_uuid</span>
+                                <span>UUID</span>
+                                <span>Foreign key to documents table</span>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                                <span style="color: var(--highlight);">content</span>
+                                <span>TEXT</span>
+                                <span>Chunk text content</span>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                                <span style="color: var(--highlight);">embedding</span>
+                                <span>vector(1536)</span>
+                                <span>Chunk embedding (pgvector)</span>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                                <span style="color: var(--highlight);">chunk_index</span>
+                                <span>INTEGER</span>
+                                <span>0-based position in parent document</span>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px;">
+                                <span style="color: var(--highlight);">created_at</span>
+                                <span>TIMESTAMP</span>
+                                <span>Chunk creation timestamp</span>
+                            </div>
+                        </div>
+                        <div style="margin-top: 15px; padding: 10px; background: rgba(52, 152, 219, 0.1); border-radius: 5px;">
+                            <strong style="color: var(--foundation);">Indexes:</strong>
+                            <div style="font-size: 0.85em; margin-top: 5px; font-family: monospace;">
+                                • idx_chunks_embedding_ivfflat (vector_cosine_ops, IVFFlat with 100 lists)<br>
+                                • idx_chunks_document_uuid, idx_chunks_doc_position (document_uuid, chunk_index)
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- entities table -->
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px; margin-bottom: 15px;">
+                        <h5 style="color: var(--text-primary); margin-bottom: 10px;">entities</h5>
+                        <p style="color: var(--text-secondary); font-size: 0.9em; margin-bottom: 15px;">
+                            Extracted entities from documents (via EntityExtractor or Graphiti)
+                        </p>
+                        <div style="font-family: monospace; font-size: 0.85em;">
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                                <strong>Column</strong>
+                                <strong>Type</strong>
+                                <strong>Description</strong>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                                <span style="color: var(--highlight);">uuid</span>
+                                <span>UUID</span>
+                                <span>Primary key, unique entity ID</span>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                                <span style="color: var(--highlight);">entity_type</span>
+                                <span>VARCHAR(50)</span>
+                                <span>customer, equipment, person, invoice, etc.</span>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                                <span style="color: var(--highlight);">name</span>
+                                <span>TEXT</span>
+                                <span>Entity name/text</span>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                                <span style="color: var(--highlight);">description</span>
+                                <span>TEXT</span>
+                                <span>Entity description (nullable)</span>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                                <span style="color: var(--highlight);">properties</span>
+                                <span>JSONB</span>
+                                <span>Additional metadata (default {})</span>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                                <span style="color: var(--highlight);">confidence</span>
+                                <span>INTEGER</span>
+                                <span>Extraction confidence (0-100)</span>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px;">
+                                <span style="color: var(--highlight);">entity_name</span>
+                                <span>TEXT</span>
+                                <span>Normalized entity name (for deduplication)</span>
+                            </div>
+                        </div>
+                        <div style="margin-top: 15px; padding: 10px; background: rgba(52, 152, 219, 0.1); border-radius: 5px;">
+                            <strong style="color: var(--foundation);">Indexes:</strong>
+                            <div style="font-size: 0.85em; margin-top: 5px; font-family: monospace;">
+                                • idx_entities_entity_type, idx_entities_name, idx_entities_type_name<br>
+                                • idx_entities_high_confidence (WHERE confidence >= 0.8)
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- structured_data table -->
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px;">
+                        <h5 style="color: var(--text-primary); margin-bottom: 10px;">structured_data ⭐ NEW (Week 2)</h5>
+                        <p style="color: var(--text-secondary); font-size: 0.9em; margin-bottom: 15px;">
+                            Structured JSON data from external sources (Samsara GPS, Turvo TMS, FrontApp)
+                        </p>
+                        <div style="font-family: monospace; font-size: 0.85em;">
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                                <strong>Column</strong>
+                                <strong>Type</strong>
+                                <strong>Description</strong>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                                <span style="color: var(--highlight);">uuid</span>
+                                <span>UUID</span>
+                                <span>Internal Apex Memory UUID</span>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                                <span style="color: var(--highlight);">data_id</span>
+                                <span>VARCHAR(255)</span>
+                                <span>External ID from source system</span>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                                <span style="color: var(--highlight);">source</span>
+                                <span>VARCHAR(100)</span>
+                                <span>Data source: samsara, turvo, frontapp</span>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                                <span style="color: var(--highlight);">data_type</span>
+                                <span>VARCHAR(50)</span>
+                                <span>gps_event, shipment, message, generic_json</span>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                                <span style="color: var(--highlight);">raw_json</span>
+                                <span>JSONB</span>
+                                <span>Original JSON payload</span>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                                <span style="color: var(--highlight);">text_representation</span>
+                                <span>TEXT</span>
+                                <span>Text for embeddings/search</span>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px;">
+                                <span style="color: var(--highlight);">graphiti_episode_uuid</span>
+                                <span>VARCHAR(255)</span>
+                                <span>Graphiti episode UUID (for rollback)</span>
+                            </div>
+                        </div>
+                        <div style="margin-top: 15px; padding: 10px; background: rgba(52, 152, 219, 0.1); border-radius: 5px;">
+                            <strong style="color: var(--foundation);">Purpose:</strong>
+                            <div style="font-size: 0.85em; margin-top: 5px;">
+                                Parallel to documents table but for JSON data. Supports JSONB queries for efficient JSON filtering.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User System Tables -->
+                <div style="margin-bottom: 30px;">
+                    <h4 style="color: var(--highlight); margin-bottom: 15px;">👤 User System Tables (5 tables)</h4>
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px;">
+                        <div style="font-size: 0.9em;">
+                            <strong style="color: var(--text-primary);">users, api_keys</strong> - Authentication and API access<br>
+                            <strong style="color: var(--text-primary);">conversations, messages</strong> - ChatGPT-like conversation interface<br>
+                            <strong style="color: var(--text-primary);">briefings, achievements, user_metrics</strong> - User features and analytics
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Operational Tables -->
+                <div>
+                    <h4 style="color: var(--highlight); margin-bottom: 15px;">⚙️ Operational Tables (6 tables)</h4>
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px;">
+                        <div style="font-size: 0.9em;">
+                            <strong style="color: var(--text-primary);">query_log, ingestion_log</strong> - Audit trails<br>
+                            <strong style="color: var(--text-primary);">embeddings_cache, query_cache</strong> - Performance optimization<br>
+                            <strong style="color: var(--text-primary);">document_entities, entity_mentions</strong> - Relationship linking
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Neo4j Schema Details -->
+            <div id="neo4j-schema" class="schema-details" style="display: none; background: var(--bg-secondary); border-radius: 10px; padding: 30px; margin-bottom: 30px; border-left: 5px solid var(--intelligence);">
+                <h3 style="color: var(--intelligence); margin-bottom: 20px;">🗄️ Neo4j Graph Database Schema</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 20px;">
+                    Graph database for storing entity relationships and community detection.
+                    Used by Graphiti for temporal reasoning and pattern detection.
+                </p>
+
+                <!-- Node Types -->
+                <div style="margin-bottom: 30px;">
+                    <h4 style="color: var(--highlight); margin-bottom: 15px;">📍 Node Types</h4>
+
+                    <!-- Entity Node -->
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px; margin-bottom: 15px;">
+                        <h5 style="color: var(--text-primary); margin-bottom: 10px;">Entity</h5>
+                        <p style="color: var(--text-secondary); font-size: 0.9em; margin-bottom: 15px;">
+                            Represents entities extracted from documents (customers, equipment, people, etc.)
+                        </p>
+                        <div style="font-family: monospace; font-size: 0.85em;">
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                                <strong>Property</strong>
+                                <strong>Type</strong>
+                                <strong>Description</strong>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                                <span style="color: var(--highlight);">uuid</span>
+                                <span>String</span>
+                                <span>Unique entity identifier</span>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                                <span style="color: var(--highlight);">name</span>
+                                <span>String</span>
+                                <span>Entity name</span>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                                <span style="color: var(--highlight);">entity_type</span>
+                                <span>String</span>
+                                <span>Entity type classification</span>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px;">
+                                <span style="color: var(--highlight);">group_id</span>
+                                <span>String</span>
+                                <span>Group identifier for multi-tenancy</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Community Node -->
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px;">
+                        <h5 style="color: var(--text-primary); margin-bottom: 10px;">Community</h5>
+                        <p style="color: var(--text-secondary); font-size: 0.9em; margin-bottom: 15px;">
+                            Detected communities of related entities (via graph algorithms)
+                        </p>
+                        <div style="font-family: monospace; font-size: 0.85em;">
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                                <strong>Property</strong>
+                                <strong>Type</strong>
+                                <strong>Description</strong>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                                <span style="color: var(--highlight);">uuid</span>
+                                <span>String</span>
+                                <span>Community identifier</span>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                                <span style="color: var(--highlight);">name</span>
+                                <span>String</span>
+                                <span>Community name or description</span>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px;">
+                                <span style="color: var(--highlight);">group_id</span>
+                                <span>String</span>
+                                <span>Group identifier</span>
+                            </div>
+                        </div>
+                        <div style="margin-top: 15px; padding: 10px; background: rgba(155, 89, 182, 0.1); border-radius: 5px;">
+                            <strong style="color: var(--intelligence);">Relationship:</strong>
+                            <div style="font-size: 0.85em; margin-top: 5px; font-family: monospace;">
+                                (Community)-[:HAS_MEMBER]->(Entity)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Relationship Types -->
+                <div>
+                    <h4 style="color: var(--highlight); margin-bottom: 15px;">🔗 Relationship Types (12+)</h4>
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px;">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; font-size: 0.9em; font-family: monospace;">
+                            <div>
+                                <strong style="color: var(--intelligence);">MANAGES</strong><br>
+                                <span style="color: var(--text-secondary); font-size: 0.85em;">Manager relationships</span>
+                            </div>
+                            <div>
+                                <strong style="color: var(--intelligence);">OPERATES</strong><br>
+                                <span style="color: var(--text-secondary); font-size: 0.85em;">Equipment operation</span>
+                            </div>
+                            <div>
+                                <strong style="color: var(--intelligence);">ISSUED_TO</strong><br>
+                                <span style="color: var(--text-secondary); font-size: 0.85em;">Invoice/document issuance</span>
+                            </div>
+                            <div>
+                                <strong style="color: var(--intelligence);">ASSIGNED_TO</strong><br>
+                                <span style="color: var(--text-secondary); font-size: 0.85em;">Task/project assignment</span>
+                            </div>
+                            <div>
+                                <strong style="color: var(--intelligence);">LOCATED_AT</strong><br>
+                                <span style="color: var(--text-secondary); font-size: 0.85em;">Physical location</span>
+                            </div>
+                            <div>
+                                <strong style="color: var(--intelligence);">WORKS_WITH</strong><br>
+                                <span style="color: var(--text-secondary); font-size: 0.85em;">Collaboration relationships</span>
+                            </div>
+                            <div>
+                                <strong style="color: var(--intelligence);">PARTICIPATES_IN</strong><br>
+                                <span style="color: var(--text-secondary); font-size: 0.85em;">Project participation</span>
+                            </div>
+                            <div>
+                                <strong style="color: var(--intelligence);">REPORTS_TO</strong><br>
+                                <span style="color: var(--text-secondary); font-size: 0.85em;">Reporting hierarchy</span>
+                            </div>
+                            <div>
+                                <strong style="color: var(--intelligence);">OWNS</strong><br>
+                                <span style="color: var(--text-secondary); font-size: 0.85em;">Ownership relationships</span>
+                            </div>
+                            <div>
+                                <strong style="color: var(--intelligence);">MAINTAINS</strong><br>
+                                <span style="color: var(--text-secondary); font-size: 0.85em;">Maintenance responsibility</span>
+                            </div>
+                            <div>
+                                <strong style="color: var(--intelligence);">PAYS_FOR</strong><br>
+                                <span style="color: var(--text-secondary); font-size: 0.85em;">Payment relationships</span>
+                            </div>
+                            <div>
+                                <strong style="color: var(--intelligence);">DELIVERS_TO</strong><br>
+                                <span style="color: var(--text-secondary); font-size: 0.85em;">Delivery relationships</span>
+                            </div>
+                        </div>
+                        <div style="margin-top: 20px; padding: 15px; background: rgba(155, 89, 182, 0.1); border-radius: 5px;">
+                            <strong style="color: var(--intelligence);">Example Cypher Query:</strong>
+                            <pre style="margin-top: 10px; padding: 10px; background: var(--bg-primary); border-radius: 5px; overflow-x: auto;">MATCH (e:Entity {group_id: $group_id})
+OPTIONAL MATCH (e)-[r]->()
+RETURN e, r
+LIMIT 100</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Qdrant Schema Details -->
+            <div id="qdrant-schema" class="schema-details" style="display: none; background: var(--bg-secondary); border-radius: 10px; padding: 30px; margin-bottom: 30px; border-left: 5px solid var(--services);">
+                <h3 style="color: var(--services); margin-bottom: 20px;">🔍 Qdrant Vector Database Schema</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 20px;">
+                    High-performance vector similarity search with apex_documents collection.
+                    Optimized for cosine similarity with 1536-dimensional embeddings.
+                </p>
+
+                <!-- Collection Schema -->
+                <div style="background: var(--bg-card); padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                    <h5 style="color: var(--text-primary); margin-bottom: 10px;">apex_documents Collection</h5>
+                    <p style="color: var(--text-secondary); font-size: 0.9em; margin-bottom: 15px;">
+                        Stores document and chunk embeddings with metadata payloads
+                    </p>
+                    <div style="font-family: monospace; font-size: 0.85em;">
+                        <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                            <strong>Field</strong>
+                            <strong>Type</strong>
+                            <strong>Description</strong>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                            <span style="color: var(--highlight);">id</span>
+                            <span>UUID</span>
+                            <span>Point ID (document or chunk UUID)</span>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                            <span style="color: var(--highlight);">vector</span>
+                            <span>float[1536]</span>
+                            <span>Embedding vector (cosine similarity)</span>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                            <span style="color: var(--highlight);">payload.title</span>
+                            <span>String</span>
+                            <span>Document/chunk title</span>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                            <span style="color: var(--highlight);">payload.content</span>
+                            <span>String</span>
+                            <span>Text content</span>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                            <span style="color: var(--highlight);">payload.doc_type</span>
+                            <span>String</span>
+                            <span>Document type (pdf, docx, etc.)</span>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                            <span style="color: var(--highlight);">payload.created_at</span>
+                            <span>Timestamp</span>
+                            <span>Creation timestamp</span>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px;">
+                            <span style="color: var(--highlight);">payload.metadata</span>
+                            <span>JSON</span>
+                            <span>Additional metadata</span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 15px; padding: 10px; background: rgba(230, 126, 34, 0.1); border-radius: 5px;">
+                        <strong style="color: var(--services);">Configuration:</strong>
+                        <div style="font-size: 0.85em; margin-top: 5px; font-family: monospace;">
+                            • Distance: Cosine Similarity<br>
+                            • Vector Size: 1536 (OpenAI text-embedding-3-small)<br>
+                            • On-Disk Storage: Optimized for large-scale retrieval
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Query Example -->
+                <div style="background: var(--bg-card); padding: 20px; border-radius: 8px;">
+                    <strong style="color: var(--services);">Example Python Query:</strong>
+                    <pre style="margin-top: 10px; padding: 15px; background: var(--bg-primary); border-radius: 5px; overflow-x: auto; font-size: 0.85em;">client.search(
+    collection_name="apex_documents",
+    query_vector=embedding,
+    limit=10,
+    score_threshold=0.7,
+    query_filter=Filter(
+        must=[
+            FieldCondition(
+                key="doc_type",
+                match=MatchValue(value="pdf")
+            )
+        ]
+    )
+)</pre>
+                </div>
+            </div>
+
+            <!-- Redis Schema Details -->
+            <div id="redis-schema" class="schema-details" style="display: none; background: var(--bg-secondary); border-radius: 10px; padding: 30px; margin-bottom: 30px; border-left: 5px solid var(--application);">
+                <h3 style="color: var(--application); margin-bottom: 20px;">🔴 Redis Cache Schema</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 20px;">
+                    Sub-10ms caching layer with 4 cache types. TTL-based with SHA256 key generation.
+                    Achieves 95% cache hit rate for repeat queries.
+                </p>
+
+                <!-- Cache Types -->
+                <div style="margin-bottom: 30px;">
+                    <h4 style="color: var(--highlight); margin-bottom: 15px;">💾 Cache Types</h4>
+
+                    <!-- Query Cache -->
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px; margin-bottom: 15px;">
+                        <h5 style="color: var(--text-primary); margin-bottom: 10px;">Query Cache</h5>
+                        <p style="color: var(--text-secondary); font-size: 0.9em; margin-bottom: 15px;">
+                            Caches complete query results with TTL (1 hour default)
+                        </p>
+                        <div style="font-family: monospace; font-size: 0.85em;">
+                            <strong>Key Format:</strong> <span style="color: var(--highlight);">query:&lt;sha256_hash&gt;</span><br>
+                            <strong>Value Type:</strong> JSON String<br>
+                            <strong>TTL:</strong> 3600 seconds (1 hour)<br>
+                            <strong>Hash Input:</strong> query text + filters (sorted keys)
+                        </div>
+                        <div style="margin-top: 15px; padding: 10px; background: rgba(46, 204, 113, 0.1); border-radius: 5px;">
+                            <strong style="color: var(--application);">Example Key:</strong>
+                            <div style="font-size: 0.85em; margin-top: 5px; font-family: monospace;">
+                                query:a3f5b7c9d1e2f4a6b8c0d2e4f6a8b0c2d4e6f8a0b2c4d6e8f0a2b4c6d8e0f2a4
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Semantic Cache -->
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px; margin-bottom: 15px;">
+                        <h5 style="color: var(--text-primary); margin-bottom: 10px;">Semantic Cache</h5>
+                        <p style="color: var(--text-secondary); font-size: 0.9em; margin-bottom: 15px;">
+                            Caches results for semantically similar queries (cosine similarity >= 0.9)
+                        </p>
+                        <div style="font-family: monospace; font-size: 0.85em;">
+                            <strong>Key Format:</strong> <span style="color: var(--highlight);">semantic:&lt;query_embedding&gt;</span><br>
+                            <strong>Similarity Threshold:</strong> 0.9 cosine similarity<br>
+                            <strong>Use Case:</strong> "Tell me about ACME" ≈ "What do you know about ACME?"
+                        </div>
+                    </div>
+
+                    <!-- Document/Entity Cache -->
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px; margin-bottom: 15px;">
+                        <h5 style="color: var(--text-primary); margin-bottom: 10px;">Document/Entity Cache</h5>
+                        <p style="color: var(--text-secondary); font-size: 0.9em; margin-bottom: 15px;">
+                            Hash-based storage for frequently accessed documents and entities
+                        </p>
+                        <div style="font-family: monospace; font-size: 0.85em;">
+                            <strong>Key Format:</strong> <span style="color: var(--highlight);">doc:&lt;uuid&gt;</span> or <span style="color: var(--highlight);">entity:&lt;uuid&gt;</span><br>
+                            <strong>Value Type:</strong> Redis Hash (HSET)<br>
+                            <strong>Fields:</strong> title, content, metadata, created_at, etc.
+                        </div>
+                    </div>
+
+                    <!-- Feature Flags -->
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px;">
+                        <h5 style="color: var(--text-primary); margin-bottom: 10px;">Feature Flags</h5>
+                        <p style="color: var(--text-secondary); font-size: 0.9em; margin-bottom: 15px;">
+                            Rollout percentage storage for A/B testing and gradual rollouts
+                        </p>
+                        <div style="font-family: monospace; font-size: 0.85em;">
+                            <strong>Key Format:</strong> <span style="color: var(--highlight);">flag:&lt;flag_name&gt;:rollout_pct</span><br>
+                            <strong>Value Type:</strong> String (percentage)<br>
+                            <strong>Example:</strong> flag:ENABLE_GRAPHITI_EXTRACTION:rollout_pct = "25"
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cache Stats -->
+                <div style="background: var(--bg-card); padding: 20px; border-radius: 8px;">
+                    <strong style="color: var(--application);">Performance Metrics:</strong>
+                    <div style="margin-top: 15px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 2em; font-weight: bold; color: var(--highlight);">95%</div>
+                            <div style="color: var(--text-secondary); font-size: 0.9em;">Cache Hit Rate</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 2em; font-weight: bold; color: var(--highlight);">&lt;10ms</div>
+                            <div style="color: var(--text-secondary); font-size: 0.9em;">Cache Latency</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 2em; font-weight: bold; color: var(--highlight);">3600s</div>
+                            <div style="color: var(--text-secondary); font-size: 0.9em;">Default TTL</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Graphiti Schema Details -->
+            <div id="graphiti-schema" class="schema-details" style="display: none; background: var(--bg-secondary); border-radius: 10px; padding: 30px; margin-bottom: 30px; border-left: 5px solid var(--operations);">
+                <h3 style="color: var(--operations); margin-bottom: 20px;">🧠 Graphiti (Neo4j-based) Schema</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 20px;">
+                    Temporal reasoning layer built on Neo4j. Custom entity types for 90% extraction accuracy.
+                    LLM-powered entity extraction with episode-based ingestion and rollback support.
+                </p>
+
+                <!-- Custom Entity Types -->
+                <div style="margin-bottom: 30px;">
+                    <h4 style="color: var(--highlight); margin-bottom: 15px;">🏷️ Custom Entity Types (5 types)</h4>
+
+                    <!-- Customer Entity -->
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px; margin-bottom: 15px;">
+                        <h5 style="color: var(--text-primary); margin-bottom: 10px;">Customer</h5>
+                        <div style="font-family: monospace; font-size: 0.85em;">
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                                <strong>Field</strong>
+                                <strong>Type</strong>
+                                <strong>Description</strong>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                                <span style="color: var(--highlight);">status</span>
+                                <span>Enum</span>
+                                <span>active, overdue, suspended, closed, pending</span>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                                <span style="color: var(--highlight);">balance</span>
+                                <span>Float</span>
+                                <span>Outstanding balance in USD</span>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                                <span style="color: var(--highlight);">contact_email</span>
+                                <span>String</span>
+                                <span>Primary contact email</span>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px;">
+                                <span style="color: var(--highlight);">customer_id</span>
+                                <span>String</span>
+                                <span>Unique customer identifier</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Invoice Entity -->
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px; margin-bottom: 15px;">
+                        <h5 style="color: var(--text-primary); margin-bottom: 10px;">Invoice</h5>
+                        <div style="font-family: monospace; font-size: 0.85em;">
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                                <strong>Field</strong>
+                                <strong>Type</strong>
+                                <strong>Description</strong>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                                <span style="color: var(--highlight);">invoice_number</span>
+                                <span>String</span>
+                                <span>Unique invoice ID (e.g., INV-2025-001)</span>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                                <span style="color: var(--highlight);">amount</span>
+                                <span>Float</span>
+                                <span>Total invoice amount in USD</span>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border);">
+                                <span style="color: var(--highlight);">status</span>
+                                <span>Enum</span>
+                                <span>paid, pending, overdue, cancelled, partial</span>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 200px 150px 1fr; gap: 10px; padding: 8px;">
+                                <span style="color: var(--highlight);">due_date</span>
+                                <span>String</span>
+                                <span>Payment due date (YYYY-MM-DD)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Other Entity Types -->
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px;">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; font-size: 0.9em;">
+                            <div>
+                                <strong style="color: var(--operations);">Equipment</strong><br>
+                                <span style="color: var(--text-secondary); font-size: 0.85em;">Vehicles, machinery with model, hours, operator, status</span>
+                            </div>
+                            <div>
+                                <strong style="color: var(--operations);">Person</strong><br>
+                                <span style="color: var(--text-secondary); font-size: 0.85em;">Drivers, employees with role, company, license</span>
+                            </div>
+                            <div>
+                                <strong style="color: var(--operations);">Project</strong><br>
+                                <span style="color: var(--text-secondary); font-size: 0.85em;">Jobs, loads with dates, budget, location, status</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Edge Types -->
+                <div style="margin-bottom: 30px;">
+                    <h4 style="color: var(--highlight); margin-bottom: 15px;">🔗 Edge Types (Temporal Relationships)</h4>
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px;">
+                        <p style="color: var(--text-secondary); font-size: 0.9em; margin-bottom: 15px;">
+                            All edges include temporal properties: valid_from, valid_to, confidence, context, source_document
+                        </p>
+                        <div style="font-family: monospace; font-size: 0.85em;">
+                            <strong>Edge Properties Schema:</strong><br>
+                            <div style="margin-top: 10px; padding: 10px; background: var(--bg-primary); border-radius: 5px;">
+                                relationship_type: MANAGES | OPERATES | ISSUED_TO | ASSIGNED_TO | ...<br>
+                                confidence: Float (0.0-1.0)<br>
+                                valid_from: ISO timestamp (when relationship started)<br>
+                                valid_to: ISO timestamp (when relationship ended, null if active)<br>
+                                context: String (additional context)<br>
+                                source_document: UUID (document where discovered)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Graphiti Advantages -->
+                <div style="background: var(--bg-card); padding: 20px; border-radius: 8px;">
+                    <strong style="color: var(--operations);">Why Graphiti vs. Regex EntityExtractor:</strong>
+                    <div style="margin-top: 15px; display: grid; gap: 10px;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span style="font-size: 1.5em;">✅</span>
+                            <div>
+                                <strong style="color: var(--text-primary);">90% Accuracy</strong><br>
+                                <span style="color: var(--text-secondary); font-size: 0.85em;">vs. 60% with regex patterns</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span style="font-size: 1.5em;">✅</span>
+                            <div>
+                                <strong style="color: var(--text-primary);">LLM-Powered</strong><br>
+                                <span style="color: var(--text-secondary); font-size: 0.85em;">Context-aware entity extraction with GPT-5</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span style="font-size: 1.5em;">✅</span>
+                            <div>
+                                <strong style="color: var(--text-primary);">Temporal Reasoning</strong><br>
+                                <span style="color: var(--text-secondary); font-size: 0.85em;">Track relationships over time with valid_from/valid_to</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span style="font-size: 1.5em;">✅</span>
+                            <div>
+                                <strong style="color: var(--text-primary);">Episode-based Rollback</strong><br>
+                                <span style="color: var(--text-secondary); font-size: 0.85em;">Saga pattern support with episode UUIDs</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Flow Visualization -->
+            <div style="background: var(--bg-secondary); border-radius: 10px; padding: 30px; margin-top: 30px;">
+                <h3 style="color: var(--highlight); margin-bottom: 20px;">📊 Data Flow Across Databases</h3>
+
+                <!-- Ingestion Flow -->
+                <div style="margin-bottom: 30px;">
+                    <h4 style="color: var(--text-primary); margin-bottom: 15px;">📥 Document Ingestion Path</h4>
+                    <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                        <div style="background: var(--bg-card); padding: 15px 20px; border-radius: 8px; border-left: 4px solid var(--highlight);">
+                            Document Upload
+                        </div>
+                        <span style="font-size: 1.5em;">→</span>
+                        <div style="background: var(--bg-card); padding: 15px 20px; border-radius: 8px; border-left: 4px solid var(--foundation);">
+                            PostgreSQL<br>
+                            <span style="font-size: 0.8em; color: var(--text-secondary);">Documents + Chunks</span>
+                        </div>
+                        <span style="font-size: 1.5em;">→</span>
+                        <div style="background: var(--bg-card); padding: 15px 20px; border-radius: 8px; border-left: 4px solid var(--operations);">
+                            Graphiti/Neo4j<br>
+                            <span style="font-size: 0.8em; color: var(--text-secondary);">Entity Extraction</span>
+                        </div>
+                        <span style="font-size: 1.5em;">→</span>
+                        <div style="background: var(--bg-card); padding: 15px 20px; border-radius: 8px; border-left: 4px solid var(--services);">
+                            Qdrant<br>
+                            <span style="font-size: 0.8em; color: var(--text-secondary);">Vector Embeddings</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Query Flow -->
+                <div>
+                    <h4 style="color: var(--text-primary); margin-bottom: 15px;">🔍 Query Execution Path</h4>
+                    <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                        <div style="background: var(--bg-card); padding: 15px 20px; border-radius: 8px; border-left: 4px solid var(--highlight);">
+                            User Query
+                        </div>
+                        <span style="font-size: 1.5em;">→</span>
+                        <div style="background: var(--bg-card); padding: 15px 20px; border-radius: 8px; border-left: 4px solid var(--application);">
+                            Redis Cache<br>
+                            <span style="font-size: 0.8em; color: var(--text-secondary);">Check Cache (&lt;10ms)</span>
+                        </div>
+                        <span style="font-size: 1.5em;">→</span>
+                        <div style="background: var(--bg-card); padding: 15px 20px; border-radius: 8px; border-left: 4px solid var(--intelligence);">
+                            Query Router<br>
+                            <span style="font-size: 0.8em; color: var(--text-secondary);">Intent Classification</span>
+                        </div>
+                        <span style="font-size: 1.5em;">→</span>
+                        <div style="background: var(--bg-card); padding: 15px 20px; border-radius: 8px; border-left: 4px solid var(--services);">
+                            Optimal DB<br>
+                            <span style="font-size: 0.8em; color: var(--text-secondary);">PG/Neo4j/Qdrant</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Tooltip (hidden by default) -->
@@ -2292,6 +3184,27 @@ router_instance = QueryRouter(
         // ===== COMPONENT CARD EXPAND =====
         function toggleExpand(card) {
             card.classList.toggle('expanded');
+        }
+
+        // ===== SCHEMA SECTION TOGGLE =====
+        function toggleSchemaSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                // Toggle display
+                if (section.style.display === 'none' || section.style.display === '') {
+                    // Hide all other schema sections first
+                    document.querySelectorAll('.schema-details').forEach(detail => {
+                        detail.style.display = 'none';
+                    });
+                    // Show the clicked section
+                    section.style.display = 'block';
+                    // Smooth scroll to the section
+                    section.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                } else {
+                    // Hide if already visible (toggle off)
+                    section.style.display = 'none';
+                }
+            }
         }
 
         // ===== INGESTION FLOW ANIMATION =====
