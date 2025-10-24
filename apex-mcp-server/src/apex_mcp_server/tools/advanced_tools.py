@@ -11,12 +11,9 @@ Provides 4 advanced features:
 
 import httpx
 from typing import Dict, List, Any, Optional
-from mcp.server.fastmcp import FastMCP
 
+from ..mcp_instance import mcp
 from ..config import config
-
-# Initialize FastMCP
-mcp = FastMCP("Apex Memory")
 
 
 async def _call_apex_api(

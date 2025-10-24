@@ -29,13 +29,12 @@ import json
 import httpx
 from typing import Dict, List, Any, Optional
 from datetime import datetime
-from mcp.server.fastmcp import FastMCP
 from anthropic import Anthropic
 
+from ..mcp_instance import mcp
 from ..config import config
 
-# Initialize FastMCP and Anthropic client
-mcp = FastMCP("Apex Memory")
+# Initialize Anthropic client
 anthropic_client = None
 
 if config.anthropic_api_key:

@@ -7,10 +7,12 @@ Starts the Model Context Protocol server with all Apex Memory tools.
 
 import asyncio
 import logging
-from mcp.server.fastmcp import FastMCP
 from mcp.server.stdio import stdio_server
 
-# Import all tools to register them
+# Import shared mcp instance
+from .mcp_instance import mcp
+
+# Import all tools to register them (importing registers decorators)
 from .tools import (
     # Basic tools
     add_memory,
@@ -35,9 +37,6 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
-
-# Initialize FastMCP server
-mcp = FastMCP("Apex Memory")
 
 
 # Add resources
@@ -203,7 +202,7 @@ def main():
     logger.info("  - extract_key_facts")
 
     # Run the server with stdio transport
-    asyncio.run(stdio_server(mcp))
+    mcp.run("stdio")
 
 
 if __name__ == "__main__":
