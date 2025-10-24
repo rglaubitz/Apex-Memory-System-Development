@@ -123,7 +123,7 @@ Each query step should have:
 - method: str ("GET" or "POST")
 - payload: dict (for POST requests, the JSON body)
 - params: dict (for GET requests, query parameters)
-- depends_on: int | null (step number this depends on, or null if independent)
+- depends_on: int | list[int] | null (step number(s) this depends on, or null if independent)
 - use_extracted: str | null (field to extract from previous step, e.g., "uuid", "entity_uuid")
 - description: str (what this query does)
 
@@ -216,10 +216,17 @@ async def execute_query_strategy(strategy: List[Dict[str, Any]]) -> List[Dict[st
 
         # Check dependencies
         if step_config.get("depends_on"):
-            dep_step = step_config["depends_on"]
-            # Wait for dependency (in our case, they're already completed since we process sequentially)
-            if dep_step not in [r["step"] for r in results]:
-                raise ValueError(f"Step {step_num} depends on step {dep_step} which hasn't completed")
+            dep_steps = step_config["depends_on"]
+
+            # Handle both single int and list of ints
+            if isinstance(dep_steps, int):
+                dep_steps = [dep_steps]
+
+            # Wait for dependencies (in our case, they're already completed since we process sequentially)
+            completed_steps = [r["step"] for r in results]
+            for dep_step in dep_steps:
+                if dep_step not in completed_steps:
+                    raise ValueError(f"Step {step_num} depends on step {dep_step} which hasn't completed")
 
             # Use extracted data if needed
             if step_config.get("use_extracted"):
