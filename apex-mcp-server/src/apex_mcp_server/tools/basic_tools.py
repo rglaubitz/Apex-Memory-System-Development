@@ -215,7 +215,7 @@ async def search_memory(
         "use_cache": use_cache,
     }
 
-    result = await _call_apex_api("POST", "/api/v1/query", json_data=payload)
+    result = await _call_apex_api("POST", "/api/v1/query/", json_data=payload)
 
     return {
         "query": result.get("query", query),
@@ -273,7 +273,7 @@ async def list_recent_memories(
         "use_cache": False,
     }
 
-    result = await _call_apex_api("POST", "/api/v1/query", json_data=payload)
+    result = await _call_apex_api("POST", "/api/v1/query/", json_data=payload)
 
     return {
         "episodes": result.get("results", []),

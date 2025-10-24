@@ -76,7 +76,7 @@ async def plan_query_strategy(question: str, max_queries: int = 6) -> List[Dict[
             {
                 "step": 1,
                 "type": "search",
-                "endpoint": "/api/v1/query",
+                "endpoint": "/api/v1/query/",
                 "method": "POST",
                 "payload": {"query": "...", "limit": 10},
                 "description": "Search for ACME Corporation",
@@ -104,7 +104,7 @@ The user asked: "{question}"
 Your task: Plan the optimal sequence of API queries to answer this question comprehensively.
 
 Available Apex API endpoints:
-1. POST /api/v1/query - General search (semantic routing, hybrid search)
+1. POST /api/v1/query/ - General search (semantic routing, hybrid search)
 2. POST /api/v1/query/temporal - Temporal queries (point-in-time, patterns)
 3. GET /api/v1/query/entity-timeline/{{uuid}} - Entity evolution timeline
 4. GET /api/v1/query/entity-communities/{{uuid}} - Entity's communities
@@ -132,7 +132,7 @@ Example for "Tell me about ACME Corporation":
   {{
     "step": 1,
     "type": "search",
-    "endpoint": "/api/v1/query",
+    "endpoint": "/api/v1/query/",
     "method": "POST",
     "payload": {{"query": "ACME Corporation", "limit": 10}},
     "depends_on": null,
