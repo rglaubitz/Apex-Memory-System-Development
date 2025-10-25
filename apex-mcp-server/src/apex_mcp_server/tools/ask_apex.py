@@ -112,7 +112,8 @@ Available Apex API endpoints:
 6. GET /api/v1/analytics/relationships - Relationship metrics
 7. GET /api/v1/analytics/communities - Community metrics
 8. GET /api/v1/analytics/dashboard - Overall graph stats
-9. POST /api/v1/patterns/aggregation/change-frequency - Pattern detection
+
+Note: Pattern detection endpoint removed - requires specific entity UUIDs which cannot be reliably extracted from generic queries. Use dedicated analyze_pattern tool instead when entity UUIDs are known.
 
 Create a query plan (max {max_queries} queries) as a JSON array.
 

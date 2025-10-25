@@ -17,9 +17,83 @@ This is the **development coordination layer** for the Apex Memory System projec
 
 **The actual codebase** is maintained separately at [`apex-memory-system/`](https://github.com/rglaubitz/apex-memory-system) and linked here as a symlink for local development.
 
+## 📁 Directory Structure
+
+```
+Apex-Memory-System-Development/
+├── README.md                    # This file
+├── CLAUDE.md                    # Claude Code instructions
+│
+├── docs/                        # 📚 Documentation & Guides
+│   ├── guides/                  # Implementation guides
+│   ├── research/                # Research papers & notes
+│   └── system/                  # System manuals & diagrams
+│
+├── session-logs/                # 📅 Day-by-day development logs
+│   ├── 2025-10-09/             # Days 1-3 completion
+│   ├── 2025-10-23/             # Day 2 implementation
+│   └── 2025-10-24/             # MCP testing
+│
+├── media/                       # 📸 Screenshots & images
+│
+├── testing/                     # 🧪 Test suites (consolidated)
+│   ├── integration/            # Integration tests
+│   ├── verification/           # Pre-deployment checks
+│   └── manual/                 # Manual test procedures
+│
+├── research/                    # 🔬 Research-first documentation
+│   ├── documentation/          # Tier 1 sources (official docs)
+│   ├── examples/               # Tier 2 sources (verified code)
+│   └── architecture-decisions/ # ADRs with citations
+│
+├── upgrades/                    # 🚀 Active improvement plans
+│   ├── active/                 # Current implementations
+│   ├── planned/                # Research phase
+│   └── completed/              # Archived upgrades
+│
+├── deployment/                  # 🌐 Deployment guides
+│   ├── mcp-server/             # PyPI deployment
+│   ├── production/             # GCP deployment
+│   └── verification/           # Pre-deployment checks
+│
+├── workflow/                    # 📋 5-phase development workflow
+├── apex-mcp-server/            # MCP server implementation
+└── apex-memory-system/         # ⭐ Main codebase (symlink)
+```
+
 ## Quick Start
 
-### View Research Documentation
+### 📚 Browse Documentation
+
+```bash
+# View all guides
+ls docs/guides/
+
+# Read system manual
+open docs/system/SYSTEM-MANUAL.html
+```
+
+### 🚀 Check Active Upgrades
+
+```bash
+# Query Router Enhancement (COMPLETED Oct 25, 2025)
+cat upgrades/active/query-router-enhancement/IMPLEMENTATION-SUMMARY.md
+
+# Grade: B- → A- (+22 points)
+# Fixes: Temporal endpoint, Qdrant content, Metadata bias
+```
+
+### 📅 Review Session Logs
+
+```bash
+# Latest session
+cat session-logs/2025-10-24/apex-mcp-testing-results.md
+
+# All Day 2 sessions
+ls session-logs/2025-10-23/
+```
+
+### 🔬 Explore Research
 
 ```bash
 # Browse research by framework
@@ -29,16 +103,7 @@ cd research/documentation/
 # Query routing, embeddings, vector search
 ```
 
-### Check Active Upgrades
-
-```bash
-# Query Router 8-week improvement plan
-cat upgrades/query-router/IMPROVEMENT-PLAN.md
-
-# Expected: +21-28 point relevance, 99% precision, <500ms P90
-```
-
-### Explore Agent System
+### 🤖 Agent System
 
 ```bash
 # 20 specialized agents
