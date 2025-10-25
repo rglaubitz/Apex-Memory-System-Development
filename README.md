@@ -349,7 +349,7 @@ All tests are organized in `upgrades/active/temporal-implementation/tests/` with
 - **Bottom-Up Testing** - Validate foundation before higher layers
 - **GO/NO-GO Decision** - Clear deployment criteria based on test results
 
-🧪 **[Testing Kit Guide](testing-kit/)** | 📋 **[Implementation Steps](testing-kit/IMPLEMENTATION.md)** | 📊 **[Results Template](testing-kit/results/RESULTS-TEMPLATE.md)**
+🧪 **[Testing Kit Guide](deployment/testing/)** | 📋 **[Implementation Steps](deployment/testing/IMPLEMENTATION.md)** | 📊 **[Results Template](deployment/testing/results/RESULTS-TEMPLATE.md)**
 
 **What You'll Know After Testing:**
 - ✅/❌ System health at all 6 layers
@@ -466,7 +466,7 @@ Claude: [Orchestrates 6 queries across graph, temporal layer, communities]
 | Resource | Description |
 |----------|-------------|
 | [CLAUDE.md](CLAUDE.md) | Claude Code integration guide |
-| [testing-kit/](testing-kit/) ⭐ NEW | Pre-deployment testing kit (3-4 hours comprehensive validation) |
+| [deployment/testing/](deployment/testing/) | Pre-deployment testing kit (3-4 hours comprehensive validation) |
 | [research/](research/) | Research knowledge base with ADRs |
 | [upgrades/](upgrades/) | Active improvement plans |
 | [upgrades/active/temporal-implementation/tests/STRUCTURE.md](upgrades/active/temporal-implementation/tests/STRUCTURE.md) | Complete test organization guide |

@@ -148,6 +148,27 @@ python scripts/dev/health_check.py -v
 
 ```
 Apex-Memory-System-Development/
+├── README.md                    # Main entry point
+├── CLAUDE.md                    # Claude instructions
+│
+├── docs/                        # 📚 All documentation
+│   ├── guides/                  # Implementation guides
+│   ├── research/                # Research papers & notes
+│   └── system/                  # System manuals & diagrams
+│
+├── session-logs/                # 📅 Development logs
+│   ├── 2025-10-09/             # Days 1-3
+│   ├── 2025-10-23/             # Day 2 sessions
+│   ├── 2025-10-24/             # MCP testing
+│   └── 2025-10-25/             # Query router + reorganization
+│
+├── media/                       # 📸 Screenshots
+│
+├── testing/                     # 🧪 Test suites
+│   ├── integration/            # Integration tests
+│   ├── verification/           # Pre-deployment checks
+│   └── manual/                 # Manual test procedures
+│
 ├── apex-memory-system/        # Symlink to actual codebase (see apex-memory-system/CLAUDE.md)
 │   ├── src/apex_memory/
 │   │   ├── api/
