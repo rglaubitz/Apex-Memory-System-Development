@@ -21,6 +21,21 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ---
 
+## ⚡ TL;DR - Start Here
+
+**First time?** Read this in order:
+1. This is a **development wrapper** - the actual code is in `apex-memory-system/` (symlinked)
+2. Check **[Quick Start](#-quick-start---working-today)** to begin development
+3. **Active work:** Graphiti + JSON Integration - see [latest handoff](upgrades/active/temporal-implementation/handoffs/HANDOFF-WEEK3-DAYS1-3.md) for copy-paste resume command
+4. For implementation details, see `apex-memory-system/CLAUDE.md`
+
+**Working today?** Jump to:
+- Starting development → [Quick Start](#-quick-start---working-today)
+- Current task → [Latest Handoff](upgrades/active/temporal-implementation/handoffs/HANDOFF-WEEK3-DAYS1-3.md)
+- Test baseline → Run `cd apex-memory-system && pytest tests/ -v --ignore=tests/load/`
+
+---
+
 # ⚠️ CRITICAL RULES - MUST ALWAYS FOLLOW
 
 ## 🔴 Rule 1: Read Key Structural READMEs First
@@ -1000,14 +1015,10 @@ After /breakdown completes, use /execute for systematic implementation:
 
 ## Configuration
 
-### Environment Variables
-
-**Configured in:** `apex-memory-system/.env` (copy from `.env.example`)
-
-**Key variables:**
-- `OPENAI_API_KEY` - OpenAI API key (required for embeddings)
-- Database connection strings (Neo4j, PostgreSQL, Qdrant, Redis)
-- Performance tuning parameters
+**Quick Reference:**
+- **Environment:** `apex-memory-system/.env` (copy from `.env.example`)
+- **Key variable:** `OPENAI_API_KEY` (required for embeddings)
+- **MCP Servers:** Auto-configured in `.claude/.mcp.json` (GitHub, PostgreSQL, Exa, Chrome DevTools)
 
 ### Database Access
 
