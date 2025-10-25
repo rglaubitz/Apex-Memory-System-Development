@@ -18,7 +18,8 @@ upgrades/
 ├── README.md              # This file
 ├── active/                # Active upgrades (implementation)
 │   ├── README.md         # Active upgrades index
-│   └── temporal-implementation/    # 🚀 Active: Workflow orchestration
+│   ├── temporal-implementation/    # 🚀 Active: Workflow orchestration
+│   └── query-router-enhancement/   # 📝 Planned: search_memory routing fix
 ├── planned/               # Planned upgrades (research phase)
 │   ├── README.md         # Planned upgrades index
 │   ├── fine-tuned-embeddings/     # 📝 Planning (domain-specific embeddings)
@@ -66,6 +67,43 @@ Replace custom saga pattern with Temporal.io workflow orchestration for durable,
 4. **Week 7-8:** Monitoring, observability, and Prometheus metrics export
 
 📋 **[Full Plan](active/temporal-implementation/README.md)**
+
+---
+
+### Query Router Enhancement - search_memory Routing Improvement
+
+**Status:** 📝 Planned (not blocking PyPI deployment)
+**Priority:** Medium
+**Timeline:** 2 hours (1 hour pattern detection + 1 hour dedicated endpoint)
+**Created:** 2025-10-24
+
+**Location:** [`active/query-router-enhancement/`](active/query-router-enhancement/)
+
+**TL;DR:**
+Fix MCP `search_memory()` tool routing to graph databases instead of PostgreSQL document storage. Add pattern-based query detection and dedicated `/api/v1/memory/search` endpoint.
+
+**Problem:**
+- Current: `search_memory("What do you know about X?")` → metadata (PostgreSQL) → old documents ❌
+- Expected: `search_memory("What do you know about X?")` → graph (Neo4j/Graphiti) → recent memories ✅
+
+**Solution (2-phase hybrid approach):**
+1. **Phase 1 (1 hour):** Add MEMORY_PATTERNS regex detection before hybrid classifier
+2. **Phase 2 (1 hour):** Create dedicated `/memory/search` endpoint that always routes to graph
+
+**Expected Gains:**
+- ✅ Correct routing for memory queries ("What do you know about X?")
+- ✅ Backward compatibility (document search unchanged)
+- ✅ No performance impact (<10ms pattern matching overhead)
+- ✅ Clean API semantics (documents vs memories)
+
+**Research Foundation:**
+- [PHASE-2-FIX-SUMMARY.md](../apex-mcp-server/PHASE-2-FIX-SUMMARY.md) - Root cause analysis
+- [PHASE-2-TESTING-RESULTS.md](../apex-mcp-server/PHASE-2-TESTING-RESULTS.md) - Testing evidence
+
+**Workaround (Immediate):**
+Use `temporal_search()` instead of `search_memory()` for recent memory queries.
+
+📋 **[Full Plan](active/query-router-enhancement/README.md)** | 📝 **[Implementation Guide](active/query-router-enhancement/IMPLEMENTATION.md)** | 🧪 **[Testing Specs](active/query-router-enhancement/TESTING.md)**
 
 ---
 

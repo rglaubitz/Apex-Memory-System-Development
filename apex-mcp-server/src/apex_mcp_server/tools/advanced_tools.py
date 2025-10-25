@@ -155,7 +155,7 @@ async def get_entity_timeline(
 
     result = await _call_apex_api(
         "GET",
-        f"/api/v1/query/entity-timeline/{entity_uuid}",
+        f"/api/v1/query/entity/{entity_uuid}/timeline",
         params=params
     )
 
@@ -223,7 +223,7 @@ async def get_communities(
         params = {"group_id": group_id}
         result = await _call_apex_api(
             "GET",
-            f"/api/v1/query/entity-communities/{entity_uuid}",
+            f"/api/v1/query/entity/{entity_uuid}/communities",
             params=params
         )
 
@@ -242,7 +242,7 @@ async def get_communities(
         )
 
         return {
-            "communities": result.get("largest_communities", []),
+            "communities": result.get("top_communities", []),
             "total_communities": result.get("community_count", 0),
             "avg_community_size": result.get("avg_community_size", 0.0),
         }

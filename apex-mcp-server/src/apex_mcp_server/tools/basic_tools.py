@@ -263,21 +263,18 @@ async def list_recent_memories(
             "count": 5
         }
     """
-    # Note: This endpoint doesn't exist yet in your API
-    # We'll need to add it or use the Graphiti service directly
-    # For now, using a search with recent filter
-
-    payload = {
-        "query": f"recent memories for {user_id}",
+    # Call the new /api/v1/graph/episodes endpoint that uses Graphiti
+    params = {
         "limit": limit,
-        "use_cache": False,
+        "group_id": group_id,
     }
 
-    result = await _call_apex_api("POST", "/api/v1/query/", json_data=payload)
+    result = await _call_apex_api("GET", "/api/v1/graph/episodes", params=params)
 
     return {
-        "episodes": result.get("results", []),
-        "count": result.get("result_count", 0),
+        "episodes": result.get("episodes", []),
+        "count": result.get("count", 0),
+        "group_id": result.get("group_id", group_id),
         "user_id": user_id,
     }
 
