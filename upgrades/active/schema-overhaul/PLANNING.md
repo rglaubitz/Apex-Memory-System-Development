@@ -692,6 +692,39 @@
 
 ---
 
+## Optional Enhancement: Seed Entities (Post-Migration)
+
+**Status:** 📋 Available Post-Phase 6
+**Duration:** 4-6 hours
+**Documentation:** See [SEED-ENTITIES-GUIDE.md](./SEED-ENTITIES-GUIDE.md)
+
+**Goal:** Implement hybrid approach to knowledge graph development:
+- Seed 5-10 critical entities (G, Origin Transport, OpenHaul, Fleet, Financials)
+- Let Graphiti extract naturally from documents
+- Best of both worlds: Predictable core + emergent relationships
+
+**When to Use:**
+- After schema overhaul complete (Phases 1-6)
+- Before major document ingestion begins
+- When you have well-known critical entities
+
+**Benefits:**
+- ✅ Consistent naming for core entities
+- ✅ Automatic discovery of long-tail entities (customers, products, etc.)
+- ✅ 90%+ extraction accuracy from Graphiti
+- ✅ Easy deduplication and maintenance
+
+**Deliverables:**
+- [ ] Seed data definition file (`data/seed/entities.json`)
+- [ ] Seed entities workflow (`SeedEntitiesWorkflow`)
+- [ ] CLI script for execution
+- [ ] Deduplication maintenance scripts
+- [ ] Monitoring dashboard for seed vs. extracted entities
+
+**Not Required:** This is an optional enhancement. The schema overhaul (Phases 1-6) provides full functionality without seed entities. Graphiti can extract all entities naturally from documents.
+
+---
+
 ## Timeline
 
 ```

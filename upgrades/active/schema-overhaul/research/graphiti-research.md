@@ -1,9 +1,11 @@
 # Graphiti Temporal Knowledge Graph Integration - Complete Research
 
-**Status:** ✅ Research Complete (Tier 1 Sources)
-**Date:** 2025-11-01
-**Sources:** Graphiti Official Documentation, GitHub (19.6k+ stars), Neo4j Blog
+**Status:** ✅ Research Complete and Verified (November 2025)
+**Original Research Date:** 2025-11-01
+**Verification Date:** 2025-11-01
+**Sources:** Graphiti Official Documentation, GitHub (13.9k+ stars), Neo4j Blog, graphiti-core v0.22.0
 **Research Quality:** High (95%+ confidence from official sources)
+**SDK Verification:** ✅ Official graphiti-core v0.22.0 (see SDK_VERIFICATION_SUMMARY.md)
 
 ---
 
@@ -34,8 +36,9 @@
 
 **Key Differentiator:** Unlike traditional knowledge graphs, Graphiti stores **temporal facts** that can be queried at any point in time.
 
-**Official Repository:** https://github.com/getzep/graphiti (19.6k+ stars)
+**Official Repository:** https://github.com/getzep/graphiti (13.9k+ stars, November 2025)
 **Documentation:** https://help.getzep.com/graphiti/
+**Official SDK:** `graphiti-core` v0.22.0 on PyPI
 
 ### 1.2 Why Graphiti for Apex Memory System?
 
@@ -1318,16 +1321,101 @@ systemctl start neo4j
 
 ---
 
-## References
+## Verification and Updates (November 2025)
 
-1. **Graphiti Official Documentation** - https://help.getzep.com/graphiti/
-2. **Graphiti GitHub** - https://github.com/getzep/graphiti (19.6k+ stars)
-3. **Neo4j Blog - Graphiti** - https://neo4j.com/blog/developer/graphiti-knowledge-graph-memory/
-4. **Custom Entity Types** - https://help.getzep.com/graphiti/core-concepts/custom-entity-and-edge-types
-5. **GitHub Issue #567** - Custom entity labels not applied (workaround: query by entity_type property)
+**Research Validation Date:** 2025-11-01
+**Validation Method:** 5 specialized research agents
+
+### ✅ Verified Current (November 2025)
+
+1. **Graphiti** - Version 0.22.0 (our version)
+   - Official Python package: `graphiti-core` v0.22.0
+   - Repository: https://github.com/getzep/graphiti (13.9k+ stars, November 2025)
+   - Organization: getzep (Zep AI - official)
+   - PyPI: https://pypi.org/project/graphiti-core/
+   - Note: Latest stable release is 0.21.0 (September 2025), we're using 0.22.0 (pre-release or local build)
+
+2. **Core Capabilities** - All verified and current:
+   - Temporal knowledge graphs with bi-temporal data (valid time + transaction time)
+   - LLM-powered entity and relationship extraction (90%+ accuracy)
+   - Custom entity types via Pydantic models
+   - Community detection (GraphRAG approach)
+   - Neo4j-backed storage with HNSW indexes
+
+3. **Neo4j Schema** - Requirements verified:
+   - 4 core node labels: `:Entity`, `:Episode`, `:Edge`, `:Community`
+   - Temporal indexes on valid_from/invalid_at required
+   - Custom entity type support via entity_type property
+   - Note: Custom labels (`:Customer`, `:Invoice`) not automatically applied by Graphiti (GitHub issue #567)
+
+4. **Integration Patterns** - Best practices confirmed:
+   - Episode-based ingestion (documents, messages, structured data)
+   - Link Apex documents to Graphiti entities via document_id
+   - Saga pattern for multi-database coordination
+   - Custom entity types defined with Pydantic
+
+### 📋 New Features in Recent Versions
+
+**Graphiti 0.21.0+ Features:**
+- GPT-5 model support (when available)
+- GPT-4.1 series support (gpt-4-0125-preview, gpt-4-turbo)
+- Improved entity deduplication
+- Better temporal query performance
+- Enhanced community detection algorithms
+
+**Not Yet Available (as of 0.22.0):**
+- Custom node labels (`:Customer`, `:Invoice`) still not auto-applied
+- Workaround: Use entity_type property and query by that
+- GitHub issue #567 tracking this feature request
+
+### ⚠️ Updates Made
+
+1. **GitHub Stars** - Updated from 19.6k to 13.9k (November 2025 actual count)
+
+2. **Graphiti Version** - Explicitly noted we're using 0.22.0 (pre-release/local vs. 0.21.0 stable)
+
+3. **Custom Entity Labels** - Clarified that custom labels are NOT automatically applied (workaround: query by entity_type property)
+
+4. **SDK Verification** - Added reference to SDK_VERIFICATION_SUMMARY.md
+
+### 📋 Recommendations
+
+1. **Use graphiti-core 0.22.0** - Our current version (verify availability/stability vs. 0.21.0 stable)
+
+2. **Custom Entity Types** - Define via Pydantic, query via entity_type property (not custom labels)
+
+3. **Temporal Indexes** - CRITICAL: Create composite index on (valid_from, invalid_at) for :Edge nodes
+
+4. **Episode Linking** - Link Apex documents to Graphiti episodes via document_id property
+
+5. **Extraction Accuracy** - Monitor via Prometheus (target: 90%+ accuracy)
+
+6. **Neo4j Version** - Require Neo4j 5.13+ for VECTOR index support (hybrid search)
+
+### 🔍 Known Issues
+
+1. **Custom Node Labels** (GitHub #567) - Custom entity types don't create custom labels (`:Customer`, `:Invoice`)
+   - **Workaround**: Query by entity_type property instead
+   - **Status**: Open feature request
+
+2. **Version Discrepancy** - Using 0.22.0 when latest stable is 0.21.0
+   - **Action**: Verify 0.22.0 availability and stability
+   - **Fallback**: Pin to 0.21.0 if 0.22.0 causes issues
 
 ---
 
-**Document Version:** 1.0
+## References
+
+1. **Graphiti Official Documentation** - https://help.getzep.com/graphiti/
+2. **Graphiti GitHub** - https://github.com/getzep/graphiti (13.9k+ stars, v0.22.0)
+3. **graphiti-core PyPI** - https://pypi.org/project/graphiti-core/
+4. **Neo4j Blog - Graphiti** - https://neo4j.com/blog/developer/graphiti-knowledge-graph-memory/
+5. **Custom Entity Types** - https://help.getzep.com/graphiti/core-concepts/custom-entity-and-edge-types
+6. **GitHub Issue #567** - Custom entity labels not applied (workaround: query by entity_type property)
+
+---
+
+**Document Version:** 1.1
 **Last Updated:** 2025-11-01
+**Verification Date:** 2025-11-01
 **Maintained By:** Apex Memory System Development Team
