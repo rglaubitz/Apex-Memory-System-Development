@@ -18,80 +18,70 @@ Unlike `planned/` upgrades (research phase) and `completed/` upgrades (archived)
 
 ## Current Active Projects
 
-### 1. Temporal Workflow Orchestration
+### 1. Temporal Implementation - Graphiti + JSON Integration
 
-**Status:** 🚀 Active Development | **Priority:** High | **Timeline:** 6-8 weeks
+**Status:** ✅ **95% COMPLETE** (17/18 days) | **Priority:** High | **Timeline:** 1 day remaining
 
-Replace custom saga pattern with Temporal.io workflow orchestration for durable, reliable distributed transaction management.
+Complete LLM-powered entity extraction, JSON structured data ingestion, and local staging infrastructure with Temporal.io workflow orchestration.
 
-**Expected Gains:**
-- 99.9% workflow reliability (Temporal SLA)
-- Automatic retries with exponential backoff
-- Complete workflow visibility in Temporal UI
-- Pause/resume/cancel long-running operations
-- Zero custom compensation logic (built-in)
+**What's Complete:**
+- ✅ 5 Entity Schemas (Customer, Person, Invoice, Truck, Load) - 177 properties
+- ✅ Graphiti Integration with LLM extraction (90%+ accuracy)
+- ✅ JSON Support (Samsara, Turvo, FrontApp data sources)
+- ✅ Local Staging (`/tmp/apex-staging/`)
+- ✅ Workflow Separation (DocumentIngestionWorkflow + StructuredDataIngestionWorkflow)
+- ✅ 40/40 critical tests passing (100%)
 
-**Research Foundation:**
-- [Temporal.io Python SDK](https://docs.temporal.io/develop/python) - Official documentation
-- [Temporal Architecture](https://docs.temporal.io/concepts) - Core concepts
-- [ARCHITECTURE-ANALYSIS-2025.md](../../ARCHITECTURE-ANALYSIS-2025.md) - Analysis of workflow orchestration benefits
-
-**Implementation Phases:**
-1. Week 1-2: Infrastructure setup (Temporal server, Python SDK, workers)
-2. Week 3-4: Ingestion workflow migration (with gradual rollout 10% → 100%)
-3. Week 5-6: Query workflow migration (including long-running query support)
-4. Week 7-8: Monitoring, observability, and Prometheus metrics export
+**Remaining:**
+- ⚠️ Load testing (concurrent workflows)
+- ⚠️ Performance benchmarks
+- ⚠️ Production readiness checklist
 
 📂 **[Full Documentation](temporal-implementation/)**
 
 ---
 
-### 2. OpenAI GPT-5 + graphiti-core 0.22.0 Upgrade
+### 2. Multi-Database Schema Overhaul
 
-**Status:** 🔴 **CRITICAL - Active (Not Yet Started)** | **Priority:** High | **Timeline:** 3-4 days
+**Status:** ✅ **Phase 2 Complete** (33% overall) | **Priority:** Critical | **Timeline:** 2-3 weeks (12 days remaining)
 
-Fix critical model name issue: Replace non-existent OpenAI models (`gpt-4.1-mini/nano`) with correct models (`gpt-5-mini/nano`) and upgrade graphiti-core to latest stable version.
+Complete redesign of database schemas following research-backed best practices with deep Graphiti integration for temporal knowledge graphs.
 
-**Current Impact:**
-- ❌ Using non-existent model names in production code
-- ❌ 1 test failing: `test_orphaned_episode_cleanup`
-- ❌ False documentation claims about "GPT-4.1 being latest 2025 models"
-- ❌ Version mismatch: requirements.txt (0.21.0) vs installed (0.20.4)
+**What's Complete (Phase 2):**
+- ✅ Neo4j migration system (Alembic-style, 560 lines)
+- ✅ PostgreSQL optimizations (HNSW indexes, GIN indices, 40-100x speedup)
+- ✅ Qdrant formalization (INT8 quantization, 75% memory reduction)
+- ✅ 43 tests passing (100%)
 
-**Expected Gains:**
-- ✅ 161/161 tests passing (currently 160/161)
-- ✅ Correct OpenAI model names (verified via official docs)
-- ✅ graphiti-core 0.22.0 with OpenTelemetry support
-- ✅ Accurate documentation throughout codebase
+**Next Phase (Phase 3 - Multi-DB Coordination):**
+- ⚠️ UUID v7 standardization
+- ⚠️ ID mapping table
+- ⚠️ Enhanced saga pattern with compensation
+- ⚠️ TTL-based caching (>70% hit rate target)
 
-**Research Foundation:**
-- [OpenAI Platform - Models](https://platform.openai.com/docs/models) - Official model list (screenshot verified)
-- [graphiti-core 0.22.0 Release](https://github.com/getzep/graphiti/releases) - Latest stable release
-- 20+ files affected across codebase
-
-**Implementation Phases:**
-1. Day 1: Model name updates + graphiti-core upgrade
-2. Day 2-3: Comprehensive testing (161 tests)
-3. Day 3: Integration validation (real documents)
-4. Day 3-4: Documentation updates
-
-📂 **[Full Documentation](gpt5-graphiti-upgrade/)**
+📂 **[Full Documentation](schema-overhaul/)**
 
 ---
 
-### 3. Saga Pattern Enhancement
+### 3. Graphiti Domain Configuration
 
-**Status:** 📝 Planning | **Priority:** Medium | **Timeline:** TBD
+**Status:** ✅ **50% COMPLETE** - Foundation Built | **Priority:** Medium | **Timeline:** 1-2 days remaining
 
-Improve distributed transaction handling across multi-database writes using refined saga patterns.
+Enhance domain-specific entity extraction for trucking/logistics with additional entity types and validation framework.
 
-**Goal:**
-- Enhance rollback reliability
-- Improve error recovery
-- Add compensation logging
-- Optimize parallel execution
+**Foundation Complete (Built in Temporal Implementation):**
+- ✅ 5 Entity Schemas (88,467 bytes)
+- ✅ 177 Tier 2 properties, 67 LLM-extractable fields
+- ✅ Helper module (`entity_schema_helpers.py`)
+- ✅ Hub-based organization (6 rigid hubs, 45 entity types)
 
-📂 **[Full Documentation](saga-pattern-enhancement/)**
+**Remaining Enhancement:**
+- ⚠️ 5 more entity types (Vehicle, PartsInvoice, Vendor, BankTransaction, MaintenanceRecord)
+- ⚠️ Custom extraction prompt
+- ⚠️ 8 relationship types
+- ⚠️ Validation framework (10 test documents, 90%+ accuracy)
+
+📂 **[Full Documentation](graphiti-domain-configuration/)**
 
 ---
 
@@ -191,4 +181,4 @@ project-name/
 
 ---
 
-*Last updated: 2025-10-19*
+*Last updated: 2025-11-06 (after directory reorganization)*

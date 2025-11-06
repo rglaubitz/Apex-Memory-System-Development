@@ -1,0 +1,25 @@
+# Apex Memory System - Migration Scripts Requirements
+# Install: pip install -r requirements.txt
+
+# Core dependencies
+python-dotenv==1.0.0         # Environment variable management
+
+# PostgreSQL
+psycopg2-binary==2.9.9       # PostgreSQL adapter
+psycopg2==2.9.9              # PostgreSQL adapter (source)
+
+# Neo4j
+neo4j==5.14.1                # Neo4j driver
+
+# Qdrant
+qdrant-client==1.7.0         # Qdrant vector database client
+
+# Redis
+redis==5.0.1                 # Redis client
+
+# Testing
+pytest==7.4.3                # Testing framework
+pytest-cov==4.1.0            # Test coverage
+
+# Utilities
+argparse==1.4.0              # Command-line argument parsing (stdlib but explicit)
