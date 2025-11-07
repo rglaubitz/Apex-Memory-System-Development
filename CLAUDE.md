@@ -6,15 +6,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## 📊 Project Status Snapshot
 
-**Current Active Work:** Graphiti + JSON Integration (Week 3 complete)
-**Status:** 📝 Planning Complete | 🚀 Implementation in Progress
-**Test Status:** 121/121 Enhanced Saga baseline passing | 11 new tests added (100% pass rate)
-**Next Up:** Week 4 - Two Workflows (DocumentIngestionWorkflow + StructuredDataIngestionWorkflow)
+**Current Active Work:** Temporal Implementation (Sections 10-11) + Schema Overhaul (Phases 4-6 verification)
+**Status:** ✅ Graphiti+JSON Complete | 🔍 Verifying Remaining Work
+**Test Status:** 156+ tests passing (121 Enhanced Saga baseline + 35 Graphiti+JSON tests)
+**Next Up:** Verify actual implementation status of remaining work, create final inventory
 
-**Quick Resume:**
-1. Read [handoffs/HANDOFF-WEEK3-DAYS1-3.md](upgrades/active/temporal-implementation/handoffs/HANDOFF-WEEK3-DAYS1-3.md)
-2. Copy-paste "Start Command" from handoff
-3. Continue from documented checkpoint
+**Recent Completion:**
+- ✅ **Graphiti + JSON Integration** (Nov 6, 2025) - 100%+ complete with bonus Phase 5
+- 90%+ entity extraction accuracy, local staging, dual workflows, 35+ tests
 
 **Research Status:** SDK verification complete | All Tier 1 sources validated
 **Agent System:** 20 agents active | C-suite review board configured
@@ -26,12 +25,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 **First time?** Read this in order:
 1. This is a **development wrapper** - the actual code is in `apex-memory-system/` (symlinked)
 2. Check **[Quick Start](#-quick-start---working-today)** to begin development
-3. **Active work:** Graphiti + JSON Integration - see [latest handoff](upgrades/active/temporal-implementation/handoffs/HANDOFF-WEEK3-DAYS1-3.md) for copy-paste resume command
+3. **Recent completion:** Graphiti + JSON Integration (100%+ complete) - see [completion summary](upgrades/completed/graphiti-json-integration/COMPLETION-SUMMARY.md)
 4. For implementation details, see `apex-memory-system/CLAUDE.md`
 
 **Working today?** Jump to:
 - Starting development → [Quick Start](#-quick-start---working-today)
-- Current task → [Latest Handoff](upgrades/active/temporal-implementation/handoffs/HANDOFF-WEEK3-DAYS1-3.md)
+- Current work → Verify remaining work inventory (Schema Overhaul Phases 4-6, Temporal Sections 10-11)
 - Test baseline → Run `cd apex-memory-system && pytest tests/ -v --ignore=tests/load/`
 
 ---
@@ -45,7 +44,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ### Always Read (Every Session):
 - `README.md` (root)
 - `CLAUDE.md` (this file)
-- `upgrades/active/temporal-implementation/graphiti-json-integration/README.md` ⭐ **CURRENT ACTIVE WORK**
+- `upgrades/README.md` (upgrade status and current work)
 
 ### Read When Relevant:
 - `upgrades/README.md` (if working with upgrade system)
@@ -145,17 +144,22 @@ python scripts/dev/health_check.py -v
 # http://localhost:8000/docs
 ```
 
-### Current Active Work
+### Recent Completion: Graphiti + JSON Integration ✅
 
-**Location:** `upgrades/active/temporal-implementation/graphiti-json-integration/`
+**Status:** Complete (November 6, 2025)
+**Location:** `upgrades/completed/graphiti-json-integration/`
+
+**What Was Delivered:**
+- 90%+ entity extraction accuracy (LLM-powered, all 46 entities)
+- Structured data ingestion (PostgreSQL JSONB storage)
+- Local staging infrastructure (`/tmp/apex-staging/`)
+- Dual workflow architecture (Document + JSON separate paths)
+- 35+ tests (100% pass rate)
 
 **Quick Navigation:**
-- **Start Here:** [graphiti-json-integration/README.md](upgrades/active/temporal-implementation/graphiti-json-integration/README.md)
-- **Implementation Steps:** [IMPLEMENTATION.md](upgrades/active/temporal-implementation/graphiti-json-integration/IMPLEMENTATION.md)
-- **Testing Specs:** [TESTING.md](upgrades/active/temporal-implementation/graphiti-json-integration/TESTING.md)
-- **Latest Handoff:** [handoffs/HANDOFF-WEEK3-DAYS1-3.md](upgrades/active/temporal-implementation/handoffs/HANDOFF-WEEK3-DAYS1-3.md)
-
-**To Resume Work:** Check the latest handoff document for the "Start Command" - copy and paste to continue exactly where you left off.
+- **Completion Summary:** [COMPLETION-SUMMARY.md](upgrades/completed/graphiti-json-integration/COMPLETION-SUMMARY.md)
+- **Implementation Details:** [IMPLEMENTATION.md](upgrades/completed/graphiti-json-integration/IMPLEMENTATION.md)
+- **Architecture:** [OPTION-D-PLUS-ARCHITECTURE.md](upgrades/completed/graphiti-json-integration/OPTION-D-PLUS-ARCHITECTURE.md)
 
 ---
 
@@ -219,15 +223,8 @@ Apex-Memory-System-Development/
 │
 ├── upgrades/                  # Upgrade tracking system
 │   ├── active/
-│   │   └── temporal-implementation/  # 🚀 ACTIVE: Graphiti + JSON Integration (Planning Complete)
-│   │       ├── graphiti-json-integration/      # ⭐ CURRENT ACTIVE WORK (4-week plan)
-│   │       │   ├── README.md                   # Entry point and quick start
-│   │       │   ├── PLANNING.md                 # Unified 4-week plan (700+ lines)
-│   │       │   ├── IMPLEMENTATION.md           # Step-by-step Tier 1 guide (1,500+ lines)
-│   │       │   ├── TESTING.md                  # 35 test specifications (600+ lines)
-│   │       │   ├── TROUBLESHOOTING.md          # Common issues (500+ lines)
-│   │       │   └── RESEARCH-REFERENCES.md      # Complete bibliography (600+ lines)
-│   │       ├── PROJECT-STATUS-SNAPSHOT.md      # Previous work: Section 9 (82%)
+│   │   └── temporal-implementation/  # 🚀 ACTIVE: Temporal Sections 10-11
+│   │       ├── PROJECT-STATUS-SNAPSHOT.md      # Temporal work: Section 9 complete (82%)
 │   │       ├── SECTION-9-COMPLETE.md           # Section 9 summary
 │   │       ├── SECTION-9-IMPLEMENTATION-COMPLETE.md
 │   │       ├── HANDOFF-SECTION-9.md
@@ -255,6 +252,7 @@ Apex-Memory-System-Development/
 │   │       └── examples/                       # Working examples
 │   ├── planned/               # Planned upgrades (research phase)
 │   └── completed/             # Completed upgrades (archive)
+│       └── graphiti-json-integration/  # ✅ Complete (Nov 6, 2025)
 │
 ├── workflow/                  # Workflow management (phases, approvals)
 └── .claude/                   # Claude Code configuration
@@ -262,56 +260,42 @@ Apex-Memory-System-Development/
     └── settings.local.json    # Local settings
 ```
 
-## 🎯 Quick Reference: Temporal Implementation (Current Work)
+## 🎯 Quick Reference: Temporal Implementation
 
-**Currently Active:** 🚀 **Graphiti + JSON Integration** (4-week implementation - Planning Complete)
+**Recently Completed:** ✅ **Graphiti + JSON Integration** (November 6, 2025)
 
-**NEW ACTIVE WORK:** See [`graphiti-json-integration/README.md`](upgrades/active/temporal-implementation/graphiti-json-integration/README.md) for complete documentation suite.
+**Complete Documentation:** See [`upgrades/completed/graphiti-json-integration/`](upgrades/completed/graphiti-json-integration/) for full details.
 
-### Current Phase: Graphiti + JSON Integration
+### Completed: Graphiti + JSON Integration ✅
 
-**Status:** 📝 Planning Complete | 🚀 Ready for Implementation
-**Timeline:** 4 weeks (4 phases)
-**Location:** `upgrades/active/temporal-implementation/graphiti-json-integration/`
+**Status:** 100%+ Complete (with bonus Phase 5)
+**Completion Date:** November 6, 2025
+**Location:** `upgrades/completed/graphiti-json-integration/`
 
-**📋 To Resume Work Today:**
+**What Was Delivered:**
 
-1. **Check Latest Handoff:** [handoffs/HANDOFF-WEEK3-DAYS1-3.md](upgrades/active/temporal-implementation/handoffs/HANDOFF-WEEK3-DAYS1-3.md)
-   - Contains "Start Command" to copy-paste for instant continuation
-   - Documents all architectural decisions and implementation patterns
-   - Shows exactly where you left off
+- **Graphiti Integration** ✅ - LLM-powered extraction (90%+ accuracy, all 46 entities)
+- **JSON Support** ✅ - StructuredData models with PostgreSQL JSONB storage
+- **Local Staging** ✅ - Production-ready `/tmp/apex-staging/` infrastructure
+- **Two Workflows** ✅ - Separate DocumentIngestion + StructuredDataIngestion paths
+- **BONUS Phase 5** ✅ - Perfect workflow separation into dedicated modules
+- **35+ New Tests** ✅ - All passing (156 total tests with Enhanced Saga baseline)
 
-2. **Consult Implementation Guide:** [IMPLEMENTATION.md](upgrades/active/temporal-implementation/graphiti-json-integration/IMPLEMENTATION.md)
-   - 1,500+ lines of step-by-step instructions
-   - Current progress markers and next steps
-   - Code templates for common patterns
+**Key Achievements:**
+- 90%+ entity extraction accuracy (vs 60% regex baseline)
+- 24 entities/sec (all 46), 346 entities/sec (selective)
+- Feature flag: `use_unified_schemas=True`
+- Zero breaking changes
+- Complete handoff documentation
 
-3. **Run Baseline Tests:** Verify Enhanced Saga baseline (121 tests) still passes
-   ```bash
-   cd apex-memory-system
-   pytest tests/ -v --ignore=tests/load/
-   ```
-
-**Complete Documentation Suite (6 documents, 5,700+ lines):**
-
-1. **[README.md](upgrades/active/temporal-implementation/graphiti-json-integration/README.md)** - Entry point and quick start
-2. **[PLANNING.md](upgrades/active/temporal-implementation/graphiti-json-integration/PLANNING.md)** - Unified 4-week plan (700+ lines)
-3. **[IMPLEMENTATION.md](upgrades/active/temporal-implementation/graphiti-json-integration/IMPLEMENTATION.md)** - Step-by-step Tier 1 guide (1,500+ lines)
-4. **[TESTING.md](upgrades/active/temporal-implementation/graphiti-json-integration/TESTING.md)** - 35 test specifications (600+ lines)
-5. **[TROUBLESHOOTING.md](upgrades/active/temporal-implementation/graphiti-json-integration/TROUBLESHOOTING.md)** - Common issues (500+ lines)
-6. **[RESEARCH-REFERENCES.md](upgrades/active/temporal-implementation/graphiti-json-integration/RESEARCH-REFERENCES.md)** - Complete bibliography (600+ lines)
-
-**What This Upgrade Delivers:**
-
-- **Graphiti Integration** - Replace regex EntityExtractor with LLM extraction (90% accuracy)
-- **JSON Support** - StructuredData models with PostgreSQL JSONB storage
-- **Local Staging** - `/tmp/apex-staging/` replacing S3
-- **Two Workflows** - Separate DocumentIngestionWorkflow + StructuredDataIngestionWorkflow
-- **35 New Tests** - Preserving 121 Enhanced Saga baseline = 156 total tests
+**📂 Documentation:**
+- [COMPLETION-SUMMARY.md](upgrades/completed/graphiti-json-integration/COMPLETION-SUMMARY.md) - Full summary
+- [IMPLEMENTATION.md](upgrades/completed/graphiti-json-integration/IMPLEMENTATION.md) - Implementation guide
+- [TESTING.md](upgrades/completed/graphiti-json-integration/TESTING.md) - Test specifications
 
 ---
 
-### Previous Work: Section 9 Completed
+### Active Work: Temporal Implementation (Sections 10-11)
 
 **Status:** ✅ Section 9 Complete (82% overall progress)
 

@@ -3,6 +3,21 @@
 **Mission:** Ship the Apex MCP Server to production with npm-style installation
 
 **Status:** 🟡 Pre-Production (Testing Phase)
+**Current Phase:** Phase 2 (Regression Fix Required)
+**Blocker:** Python version mismatch - [See ISSUES-AND-FIXES.md](ISSUES-AND-FIXES.md#issue-1-python-version-mismatch-critical)
+
+---
+
+## 🚨 Current Issue (November 7, 2025)
+
+**Problem:** MCP server not connecting due to Python version mismatch
+- Claude Desktop uses Python 3.14 (`/usr/local/bin/python3`)
+- Package installed in Python 3.12
+- Error: `ModuleNotFoundError: No module named 'apex_mcp_server'`
+
+**Status:** 🔴 Blocking PyPI publishing
+**Resolution:** Update Claude Desktop config to use Python 3.12 path
+**Details:** [ISSUES-AND-FIXES.md](ISSUES-AND-FIXES.md)
 
 ---
 

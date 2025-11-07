@@ -10,11 +10,12 @@
 
 | I want to... | Go to... | Status |
 |-------------|----------|--------|
-| **Deploy MCP Server to PyPI** | [mcp-server/](mcp-server/) | 🟡 Pre-Production (82% complete) |
+| **Deploy MCP Server to PyPI** | [mcp-server/](mcp-server/) | 🔴 Blocked (Python version issue) |
 | **Deploy to Production (GCP)** | [production/](production/) | 📝 Planned |
 | **Run Pre-Deployment Verification** | [verification/](verification/) | ✅ Complete |
 | **Run Pre-Deployment Testing** | [testing/](testing/) | ✅ Complete |
 | **Deploy Query Router** | [components/query-router/](components/query-router/) | ✅ Deployed |
+| **Deploy Google Drive Integration** | [components/google-drive-integration/](components/google-drive-integration/) | ✅ Production Ready |
 
 ---
 
@@ -24,7 +25,13 @@
 
 **What:** Deploy Apex MCP Server to PyPI for npm-style installation (`uvx apex-mcp-server`)
 
-**Status:** 🟡 Pre-Production (Phase 1 complete - awaiting manual testing)
+**Status:** 🔴 Blocked (Python version mismatch)
+
+**Blocker:** MCP server not connecting - Python 3.14 vs 3.12 mismatch
+- **Issue:** Claude Desktop uses Python 3.14, package installed in Python 3.12
+- **Error:** `ModuleNotFoundError: No module named 'apex_mcp_server'`
+- **Fix:** Update Claude Desktop config to use Python 3.12 path
+- **Details:** [mcp-server/ISSUES-AND-FIXES.md](mcp-server/ISSUES-AND-FIXES.md)
 
 **Quick Start:**
 ```bash
@@ -35,15 +42,17 @@ cd apex-mcp-server
 **Key Documents:**
 - **[DEPLOYMENT-CHECKLIST.md](mcp-server/DEPLOYMENT-CHECKLIST.md)** - 8-phase rollout plan (70+ tasks)
 - **[PUBLISHING.md](mcp-server/PUBLISHING.md)** - PyPI publishing guide
+- **[ISSUES-AND-FIXES.md](mcp-server/ISSUES-AND-FIXES.md)** - Current issues and resolutions ⚠️ **NEW**
 
-**Current Phase:** Phase 2 - Manual Testing (requires user testing before PyPI publish)
+**Current Phase:** Phase 2 - Manual Testing (blocked by Python version issue)
 
 **Next Steps:**
-1. Test install script
-2. Test Claude Desktop integration
-3. Test all 10 MCP tools
-4. Publish to TestPyPI
-5. Publish to production PyPI
+1. ⚠️ **Fix Python version mismatch** (immediate)
+2. Test install script
+3. Test Claude Desktop integration
+4. Test all 10 MCP tools
+5. Publish to TestPyPI
+6. Publish to production PyPI
 
 ---
 
@@ -163,6 +172,44 @@ cd testing
 - Optimal database routing (Neo4j, PostgreSQL, Qdrant, Redis)
 - 90% routing accuracy
 - <100ms cache-hit latency
+
+### Google Drive Integration
+**Path:** [components/google-drive-integration/](components/google-drive-integration/)
+
+**Status:** ✅ Production Ready (92% test pass rate)
+
+**Completion Date:** November 7, 2025
+
+**Key Documents:**
+- **[DEPLOYMENT-CHECKLIST.md](components/google-drive-integration/DEPLOYMENT-CHECKLIST.md)** - 14-item pre-deployment checklist
+- **[DEPLOYMENT-GUIDE.md](components/google-drive-integration/DEPLOYMENT-GUIDE.md)** - Complete deployment guide
+- **[TROUBLESHOOTING-RUNBOOK.md](components/google-drive-integration/TROUBLESHOOTING-RUNBOOK.md)** - Operational troubleshooting (800 lines)
+- **[README.md](components/google-drive-integration/README.md)** - Component overview
+
+**Features:**
+- Automated Google Drive folder monitoring (every 15 minutes via Temporal schedule)
+- Auto-ingestion of new documents → DocumentIngestionWorkflow
+- Auto-archive of processed files → Google Drive archive folder
+- Error handling with Dead Letter Queue (retryable vs non-retryable classification)
+- 7 Prometheus metrics + 12 alert rules (critical/warning/info)
+- PostgreSQL-backed tracking (processed files, permanent failures)
+
+**Test Coverage:**
+- 44/48 tests passing (92%)
+- 100% coverage for critical paths (fetch, archive, poll, error handling, DLQ)
+
+**Quick Start:**
+```bash
+# 1. Complete pre-deployment checklist
+cat deployment/components/google-drive-integration/DEPLOYMENT-CHECKLIST.md
+
+# 2. Follow deployment guide
+cat deployment/components/google-drive-integration/DEPLOYMENT-GUIDE.md
+
+# 3. Deploy and verify
+python scripts/temporal/create_monitor_schedule.py
+sudo systemctl start apex-temporal-worker
+```
 
 ---
 
