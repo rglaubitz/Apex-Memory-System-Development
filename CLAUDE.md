@@ -1003,6 +1003,35 @@ After /breakdown completes, use /execute for systematic implementation:
 - **Environment:** `apex-memory-system/.env` (copy from `.env.example`)
 - **Key variable:** `OPENAI_API_KEY` (required for embeddings)
 - **MCP Servers:** Auto-configured in `.claude/.mcp.json` (GitHub, PostgreSQL, Exa, Chrome DevTools)
+- **Sentry DSN:** `SENTRY_DSN` in `.env` (optional, for AI-optimized error tracking)
+
+### Sentry Error Tracking
+
+**Status:** ✅ Fully integrated (All phases complete)
+
+Sentry provides AI-optimized error tracking with rich debugging context:
+
+**Key Features:**
+- **150-breadcrumb trail** (3x standard) - Complete event sequence before errors
+- **Local variable snapshots** - Variable state at crash point (privacy-scrubbed)
+- **Exception chain capture** - Full `raise from e` pattern support
+- **Source code context** - 5 lines before/after each stack frame
+- **Temporal integration** - Automatic workflow/activity error tracking
+
+**Configuration:**
+```bash
+# Required in apex-memory-system/.env
+SENTRY_DSN=https://your-dsn@o1234567890.ingest.us.sentry.io/1234567890
+
+# Optional settings
+SENTRY_ENVIRONMENT=production  # (defaults to "production")
+SENTRY_TRACES_SAMPLE_RATE=0.1  # 10% of transactions (defaults to 0.1)
+SENTRY_PROFILES_SAMPLE_RATE=0.1  # 10% profiling (defaults to 0.1)
+```
+
+**Complete Documentation:** `apex-memory-system/research/documentation/sentry/README.md`
+
+**Privacy:** All sensitive data (passwords, tokens, API keys) automatically scrubbed before sending to Sentry.
 
 ### Database Access
 

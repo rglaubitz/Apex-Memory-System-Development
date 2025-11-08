@@ -192,6 +192,7 @@
 | **Grafana** | latest | Metrics visualization, dashboards | docker-compose.yml |
 | **Grafana Cloud** | Pro tier ($19/month) | Managed Prometheus + Grafana | deployment/PRODUCTION-DEPLOYMENT-PLAN.md |
 | **prometheus-client** | 0.23.1 | Python Prometheus client | requirements.txt |
+| **Sentry** | 2.43.0 | AI-optimized error tracking (150-breadcrumb trail, local variables, exception chains, Temporal integration) | requirements.txt, .env |
 
 ### Tracing & Logging
 

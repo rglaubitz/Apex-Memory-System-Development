@@ -391,6 +391,7 @@ The actual implementation is maintained at:
 - **PostgreSQL + pgvector** - Metadata search and hybrid semantic queries
 - **Qdrant** - High-performance vector similarity search
 - **Redis** - Cache layer for <100ms repeat queries
+- **Sentry** - AI-optimized error tracking with 150-breadcrumb trail, local variables, exception chains
 
 ### Quick Commands (from apex-memory-system/)
 
