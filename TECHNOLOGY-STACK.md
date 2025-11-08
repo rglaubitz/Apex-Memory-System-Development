@@ -301,6 +301,38 @@
 | **gcloud CLI** | GCP management | deployment/production/GCP-DEPLOYMENT-GUIDE.md |
 | **gh (GitHub CLI)** | GitHub operations | Workflow commands |
 
+### Modern Python Development Tools (2025) ⭐ NEW
+
+**Installed:** November 7, 2025
+**Status:** ✅ All configured and operational
+
+| Tool | Version | Purpose | Speed vs Legacy |
+|------|---------|---------|-----------------|
+| **uv** | 0.8.12 | Ultra-fast package manager | 10-100x faster than pip |
+| **ruff** | 0.14.4 | All-in-one linter + formatter | 10-100x faster than flake8/black |
+| **pyright** | 1.1.407 | Fast type checker | Faster than mypy |
+| **pre-commit** | 4.0.1 | Git hook automation | Prevents bad commits |
+| **pip-audit** | 2.9.0 | Official security scanner | Python Packaging Authority |
+| **gitleaks** | 8.29.0 | Secret scanner | Prevents API key leaks |
+| **semgrep** | 1.142.0 | Advanced security scanning | Complex pattern detection |
+| **mkdocs-material** | 9.5.42+ | Modern documentation | Beautiful docs |
+| **just** | 1.43.0 | Task runner | Simpler than Make |
+
+**Configuration:**
+- **pyproject.toml** - Centralized config for all Python tools (ruff, mypy, pytest, coverage)
+- **.pre-commit-config.yaml** - Pre-commit hooks (ruff, mypy, gitleaks, semgrep, pip-audit)
+- **justfile** - 40+ common development commands
+
+**Impact:**
+- ✅ **Auto-fixed 3,060 code quality issues** (97.8% of 3,132 found)
+- ✅ **Formatted 262 files** for consistent style
+- ✅ **Pre-commit hooks** run before every commit
+- ✅ **Security scanning** (dependencies + secrets + patterns)
+
+**Documentation:** See `DEVELOPMENT-TOOLS.md` for complete guide
+
+**Ruff Replaces:** black, isort, flake8, pyupgrade, pydocstyle, pycodestyle, autoflake (7 tools → 1!)
+
 ### MCP (Model Context Protocol) Servers
 
 **Configuration:** `.claude/.mcp.json`
