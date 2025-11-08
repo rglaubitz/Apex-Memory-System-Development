@@ -2,6 +2,23 @@
 
 **Central hub for all deployment paths, guides, and resources.**
 
+**Last Updated:** 2025-11-07
+**Deployment System Status:** 🟢 Operational (1 deployed, 1 production-ready, 1 planned)
+
+---
+
+## 🚀 Getting Started
+
+**New to deployment? Start here:**
+
+1. **📋 Prerequisites** → [DEPLOYMENT-NEEDS.md](DEPLOYMENT-NEEDS.md) - What you need to buy/obtain first (4-6 hours setup)
+2. **✅ Verification** → [verification/](verification/) - Verify production readiness (3-4 hours)
+3. **🧪 Testing** → [testing/](testing/) - Run comprehensive tests (3-4 hours)
+4. **☁️ Deploy** → [production/](production/) - Deploy to GCP (4-6 weeks)
+
+**Total time:** ~5-7 weeks from zero to production
+**Total cost:** $411-807/month (or $149-249/month for first 90 days with GCP credits)
+
 ---
 
 ## 📍 Quick Navigation
@@ -10,12 +27,46 @@
 
 | I want to... | Go to... | Status |
 |-------------|----------|--------|
+| **⚠️ See what I need to buy/obtain first** | **[DEPLOYMENT-NEEDS.md](DEPLOYMENT-NEEDS.md)** ⭐ | **📋 START HERE** |
 | **Deploy MCP Server to PyPI** | [mcp-server/](mcp-server/) | 🔴 Blocked (Python version issue) |
 | **Deploy to Production (GCP)** | [production/](production/) | 📝 Planned |
 | **Run Pre-Deployment Verification** | [verification/](verification/) | ✅ Complete |
 | **Run Pre-Deployment Testing** | [testing/](testing/) | ✅ Complete |
 | **Deploy Query Router** | [components/query-router/](components/query-router/) | ✅ Deployed |
 | **Deploy Google Drive Integration** | [components/google-drive-integration/](components/google-drive-integration/) | ✅ Production Ready |
+
+---
+
+## ⚠️ BEFORE YOU DEPLOY - READ THIS FIRST
+
+**📋 Complete prerequisite checklist:** [DEPLOYMENT-NEEDS.md](DEPLOYMENT-NEEDS.md)
+
+**What you need to buy/obtain before starting any deployment:**
+- GCP Account ($300 free credit for 90 days)
+- Temporal Cloud ($100-150/month)
+- Grafana Cloud Pro ($19/month)
+- OpenAI API key (~$10-30/month)
+- Anthropic API key (~$20-50/month)
+- Docker Desktop license verification (may need Business license if org >250 employees)
+- Password manager (Bitwarden free or 1Password $5/month)
+- Domain name (optional, ~$12-15/year)
+
+**Total monthly cost:** $411-807/month (or $149-249/month for first 90 days with GCP credits)
+
+**Setup time:** 4-6 hours (spread over 1-2 days for account approvals)
+
+**⛔ DO NOT START DEPLOYMENT** until you've completed [DEPLOYMENT-NEEDS.md](DEPLOYMENT-NEEDS.md).
+
+This comprehensive checklist includes:
+- Table of all services with costs and signup links
+- Step-by-step setup workflow (recommended order)
+- Docker Desktop licensing verification
+- Secret generation and storage
+- 2FA setup for all accounts
+- Budget alerts configuration
+- Cost optimization tips
+
+**See:** [DEPLOYMENT-NEEDS.md](DEPLOYMENT-NEEDS.md) for complete details.
 
 ---
 
@@ -64,30 +115,44 @@ cd apex-mcp-server
 
 **Status:** 📝 Planned (architecture complete, not yet deployed)
 
-**Timeline:** 4-6 weeks | **Cost:** $500-$1,500/month
+**Timeline:** 5-6 weeks (128-170 hours) | **Cost:** $411-807/month
+
+**Prerequisites:** ⚠️ **MUST complete [DEPLOYMENT-NEEDS.md](DEPLOYMENT-NEEDS.md) first**
 
 **Key Documents:**
-- **[README.md](production/README.md)** - Overview and decision framework
-- **[GCP-DEPLOYMENT-GUIDE.md](production/GCP-DEPLOYMENT-GUIDE.md)** - Step-by-step GCP deployment
-- **[ARCHITECTURE.md](production/ARCHITECTURE.md)** - Production architecture
-- **[DEPLOYMENT-CHECKLIST.md](production/DEPLOYMENT-CHECKLIST.md)** - Production deployment tasks
-- **[UPDATE-WORKFLOW.md](production/UPDATE-WORKFLOW.md)** - Zero-downtime updates
+- **[DEPLOYMENT-NEEDS.md](DEPLOYMENT-NEEDS.md)** - ⭐ **START HERE** - What to buy/obtain before deploying
+- **[PRODUCTION-DEPLOYMENT-PLAN.md](PRODUCTION-DEPLOYMENT-PLAN.md)** - Complete 5-6 week deployment plan
+- **[production/README.md](production/README.md)** - Overview and decision framework
+- **[production/GCP-DEPLOYMENT-GUIDE.md](production/GCP-DEPLOYMENT-GUIDE.md)** - Step-by-step GCP deployment (8 phases)
+- **[production/ARCHITECTURE.md](production/ARCHITECTURE.md)** - Production architecture decisions
 
 **Infrastructure:**
-- GKE cluster (3 nodes: 4 vCPU, 16GB each)
-- Cloud SQL PostgreSQL + pgvector
-- Neo4j Aura database
-- Qdrant Cloud vector search
-- Redis Memorystore
-- Cloud Load Balancing + CDN
-- Cloud Armor (DDoS protection)
+- Cloud Run (serverless containers) - API, Workers, Qdrant
+- Cloud SQL PostgreSQL + pgvector (db-n1-standard-1 to start)
+- Neo4j on Compute Engine (e2-small to start)
+- Qdrant on Cloud Run (containerized)
+- Redis Memorystore (Basic 1GB)
+- Cloud Load Balancing + SSL
+- Temporal Cloud (workflow orchestration)
+- Grafana Cloud Pro (monitoring)
+
+**Monthly Cost Breakdown:**
+- GCP Services: $261-542/month (auto-scales)
+- Temporal Cloud: $100-150/month
+- Grafana Cloud: $19/month
+- API Keys (OpenAI + Anthropic): $30-80/month
+- **Total: $411-807/month**
+
+**First 90 Days:** $149-249/month (using GCP $300 free credit)
 
 **Next Steps:**
-1. Create GCP project and enable billing
-2. Configure Terraform backend
-3. Review and customize terraform variables
-4. Deploy infrastructure
-5. Deploy application
+1. ⚠️ Complete [DEPLOYMENT-NEEDS.md](DEPLOYMENT-NEEDS.md) prerequisites (4-6 hours)
+2. Create Pulumi Infrastructure-as-Code (40-60 hours) - **Critical path blocker**
+3. Set up external services (Temporal Cloud, Grafana Cloud) (8-12 hours)
+4. Deploy databases (8-12 hours)
+5. Deploy application (12-16 hours)
+6. Configure monitoring (8-12 hours)
+7. Production validation (16-24 hours)
 
 ---
 
@@ -240,30 +305,49 @@ Do you need to deploy the MCP Server for Claude Desktop?
 
 **For first-time production deployment:**
 
-1. **Verification** (3-4 hours)
+### Phase 0: Prerequisites (4-6 hours, Days 1-3)
+   - **📋 [DEPLOYMENT-NEEDS.md](DEPLOYMENT-NEEDS.md)** - Complete ALL prerequisites first
+   - Set up GCP account ($300 free credit)
+   - Create Temporal Cloud account ($100-150/month)
+   - Create Grafana Cloud Pro account ($19/month)
+   - Obtain API keys (OpenAI, Anthropic)
+   - Verify Docker Desktop licensing
+   - Generate and store all secrets securely
+   - Enable 2FA on all accounts
+   - **⛔ DO NOT PROCEED without completing this phase**
+
+### Phase 1: Verification (3-4 hours)
    - Run [verification/](verification/) workflow
    - Ensure all 23 verifications pass
    - Document any issues
+   - Establish production readiness baseline
 
-2. **Testing** (3-4 hours)
+### Phase 2: Testing (3-4 hours)
    - Run [testing/](testing/) suite
    - Ensure 230+ tests pass
    - Review performance metrics
+   - Validate all critical paths
 
-3. **Component Deployment** (1 week per component)
-   - Deploy components individually
-   - Start with [components/query-router/](components/query-router/)
-   - Validate each component before next
+### Phase 3: Infrastructure-as-Code (40-60 hours, Weeks 1-2)
+   - **Critical blocker:** Create Pulumi IaC (doesn't exist yet)
+   - Define all GCP resources (VPC, Cloud Run, databases)
+   - Test deployment locally
+   - Document IaC patterns
+   - **Cannot deploy without this**
 
-4. **Production Deployment** (4-6 weeks)
-   - Follow [production/](production/) guide
-   - Deploy to GCP infrastructure
+### Phase 4: Production Deployment (88-128 hours, Weeks 3-5)
+   - Follow [production/GCP-DEPLOYMENT-GUIDE.md](production/GCP-DEPLOYMENT-GUIDE.md)
+   - Deploy databases (PostgreSQL, Neo4j, Qdrant, Redis)
+   - Deploy application (Cloud Run services)
+   - Configure monitoring and alerts
+   - Run production validation
    - Monitor for 1 week before full cutover
 
-5. **MCP Server** (1-2 weeks)
+### Phase 5: MCP Server (Optional, 1-2 weeks)
    - Follow [mcp-server/](mcp-server/) guide
+   - Fix Python version issue first
    - Publish to PyPI
-   - Enable npm-style installation
+   - Enable npm-style installation (`uvx apex-mcp-server`)
 
 ---
 
@@ -282,18 +366,41 @@ Do you need to deploy the MCP Server for Claude Desktop?
 
 ---
 
-## 🚨 Before You Deploy
+## 🚨 Before You Deploy - Critical Checklist
 
-**Pre-flight checklist:**
+**⛔ STOP - Complete these before any deployment:**
 
-- [ ] All tests passing (230+ tests)
-- [ ] All verifications passing (23 verifications)
+### Prerequisites (Phase 0)
+- [ ] **[DEPLOYMENT-NEEDS.md](DEPLOYMENT-NEEDS.md) 100% complete** - All items checked
+- [ ] GCP account created with $300 free credit
+- [ ] Temporal Cloud account created ($100-150/month)
+- [ ] Grafana Cloud Pro account created ($19/month)
+- [ ] OpenAI API key obtained and stored in password manager
+- [ ] Anthropic API key obtained and stored in password manager
+- [ ] Docker Desktop licensed correctly (verify if Business license needed)
+- [ ] All secrets generated (SECRET_KEY, DB passwords) and stored securely
+- [ ] 2FA enabled on all cloud accounts
+- [ ] Password manager configured with all credentials
+
+### Verification (Phase 1)
+- [ ] All 230+ tests passing
+- [ ] All 23 verifications passing
+- [ ] Production readiness confirmed
+
+### Infrastructure Preparation (Phase 3)
+- [ ] Pulumi Infrastructure-as-Code created (40-60 hours)
+- [ ] IaC tested locally
+- [ ] All GCP resources defined
+
+### Deployment Readiness (Phase 4)
 - [ ] Documentation reviewed and up-to-date
 - [ ] Environment variables configured
 - [ ] Database backups created
 - [ ] Rollback plan documented
 - [ ] Monitoring and alerting configured
-- [ ] Team notified of deployment window
+- [ ] Budget alerts set ($700/month threshold)
+
+**Estimated total prep time before first deployment:** 50-70 hours (Phases 0-3)
 
 ---
 
@@ -307,5 +414,28 @@ Do you need to deploy the MCP Server for Claude Desktop?
 
 ---
 
-**Last Updated:** 2025-10-21
-**Deployment System Status:** 🟢 Operational (1 deployed, 1 pre-production, 1 planned)
+## 💡 Key Insights from Deployment Readiness Analysis
+
+**Current State:** 72% production-ready with clear path to deployment
+
+**Strengths:**
+- ✅ Excellent codebase (39,499 lines, 477 tests)
+- ✅ Production monitoring ready (27 metrics, 5 dashboards, 12+ alerts)
+- ✅ Complete database schemas (7 Alembic migrations + Neo4j + Qdrant)
+- ✅ Comprehensive documentation (1,755-line deployment guide)
+
+**Critical Gaps:**
+- 🔴 No Infrastructure-as-Code (40-60 hours to create)
+- 🔴 3 critical bugs to fix (Dockerfile, SECRET_KEY, .dockerignore) - 1 hour total
+- ⚠️ No deployment automation
+
+**Realistic Timeline:** 5-6 weeks (128-170 hours)
+**Realistic Cost:** $411-807/month (or $149-249/month for first 90 days)
+
+**See:** [DEPLOYMENT-NEEDS.md](DEPLOYMENT-NEEDS.md) for complete prerequisites and cost breakdown.
+
+---
+
+**Last Updated:** 2025-11-07
+**Deployment System Status:** 🟢 Operational (1 deployed, 1 production-ready, 1 planned)
+**Documentation Status:** ✅ Complete with prerequisites checklist

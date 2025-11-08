@@ -2,7 +2,7 @@
 
 **Purpose:** Complete step-by-step guide to deploy Apex Memory System to Google Cloud Platform.
 
-**Prerequisites:** Complete [DEPLOYMENT-CHECKLIST.md](DEPLOYMENT-CHECKLIST.md) before starting this guide.
+**Prerequisites:** ⚠️ **MUST complete [../DEPLOYMENT-NEEDS.md](../DEPLOYMENT-NEEDS.md) before starting this guide.**
 
 **Timeline:** 8-12 hours for first deployment, 2-4 hours for subsequent deployments.
 
@@ -10,8 +10,37 @@
 
 ---
 
+## ⚠️ PREREQUISITES - COMPLETE FIRST
+
+**CRITICAL:** Before starting Phase 1, you MUST have:
+
+📋 **[Complete prerequisite checklist: ../DEPLOYMENT-NEEDS.md](../DEPLOYMENT-NEEDS.md)**
+
+**Quick verification:**
+- [ ] GCP account created with billing enabled ($300 free credit)
+- [ ] Temporal Cloud namespace created ($100-150/month)
+- [ ] Grafana Cloud Pro account ($19/month)
+- [ ] OpenAI API key obtained and stored in password manager
+- [ ] Anthropic API key obtained and stored in password manager
+- [ ] Docker Desktop licensed correctly (check if Business license needed)
+- [ ] All secrets generated (SECRET_KEY, DB passwords) and stored securely
+- [ ] gcloud CLI installed and authenticated (`gcloud auth login`)
+- [ ] Pulumi CLI installed (`pulumi version`)
+- [ ] 2FA enabled on all cloud accounts
+- [ ] All 156+ tests passing locally (`pytest`)
+
+**Estimated setup time:** 4-6 hours (if starting from scratch)
+**Monthly cost after prerequisites:** $411-807/month (or $149-249/month for first 90 days with GCP credits)
+
+**⛔ DO NOT PROCEED** until ALL checkboxes above are complete.
+
+See **[../DEPLOYMENT-NEEDS.md](../DEPLOYMENT-NEEDS.md)** for detailed setup instructions.
+
+---
+
 ## Table of Contents
 
+- [Prerequisites](#prerequisites---complete-first)
 - [Phase 1: Foundation Setup](#phase-1-foundation-setup)
 - [Phase 2: Database Deployment](#phase-2-database-deployment)
 - [Phase 3: Temporal Setup](#phase-3-temporal-setup)
@@ -21,21 +50,6 @@
 - [Phase 7: Production Validation](#phase-7-production-validation)
 - [Phase 8: Production Release](#phase-8-production-release)
 - [Troubleshooting](#troubleshooting)
-
----
-
-## Prerequisites Checklist
-
-Before starting, ensure you have:
-
-- [x] GCP account with billing enabled
-- [x] Temporal Cloud namespace created
-- [x] OpenAI API key obtained
-- [x] GitHub repository created
-- [x] All 156 tests passing locally
-- [x] gcloud CLI installed and authenticated
-
-**If any item is not checked, return to [DEPLOYMENT-CHECKLIST.md](DEPLOYMENT-CHECKLIST.md) first.**
 
 ---
 
