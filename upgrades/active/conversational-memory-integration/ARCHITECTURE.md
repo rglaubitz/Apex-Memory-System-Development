@@ -43,7 +43,7 @@ Implement automatic conversation→knowledge graph ingestion with:
 - **Horizontal scaling:** All components scale independently
 - **Caching strategy:** Redis reduces load by 60-95% across the stack
 - **Degradation strategy:** 5 tiers prevent unbounded growth
-- **Migration path:** PostgreSQL → Event Sourcing (NATS JetStream) when ready
+- **Storage architecture:** PostgreSQL primary storage (no migration planned)
 
 ---
 
@@ -54,7 +54,6 @@ Implement automatic conversation→knowledge graph ingestion with:
 | **Human Interface** | Slack Bolt (Python) | Native to team workflow, rich UI, proven at scale |
 | **Agent Communication** | NATS (agent↔agent only) | <10ms latency, pub/sub + request-reply, already in stack |
 | **Primary Storage** | PostgreSQL | ACID guarantees, queryable, 90% implemented |
-| **Event Streaming** | NATS JetStream (Phase 2) | Migration path for event sourcing when needed |
 | **Knowledge Graph** | Neo4j + Graphiti | Temporal reasoning, entity relationships, patterns |
 | **Caching** | Redis | 60% latency reduction, 5x cost savings, critical |
 | **Background Jobs** | Temporal.io | Durable workflows, retry logic, observability |
@@ -396,284 +395,521 @@ class MemoryDecayWorkflow:
 
 ---
 
-### Tier 4: Retention Policy (Automatic Archival) ⭐ NEW
+### Tier 4: Retention Policy (Future Enhancement)
 
-**Tiered retention based on message importance**
+**Status:** Optional, not in MVP
+**Timeline:** Phase 3 (Weeks 3-4) - if needed
 
-```python
-RETENTION_TIERS = {
-    "critical": None,          # Keep forever (user preferences, key facts)
-    "important": 365,          # 1 year (valuable conversations)
-    "normal": 90,              # 3 months (typical interactions)
-    "ephemeral": 7             # 1 week (chit-chat, status checks)
-}
+**Goal:** Tiered retention based on message importance (ephemeral, normal, important, critical)
 
-def classify_message(message: Message) -> str:
-    # Critical: User preferences, important entities
-    if contains_preference(message) or mentions_key_entity(message):
-        return "critical"
+**Key Features:**
+- Automatic archival to S3/cold storage after retention period
+- 4 retention tiers: 7 days (ephemeral) → 1 year (important) → forever (critical)
+- Storage tier optimization: Hot (Neo4j) → Warm (PostgreSQL) → Cold (S3)
 
-    # Important: Task assignments, decisions, approvals
-    if is_task(message) or is_decision(message):
-        return "important"
-
-    # Ephemeral: Status checks, greetings
-    if is_status_check(message) or is_greeting(message):
-        return "ephemeral"
-
-    # Normal: Everything else
-    return "normal"
-```
-
-**Database schema:**
-```sql
-ALTER TABLE messages ADD COLUMN retention_tier VARCHAR(20) DEFAULT 'normal';
-ALTER TABLE messages ADD COLUMN archive_after_date TIMESTAMP;
-
--- Index for archival job
-CREATE INDEX idx_messages_archive ON messages(archive_after_date)
-WHERE archive_after_date IS NOT NULL AND archived = FALSE;
-```
-
-**Archival workflow (weekly cron):**
-```python
-@workflow.defn
-class ArchivalWorkflow:
-    """Runs weekly, moves old messages to cold storage"""
-
-    @workflow.run
-    async def run(self) -> dict:
-        # Find messages past archive_after_date
-        messages = await workflow.execute_activity(
-            fetch_archival_candidates,
-            start_to_close_timeout=timedelta(minutes=5)
-        )
-
-        # Move to S3 or archive table
-        await workflow.execute_activity(
-            archive_messages_to_s3,
-            args=[messages],
-            start_to_close_timeout=timedelta(minutes=30)
-        )
-
-        # Mark as archived in PostgreSQL
-        await workflow.execute_activity(
-            mark_messages_archived,
-            args=[message_ids],
-            start_to_close_timeout=timedelta(minutes=5)
-        )
-
-        return {
-            "archived_count": len(messages),
-            "cold_storage_bytes": calculate_size(messages)
-        }
-```
-
-**Storage tiers:**
-- **Hot (Neo4j):** Last 90 days + all critical (50,000 episodes)
-- **Warm (PostgreSQL):** Last 365 days (200,000 episodes)
-- **Cold (S3):** Everything older (unlimited, $0.023/GB/month)
-
-**Cost impact:**
+**Estimated Cost Savings:**
 - Neo4j: $200/month (vs $2000/month without archival)
-- S3: $50/month (vs $500/month PostgreSQL)
-- Total savings: $2250/month ($27,000/year)
+- Total savings: $2,250/month ($27,000/year)
+
+**Implementation Details:** See `research/future-enhancements/retention-archival.md`
 
 ---
 
-### Tier 5: Duplicate Fact Consolidation ⭐ NEW
+### Tier 5: Duplicate Fact Consolidation (Future Enhancement)
 
-**Detect and merge redundant information**
+**Status:** Optional, not in MVP
+**Timeline:** Phase 3 (Weeks 3-4) - if needed
 
-**Problem:**
-- User says "ACME Corp prefers aisle seats" in 10 different conversations
+**Goal:** Detect and merge redundant information using semantic similarity
+
+**Problem Example:**
+- User mentions "ACME Corp prefers aisle seats" in 10 conversations
 - Without consolidation: 10 separate facts in knowledge graph
 - With consolidation: 1 fact with confidence=10, last_mentioned=recent
 
-**Implementation:**
-```python
-class DuplicateFactDetector:
+**Key Features:**
+- Semantic similarity detection (vector.similarity > 0.9)
+- Automatic fact merging with confidence scoring
+- Weekly consolidation workflow (Temporal.io)
 
-    async def detect_duplicates(self, new_episode: Episode) -> list[Episode]:
-        """Find existing episodes with same semantic meaning"""
-
-        # Extract facts from new episode
-        new_facts = await self.extract_facts(new_episode)
-
-        # Query knowledge graph for similar facts (semantic similarity > 0.9)
-        for fact in new_facts:
-            existing = await self.neo4j.query(
-                """
-                MATCH (e:Episode)-[:CONTAINS]->(f:Fact)
-                WHERE vector.similarity(f.embedding, $embedding) > 0.9
-                AND f.entity = $entity
-                RETURN e, f
-                ORDER BY f.confidence DESC
-                LIMIT 1
-                """,
-                embedding=fact.embedding,
-                entity=fact.entity
-            )
-
-            if existing:
-                yield (fact, existing)
-
-    async def consolidate_or_skip(self, new_episode, duplicates):
-        """Decide: skip new episode or update existing fact"""
-
-        if duplicates:
-            # Update existing fact's confidence and recency
-            for new_fact, existing_fact in duplicates:
-                await self.neo4j.query(
-                    """
-                    MATCH (f:Fact {uuid: $uuid})
-                    SET f.confidence = f.confidence + 1,
-                        f.last_mentioned = $now,
-                        f.mention_count = f.mention_count + 1
-                    """,
-                    uuid=existing_fact.uuid,
-                    now=datetime.utcnow()
-                )
-
-            # Skip creating new episode (redundant)
-            await self.db.update_message(
-                message_uuid=new_episode.message_uuid,
-                ingestion_skipped=True,
-                skip_reason="duplicate_fact_consolidated"
-            )
-
-            return "consolidated"
-        else:
-            # Create new episode (novel information)
-            await self.graphiti.create_episode(new_episode)
-            return "created"
-```
-
-**Consolidation workflow (weekly cron):**
-```python
-@workflow.defn
-class FactConsolidationWorkflow:
-    """Runs weekly, identifies and merges duplicate facts"""
-
-    @workflow.run
-    async def run(self) -> dict:
-        # Find fact clusters (semantic similarity > 0.9)
-        clusters = await workflow.execute_activity(
-            identify_fact_clusters,
-            start_to_close_timeout=timedelta(minutes=30)
-        )
-
-        consolidated_count = 0
-        for cluster in clusters:
-            # Merge cluster into single canonical fact
-            await workflow.execute_activity(
-                consolidate_fact_cluster,
-                args=[cluster],
-                start_to_close_timeout=timedelta(minutes=5)
-            )
-            consolidated_count += len(cluster) - 1
-
-        return {
-            "clusters_found": len(clusters),
-            "facts_consolidated": consolidated_count
-        }
-```
-
-**Metrics:**
+**Estimated Benefits:**
 - Redundancy reduction: 20-40% of facts are duplicates
 - Storage saved: 50-100 GB/year (Neo4j)
 - Query performance: 20-30% faster (fewer facts to traverse)
 
+**Implementation Details:** See `research/future-enhancements/duplicate-consolidation.md`
+
 ---
 
-## Migration Path: PostgreSQL → Event Sourcing
+## Multi-Agent Namespacing Strategy
 
-### Phase 1 (Weeks 1-8): PostgreSQL Primary ✅
+### Overview
 
-**Current architecture - ship this first:**
+The Conversational Memory Integration supports **multiple specialized agents** sharing the same knowledge infrastructure with logical separation. This "one knowledge base, multiple specialized access patterns" design enables clean agent-specific organization while maintaining cross-agent insights.
+
+**Design Philosophy:** Each agent (Oscar, Sarah, Maya) has its own namespace across all databases, allowing:
+- **Agent-specific queries** - Fast filtering without cross-contamination
+- **Cross-agent insights** - Query multiple namespaces when needed
+- **Dynamic agent addition** - Add new agents without code changes (15-30 minutes)
+- **Clean monitoring** - Per-agent metrics and performance tracking
+
+**Key Benefits:**
+- **Performance:** Smaller collections = faster queries (agent-specific collections)
+- **Scalability:** Each agent's data scales independently
+- **Monitoring:** Per-agent cache hit rates, query latency, cost tracking
+- **Future-ready:** Smooth transition to Phase 2 (multi-agent specialization)
+
+**Reference:** See `agent-registry.md` for complete agent documentation and `research/future-enhancements/fluid-mind-patterns-to-adopt.md` for implementation patterns.
+
+---
+
+### Known Agents
+
+**Active Agents (Phase 1):**
+- **Oscar** (`oscar`) - Fleet Manager - Trucks, maintenance, routes, drivers
+- **System** (`system`) - Default agent for shared operations and cross-agent knowledge
+
+**Planned Agents (Phase 2 - Weeks 9-14):**
+- **Sarah** (`sarah`) - CFO / Finance Agent - Invoices, costs, vendor analysis
+- **Maya** (`maya`) - Sales / CRM Agent - Customers, quotes, pricing, deals
+
+**Agent Selection Logic:**
+```python
+# Conversation determines agent_id
+agent_id = conversation.agent_id or "system"  # Default to "system"
+
+# All services use agent_id
+cache = CacheService(redis, agent_id=agent_id)
+vector = VectorService(qdrant, agent_id=agent_id)
+graph = GraphService(neo4j, agent_id=agent_id)
+```
+
+---
+
+### Redis Namespace Pattern
+
+**Purpose:** Prevent cache collisions when adding multiple agents
+
+**Pattern:** `{agent_id}:resource:id:detail`
+
+**Implementation:**
+```python
+class CacheService:
+    def __init__(self, redis_client, agent_id: str = "system"):
+        self.redis = redis_client
+        self.agent_id = agent_id  # ← Agent namespace
+
+    async def cache_conversation_context(
+        self,
+        conversation_id: UUID,
+        context: dict,
+        ttl: int = 1800
+    ):
+        # Agent-namespaced key
+        key = f"{self.agent_id}:conversation:{conversation_id}:context"
+        await self.redis.setex(key, ttl, json.dumps(context))
+
+    async def cache_entity(self, entity_id: UUID, entity: dict, ttl: int = 3600):
+        # Shared knowledge (no agent prefix)
+        key = f"shared:entity:{entity_id}"
+        await self.redis.setex(key, ttl, json.dumps(entity))
+```
+
+**Example Keys:**
+- `oscar:conversation:123:context` - Oscar's conversation cache
+- `sarah:invoice:456:analysis` - Sarah's invoice analysis
+- `maya:quote:789:pricing` - Maya's quote pricing
+- `shared:entity:999:metadata` - Cross-agent shared entity
+
+**Benefits:**
+- **Zero performance impact** - Redis handles namespaces natively
+- **Easier debugging** - Know which agent created which cache entry
+- **Cleaner eviction** - Expire agent caches independently
+- **Prevents collisions** - Oscar's context ≠ Sarah's context
+
+**Effort:** 1-2 hours (minimal code change, maximum future-proofing)
+
+---
+
+### Qdrant Agent Collections
+
+**Purpose:** Separate vector collections per agent for faster queries
+
+**Collection Mapping:**
+```python
+AGENT_COLLECTIONS = {
+    "oscar": "oscar_fleet_knowledge",
+    "sarah": "sarah_financial_knowledge",
+    "maya": "maya_sales_knowledge",
+    "system": "shared_documents"
+}
+```
+
+**Implementation:**
+```python
+class VectorService:
+    def __init__(self, qdrant_client, agent_id: str = "system"):
+        self.qdrant = qdrant_client
+        self.agent_id = agent_id
+        self.collection_name = AGENT_COLLECTIONS.get(agent_id, "shared_documents")
+
+    async def search(self, query_vector: list[float], limit: int = 10):
+        """Search in agent-specific collection"""
+        return await self.qdrant.search(
+            collection_name=self.collection_name,
+            query_vector=query_vector,
+            limit=limit
+        )
+
+    async def search_cross_agent(
+        self,
+        query_vector: list[float],
+        agents: list[str],
+        limit_per_agent: int = 5
+    ):
+        """Search across multiple agent collections"""
+        results = []
+        for agent_id in agents:
+            collection = AGENT_COLLECTIONS.get(agent_id)
+            if collection:
+                agent_results = await self.qdrant.search(
+                    collection_name=collection,
+                    query_vector=query_vector,
+                    limit=limit_per_agent
+                )
+                results.extend(agent_results)
+        return results
+```
+
+**Benefits:**
+- **Faster queries** - Smaller collections = faster vector search
+- **Better organization** - Oscar's fleet knowledge ≠ Sarah's financial knowledge
+- **Better monitoring** - Per-collection metrics on search performance
+- **Easier to scale** - Optimize collection configurations per agent
+
+**Collection Creation:**
+```python
+# One-time setup (no code changes for new agents)
+await qdrant.create_collection(
+    collection_name="oscar_fleet_knowledge",
+    vectors_config={"size": 1536, "distance": "Cosine"}
+)
+```
+
+**Effort:** 4-6 hours (straightforward implementation, significant benefits)
+
+---
+
+### PostgreSQL Schema Preparation (Phase 2)
+
+**Purpose:** Prepare agent-specific schemas for Phase 2 (don't use until multi-agent activation)
+
+**Schema Strategy:**
+```sql
+-- Core schema (shared tables) - USE NOW
+CREATE SCHEMA IF NOT EXISTS core;
+SET search_path TO core;
+CREATE TABLE messages (...);  -- All conversations
+CREATE TABLE entities (...);  -- All entities
+CREATE TABLE conversations (...);  -- All conversations
+
+-- Agent-specific schemas - PREPARE BUT DON'T USE YET
+CREATE SCHEMA IF NOT EXISTS oscar;
+CREATE SCHEMA IF NOT EXISTS sarah;
+CREATE SCHEMA IF NOT EXISTS maya;
+
+-- Phase 2: Agent-specific tables (when needed)
+-- CREATE TABLE oscar.fleet_metrics (...);
+-- CREATE TABLE sarah.financial_patterns (...);
+-- CREATE TABLE maya.sales_quotes (...);
+```
+
+**Implementation (Phase 1):**
+```python
+class DatabaseService:
+    AGENT_SCHEMAS = {
+        "oscar": "oscar",
+        "sarah": "sarah",
+        "maya": "maya",
+        "system": "core"
+    }
+
+    def __init__(self, db_connection, agent_id: str = "system"):
+        self.db = db_connection
+        self.agent_id = agent_id
+        self.schema = self.AGENT_SCHEMAS.get(agent_id, "core")
+
+    async def write_message(self, message: dict):
+        """Write to core schema (all messages visible)"""
+        query = """
+        INSERT INTO core.messages (uuid, content, agent_id, created_at)
+        VALUES ($1, $2, $3, NOW())
+        """
+        return await self.db.execute(
+            query,
+            message['uuid'],
+            message['content'],
+            self.agent_id
+        )
+```
+
+**Phase 1 Status:**
+- ✅ Create schemas (preparation only)
+- ✅ All tables in `core` schema
+- ❌ Don't use agent-specific schemas yet (Phase 2)
+
+**Phase 2 Activation:**
+- Add agent-specific tables (fleet_metrics, financial_patterns, sales_quotes)
+- Update services to write to agent schemas
+- Maintain core schema for shared tables
+
+**Benefits:**
+- **Clean isolation** - Oscar's fleet data ≠ Sarah's financial data
+- **Easier RBAC** - Grant schema-level permissions
+- **Better performance** - Smaller tables = faster queries
+- **Compliance-friendly** - Agent data isolated for audits
+
+**Effort:** 2-4 hours (schema creation only, no table migrations needed)
+
+---
+
+### Neo4j Label-Based Separation (Phase 2)
+
+**Purpose:** Add agent-specific labels to Neo4j nodes for efficient filtering
+
+**Label Strategy:**
+```cypher
+-- Entity with agent-specific label
+CREATE (e:Entity:Oscar_Domain {
+  uuid: '123',
+  name: 'Truck 247',
+  type: 'equipment',
+  agent_id: 'oscar',
+  created_at: datetime()
+})
+
+-- Efficient agent-specific query
+MATCH (e:Entity:Oscar_Domain)
+RETURN e
+
+-- Cross-domain query (when needed)
+MATCH (e:Entity)
+WHERE e:Oscar_Domain OR e:Sarah_Domain
+RETURN e
+```
+
+**Implementation (Phase 2):**
+```python
+class GraphService:
+    AGENT_LABELS = {
+        "oscar": "Oscar_Domain",
+        "sarah": "Sarah_Domain",
+        "maya": "Maya_Domain",
+        "system": "Shared"
+    }
+
+    def __init__(self, neo4j_driver, agent_id: str = "system"):
+        self.neo4j = neo4j_driver
+        self.agent_id = agent_id
+        self.agent_label = self.AGENT_LABELS.get(agent_id, "Shared")
+
+    async def create_entity(self, entity: dict):
+        """Create entity with agent-specific label"""
+        query = f"""
+        CREATE (e:Entity:{self.agent_label} {{
+          uuid: $uuid,
+          name: $name,
+          type: $type,
+          agent_id: $agent_id,
+          created_at: datetime()
+        }})
+        RETURN e
+        """
+        return await self.neo4j.run(query, **entity, agent_id=self.agent_id)
+```
+
+**Benefits:**
+- **Efficient queries** - Single-label filter vs property filter
+- **Cross-domain possible** - Query multiple labels when needed
+- **Better performance** - Neo4j optimizes label filters
+- **Cleaner visualization** - Color-code by agent domain
+
+**Phase 1 Status:** Defer to Phase 2 (requires schema migration)
+
+**Effort:** 4-6 hours (Phase 2 implementation)
+
+---
+
+### Adding New Agents (Dynamic Pattern)
+
+**Process:** 15-30 minutes per new agent (no code changes required)
+
+**Step 1: Update Agent Registry**
+- Add agent definition to `agent-registry.md`
+- Document domain, responsibilities, data scope
+
+**Step 2: Create Database Namespaces**
+
+**Redis:** No action needed (dynamic namespacing)
+```python
+# Just pass new agent_id - works instantly
+cache = CacheService(redis, agent_id="alex")
+```
+
+**Qdrant:** Create collection
+```python
+await qdrant.create_collection(
+    collection_name="alex_domain_knowledge",
+    vectors_config={"size": 1536, "distance": "Cosine"}
+)
+```
+
+**PostgreSQL:** Create schema (Phase 2 only)
+```sql
+CREATE SCHEMA IF NOT EXISTS alex;
+```
+
+**Neo4j:** Use label (Phase 2 only)
+```cypher
+CREATE (e:Entity:Alex_Domain {name: "Example"})
+```
+
+**Step 3: Update Configuration**
+```python
+# File: apex-memory-system/config/agent_registry.py
+AGENT_COLLECTIONS = {
+    "oscar": "oscar_fleet_knowledge",
+    "sarah": "sarah_financial_knowledge",
+    "maya": "maya_sales_knowledge",
+    "alex": "alex_domain_knowledge",  # ← Add here
+    "system": "shared_documents"
+}
+```
+
+**Total Time:** 15-30 minutes (no application restarts needed)
+
+---
+
+### Cross-Agent Interaction Patterns
+
+**Single-Agent Operation (Most Common):**
+```python
+# Oscar receives message about truck maintenance
+agent_id = "oscar"
+
+# Redis cache (Oscar namespace)
+cache = CacheService(redis, agent_id=agent_id)
+await cache.cache_conversation_context(conv_id, context)
+# Key: oscar:conversation:123:context
+
+# Qdrant search (Oscar collection)
+vector = VectorService(qdrant, agent_id=agent_id)
+results = await vector.search(query_vector)
+# Searches: oscar_fleet_knowledge
+```
+
+**Cross-Agent Operation (Advanced - Phase 2):**
+```python
+# Query: "How do maintenance costs (Oscar) affect our margins (Sarah)?"
+
+# Query Oscar's fleet data
+oscar_service = VectorService(qdrant, agent_id="oscar")
+fleet_data = await oscar_service.search(query_vector)
+
+# Query Sarah's financial data
+sarah_service = VectorService(qdrant, agent_id="sarah")
+cost_data = await sarah_service.search(query_vector)
+
+# Synthesize cross-domain insight
+insight = synthesize_cross_domain(fleet_data, cost_data)
+```
+
+---
+
+### Monitoring & Metrics (Per-Agent)
+
+**Grafana Dashboard Additions:**
+```python
+# Cache hit rates per agent
+cache_hit_rate_oscar = redis.get("metrics:oscar:cache_hit_rate")
+cache_hit_rate_sarah = redis.get("metrics:sarah:cache_hit_rate")
+
+# Query latency per agent
+query_latency_oscar = prometheus.histogram(
+    "query_latency",
+    labels={"agent": "oscar"}
+)
+query_latency_sarah = prometheus.histogram(
+    "query_latency",
+    labels={"agent": "sarah"}
+)
+
+# Vector search performance per collection
+vector_search_oscar = qdrant.get_collection_metrics("oscar_fleet_knowledge")
+vector_search_sarah = qdrant.get_collection_metrics("sarah_financial_knowledge")
+```
+
+**Dashboard Panels:**
+- Per-agent cache hit rates (Oscar: 95%, Sarah: 92%, Maya: 88%)
+- Per-agent query latency (P50/P95)
+- Per-collection vector search performance
+- Cross-agent query frequency
+- Cost per agent (LLM API usage)
+
+---
+
+### Timeline Impact
+
+**Phase 1 (Weeks 1-8): Low-Complexity Patterns**
+- ✅ Redis namespaces: +1-2 hours
+- ✅ Qdrant collections: +4-6 hours
+- ⚠️ PostgreSQL schema prep: +2-4 hours
+
+**Total Phase 1 Impact:** +1 week → 7-9 weeks (vs original 6-8 weeks)
+
+**Phase 2 (Weeks 9-14): Multi-Agent Specialization**
+- ✅ Activate PostgreSQL schemas
+- ✅ Add Neo4j agent labels
+- ✅ Implement cross-agent query capabilities
+- ✅ Add agent identity routing to query router
+
+**Benefit:** Smooth transition to multi-agent architecture with zero rework.
+
+---
+
+## Storage Architecture: PostgreSQL Primary
+
+### Finalized Decision ✅
+
+**Architecture:**
 ```
 Message → PostgreSQL → Temporal → Graphiti
 ```
 
-**Pros:**
-- 90% implemented (conversations table exists)
-- ACID guarantees (reliable)
-- Fast to ship (2-3 weeks)
+**Why PostgreSQL primary works:**
+- **90% implemented** - conversations table exists, API functional
+- **ACID guarantees** - Reliable, transactional integrity
+- **Fast to ship** - 2-3 weeks to production (no migration needed)
+- **Query capable** - Full SQL for analytics and debugging
+- **Proven at scale** - Handles 1,000+ messages/hour easily
 
-**Cons:**
-- Two-stage storage (write twice)
-- Limited replay capability
+**NATS role:**
+- Agent↔agent messaging ONLY (30% of traffic)
+- High-speed communication (<20ms latency)
+- Pub/sub pattern for agent coordination
+- NOT used for primary storage
 
----
+### Future Considerations (Optional)
 
-### Phase 2 (Months 3-6): Hybrid (Add NATS Publisher)
+**If traffic exceeds 10,000 messages/hour sustained:**
+- Consider event sourcing migration (PostgreSQL → NATS JetStream)
+- See `research/future-enhancements/event-sourcing-migration.md` for details
+- Not planned for MVP or Phase 1 implementation
 
-**Add event streaming without breaking existing system:**
-```
-Message → PostgreSQL → (NEW) NATS Publisher Job
-                ↓              ↓
-            Temporal     NATS JetStream
-                                ↓
-                        (Optional Analytics Consumers)
-```
-
-**Benefits:**
-- Event streaming for analytics
-- Replay capability
-- No breaking changes
-
-**Implementation:**
-```python
-@workflow.defn
-class NATSPublisherWorkflow:
-    """Publishes PostgreSQL changes to NATS JetStream"""
-
-    @workflow.run
-    async def run(self, message_uuid: UUID) -> dict:
-        # Fetch message from PostgreSQL
-        message = await workflow.execute_activity(
-            fetch_message,
-            args=[message_uuid],
-            start_to_close_timeout=timedelta(seconds=30)
-        )
-
-        # Publish to NATS JetStream (persistent)
-        await workflow.execute_activity(
-            publish_to_nats_jetstream,
-            args=[message],
-            start_to_close_timeout=timedelta(seconds=30)
-        )
-
-        return {"published": True}
-```
-
----
-
-### Phase 3 (Months 6-12): Event Sourcing Primary (Optional)
-
-**Migrate to NATS JetStream as primary source:**
-```
-Message → NATS JetStream (primary)
-               ↓              ↓              ↓
-       PostgreSQL      Graphiti          Analytics
-       (Consumer)      (Consumer)        (Consumer)
-```
-
-**Benefits:**
-- Complete event sourcing
-- Horizontal scaling
-- Full replay capability
-- Decoupled consumers
-
-**Cons:**
-- Complex setup (clustering, retention)
-- Operational overhead (monitoring, rebalancing)
-- Learning curve
-
-**Decision point:** Only migrate if you need:
-- >10,000 messages/hour sustained
-- Multiple consumer teams (analytics, ML, etc.)
-- Event replay for debugging/reprocessing
+**Current capacity:**
+- PostgreSQL handles 10,000+ messages/hour with proper indexing
+- Redis caching reduces load by 60-95%
+- Horizontal scaling available if needed (read replicas)
 
 ---
 

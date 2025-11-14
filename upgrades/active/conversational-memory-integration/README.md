@@ -2,7 +2,7 @@
 
 **Status:** 🟢 Architecture Finalized - Ready for Activation
 **Priority:** P0 - Critical (enables AI agent brain functionality)
-**Timeline:** 6-8 weeks (6 implementation phases)
+**Timeline:** 7-9 weeks (6 implementation phases + multi-agent patterns)
 **Target Deployment:** Mid-January 2026
 
 ---
@@ -30,9 +30,18 @@ Apex Memory System successfully ingests documents (PDFs, DOCX) into the knowledg
 **Implement automatic conversation → knowledge graph ingestion** with:
 
 ### Three Core Paths
+
 1. **Human↔Agent (70% traffic):** Slack → PostgreSQL → Background extraction → Neo4j/Graphiti
+   - Agent-namespaced Redis caching: `oscar:conversation:123:context`
+   - Agent-specific Qdrant collections: `oscar_fleet_knowledge`
+
 2. **Agent↔Agent (30% traffic):** NATS → PostgreSQL → Background extraction → Neo4j/Graphiti
+   - Cross-agent knowledge sharing: Oscar ↔ Sarah ↔ Maya
+   - Agent-specific Neo4j labels: `:Oscar_Domain`, `:Sarah_Domain`, `:Maya_Domain`
+
 3. **Performance Layer:** Redis caching (60% latency reduction, 5x cost savings)
+   - Three agent namespaces: `oscar:*`, `sarah:*`, `maya:*`
+   - Shared knowledge: `shared:entity:*`
 
 ### Five Degradation Tiers
 1. **Pre-ingestion filtering:** Block 30-50% of low-value messages
@@ -54,28 +63,25 @@ Read this first for:
 - Redis caching strategy (3 layers)
 - 5-tier degradation strategy (with code examples)
 - Realistic latency targets (P50/P95/Max)
-- Migration path (PostgreSQL → Event Sourcing)
+- Storage architecture (PostgreSQL primary, no migration planned)
 - Security, monitoring, scalability analysis
 
 **Link:** [ARCHITECTURE.md](./ARCHITECTURE.md)
 
 ---
 
-### 📋 **UPGRADE-PLAN.md** - Original Planning Doc
-**Detailed 6-phase implementation plan**
+### 📋 **UPGRADE-PLAN.md** - Historical Planning Doc
+**Status:** ⚠️ Superseded by ARCHITECTURE.md (archived to `archive/UPGRADE-PLAN-ORIGINAL.md`)
 
-Phases covered:
-- Phase 0: Project setup (1-2 days)
-- Phase 1: Research & Documentation (Week 1)
-- Phase 2: Core Feedback Loop (Week 2-3)
-- Phase 3: Memory Quality & Importance (Week 3-4)
-- Phase 4: Agent↔Agent Communication (Week 5-6)
-- Phase 5: Proactive & Advanced Features (Week 7)
-- Phase 6: Comprehensive Testing & Validation (Week 8)
+This document contained early planning notes and has been replaced with finalized architecture.
 
-**Note:** ARCHITECTURE.md supersedes this with finalized decisions.
+**For current implementation details:**
+- See [ARCHITECTURE.md](./ARCHITECTURE.md) - Finalized technical architecture
+- IMPLEMENTATION.md will be created in Phase 1 (Week 1)
 
-**Link:** [UPGRADE-PLAN.md](./UPGRADE-PLAN.md)
+**Original planning document:** [archive/UPGRADE-PLAN-ORIGINAL.md](./archive/UPGRADE-PLAN-ORIGINAL.md)
+
+**Link:** [UPGRADE-PLAN.md](./UPGRADE-PLAN.md) (stub with navigation)
 
 ---
 
@@ -152,9 +158,85 @@ Architecture:
 
 ---
 
+## 🤖 Multi-Agent Architecture
+
+### Known Agents
+
+**Active Agents (Phase 1):**
+- **Oscar** (`oscar`) - Fleet Manager - Trucks, maintenance, routes, drivers
+- **System** (`system`) - Default agent for shared operations
+
+**Planned Agents (Phase 2 - Weeks 9-14):**
+- **Sarah** (`sarah`) - CFO / Finance Agent - Invoices, costs, vendor analysis
+- **Maya** (`maya`) - Sales / CRM Agent - Customers, quotes, pricing, deals
+
+**Complete documentation:** [agent-registry.md](./agent-registry.md)
+
+### Agent-Specific Data Flow Example
+
+**Scenario:** Oscar (Fleet Manager) processes conversation about Truck 247 maintenance
+
+```
+1. User: "Truck 247 needs oil change next week"
+         ↓
+2. Slack → ConversationService (agent_id="oscar")
+         ↓
+3. Redis Check (Oscar namespace)
+   Key: oscar:conversation:123:context
+   Result: CACHE HIT (<5ms) - last 20 messages
+         ↓
+4. PostgreSQL Write
+   Table: core.messages (agent_id="oscar")
+         ↓
+5. QueryRouter → Oscar's knowledge
+   - Redis: oscar:entity:truck247:profile
+   - Qdrant: oscar_fleet_knowledge collection
+   - Neo4j: MATCH (t:Entity:Oscar_Domain {name: "Truck 247"})
+         ↓
+6. Claude API (context-aware response)
+         ↓
+7. Background Ingestion (Temporal)
+   - Extract entities: ["Truck 247", "oil change", "next week"]
+   - Write to: oscar_fleet_knowledge collection
+   - Create Neo4j episode: (:Episode:Oscar_Domain)
+```
+
+**Key Benefits:**
+- **Fast queries:** Oscar's collection only (not all agents)
+- **No collisions:** Oscar's Truck 247 ≠ Sarah's invoice mentions
+- **Clean monitoring:** Per-agent cache hit rates, query latency
+- **Dynamic growth:** Add new agents in 15-30 minutes
+
+### Cross-Agent Query Example (Phase 2)
+
+**Scenario:** "How do maintenance costs (Oscar) affect our margins (Sarah)?"
+
+```
+1. Query Router detects cross-agent query
+         ↓
+2. Query Oscar's data:
+   - Collection: oscar_fleet_knowledge
+   - Query: "maintenance costs for Q4"
+         ↓
+3. Query Sarah's data:
+   - Collection: sarah_financial_knowledge
+   - Query: "profit margins Q4"
+         ↓
+4. Synthesize insight:
+   "High maintenance costs ($50K) in Q4 reduced margins by 8%"
+```
+
+**Implementation Details:** See [ARCHITECTURE.md - Multi-Agent Namespacing Strategy](./ARCHITECTURE.md#multi-agent-namespacing-strategy)
+
+---
+
 ## 🚀 Implementation Roadmap
 
-### Timeline: 6-8 Weeks
+### Timeline: 7-9 Weeks (Updated with Multi-Agent Patterns)
+
+**Original:** 6-8 weeks
+**With Fluid Mind Patterns:** +1 week → **7-9 weeks**
+**Additional work:** Redis namespaces, Qdrant collections, PostgreSQL schema prep
 
 ```
 Week 0: Project Setup (this folder structure, docs)
@@ -239,31 +321,22 @@ Week 8: Comprehensive Testing & Validation
 
 ---
 
-## 🔄 Migration Path
+## 🔄 Storage Architecture
 
-### Phase 1 (MVP): PostgreSQL Primary ✅
+### PostgreSQL Primary ✅
 ```
 Message → PostgreSQL → Temporal → Graphiti
 ```
-**Ship this first** (2-3 weeks to production)
 
-### Phase 2 (Future): Hybrid (Add NATS Publisher)
-```
-Message → PostgreSQL → NATS Publisher Job
-                ↓              ↓
-            Temporal     NATS JetStream
-                                ↓
-                        Analytics Consumers
-```
-**Add event streaming** (Months 3-6)
+**Finalized Decision:**
+- PostgreSQL as primary storage (no migration planned)
+- NATS for agent↔agent messaging only (30% of traffic)
+- Ship to production in 2-3 weeks
 
-### Phase 3 (Optional): Event Sourcing Primary
-```
-Message → NATS JetStream (primary)
-               ↓              ↓              ↓
-       PostgreSQL      Graphiti          Analytics
-```
-**Only if needed** (>10K msgs/hour sustained)
+**Future Considerations:**
+- If traffic exceeds 10,000 msgs/hour, evaluate event sourcing
+- See `research/future-enhancements/event-sourcing-migration.md`
+- Not planned for MVP
 
 ---
 
