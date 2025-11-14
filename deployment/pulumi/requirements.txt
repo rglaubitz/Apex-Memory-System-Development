@@ -1,0 +1,19 @@
+# Pulumi Core
+pulumi>=3.100.0,<4.0.0
+
+# GCP Provider (2025 version with full Cloud Run v2 support)
+pulumi-gcp>=7.38.0,<8.0.0
+
+# Random Provider (for generating secure passwords, tokens)
+pulumi-random>=4.16.0,<5.0.0
+
+# Command Provider (for local-exec provisioners if needed)
+pulumi-command>=0.9.0,<1.0.0
+
+# Optional: Policy as Code (CrossGuard)
+# pulumi-policy>=1.8.0,<2.0.0
+
+# Development Dependencies (uncomment for local testing)
+# pytest>=8.0.0
+# pytest-mock>=3.12.0
+# mypy>=1.8.0

@@ -1,0 +1,12 @@
+name: apex-memory-infrastructure
+runtime:
+  name: python
+  options:
+    # Use uv for faster package management (100x faster than pip)
+    virtualenv: .venv
+    toolchain: uv
+description: Apex Memory System - GCP Production Infrastructure (Multi-Database, Cloud Run, Serverless)
+
+# Backend: Pulumi Cloud (free tier with automatic state locking)
+# Alternative: gs://apex-pulumi-state (requires manual setup)
+# Note: backend URL is set via 'pulumi login' command, not in this file

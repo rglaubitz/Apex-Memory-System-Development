@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apex Memory System - Neural Network Visualization</title>
+    <style>
+        /* ==================== DESIGN SYSTEM ==================== */
+        :root {
+            /* Colors */
+            --bg-dark: #0a0e27;
+            --bg-darker: #050711;
+            --accent-blue: #00d4ff;
+            --accent-cyan: #06b6d4;
+            --accent-purple: #a855f7;
+            --accent-pink: #ec4899;
+            --accent-orange: #f59e0b;
+            --accent-green: #10b981;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+
+            /* Data Type Colors */
+            --eld-color: #00d4ff;
+            --truck-color: #f59e0b;
+            --document-color: #a855f7;
+            --personal-color: #10b981;
+            --financial-color: #ec4899;
+
+            /* Typography */
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg-darker);
+            color: var(--text-primary);
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        /* Animated background gradient */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(168, 85, 247, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 50% 20%, rgba(236, 72, 153, 0.1) 0%, transparent 50%);
+            animation: gradientShift 20s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* ==================== HEADER ==================== */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.5rem 2rem;
+            z-index: 100;
+        }
+
+        .header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
+        }
+
+        .header p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+        }
+
+        /* ==================== MAIN CANVAS ==================== */
+        .canvas-container {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+            padding-top: 90px;
+        }
+
+        #network-canvas {
+            width: 100%;
+            height: calc(100vh - 90px);
+            display: block;
+        }
+
+        /* ==================== CONTROL PANEL ==================== */
+        .control-panel {
+            position: fixed;
+            top: 90px;
+            right: -320px;
+            bottom: 0;
+            width: 320px;
+            background: rgba(20, 25, 55, 0.98);
+            backdrop-filter: blur(20px);
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem 1.5rem;
+            z-index: 100;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+        }
+
+        .control-panel.open {
+            right: 0;
+        }
+
+        .control-panel h3 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: var(--accent-cyan);
+        }
+
+        .control-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .control-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .control-label {
+            display: block;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .slider {
+            width: 100%;
+            height: 4px;
+            border-radius: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+
+        .slider::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--accent-cyan);
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+        }
+
+        /* ==================== LEGEND ==================== */
+        .legend {
+            position: fixed;
+            top: 90px;
+            left: -280px;
+            bottom: 0;
+            width: 280px;
+            background: rgba(20, 25, 55, 0.98);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem 1.5rem;
+            z-index: 100;
+            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+        }
+
+        .legend.open {
+            left: 0;
+        }
+
+        .legend h3 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: var(--accent-cyan);
+        }
+
+        .legend-section {
+            margin-bottom: 1.25rem;
+        }
+
+        .legend-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .legend-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
+        .legend-label {
+            color: var(--text-secondary);
+        }
+
+        /* ==================== TOGGLE BUTTONS ==================== */
+        .toggle-btn {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 48px;
+            height: 120px;
+            background: rgba(20, 25, 55, 0.98);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            z-index: 99;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            color: var(--accent-cyan);
+            font-size: 0.75rem;
+            font-weight: 600;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+        }
+
+        .toggle-btn:hover {
+            background: rgba(30, 35, 65, 0.98);
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+
+        .toggle-btn-left {
+            left: 0;
+            border-left: none;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .toggle-btn-left.hidden {
+            left: 280px;
+        }
+
+        .toggle-btn-right {
+            right: 0;
+            border-right: none;
+            border-radius: 12px 0 0 12px;
+        }
+
+        .toggle-btn-right.hidden {
+            right: 320px;
+        }
+
+        .toggle-icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .toggle-btn-left .toggle-icon {
+            transform: rotate(0deg);
+        }
+
+        .toggle-btn-left.hidden .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .toggle-btn-right .toggle-icon {
+            transform: rotate(0deg);
+        }
+
+        .toggle-btn-right.hidden .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        /* ==================== TOOLTIP ==================== */
+        .tooltip {
+            position: fixed;
+            background: rgba(10, 14, 39, 0.98);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+            max-width: 320px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .tooltip.visible {
+            opacity: 1;
+        }
+
+        .tooltip h4 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-cyan);
+        }
+
+        .tooltip p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 0.5rem;
+        }
+
+        .tooltip-stats {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tooltip-stat {
+            flex: 1;
+        }
+
+        .tooltip-stat-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+        }
+
+        .tooltip-stat-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+        }
+
+        /* ==================== SVG NODE STYLES ==================== */
+        .node {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .node:hover .node-circle {
+            filter: brightness(1.3) drop-shadow(0 0 20px currentColor);
+        }
+
+        .node-circle {
+            transition: all 0.3s ease;
+        }
+
+        .node-label {
+            font-size: 12px;
+            fill: var(--text-primary);
+            text-anchor: middle;
+            pointer-events: none;
+            font-weight: 600;
+        }
+
+        .node-sublabel {
+            font-size: 10px;
+            fill: var(--text-secondary);
+            text-anchor: middle;
+            pointer-events: none;
+        }
+
+        .connection-line {
+            stroke-width: 2;
+            stroke-opacity: 0.3;
+            fill: none;
+            transition: all 0.3s ease;
+        }
+
+        .connection-line.highlighted {
+            stroke-width: 3;
+            stroke-opacity: 0.8;
+            filter: drop-shadow(0 0 8px currentColor);
+        }
+
+        /* Particle animation */
+        @keyframes particleFlow {
+            0% {
+                offset-distance: 0%;
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                offset-distance: 100%;
+                opacity: 0;
+            }
+        }
+
+        .particle {
+            animation: particleFlow 3s ease-in-out infinite;
+        }
+
+        /* Pulse animation for active nodes */
+        @keyframes pulse {
+            0%, 100% {
+                r: 30;
+                opacity: 0.8;
+            }
+            50% {
+                r: 35;
+                opacity: 1;
+            }
+        }
+
+        .node-pulse {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* Glow effect */
+        .glow {
+            filter: drop-shadow(0 0 10px currentColor);
+        }
+
+        /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.25rem;
+            }
+
+            .control-panel {
+                width: 280px;
+                right: -280px;
+            }
+
+            .legend {
+                width: 240px;
+                left: -240px;
+            }
+
+            .toggle-btn {
+                width: 40px;
+                height: 100px;
+                font-size: 0.7rem;
+            }
+
+            .toggle-btn-left.hidden {
+                left: 240px;
+            }
+
+            .toggle-btn-right.hidden {
+                right: 280px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ==================== HEADER ==================== -->
+    <div class="header">
+        <h1>Apex Memory System - Neural Network</h1>
+        <p>Watch your data flow through AI workers into specialized brain regions in real-time</p>
+    </div>
+
+    <!-- ==================== MAIN CANVAS ==================== -->
+    <div class="canvas-container">
+        <svg id="network-canvas" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <!-- Gradients for nodes -->
+                <linearGradient id="gradient-eld" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#00d4ff;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#0284c7;stop-opacity:1" />
+                </linearGradient>
+                <linearGradient id="gradient-truck" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#d97706;stop-opacity:1" />
+                </linearGradient>
+                <linearGradient id="gradient-document" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#a855f7;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+                </linearGradient>
+                <linearGradient id="gradient-personal" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+                </linearGradient>
+                <linearGradient id="gradient-financial" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#ec4899;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#db2777;stop-opacity:1" />
+                </linearGradient>
+                <linearGradient id="gradient-ai" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#0891b2;stop-opacity:1" />
+                </linearGradient>
+                <linearGradient id="gradient-brain" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#a855f7;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
+                </linearGradient>
+
+                <!-- Glow filter -->
+                <filter id="glow">
+                    <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+                    <feMerge>
+                        <feMergeNode in="coloredBlur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
+
+                <!-- Arrow markers for connections -->
+                <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                    <polygon points="0 0, 10 3, 0 6" fill="rgba(255, 255, 255, 0.5)" />
+                </marker>
+            </defs>
+
+            <!-- Connections will be drawn here by JavaScript -->
+            <g id="connections-layer"></g>
+
+            <!-- Particles will be animated here -->
+            <g id="particles-layer"></g>
+
+            <!-- Nodes will be drawn here by JavaScript -->
+            <g id="nodes-layer"></g>
+        </svg>
+    </div>
+
+    <!-- ==================== TOGGLE BUTTONS ==================== -->
+    <div class="toggle-btn toggle-btn-left" id="toggle-legend">
+        <span class="toggle-icon">◀</span>
+        <span>Legend</span>
+    </div>
+
+    <div class="toggle-btn toggle-btn-right" id="toggle-controls">
+        <span class="toggle-icon">▶</span>
+        <span>Controls</span>
+    </div>
+
+    <!-- ==================== LEGEND ==================== -->
+    <div class="legend" id="legend-panel">
+        <h3>Network Legend</h3>
+
+        <div class="legend-section">
+            <div class="legend-title">Data Sources</div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: var(--eld-color);"></div>
+                <span class="legend-label">ELD Data</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: var(--truck-color);"></div>
+                <span class="legend-label">Truck Specs</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: var(--document-color);"></div>
+                <span class="legend-label">Documents</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: var(--personal-color);"></div>
+                <span class="legend-label">Personal Data</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: var(--financial-color);"></div>
+                <span class="legend-label">Financial Data</span>
+            </div>
+        </div>
+
+        <div class="legend-section">
+            <div class="legend-title">Processing</div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: var(--accent-cyan);"></div>
+                <span class="legend-label">AI Workers</span>
+            </div>
+        </div>
+
+        <div class="legend-section">
+            <div class="legend-title">Brain Regions</div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));"></div>
+                <span class="legend-label">5 Specialized DBs</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== CONTROL PANEL ==================== -->
+    <div class="control-panel" id="control-panel">
+        <h3>Controls</h3>
+
+        <div class="control-group">
+            <label class="control-label">Animation Speed</label>
+            <input type="range" class="slider" id="speed-slider" min="1" max="10" value="5">
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">Particle Density</label>
+            <input type="range" class="slider" id="density-slider" min="5" max="50" value="20">
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">Filter by Data Type</label>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-type="all">All</button>
+                <button class="filter-btn" data-type="eld">ELD</button>
+                <button class="filter-btn" data-type="truck">Truck</button>
+                <button class="filter-btn" data-type="document">Docs</button>
+                <button class="filter-btn" data-type="personal">Personal</button>
+                <button class="filter-btn" data-type="financial">Financial</button>
+            </div>
+        </div>
+
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-value" id="packets-count">0</div>
+                <div class="stat-label">Packets/sec</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="nodes-count">0</div>
+                <div class="stat-label">Active Nodes</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== TOOLTIP ==================== -->
+    <div class="tooltip" id="tooltip">
+        <h4 id="tooltip-title"></h4>
+        <p id="tooltip-description"></p>
+        <div class="tooltip-stats" id="tooltip-stats" style="display: none;">
+            <div class="tooltip-stat">
+                <div class="tooltip-stat-value" id="tooltip-throughput">0</div>
+                <div class="tooltip-stat-label">Throughput</div>
+            </div>
+            <div class="tooltip-stat">
+                <div class="tooltip-stat-value" id="tooltip-latency">0ms</div>
+                <div class="tooltip-stat-label">Latency</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== JAVASCRIPT ==================== -->
+    <script>
+        // ==================== NETWORK DATA STRUCTURE ====================
+        const networkData = {
+            // Data Sources (Left Column)
+            sources: [
+                {
+                    id: 'eld-data',
+                    label: 'ELD Data',
+                    sublabel: 'Hours, Routes, Events',
+                    type: 'eld',
+                    color: '#00d4ff',
+                    gradient: 'gradient-eld',
+                    x: 15,
+                    y: 15,
+                    description: 'Electronic Logging Device data: driver hours, vehicle routes, duty status changes',
+                    throughput: '2.5K/hr',
+                    latency: '120ms'
+                },
+                {
+                    id: 'truck-data',
+                    label: 'Truck Data',
+                    sublabel: 'Specs, Maintenance, Location',
+                    type: 'truck',
+                    color: '#f59e0b',
+                    gradient: 'gradient-truck',
+                    x: 15,
+                    y: 30,
+                    description: 'Vehicle specifications, maintenance records, GPS tracking, fuel consumption',
+                    throughput: '1.8K/hr',
+                    latency: '95ms'
+                },
+                {
+                    id: 'documents',
+                    label: 'Documents',
+                    sublabel: 'PDFs, Contracts, Invoices',
+                    type: 'document',
+                    color: '#a855f7',
+                    gradient: 'gradient-document',
+                    x: 15,
+                    y: 45,
+                    description: 'PDF documents, contracts, invoices, receipts, compliance forms',
+                    throughput: '850/hr',
+                    latency: '340ms'
+                },
+                {
+                    id: 'personal-data',
+                    label: 'Personal Data',
+                    sublabel: 'Drivers, Contacts, Profiles',
+                    type: 'personal',
+                    color: '#10b981',
+                    gradient: 'gradient-personal',
+                    x: 15,
+                    y: 60,
+                    description: 'Driver profiles, contact information, certifications, employment records',
+                    throughput: '420/hr',
+                    latency: '80ms'
+                },
+                {
+                    id: 'financial-data',
+                    label: 'Financial Data',
+                    sublabel: 'Invoices, Payments, Expenses',
+                    type: 'financial',
+                    color: '#ec4899',
+                    gradient: 'gradient-financial',
+                    x: 15,
+                    y: 75,
+                    description: 'Invoices, payment records, expense reports, profit/loss statements',
+                    throughput: '1.2K/hr',
+                    latency: '150ms'
+                }
+            ],
+
+            // AI Workers (Middle Column)
+            workers: [
+                {
+                    id: 'entity-extraction',
+                    label: 'Entity Extraction',
+                    sublabel: 'LLM-Powered (90% accuracy)',
+                    type: 'ai',
+                    color: '#06b6d4',
+                    gradient: 'gradient-ai',
+                    x: 40,
+                    y: 20,
+                    description: 'AI extracts 46 entity types: trucks, drivers, locations, customers, etc.',
+                    throughput: '24/sec',
+                    latency: '340ms'
+                },
+                {
+                    id: 'embeddings',
+                    label: 'Embeddings',
+                    sublabel: 'Semantic Vectors (1536-dim)',
+                    type: 'ai',
+                    color: '#06b6d4',
+                    gradient: 'gradient-ai',
+                    x: 40,
+                    y: 38,
+                    description: 'Converts text into meaning vectors for similarity search',
+                    throughput: '150/sec',
+                    latency: '85ms'
+                },
+                {
+                    id: 'pattern-detection',
+                    label: 'Pattern Detection',
+                    sublabel: 'Temporal Trends & Anomalies',
+                    type: 'ai',
+                    color: '#06b6d4',
+                    gradient: 'gradient-ai',
+                    x: 40,
+                    y: 56,
+                    description: 'Detects recurring patterns, trends, and anomalies over time',
+                    throughput: '45/sec',
+                    latency: '220ms'
+                },
+                {
+                    id: 'relationship-mapping',
+                    label: 'Relationship Mapping',
+                    sublabel: 'Graph Connections',
+                    type: 'ai',
+                    color: '#06b6d4',
+                    gradient: 'gradient-ai',
+                    x: 40,
+                    y: 74,
+                    description: 'Maps connections between entities: who-knows-who, supply chains',
+                    throughput: '80/sec',
+                    latency: '120ms'
+                }
+            ],
+
+            // Brain Regions (Right Column)
+            brainRegions: [
+                {
+                    id: 'neo4j',
+                    label: 'Neo4j',
+                    sublabel: 'Social Memory (Graph)',
+                    type: 'brain',
+                    color: '#a855f7',
+                    gradient: 'gradient-brain',
+                    icon: '🤝',
+                    x: 75,
+                    y: 15,
+                    description: 'Graph database for relationships: who-knows-who, supply chain connections',
+                    throughput: '12K/sec',
+                    latency: '<10ms'
+                },
+                {
+                    id: 'graphiti',
+                    label: 'Graphiti',
+                    sublabel: 'Timeline Memory (Temporal)',
+                    type: 'brain',
+                    color: '#a855f7',
+                    gradient: 'gradient-brain',
+                    icon: '📅',
+                    x: 75,
+                    y: 30,
+                    description: 'Temporal tracking: what happened when, how things changed over time',
+                    throughput: '3.5K/sec',
+                    latency: '45ms'
+                },
+                {
+                    id: 'qdrant',
+                    label: 'Qdrant',
+                    sublabel: 'Meaning Memory (Vectors)',
+                    type: 'brain',
+                    color: '#a855f7',
+                    gradient: 'gradient-brain',
+                    icon: '💡',
+                    x: 75,
+                    y: 45,
+                    description: 'Vector search for semantic similarity: find documents by meaning',
+                    throughput: '25K/sec',
+                    latency: '<5ms'
+                },
+                {
+                    id: 'postgresql',
+                    label: 'PostgreSQL',
+                    sublabel: 'Facts Memory (Structured)',
+                    type: 'brain',
+                    color: '#a855f7',
+                    gradient: 'gradient-brain',
+                    icon: '📊',
+                    x: 75,
+                    y: 60,
+                    description: 'Structured data with metadata: dates, tags, categories, filters',
+                    throughput: '18K/sec',
+                    latency: '<8ms'
+                },
+                {
+                    id: 'redis',
+                    label: 'Redis',
+                    sublabel: 'Instant Recall (Cache)',
+                    type: 'brain',
+                    color: '#a855f7',
+                    gradient: 'gradient-brain',
+                    icon: '⚡',
+                    x: 75,
+                    y: 75,
+                    description: 'Lightning-fast cache for repeat queries: <100ms response time',
+                    throughput: '100K/sec',
+                    latency: '<1ms'
+                }
+            ]
+        };
+
+        // Connection mappings (which sources connect to which workers, which workers to which brains)
+        const connections = [
+            // ELD Data connections
+            { from: 'eld-data', to: 'entity-extraction', type: 'eld' },
+            { from: 'eld-data', to: 'pattern-detection', type: 'eld' },
+            { from: 'entity-extraction', to: 'neo4j', type: 'eld', fromSource: 'eld-data' },
+            { from: 'pattern-detection', to: 'graphiti', type: 'eld', fromSource: 'eld-data' },
+
+            // Truck Data connections
+            { from: 'truck-data', to: 'entity-extraction', type: 'truck' },
+            { from: 'truck-data', to: 'embeddings', type: 'truck' },
+            { from: 'entity-extraction', to: 'neo4j', type: 'truck', fromSource: 'truck-data' },
+            { from: 'embeddings', to: 'postgresql', type: 'truck', fromSource: 'truck-data' },
+
+            // Documents connections
+            { from: 'documents', to: 'entity-extraction', type: 'document' },
+            { from: 'documents', to: 'embeddings', type: 'document' },
+            { from: 'entity-extraction', to: 'neo4j', type: 'document', fromSource: 'documents' },
+            { from: 'embeddings', to: 'qdrant', type: 'document', fromSource: 'documents' },
+            { from: 'embeddings', to: 'redis', type: 'document', fromSource: 'documents' },
+
+            // Personal Data connections
+            { from: 'personal-data', to: 'entity-extraction', type: 'personal' },
+            { from: 'personal-data', to: 'relationship-mapping', type: 'personal' },
+            { from: 'entity-extraction', to: 'neo4j', type: 'personal', fromSource: 'personal-data' },
+            { from: 'relationship-mapping', to: 'neo4j', type: 'personal', fromSource: 'personal-data' },
+
+            // Financial Data connections
+            { from: 'financial-data', to: 'entity-extraction', type: 'financial' },
+            { from: 'financial-data', to: 'pattern-detection', type: 'financial' },
+            { from: 'entity-extraction', to: 'postgresql', type: 'financial', fromSource: 'financial-data' },
+            { from: 'pattern-detection', to: 'graphiti', type: 'financial', fromSource: 'financial-data' }
+        ];
+
+        // ==================== SVG SETUP ====================
+        const svg = document.getElementById('network-canvas');
+        const connectionsLayer = document.getElementById('connections-layer');
+        const particlesLayer = document.getElementById('particles-layer');
+        const nodesLayer = document.getElementById('nodes-layer');
+
+        let svgWidth, svgHeight;
+        let animationSpeed = 5;
+        let particleDensity = 20;
+        let activeFilter = 'all';
+        let particleCount = 0;
+
+        function updateDimensions() {
+            svgWidth = svg.clientWidth;
+            svgHeight = svg.clientHeight;
+            svg.setAttribute('viewBox', `0 0 ${svgWidth} ${svgHeight}`);
+        }
+
+        window.addEventListener('resize', () => {
+            updateDimensions();
+            redrawNetwork();
+        });
+
+        updateDimensions();
+
+        // ==================== DRAW NETWORK ====================
+        function drawNetwork() {
+            // Clear existing
+            connectionsLayer.innerHTML = '';
+            nodesLayer.innerHTML = '';
+
+            // Draw connections first (so they appear behind nodes)
+            connections.forEach(conn => {
+                const fromNode = findNode(conn.from);
+                const toNode = findNode(conn.to);
+                if (!fromNode || !toNode) return;
+
+                const fromX = (fromNode.x / 100) * svgWidth;
+                const fromY = (fromNode.y / 100) * svgHeight;
+                const toX = (toNode.x / 100) * svgWidth;
+                const toY = (toNode.y / 100) * svgHeight;
+
+                // Create curved path
+                const midX = (fromX + toX) / 2;
+                const midY = (fromY + toY) / 2;
+                const curvature = 30;
+                const curveY = midY - curvature;
+
+                const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                const pathData = `M ${fromX} ${fromY} Q ${midX} ${curveY}, ${toX} ${toY}`;
+                path.setAttribute('d', pathData);
+                path.setAttribute('stroke', getColorForType(conn.type));
+                path.setAttribute('class', 'connection-line');
+                path.setAttribute('data-type', conn.type);
+                path.setAttribute('data-from', conn.from);
+                path.setAttribute('data-to', conn.to);
+                path.setAttribute('marker-end', 'url(#arrowhead)');
+                path.setAttribute('id', `path-${conn.from}-${conn.to}-${conn.type}`);
+
+                connectionsLayer.appendChild(path);
+            });
+
+            // Draw nodes
+            const allNodes = [...networkData.sources, ...networkData.workers, ...networkData.brainRegions];
+            allNodes.forEach(node => {
+                const x = (node.x / 100) * svgWidth;
+                const y = (node.y / 100) * svgHeight;
+
+                // Create node group
+                const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+                g.setAttribute('class', 'node');
+                g.setAttribute('data-id', node.id);
+                g.setAttribute('data-type', node.type);
+                g.setAttribute('transform', `translate(${x}, ${y})`);
+
+                // Pulse circle (background)
+                const pulseCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                pulseCircle.setAttribute('class', 'node-pulse');
+                pulseCircle.setAttribute('r', '30');
+                pulseCircle.setAttribute('fill', node.color);
+                pulseCircle.setAttribute('opacity', '0.2');
+                g.appendChild(pulseCircle);
+
+                // Main circle
+                const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                circle.setAttribute('class', 'node-circle glow');
+                circle.setAttribute('r', '30');
+                circle.setAttribute('fill', `url(#${node.gradient})`);
+                circle.setAttribute('filter', 'url(#glow)');
+                g.appendChild(circle);
+
+                // Icon (for brain regions)
+                if (node.icon) {
+                    const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                    text.setAttribute('class', 'node-icon');
+                    text.setAttribute('text-anchor', 'middle');
+                    text.setAttribute('dominant-baseline', 'middle');
+                    text.setAttribute('font-size', '24');
+                    text.textContent = node.icon;
+                    g.appendChild(text);
+                }
+
+                // Label
+                const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                label.setAttribute('class', 'node-label');
+                label.setAttribute('y', '50');
+                label.textContent = node.label;
+                g.appendChild(label);
+
+                // Sublabel
+                const sublabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                sublabel.setAttribute('class', 'node-sublabel');
+                sublabel.setAttribute('y', '65');
+                sublabel.textContent = node.sublabel;
+                g.appendChild(sublabel);
+
+                // Add hover events
+                g.addEventListener('mouseenter', (e) => showTooltip(e, node));
+                g.addEventListener('mouseleave', hideTooltip);
+                g.addEventListener('click', () => highlightConnections(node.id));
+
+                nodesLayer.appendChild(g);
+            });
+
+            // Update node count
+            document.getElementById('nodes-count').textContent = allNodes.length;
+        }
+
+        function findNode(id) {
+            return [...networkData.sources, ...networkData.workers, ...networkData.brainRegions]
+                .find(n => n.id === id);
+        }
+
+        function getColorForType(type) {
+            const colors = {
+                'eld': '#00d4ff',
+                'truck': '#f59e0b',
+                'document': '#a855f7',
+                'personal': '#10b981',
+                'financial': '#ec4899',
+                'ai': '#06b6d4'
+            };
+            return colors[type] || '#06b6d4';
+        }
+
+        function redrawNetwork() {
+            drawNetwork();
+            startParticleAnimation();
+        }
+
+        // ==================== PARTICLE ANIMATION ====================
+        let particleAnimationInterval;
+
+        function startParticleAnimation() {
+            if (particleAnimationInterval) {
+                clearInterval(particleAnimationInterval);
+            }
+
+            const interval = 3000 / animationSpeed;
+
+            particleAnimationInterval = setInterval(() => {
+                createParticleBurst();
+            }, interval);
+        }
+
+        function createParticleBurst() {
+            // Filter connections based on active filter
+            let activeConnections = connections;
+            if (activeFilter !== 'all') {
+                activeConnections = connections.filter(c => c.type === activeFilter);
+            }
+
+            // Create particles for random subset
+            const numParticles = Math.floor(particleDensity / 5);
+            for (let i = 0; i < numParticles; i++) {
+                const conn = activeConnections[Math.floor(Math.random() * activeConnections.length)];
+                if (conn) {
+                    createParticle(conn);
+                }
+            }
+
+            // Update packet counter
+            particleCount += numParticles;
+            const packetsPerSec = Math.round(particleCount / 3);
+            document.getElementById('packets-count').textContent = packetsPerSec;
+        }
+
+        function createParticle(conn) {
+            const pathId = `path-${conn.from}-${conn.to}-${conn.type}`;
+            const path = document.getElementById(pathId);
+            if (!path) return;
+
+            const pathData = path.getAttribute('d');
+
+            // Create particle circle
+            const particle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            particle.setAttribute('r', '4');
+            particle.setAttribute('fill', getColorForType(conn.type));
+            particle.setAttribute('filter', 'url(#glow)');
+            particle.setAttribute('class', 'particle');
+
+            // Create motion path animation
+            const animateMotion = document.createElementNS('http://www.w3.org/2000/svg', 'animateMotion');
+            animateMotion.setAttribute('dur', `${3 / animationSpeed}s`);
+            animateMotion.setAttribute('path', pathData.replace(/^M/, '').trim());
+            animateMotion.setAttribute('begin', '0s');
+            animateMotion.setAttribute('fill', 'remove');
+
+            particle.appendChild(animateMotion);
+            particlesLayer.appendChild(particle);
+
+            // Remove particle after animation
+            setTimeout(() => {
+                if (particle.parentNode) {
+                    particle.parentNode.removeChild(particle);
+                }
+            }, (3000 / animationSpeed) + 100);
+        }
+
+        // ==================== TOOLTIP ====================
+        const tooltip = document.getElementById('tooltip');
+
+        function showTooltip(event, node) {
+            const tooltipTitle = document.getElementById('tooltip-title');
+            const tooltipDescription = document.getElementById('tooltip-description');
+            const tooltipStats = document.getElementById('tooltip-stats');
+            const tooltipThroughput = document.getElementById('tooltip-throughput');
+            const tooltipLatency = document.getElementById('tooltip-latency');
+
+            tooltipTitle.textContent = node.label;
+            tooltipDescription.textContent = node.description;
+
+            if (node.throughput && node.latency) {
+                tooltipStats.style.display = 'flex';
+                tooltipThroughput.textContent = node.throughput;
+                tooltipLatency.textContent = node.latency;
+            } else {
+                tooltipStats.style.display = 'none';
+            }
+
+            tooltip.classList.add('visible');
+            updateTooltipPosition(event);
+        }
+
+        function hideTooltip() {
+            tooltip.classList.remove('visible');
+        }
+
+        function updateTooltipPosition(event) {
+            const x = event.clientX;
+            const y = event.clientY;
+
+            // Position tooltip near cursor, but keep it on screen
+            const tooltipRect = tooltip.getBoundingClientRect();
+            let left = x + 20;
+            let top = y + 20;
+
+            if (left + tooltipRect.width > window.innerWidth) {
+                left = x - tooltipRect.width - 20;
+            }
+
+            if (top + tooltipRect.height > window.innerHeight) {
+                top = y - tooltipRect.height - 20;
+            }
+
+            tooltip.style.left = `${left}px`;
+            tooltip.style.top = `${top}px`;
+        }
+
+        // Update tooltip position on mouse move
+        svg.addEventListener('mousemove', (e) => {
+            if (tooltip.classList.contains('visible')) {
+                updateTooltipPosition(e);
+            }
+        });
+
+        // ==================== HIGHLIGHT CONNECTIONS ====================
+        function highlightConnections(nodeId) {
+            // Reset all connections
+            document.querySelectorAll('.connection-line').forEach(line => {
+                line.classList.remove('highlighted');
+            });
+
+            // Highlight connections for this node
+            document.querySelectorAll(`.connection-line[data-from="${nodeId}"], .connection-line[data-to="${nodeId}"]`).forEach(line => {
+                line.classList.add('highlighted');
+            });
+
+            // Auto-remove highlight after 3 seconds
+            setTimeout(() => {
+                document.querySelectorAll('.connection-line').forEach(line => {
+                    line.classList.remove('highlighted');
+                });
+            }, 3000);
+        }
+
+        // ==================== CONTROLS ====================
+        // Speed slider
+        document.getElementById('speed-slider').addEventListener('input', (e) => {
+            animationSpeed = parseInt(e.target.value);
+            startParticleAnimation();
+        });
+
+        // Density slider
+        document.getElementById('density-slider').addEventListener('input', (e) => {
+            particleDensity = parseInt(e.target.value);
+        });
+
+        // Filter buttons
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Update active state
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                // Update filter
+                activeFilter = btn.dataset.type;
+
+                // Update connections visibility
+                document.querySelectorAll('.connection-line').forEach(line => {
+                    if (activeFilter === 'all' || line.dataset.type === activeFilter) {
+                        line.style.display = 'block';
+                    } else {
+                        line.style.display = 'none';
+                    }
+                });
+
+                // Update nodes visibility (dim non-matching)
+                document.querySelectorAll('.node').forEach(node => {
+                    if (activeFilter === 'all') {
+                        node.style.opacity = '1';
+                    } else {
+                        // Check if this node is part of filtered connections
+                        const nodeId = node.dataset.id;
+                        const hasConnection = connections.some(c =>
+                            (c.from === nodeId || c.to === nodeId) &&
+                            (c.type === activeFilter || c.fromSource === activeFilter)
+                        );
+                        node.style.opacity = hasConnection ? '1' : '0.3';
+                    }
+                });
+            });
+        });
+
+        // ==================== SIDEBAR TOGGLES ====================
+        const legendPanel = document.getElementById('legend-panel');
+        const controlPanel = document.getElementById('control-panel');
+        const toggleLegend = document.getElementById('toggle-legend');
+        const toggleControls = document.getElementById('toggle-controls');
+
+        toggleLegend.addEventListener('click', () => {
+            legendPanel.classList.toggle('open');
+            toggleLegend.classList.toggle('hidden');
+        });
+
+        toggleControls.addEventListener('click', () => {
+            controlPanel.classList.toggle('open');
+            toggleControls.classList.toggle('hidden');
+        });
+
+        // Close panels when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!legendPanel.contains(e.target) && !toggleLegend.contains(e.target) && legendPanel.classList.contains('open')) {
+                legendPanel.classList.remove('open');
+                toggleLegend.classList.remove('hidden');
+            }
+            if (!controlPanel.contains(e.target) && !toggleControls.contains(e.target) && controlPanel.classList.contains('open')) {
+                controlPanel.classList.remove('open');
+                toggleControls.classList.remove('hidden');
+            }
+        });
+
+        // ==================== INITIALIZE ====================
+        drawNetwork();
+        startParticleAnimation();
+
+        // Reset particle count every 3 seconds
+        setInterval(() => {
+            particleCount = 0;
+        }, 3000);
+
+        console.log('🧠 Apex Neural Network Visualization loaded!');
+        console.log('💡 Hover over nodes for details, click to highlight connections');
+        console.log('🎮 Click the side buttons to open Legend (left) or Controls (right)');
+    </script>
+</body>
+</html>

@@ -109,18 +109,36 @@ cd apex-mcp-server
 
 ## ☁️ Production Deployment (GCP)
 
-**Path:** [production/](production/)
+**Path:** [pulumi/](pulumi/) (Infrastructure-as-Code) | [production/](production/) (Deployment guide)
 
-**What:** Deploy full Apex Memory System to Google Cloud Platform
+**What:** Deploy full Apex Memory System to Google Cloud Platform using Pulumi
 
-**Status:** 📝 Planned (architecture complete, not yet deployed)
+**Status:** 🟢 Phase 0 Complete | 🔵 Week 1 Ready (Networking + Cloud SQL)
 
-**Timeline:** 5-6 weeks (128-170 hours) | **Cost:** $411-807/month
+**Timeline:** 6 weeks (108-132 hours remaining) | **Cost:** $411-807/month
+
+**Last Updated:** 2025-11-08
 
 **Prerequisites:** ⚠️ **MUST complete [DEPLOYMENT-NEEDS.md](DEPLOYMENT-NEEDS.md) first**
 
+**Progress (2025-11-08):**
+
+**✅ Phase 0: Pulumi Setup Complete**
+- Installed all CLI tools (Pulumi v3.206.0, gcloud v546.0.0, uv 0.8.12)
+- Authenticated with GCP and Pulumi Cloud
+- Created `dev` stack in `apex-memory-dev` project
+- Deployed 13 GCP APIs (compute, sqladmin, redis, run, secretmanager, etc.)
+- Infrastructure state managed via Pulumi Cloud
+- View deployment: https://app.pulumi.com/rglaubitz-org/apex-memory-infrastructure/dev/updates/1
+
+**📋 Next: Week 1 Implementation (20-24 hours)**
+- Create `modules/networking.py` - VPC with private Google Access
+- Create `modules/databases.py` - Cloud SQL PostgreSQL
+- See [pulumi/README.md](pulumi/README.md) for detailed plan
+
 **Key Documents:**
 - **[DEPLOYMENT-NEEDS.md](DEPLOYMENT-NEEDS.md)** - ⭐ **START HERE** - What to buy/obtain before deploying
+- **[pulumi/README.md](pulumi/README.md)** - ⭐ **Pulumi IaC Guide** - Complete setup and implementation guide
 - **[PRODUCTION-DEPLOYMENT-PLAN.md](PRODUCTION-DEPLOYMENT-PLAN.md)** - Complete 5-6 week deployment plan
 - **[production/README.md](production/README.md)** - Overview and decision framework
 - **[production/GCP-DEPLOYMENT-GUIDE.md](production/GCP-DEPLOYMENT-GUIDE.md)** - Step-by-step GCP deployment (8 phases)
@@ -146,13 +164,15 @@ cd apex-mcp-server
 **First 90 Days:** $149-249/month (using GCP $300 free credit)
 
 **Next Steps:**
-1. ⚠️ Complete [DEPLOYMENT-NEEDS.md](DEPLOYMENT-NEEDS.md) prerequisites (4-6 hours)
-2. Create Pulumi Infrastructure-as-Code (40-60 hours) - **Critical path blocker**
-3. Set up external services (Temporal Cloud, Grafana Cloud) (8-12 hours)
-4. Deploy databases (8-12 hours)
-5. Deploy application (12-16 hours)
-6. Configure monitoring (8-12 hours)
-7. Production validation (16-24 hours)
+1. ✅ ~~Complete [DEPLOYMENT-NEEDS.md](DEPLOYMENT-NEEDS.md) prerequisites~~ (partially complete - GCP auth done)
+2. 🔵 **CURRENT:** Week 1 Pulumi Implementation - Networking + Cloud SQL (20-24 hours)
+3. Week 2: Neo4j + Redis (16-20 hours)
+4. Week 3: Cloud Run Services (20-24 hours)
+5. Week 4: Qdrant + Secrets (16-20 hours)
+6. Week 5: Monitoring + Testing (20-24 hours)
+7. Week 6: Production Deployment (16-20 hours)
+
+**See [pulumi/README.md](pulumi/README.md) for detailed 6-week roadmap.**
 
 ---
 
@@ -436,6 +456,7 @@ Do you need to deploy the MCP Server for Claude Desktop?
 
 ---
 
-**Last Updated:** 2025-11-07
-**Deployment System Status:** 🟢 Operational (1 deployed, 1 production-ready, 1 planned)
+**Last Updated:** 2025-11-08
+**Deployment System Status:** 🟢 Operational (1 deployed, 1 production-ready, 1 in-progress)
 **Documentation Status:** ✅ Complete with prerequisites checklist
+**Pulumi Status:** 🟢 Phase 0 Complete | 🔵 Week 1 Ready

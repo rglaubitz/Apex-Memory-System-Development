@@ -1,0 +1,1818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apex Memory System - We Rebuilt the Human Brain for AI</title>
+    <style>
+        /* ==================== DESIGN SYSTEM ==================== */
+        :root {
+            /* Colors - Sleek Modern Palette */
+            --bg-primary: #0a0e27;
+            --bg-secondary: #141937;
+            --accent-blue: #00d4ff;
+            --accent-purple: #a855f7;
+            --accent-pink: #ec4899;
+            --accent-cyan: #06b6d4;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+
+            /* Typography */
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            --font-display: "SF Pro Display", -apple-system, BlinkMacSystemFont, sans-serif;
+
+            /* Spacing */
+            --section-padding: 8rem 2rem;
+            --container-max: 1200px;
+
+            /* Effects */
+            --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+            --glass-blur: blur(20px);
+        }
+
+        /* ==================== BASE STYLES ==================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Gradient background overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(168, 85, 247, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* ==================== TYPOGRAPHY ==================== */
+        h1, h2, h3, h4 {
+            font-family: var(--font-display);
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.5rem;
+        }
+
+        h2 {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            margin-bottom: 2rem;
+        }
+
+        h3 {
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            margin-bottom: 1rem;
+        }
+
+        p {
+            font-size: clamp(1.125rem, 2vw, 1.375rem);
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 1.5rem;
+        }
+
+        /* ==================== LAYOUT UTILITIES ==================== */
+        .container {
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--section-padding);
+            position: relative;
+        }
+
+        .section-content {
+            width: 100%;
+            text-align: center;
+        }
+
+        /* ==================== GLASSMORPHISM CARD ==================== */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            transition: all 0.4s var(--transition-smooth);
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
+        }
+
+        /* ==================== ANIMATIONS ==================== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(2.5);
+                opacity: 0;
+            }
+        }
+
+        @keyframes slideRight {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .animate-on-scroll.visible {
+            animation: fadeInUp 0.8s var(--transition-smooth) forwards;
+        }
+
+        /* ==================== SECTION 1: HERO ==================== */
+        #hero {
+            background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            position: relative;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .hero-left, .hero-right {
+            padding: 2rem;
+        }
+
+        .hero-headline {
+            font-size: clamp(2rem, 5vw, 4rem);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-subhead {
+            font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+            color: var(--text-secondary);
+            font-weight: 400;
+            margin-bottom: 2rem;
+        }
+
+        /* Forgetting Animation (Left Side) */
+        .forgetting-demo {
+            position: relative;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .chat-bubble {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            animation: fadeIn 1s ease-in, fadeOut 3s ease-in 2s forwards;
+        }
+
+        @keyframes fadeOut {
+            to { opacity: 0; transform: translateY(-20px); }
+        }
+
+        .chat-bubble-delay-1 { animation-delay: 1s, 3s; }
+        .chat-bubble-delay-2 { animation-delay: 2s, 4s; }
+        .chat-bubble-delay-3 { animation-delay: 3s, 5s; }
+
+        /* Remembering Visualization (Right Side) */
+        .memory-graph {
+            position: relative;
+            height: 400px;
+        }
+
+        .node {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            font-weight: 600;
+            box-shadow: 0 8px 24px rgba(0, 212, 255, 0.4);
+            animation: fadeIn 1s ease-in forwards;
+        }
+
+        .node:nth-child(1) { top: 20%; left: 20%; animation-delay: 0.5s; opacity: 0; }
+        .node:nth-child(2) { top: 20%; right: 20%; animation-delay: 1s; opacity: 0; }
+        .node:nth-child(3) { bottom: 20%; left: 30%; animation-delay: 1.5s; opacity: 0; }
+        .node:nth-child(4) { bottom: 20%; right: 30%; animation-delay: 2s; opacity: 0; }
+        .node:nth-child(5) { top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: 2.5s; opacity: 0; width: 100px; height: 100px; font-size: 1rem; }
+
+        .connection-line {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+            transform-origin: left;
+            animation: drawLine 1s ease-in forwards;
+            opacity: 0;
+        }
+
+        @keyframes drawLine {
+            from { width: 0; opacity: 0; }
+            to { width: 100%; opacity: 0.6; }
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: pulse 2s infinite;
+            cursor: pointer;
+        }
+
+        .scroll-arrow {
+            width: 30px;
+            height: 30px;
+            border-left: 2px solid var(--accent-blue);
+            border-bottom: 2px solid var(--accent-blue);
+            transform: rotate(-45deg);
+        }
+
+        /* ==================== SECTION 2: BRAIN BLUEPRINT ==================== */
+        #brain-blueprint {
+            background: var(--bg-secondary);
+        }
+
+        .brain-container {
+            max-width: 800px;
+            margin: 3rem auto;
+            position: relative;
+        }
+
+        .brain-svg {
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(0 10px 30px rgba(0, 212, 255, 0.3));
+        }
+
+        .brain-region {
+            opacity: 0;
+            transition: all 0.8s var(--transition-smooth);
+        }
+
+        .brain-region.active {
+            opacity: 1;
+        }
+
+        .brain-labels {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .brain-label {
+            text-align: center;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.6s var(--transition-smooth);
+        }
+
+        .brain-label.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .brain-label-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1rem;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .brain-label h4 {
+            color: var(--accent-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .brain-label p {
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+
+        /* ==================== SECTION 3: TRANSFORMATION ==================== */
+        #transformation {
+            background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+        }
+
+        .transformation-visual {
+            max-width: 900px;
+            margin: 3rem auto;
+            position: relative;
+        }
+
+        .database-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .database-card {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.6s var(--transition-smooth);
+        }
+
+        .database-card.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .database-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.05);
+        }
+
+        .database-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1rem;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .database-card h4 {
+            color: var(--accent-cyan);
+            margin-bottom: 0.5rem;
+            font-size: 1.25rem;
+        }
+
+        .database-card p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        .coordinator {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(168, 85, 247, 0.1));
+            border: 2px solid var(--accent-blue);
+        }
+
+        .coordinator .database-icon {
+            width: 100px;
+            height: 100px;
+        }
+
+        /* ==================== SECTION 4: MEMORY JOURNEY ==================== */
+        #memory-journey {
+            background: var(--bg-primary);
+        }
+
+        .pipeline {
+            max-width: 100%;
+            margin: 3rem auto;
+            padding: 3rem 0;
+            position: relative;
+        }
+
+        .pipeline-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .pipeline-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+            transform: translateY(-50%);
+            transition: width 2s var(--transition-smooth);
+            z-index: 0;
+        }
+
+        .pipeline-line.animating {
+            width: 100%;
+        }
+
+        .pipeline-step {
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.6s var(--transition-smooth);
+            z-index: 1;
+        }
+
+        .pipeline-step.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .step-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 1rem;
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 2px solid var(--glass-border);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            position: relative;
+        }
+
+        .pipeline-step.active .step-icon {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+        }
+
+        .step-number {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            font-weight: 700;
+        }
+
+        .step-label {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .step-description {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .parallel-indicator {
+            margin-top: 3rem;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 1s ease-in;
+        }
+
+        .parallel-indicator.active {
+            opacity: 1;
+        }
+
+        .parallel-boxes {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .parallel-box {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            animation: fadeIn 0.6s ease-in forwards;
+            opacity: 0;
+        }
+
+        .parallel-box:nth-child(1) { animation-delay: 0.2s; }
+        .parallel-box:nth-child(2) { animation-delay: 0.4s; }
+        .parallel-box:nth-child(3) { animation-delay: 0.6s; }
+        .parallel-box:nth-child(4) { animation-delay: 0.8s; }
+        .parallel-box:nth-child(5) { animation-delay: 1s; }
+
+        /* ==================== SECTION 5: INSTANT RECALL ==================== */
+        #instant-recall {
+            background: var(--bg-secondary);
+        }
+
+        .query-demo {
+            max-width: 900px;
+            margin: 3rem auto;
+        }
+
+        .query-input {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 2px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            text-align: center;
+            margin-bottom: 3rem;
+            opacity: 0;
+            transition: all 0.8s var(--transition-smooth);
+        }
+
+        .query-input.active {
+            opacity: 1;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 40px rgba(0, 212, 255, 0.3);
+        }
+
+        .router-brain {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 3rem;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            position: relative;
+            opacity: 0;
+            transition: all 0.8s var(--transition-smooth);
+        }
+
+        .router-brain.active {
+            opacity: 1;
+            animation: pulse 2s infinite;
+        }
+
+        .ripple-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px solid var(--accent-cyan);
+            border-radius: 50%;
+            animation: ripple 2s ease-out infinite;
+        }
+
+        .ripple-ring:nth-child(2) { animation-delay: 0.5s; }
+        .ripple-ring:nth-child(3) { animation-delay: 1s; }
+
+        .query-results {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .result-stream {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s var(--transition-smooth);
+        }
+
+        .result-stream.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .result-db-label {
+            color: var(--accent-cyan);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .fusion-animation {
+            margin: 3rem 0;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 1s ease-in;
+        }
+
+        .fusion-animation.active {
+            opacity: 1;
+        }
+
+        .fusion-streams {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .fusion-stream {
+            width: 4px;
+            height: 100px;
+            background: linear-gradient(180deg, var(--accent-cyan), transparent);
+            animation: slideDown 1.5s ease-in forwards;
+            transform-origin: top;
+        }
+
+        @keyframes slideDown {
+            from { transform: scaleY(0); }
+            to { transform: scaleY(1); }
+        }
+
+        .fusion-point {
+            width: 40px;
+            height: 40px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        .final-answer {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(168, 85, 247, 0.1));
+            border: 2px solid var(--accent-blue);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-top: 2rem;
+            opacity: 0;
+            transition: opacity 1s ease-in;
+        }
+
+        .final-answer.active {
+            opacity: 1;
+        }
+
+        /* ==================== SECTION 6: THE MAGIC ==================== */
+        #the-magic {
+            background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+        }
+
+        .capabilities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .capability-card {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            text-align: center;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.6s var(--transition-smooth);
+        }
+
+        .capability-card.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .capability-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--accent-cyan);
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(6, 182, 212, 0.3);
+        }
+
+        .capability-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+        }
+
+        .capability-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-blue);
+        }
+
+        .capability-card p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        /* ==================== SECTION 7: REAL-WORLD SCENARIOS ==================== */
+        #scenarios {
+            background: var(--bg-primary);
+        }
+
+        .scenarios-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .scenario-card {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s var(--transition-smooth);
+        }
+
+        .scenario-card.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scenario-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .scenario-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 1rem;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-pink));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .scenario-card h3 {
+            color: var(--accent-blue);
+            margin-bottom: 2rem;
+        }
+
+        .before-after {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .before, .after {
+            padding: 1.5rem;
+            border-radius: 16px;
+            border-left: 4px solid;
+        }
+
+        .before {
+            background: rgba(236, 72, 153, 0.1);
+            border-color: var(--accent-pink);
+        }
+
+        .after {
+            background: rgba(6, 182, 212, 0.1);
+            border-color: var(--accent-cyan);
+        }
+
+        .label {
+            font-size: 0.875rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .before .label { color: var(--accent-pink); }
+        .after .label { color: var(--accent-cyan); }
+
+        .scenario-question {
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid var(--accent-blue);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: center;
+            font-weight: 600;
+            color: var(--accent-blue);
+        }
+
+        .time-saved {
+            text-align: center;
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(168, 85, 247, 0.1));
+            border-radius: 12px;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+        }
+
+        /* ==================== SECTION 8: BOTTOM LINE ==================== */
+        #bottom-line {
+            background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 3rem;
+            max-width: 1100px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .comparison-side {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 2px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 3rem;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.8s var(--transition-smooth);
+        }
+
+        .comparison-side.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .comparison-before {
+            border-color: var(--accent-pink);
+        }
+
+        .comparison-after {
+            border-color: var(--accent-cyan);
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.05), rgba(168, 85, 247, 0.05));
+        }
+
+        .comparison-side h3 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .comparison-before h3 { color: var(--accent-pink); }
+        .comparison-after h3 { color: var(--accent-cyan); }
+
+        .comparison-items {
+            list-style: none;
+        }
+
+        .comparison-item {
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .comparison-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-icon {
+            flex-shrink: 0;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .comparison-before .item-icon {
+            background: rgba(236, 72, 153, 0.2);
+            color: var(--accent-pink);
+        }
+
+        .comparison-after .item-icon {
+            background: rgba(6, 182, 212, 0.2);
+            color: var(--accent-cyan);
+        }
+
+        .item-text {
+            flex: 1;
+            font-size: 1.125rem;
+        }
+
+        .cta-section {
+            text-align: center;
+            margin-top: 4rem;
+            opacity: 0;
+            transition: opacity 1s ease-in;
+        }
+
+        .cta-section.active {
+            opacity: 1;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            font-weight: 700;
+            padding: 1.5rem 3rem;
+            border-radius: 16px;
+            text-decoration: none;
+            transition: all 0.3s var(--transition-smooth);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 50px rgba(0, 212, 255, 0.6);
+        }
+
+        /* ==================== RESPONSIVE DESIGN ==================== */
+        @media (max-width: 768px) {
+            :root {
+                --section-padding: 4rem 1.5rem;
+            }
+
+            .hero-content,
+            .comparison {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .pipeline-steps {
+                flex-direction: column;
+            }
+
+            .pipeline-line {
+                width: 4px;
+                height: 0;
+                left: 50%;
+                top: 0;
+                transform: translateX(-50%);
+            }
+
+            .pipeline-line.animating {
+                height: 100%;
+                width: 4px;
+            }
+
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            h3 { font-size: 1.5rem; }
+        }
+
+        /* ==================== ACCESSIBILITY ==================== */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* ==================== UTILITY CLASSES ==================== */
+        .text-gradient {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .text-center { text-align: center; }
+        .mb-1 { margin-bottom: 0.5rem; }
+        .mb-2 { margin-bottom: 1rem; }
+        .mb-3 { margin-bottom: 1.5rem; }
+        .mb-4 { margin-bottom: 2rem; }
+        .mt-4 { margin-top: 2rem; }
+    </style>
+</head>
+<body>
+    <!-- ==================== SECTION 1: HERO ==================== -->
+    <section id="hero" class="section">
+        <div class="container">
+            <div class="hero-content">
+                <!-- Left Side: The Problem -->
+                <div class="hero-left animate-on-scroll">
+                    <h1 class="hero-headline">Your AI Has Amnesia.</h1>
+                    <p class="hero-subhead">Every conversation starts from zero. All context forgotten. Limited by tiny memory windows.</p>
+
+                    <div class="forgetting-demo">
+                        <div class="chat-bubble">
+                            <strong>You:</strong> Tell me about ACME Corporation
+                        </div>
+                        <div class="chat-bubble chat-bubble-delay-1">
+                            <strong>AI:</strong> Here's what I found...
+                        </div>
+                        <div class="chat-bubble chat-bubble-delay-2">
+                            <strong>30 minutes later...</strong>
+                        </div>
+                        <div class="chat-bubble chat-bubble-delay-3">
+                            <strong>You:</strong> What about ACME?<br>
+                            <strong>AI:</strong> Sorry, I don't remember our earlier conversation.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side: The Solution -->
+                <div class="hero-right animate-on-scroll">
+                    <h1 class="text-gradient">We Fixed It.</h1>
+                    <p class="hero-subhead">We rebuilt the human brain for artificial intelligence. Permanent memory. Instant recall. Infinite connections.</p>
+
+                    <div class="memory-graph">
+                        <div class="node">Doc A</div>
+                        <div class="node">Doc B</div>
+                        <div class="node">Doc C</div>
+                        <div class="node">Doc D</div>
+                        <div class="node">Apex<br>Brain</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="scroll-indicator" onclick="document.getElementById('brain-blueprint').scrollIntoView({behavior: 'smooth'})">
+                <div class="scroll-arrow"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SECTION 2: BRAIN BLUEPRINT ==================== -->
+    <section id="brain-blueprint" class="section">
+        <div class="container">
+            <div class="section-content animate-on-scroll">
+                <h2>The Human Brain Blueprint</h2>
+                <p>Your brain doesn't store everything the same way. Neither should AI.</p>
+
+                <div class="brain-container">
+                    <!-- Simplified Brain SVG -->
+                    <svg class="brain-svg" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Social/Relationship Memory (Temporal Lobe - Left) -->
+                        <ellipse class="brain-region" id="region-1" cx="100" cy="150" rx="80" ry="100"
+                                 fill="url(#gradient-cyan)" opacity="0.8"/>
+
+                        <!-- Meaning Memory (Cortex - Top) -->
+                        <ellipse class="brain-region" id="region-2" cx="200" cy="80" rx="120" ry="70"
+                                 fill="url(#gradient-blue)" opacity="0.8"/>
+
+                        <!-- Timeline Memory (Hippocampus - Center) -->
+                        <ellipse class="brain-region" id="region-3" cx="200" cy="160" rx="60" ry="80"
+                                 fill="url(#gradient-purple)" opacity="0.8"/>
+
+                        <!-- Facts Memory (Frontal Lobe - Right) -->
+                        <ellipse class="brain-region" id="region-4" cx="300" cy="150" rx="80" ry="100"
+                                 fill="url(#gradient-pink)" opacity="0.8"/>
+
+                        <!-- Instant Recall (Prefrontal Cortex - Front) -->
+                        <ellipse class="brain-region" id="region-5" cx="200" cy="200" rx="50" ry="50"
+                                 fill="url(#gradient-orange)" opacity="0.9"/>
+
+                        <!-- Gradients -->
+                        <defs>
+                            <linearGradient id="gradient-cyan" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#0891b2;stop-opacity:1" />
+                            </linearGradient>
+                            <linearGradient id="gradient-blue" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#00d4ff;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#0284c7;stop-opacity:1" />
+                            </linearGradient>
+                            <linearGradient id="gradient-purple" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#a855f7;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+                            </linearGradient>
+                            <linearGradient id="gradient-pink" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#ec4899;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#db2777;stop-opacity:1" />
+                            </linearGradient>
+                            <linearGradient id="gradient-orange" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#d97706;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+
+                <div class="brain-labels">
+                    <div class="brain-label" id="label-1">
+                        <div class="brain-label-icon">🤝</div>
+                        <h4>Social Memory</h4>
+                        <p>Who knows who. How things connect.</p>
+                    </div>
+                    <div class="brain-label" id="label-2">
+                        <div class="brain-label-icon">💡</div>
+                        <h4>Meaning Memory</h4>
+                        <p>This reminds me of that other thing.</p>
+                    </div>
+                    <div class="brain-label" id="label-3">
+                        <div class="brain-label-icon">📅</div>
+                        <h4>Timeline Memory</h4>
+                        <p>What happened when. How things changed.</p>
+                    </div>
+                    <div class="brain-label" id="label-4">
+                        <div class="brain-label-icon">📊</div>
+                        <h4>Facts Memory</h4>
+                        <p>Organized information. Dates, tags, categories.</p>
+                    </div>
+                    <div class="brain-label" id="label-5">
+                        <div class="brain-label-icon">⚡</div>
+                        <h4>Instant Recall</h4>
+                        <p>What you just heard. Immediate access.</p>
+                    </div>
+                </div>
+
+                <p class="mt-4" style="font-size: 1.5rem; color: var(--accent-blue); font-weight: 600;">
+                    Each region specializes. All work together seamlessly.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SECTION 3: TRANSFORMATION ==================== -->
+    <section id="transformation" class="section">
+        <div class="container">
+            <div class="section-content animate-on-scroll">
+                <h2>We Rebuilt It For AI</h2>
+                <p>Five specialized databases. One intelligent coordinator. Zero forgotten conversations.</p>
+
+                <div class="database-grid">
+                    <div class="database-card" data-delay="0">
+                        <div class="database-icon">🤝</div>
+                        <h4>Neo4j</h4>
+                        <p>"Who Knows Who"</p>
+                        <p class="mt-2" style="font-size: 0.875rem;">Find connections between people, companies, concepts</p>
+                    </div>
+
+                    <div class="database-card" data-delay="100">
+                        <div class="database-icon">💡</div>
+                        <h4>Qdrant</h4>
+                        <p>"Find Similar Things"</p>
+                        <p class="mt-2" style="font-size: 0.875rem;">Understand meaning, not just keywords</p>
+                    </div>
+
+                    <div class="database-card" data-delay="200">
+                        <div class="database-icon">📅</div>
+                        <h4>Graphiti</h4>
+                        <p>"What Happened When"</p>
+                        <p class="mt-2" style="font-size: 0.875rem;">Track how things changed over time</p>
+                    </div>
+
+                    <div class="database-card" data-delay="300">
+                        <div class="database-icon">📊</div>
+                        <h4>PostgreSQL</h4>
+                        <p>"Organized Facts"</p>
+                        <p class="mt-2" style="font-size: 0.875rem;">Structured data with lightning-fast filters</p>
+                    </div>
+
+                    <div class="database-card" data-delay="400">
+                        <div class="database-icon">⚡</div>
+                        <h4>Redis</h4>
+                        <p>"Instant Answers"</p>
+                        <p class="mt-2" style="font-size: 0.875rem;">Sub-100ms recall for repeat questions</p>
+                    </div>
+
+                    <div class="database-card coordinator" data-delay="500">
+                        <div class="database-icon">🧠</div>
+                        <h4>Temporal.io</h4>
+                        <p>"The Nervous System"</p>
+                        <p class="mt-2">Coordinates everything. Ensures nothing fails. Complete visibility.</p>
+                    </div>
+                </div>
+
+                <p class="mt-4" style="font-size: 1.25rem; color: var(--text-secondary);">
+                    Like your brain: specialized regions, unified intelligence.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SECTION 4: MEMORY JOURNEY ==================== -->
+    <section id="memory-journey" class="section">
+        <div class="container">
+            <div class="section-content animate-on-scroll">
+                <h2>Journey of a Memory</h2>
+                <p>Watch how information enters the system and gets stored across all "brain regions" simultaneously.</p>
+
+                <div class="pipeline">
+                    <div class="pipeline-steps">
+                        <div class="pipeline-line"></div>
+
+                        <div class="pipeline-step">
+                            <div class="step-icon">
+                                <span class="step-number">1</span>
+                                📄
+                            </div>
+                            <div class="step-label">Upload</div>
+                            <div class="step-description">Document arrives</div>
+                        </div>
+
+                        <div class="pipeline-step">
+                            <div class="step-icon">
+                                <span class="step-number">2</span>
+                                📖
+                            </div>
+                            <div class="step-label">Read</div>
+                            <div class="step-description">Extract text</div>
+                        </div>
+
+                        <div class="pipeline-step">
+                            <div class="step-icon">
+                                <span class="step-number">3</span>
+                                🧠
+                            </div>
+                            <div class="step-label">Understand</div>
+                            <div class="step-description">Identify entities</div>
+                        </div>
+
+                        <div class="pipeline-step">
+                            <div class="step-icon">
+                                <span class="step-number">4</span>
+                                🔮
+                            </div>
+                            <div class="step-label">Vectorize</div>
+                            <div class="step-description">Create meanings</div>
+                        </div>
+
+                        <div class="pipeline-step">
+                            <div class="step-icon">
+                                <span class="step-number">5</span>
+                                💾
+                            </div>
+                            <div class="step-label">Store</div>
+                            <div class="step-description">Write to all DBs</div>
+                        </div>
+
+                        <div class="pipeline-step">
+                            <div class="step-icon">
+                                <span class="step-number">6</span>
+                                ✅
+                            </div>
+                            <div class="step-label">Remember</div>
+                            <div class="step-description">Forever</div>
+                        </div>
+                    </div>
+
+                    <div class="parallel-indicator">
+                        <h3 style="color: var(--accent-cyan); margin-bottom: 1rem;">All 5 Brain Regions Light Up Simultaneously</h3>
+                        <div class="parallel-boxes">
+                            <div class="parallel-box">🤝</div>
+                            <div class="parallel-box">💡</div>
+                            <div class="parallel-box">📅</div>
+                            <div class="parallel-box">📊</div>
+                            <div class="parallel-box">⚡</div>
+                        </div>
+                        <p class="mt-4" style="font-size: 1.25rem; color: var(--accent-blue);">
+                            Seconds, not hours.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SECTION 5: INSTANT RECALL ==================== -->
+    <section id="instant-recall" class="section">
+        <div class="container">
+            <div class="section-content animate-on-scroll">
+                <h2>The Power of Instant Recall</h2>
+                <p>Watch how a single question queries multiple "brain regions" in parallel.</p>
+
+                <div class="query-demo">
+                    <div class="query-input">
+                        "What equipment is underutilized based on our data?"
+                    </div>
+
+                    <div class="router-brain">
+                        <div class="ripple-ring"></div>
+                        <div class="ripple-ring"></div>
+                        <div class="ripple-ring"></div>
+                        🧠
+                    </div>
+
+                    <div class="query-results">
+                        <div class="result-stream">
+                            <div class="result-db-label">Neo4j (Connections)</div>
+                            <p style="font-size: 0.95rem; color: var(--text-secondary);">
+                                "Found 12 trucks connected to declining routes..."
+                            </p>
+                        </div>
+
+                        <div class="result-stream">
+                            <div class="result-db-label">PostgreSQL (Usage Data)</div>
+                            <p style="font-size: 0.95rem; color: var(--text-secondary);">
+                                "5 vehicles under 40% utilization last 90 days..."
+                            </p>
+                        </div>
+
+                        <div class="result-stream">
+                            <div class="result-db-label">Qdrant (Patterns)</div>
+                            <p style="font-size: 0.95rem; color: var(--text-secondary);">
+                                "Similar equipment shows seasonal underuse..."
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="fusion-animation">
+                        <h3 style="color: var(--accent-cyan); margin-bottom: 1.5rem;">Results Fuse Into One Answer</h3>
+                        <div class="fusion-streams">
+                            <div class="fusion-stream"></div>
+                            <div class="fusion-stream" style="animation-delay: 0.3s;"></div>
+                            <div class="fusion-stream" style="animation-delay: 0.6s;"></div>
+                        </div>
+                        <div class="fusion-point"></div>
+                    </div>
+
+                    <div class="final-answer">
+                        <h3 style="color: var(--accent-blue); margin-bottom: 1rem;">Here's what you need to know:</h3>
+                        <p>5 trucks (IDs: T-847, T-923, T-1055, T-1200, T-1384) showing under 40% utilization over 90 days. Connected to routes experiencing 30% volume decline. Similar seasonal pattern detected in Western region. Recommendation: Redeploy to growing Eastern routes or consider disposal.</p>
+                        <div class="time-saved mt-4">⚡ Answer in under 1 second</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SECTION 6: THE MAGIC ==================== -->
+    <section id="the-magic" class="section">
+        <div class="container">
+            <div class="section-content animate-on-scroll">
+                <h2>What Makes This Magical</h2>
+                <p>Seven capabilities that transform how you work with information.</p>
+
+                <div class="capabilities-grid">
+                    <div class="capability-card" data-delay="0">
+                        <div class="capability-icon">📝</div>
+                        <h3>Never Forgets</h3>
+                        <p>"Like a journal that writes itself and never loses a page."</p>
+                    </div>
+
+                    <div class="capability-card" data-delay="100">
+                        <div class="capability-icon">🔗</div>
+                        <h3>Connects Dots</h3>
+                        <p>"Six degrees of separation for your entire business ecosystem."</p>
+                    </div>
+
+                    <div class="capability-card" data-delay="200">
+                        <div class="capability-icon">🎯</div>
+                        <h3>Understands Meaning</h3>
+                        <p>"Thinks like you do, not like a keyword search."</p>
+                    </div>
+
+                    <div class="capability-card" data-delay="300">
+                        <div class="capability-icon">📈</div>
+                        <h3>Gets Smarter</h3>
+                        <p>"Learns which answers you need most, serves them instantly."</p>
+                    </div>
+
+                    <div class="capability-card" data-delay="400">
+                        <div class="capability-icon">🛡️</div>
+                        <h3>Never Loses Data</h3>
+                        <p>"If anything fails, everything rolls back. No partial writes."</p>
+                    </div>
+
+                    <div class="capability-card" data-delay="500">
+                        <div class="capability-icon">⏰</div>
+                        <h3>Time Travel</h3>
+                        <p>"See what you knew then, not just what you know now."</p>
+                    </div>
+
+                    <div class="capability-card" data-delay="600">
+                        <div class="capability-icon">⚡</div>
+                        <h3>Seconds Not Hours</h3>
+                        <p>"Complex questions spanning your entire business. Instant answers."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SECTION 7: REAL-WORLD SCENARIOS ==================== -->
+    <section id="scenarios" class="section">
+        <div class="container">
+            <div class="section-content animate-on-scroll">
+                <h2>See It In Action</h2>
+                <p>Real problems. Real solutions. Real time savings.</p>
+
+                <div class="scenarios-grid">
+                    <!-- Scenario 1 -->
+                    <div class="scenario-card">
+                        <div class="scenario-header">
+                            <div class="scenario-icon">📦</div>
+                            <h3>Supply Chain Risk Detection</h3>
+                        </div>
+
+                        <div class="before-after">
+                            <div class="before">
+                                <div class="label">Before</div>
+                                <p>2-4 hours analyzing spreadsheets, running SQL queries, reading email threads. Often miss critical patterns.</p>
+                            </div>
+
+                            <div class="scenario-question">
+                                "Which suppliers are at risk based on payment delays, delivery issues, and changing order patterns?"
+                            </div>
+
+                            <div class="after">
+                                <div class="label">After</div>
+                                <p>Comprehensive risk analysis across graph connections, temporal trends, and semantic patterns. Complete answer with specific recommendations.</p>
+                            </div>
+                        </div>
+
+                        <div class="time-saved">⏱️ Save 2-4 hours per analysis</div>
+                    </div>
+
+                    <!-- Scenario 2 -->
+                    <div class="scenario-card">
+                        <div class="scenario-header">
+                            <div class="scenario-icon">🏢</div>
+                            <h3>Customer Intelligence</h3>
+                        </div>
+
+                        <div class="before-after">
+                            <div class="before">
+                                <div class="label">Before</div>
+                                <p>Searching 5 different systems. Reading dozens of documents. Manually building timeline. Missing key connections.</p>
+                            </div>
+
+                            <div class="scenario-question">
+                                "Show me ACME Corporation's complete profile: relationships, history, timeline, patterns."
+                            </div>
+
+                            <div class="after">
+                                <div class="label">After</div>
+                                <p>Full network map, complete timeline, interaction patterns, proactive insights. Everything connected, nothing missed.</p>
+                            </div>
+                        </div>
+
+                        <div class="time-saved">⏱️ From scattered to comprehensive in seconds</div>
+                    </div>
+
+                    <!-- Scenario 3 -->
+                    <div class="scenario-card">
+                        <div class="scenario-header">
+                            <div class="scenario-icon">💎</div>
+                            <h3>Hidden Opportunities</h3>
+                        </div>
+
+                        <div class="before-after">
+                            <div class="before">
+                                <div class="label">Before</div>
+                                <p>You don't even know what to ask. Insights buried in data. Patterns invisible until someone points them out.</p>
+                            </div>
+
+                            <div class="scenario-question">
+                                "What patterns and trends should I know about?"
+                            </div>
+
+                            <div class="after">
+                                <div class="label">After</div>
+                                <p>Automatic pattern detection surfaces insights proactively. "Customer X orders every 3-4 weeks." "Route efficiency declining 15% in Region Y."</p>
+                            </div>
+                        </div>
+
+                        <div class="time-saved">💡 10+ proactive insights per week</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SECTION 8: BOTTOM LINE ==================== -->
+    <section id="bottom-line" class="section">
+        <div class="container">
+            <div class="section-content animate-on-scroll">
+                <h2>The Bottom Line</h2>
+                <p>We gave AI a brain that works like yours does.</p>
+
+                <div class="comparison">
+                    <!-- Before -->
+                    <div class="comparison-side comparison-before">
+                        <h3>Before</h3>
+                        <ul class="comparison-items">
+                            <li class="comparison-item">
+                                <div class="item-icon">⏱️</div>
+                                <div class="item-text">2-4 hours researching per question</div>
+                            </li>
+                            <li class="comparison-item">
+                                <div class="item-icon">❌</div>
+                                <div class="item-text">40% of decisions made with incomplete context</div>
+                            </li>
+                            <li class="comparison-item">
+                                <div class="item-icon">🔍</div>
+                                <div class="item-text">No proactive insights - reactive only</div>
+                            </li>
+                            <li class="comparison-item">
+                                <div class="item-icon">💭</div>
+                                <div class="item-text">Questions you can't even ask</div>
+                            </li>
+                            <li class="comparison-item">
+                                <div class="item-icon">🧩</div>
+                                <div class="item-text">Information scattered across 5 systems</div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- After -->
+                    <div class="comparison-side comparison-after">
+                        <h3>With Apex</h3>
+                        <ul class="comparison-items">
+                            <li class="comparison-item">
+                                <div class="item-icon">⚡</div>
+                                <div class="item-text">Under 1 second per answer</div>
+                            </li>
+                            <li class="comparison-item">
+                                <div class="item-icon">✅</div>
+                                <div class="item-text">100% of decisions with full context</div>
+                            </li>
+                            <li class="comparison-item">
+                                <div class="item-icon">💡</div>
+                                <div class="item-text">10+ proactive insights per week</div>
+                            </li>
+                            <li class="comparison-item">
+                                <div class="item-icon">🎯</div>
+                                <div class="item-text">Ask anything, connect everything</div>
+                            </li>
+                            <li class="comparison-item">
+                                <div class="item-icon">🧠</div>
+                                <div class="item-text">Unified intelligence, permanent memory</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="cta-section">
+                    <p style="font-size: 1.75rem; margin-bottom: 2rem; color: var(--text-primary);">
+                        <strong>We didn't just make AI faster.</strong><br>
+                        We gave it a brain that never forgets.
+                    </p>
+                    <a href="#" class="cta-button">Ready to Give Your AI a Brain?</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== JAVASCRIPT ==================== -->
+    <script>
+        // ==================== SCROLL ANIMATION CONTROLLER ====================
+        const observerOptions = {
+            threshold: 0.2,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections with animate-on-scroll
+        document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+        // ==================== SECTION 2: BRAIN BLUEPRINT ANIMATION ====================
+        const brainSection = document.getElementById('brain-blueprint');
+        const brainObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Animate brain regions sequentially
+                    const regions = document.querySelectorAll('.brain-region');
+                    const labels = document.querySelectorAll('.brain-label');
+
+                    regions.forEach((region, index) => {
+                        setTimeout(() => {
+                            region.classList.add('active');
+                            if (labels[index]) labels[index].classList.add('active');
+                        }, index * 400);
+                    });
+
+                    brainObserver.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        brainObserver.observe(brainSection);
+
+        // ==================== SECTION 3: DATABASE CARDS ANIMATION ====================
+        const transformSection = document.getElementById('transformation');
+        const transformObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const cards = document.querySelectorAll('.database-card');
+                    cards.forEach((card, index) => {
+                        setTimeout(() => {
+                            card.classList.add('active');
+                        }, card.dataset.delay || index * 150);
+                    });
+                    transformObserver.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        transformObserver.observe(transformSection);
+
+        // ==================== SECTION 4: PIPELINE ANIMATION ====================
+        const pipelineSection = document.getElementById('memory-journey');
+        const pipelineObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const steps = document.querySelectorAll('.pipeline-step');
+                    const line = document.querySelector('.pipeline-line');
+                    const parallel = document.querySelector('.parallel-indicator');
+
+                    // Animate line
+                    setTimeout(() => line.classList.add('animating'), 300);
+
+                    // Animate steps
+                    steps.forEach((step, index) => {
+                        setTimeout(() => {
+                            step.classList.add('active');
+                        }, index * 500);
+                    });
+
+                    // Show parallel indicator
+                    setTimeout(() => parallel.classList.add('active'), steps.length * 500 + 500);
+
+                    pipelineObserver.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        pipelineObserver.observe(pipelineSection);
+
+        // ==================== SECTION 5: QUERY DEMO ANIMATION ====================
+        const querySection = document.getElementById('instant-recall');
+        const queryObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const queryInput = document.querySelector('.query-input');
+                    const routerBrain = document.querySelector('.router-brain');
+                    const results = document.querySelectorAll('.result-stream');
+                    const fusion = document.querySelector('.fusion-animation');
+                    const answer = document.querySelector('.final-answer');
+
+                    // Query appears
+                    setTimeout(() => queryInput.classList.add('active'), 300);
+
+                    // Router analyzes
+                    setTimeout(() => routerBrain.classList.add('active'), 800);
+
+                    // Results stream in
+                    results.forEach((result, index) => {
+                        setTimeout(() => result.classList.add('active'), 1500 + index * 300);
+                    });
+
+                    // Fusion happens
+                    setTimeout(() => fusion.classList.add('active'), 2500);
+
+                    // Final answer appears
+                    setTimeout(() => answer.classList.add('active'), 3500);
+
+                    queryObserver.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        queryObserver.observe(querySection);
+
+        // ==================== SECTION 6: CAPABILITIES CARDS ====================
+        const magicSection = document.getElementById('the-magic');
+        const magicObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const cards = document.querySelectorAll('.capability-card');
+                    cards.forEach((card, index) => {
+                        setTimeout(() => {
+                            card.classList.add('active');
+                        }, card.dataset.delay || index * 100);
+                    });
+                    magicObserver.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        magicObserver.observe(magicSection);
+
+        // ==================== SECTION 7: SCENARIOS CARDS ====================
+        const scenariosSection = document.getElementById('scenarios');
+        const scenariosObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const cards = document.querySelectorAll('.scenario-card');
+                    cards.forEach((card, index) => {
+                        setTimeout(() => {
+                            card.classList.add('active');
+                        }, index * 200);
+                    });
+                    scenariosObserver.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        scenariosObserver.observe(scenariosSection);
+
+        // ==================== SECTION 8: COMPARISON AND CTA ====================
+        const bottomSection = document.getElementById('bottom-line');
+        const bottomObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const sides = document.querySelectorAll('.comparison-side');
+                    const cta = document.querySelector('.cta-section');
+
+                    sides.forEach((side, index) => {
+                        setTimeout(() => side.classList.add('active'), index * 300);
+                    });
+
+                    setTimeout(() => cta.classList.add('active'), 1000);
+
+                    bottomObserver.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        bottomObserver.observe(bottomSection);
+
+        // ==================== SMOOTH SCROLL FOR ALL INTERNAL LINKS ====================
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

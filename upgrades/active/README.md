@@ -85,6 +85,43 @@ Enhance domain-specific entity extraction for trucking/logistics with additional
 
 ---
 
+### 4. Conversational Memory Integration ⭐ NEW
+
+**Status:** 🟢 **Architecture Finalized** - Ready for Implementation | **Priority:** P0 - Critical | **Timeline:** 6-8 weeks
+
+Transform Apex into true AI agent brain by enabling automatic conversation → knowledge graph ingestion.
+
+**The Problem:**
+- Conversations stored in PostgreSQL but NOT extracted into knowledge graph
+- System can't learn from user interactions or agent collaborations
+- Missing 70% of potential knowledge (document ingestion works, conversation ingestion doesn't)
+
+**The Solution:**
+- ✅ **Architecture finalized** (Slack + NATS + PostgreSQL + Redis + Neo4j/Graphiti)
+- ✅ **3 core paths:** Human↔Agent (70%), Agent↔Agent (30%), Redis caching
+- ✅ **5-tier degradation:** Filter, score, decay, archive, consolidate
+- ✅ **Realistic performance targets:** 2-3s Slack, <20ms NATS, 10-20s background
+- ✅ **Migration path:** PostgreSQL → Event Sourcing (when ready)
+
+**Implementation Phases (6-8 weeks):**
+- Week 1: Research & Documentation (ADRs, schemas, IMPLEMENTATION.md)
+- Week 2-3: Core Feedback Loop + Redis (automatic ingestion, caching)
+- Week 3-4: Memory Quality (importance scoring, archival, consolidation)
+- Week 5-6: Agent↔Agent Communication (NATS integration)
+- Week 7: Proactive Features (suggestions, patterns, communities)
+- Week 8: Comprehensive Testing (156 Enhanced Saga baseline + 70 new tests)
+
+**Key Benefits:**
+- Agents learn from every conversation automatically
+- 60% latency reduction (Redis caching)
+- 5x cost savings (LLM deduplication)
+- 80% storage reduction (5-tier degradation)
+- <$0.05 per conversation (including LLM costs)
+
+📂 **[Full Documentation](conversational-memory-integration/)**
+
+---
+
 ## Development Workflow
 
 **Active projects follow this cycle:**

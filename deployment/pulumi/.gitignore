@@ -1,0 +1,37 @@
+# Pulumi State Files (never commit!)
+Pulumi.*.yaml
+!Pulumi.yaml
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+.venv/
+env/
+*.virtualenv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Pulumi Local State (if using local backend)
+.pulumi/
+*.state
+
+# Secrets (never commit!)
+secrets.yaml
+*.secret
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
