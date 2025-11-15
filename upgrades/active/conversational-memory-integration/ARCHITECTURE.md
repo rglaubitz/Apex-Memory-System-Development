@@ -395,30 +395,38 @@ class MemoryDecayWorkflow:
 
 ---
 
-### Tier 4: Retention Policy (Future Enhancement)
+### Tier 4: Retention Policy (Full Implementation - Phase 3)
 
-**Status:** Optional, not in MVP
-**Timeline:** Phase 3 (Weeks 3-4) - if needed
+**Status:** ✅ Included in Phase 3 full implementation
+**Timeline:** Phase 3, Days 8-10 (Week 2)
+**Storage Solution:** ✅ Google Cloud Storage (GCS) - See ADR-001
 
 **Goal:** Tiered retention based on message importance (ephemeral, normal, important, critical)
 
 **Key Features:**
-- Automatic archival to S3/cold storage after retention period
+- Automatic archival to **Google Cloud Storage (GCS)** after retention period
 - 4 retention tiers: 7 days (ephemeral) → 1 year (important) → forever (critical)
-- Storage tier optimization: Hot (Neo4j) → Warm (PostgreSQL) → Cold (S3)
+- Storage tier optimization: Hot (Neo4j) → Warm (PostgreSQL) → Cold (GCS)
+
+**GCS Configuration:**
+- Storage class: **Nearline** ($0.012/GB/month)
+- Lifecycle policies: Auto-transition to Coldline (90 days) → Archive (365 days)
+- Bucket: `apex-memory-archive`
+- Python SDK: `google-cloud-storage`
 
 **Estimated Cost Savings:**
 - Neo4j: $200/month (vs $2000/month without archival)
+- GCS cost: <$1/year (even at scale)
 - Total savings: $2,250/month ($27,000/year)
 
-**Implementation Details:** See `research/future-enhancements/retention-archival.md`
+**Architecture Decision:** See `research/architecture-decisions/ADR-001-cold-storage-gcs.md`
 
 ---
 
-### Tier 5: Duplicate Fact Consolidation (Future Enhancement)
+### Tier 5: Duplicate Fact Consolidation (Full Implementation - Phase 3)
 
-**Status:** Optional, not in MVP
-**Timeline:** Phase 3 (Weeks 3-4) - if needed
+**Status:** ✅ Included in Phase 3 full implementation
+**Timeline:** Phase 3, Days 11-13 (Week 3)
 
 **Goal:** Detect and merge redundant information using semantic similarity
 
@@ -1042,8 +1050,8 @@ async def delete_user_data(user_id: UUID):
     # 4. Clear from Redis
     await redis.delete(f"user:{user_id}:*")
 
-    # 5. Delete from S3 archives
-    await s3.delete_user_archives(user_id)
+    # 5. Delete from GCS archives
+    await gcs.delete_user_archives(user_id)
 ```
 
 ### Sensitive Information Handling
@@ -1102,7 +1110,7 @@ def redact_sensitive_info(message: str) -> str:
 - Redis memory usage (GB)
 - PostgreSQL storage growth (GB/day)
 - Neo4j storage growth (GB/day)
-- S3 archival costs ($/month)
+- GCS archival costs ($/month)
 
 **Business Metrics:**
 - Knowledge graph growth (entities/day, relationships/day)
