@@ -39,14 +39,43 @@
 
 | Service | Cost | Purpose | Where to Get | Prerequisites | Time to Setup | Status |
 |---------|------|---------|--------------|---------------|---------------|--------|
-| **OpenAI API Key** | ~$10-30/month (usage-based)<br>$0.00013/1K tokens (embeddings) | Text embeddings (text-embedding-3-small) | https://platform.openai.com/api-keys | - OpenAI account<br>- Payment method added | 10 min | [ ] |
+| **OpenAI API Key** | ~$10-30/month (usage-based)<br>$0.00013/1K tokens (embeddings) | Text embeddings (text-embedding-3-small) **+ Graphiti entity extraction** | https://platform.openai.com/api-keys | - OpenAI account<br>- Payment method added | 10 min | [ ] |
 | **Anthropic API Key** | ~$20-50/month (usage-based)<br>$3/million input tokens (Claude Haiku) | Claude for query rewriting, chat, LLM classification | https://console.anthropic.com/settings/keys | - Anthropic account<br>- Payment method added | 10 min | [ ] |
+| **Graphiti LLM** | ~$10-30/month (usage-based)<br>Included in OpenAI/Anthropic costs above | LLM-powered entity extraction (90%+ accuracy, replaces regex) | Use existing OpenAI or Anthropic key | - OpenAI OR Anthropic account | 0 min (already configured) | [ ] |
+| **GPT-5 Nano** (optional) | ~$5-15/month (usage-based)<br>$0.05/$0.40 per 1M tokens | Conversation entity extraction (40x cheaper than Claude) | Use existing OpenAI key | - OpenAI account | 0 min (already configured) | [ ] |
 
-**Subtotal API Keys:** $30-80/month (usage-based)
+**Note:** Graphiti and GPT-5 Nano use the same API keys as OpenAI/Anthropic - no additional service signup required.
+
+**Subtotal API Keys:** $40-110/month (usage-based, includes Graphiti + Conversation processing)
 
 ---
 
-## 3. Development Tools
+## 3. Google Drive Integration + GCS Archival (Optional Component)
+
+| Service | Cost | Purpose | Where to Get | Prerequisites | Time to Setup | Status |
+|---------|------|---------|--------------|---------------|---------------|--------|
+| **Google Cloud Service Account** | FREE | Google Drive API access for monitoring | https://console.cloud.google.com/iam-admin/serviceaccounts | - GCP account<br>- Project created | 15 min | [ ] |
+| **Google Drive API** | FREE (within quota) | Drive file monitoring and ingestion | https://console.cloud.google.com/apis/library/drive.googleapis.com | - GCP project<br>- Service account created | 5 min | [ ] |
+| **Google Drive Folder** | FREE | Monitored folder for auto-ingestion | https://drive.google.com | - Service account email | 5 min | [ ] |
+| **GCS Bucket (Archive)** | ~$0-5/month | Long-term document archival | GCP Cloud Storage (already enabled) | - GCP project<br>- Service account | 10 min | [ ] |
+| **GCS Bucket (Messages)** | ~$5-10/month | Message cold storage | GCP Cloud Storage (already enabled) | - GCP project | 10 min | [ ] |
+
+**Notes:**
+- **Optional:** Google Drive integration is optional. If enabled, new documents placed in monitored folder are automatically ingested into Apex Memory System every 15 minutes.
+- **Quota:** Google Drive API has free quota (10,000 requests/day). Apex Monitor polls every 15 minutes = 96 requests/day (well within free tier).
+- **GCS Archival:** Two buckets for long-term storage (documents + messages). Lifecycle policies auto-transition to Coldline/Archive tiers.
+- **Setup Time:** 25 minutes Drive + 20 minutes GCS = 45 minutes total
+
+**Complete Setup Guides:**
+- Drive Monitor: `deployment/components/google-drive-integration/DEPLOYMENT-GUIDE.md`
+- Drive Archive: `deployment/components/google-drive-integration/ARCHIVE-WORKFLOW.md`
+- GCS Archival: `deployment/components/gcs-archival/DEPLOYMENT-GUIDE.md`
+
+**Subtotal Google Drive + GCS:** $5-15/month (GCS storage, Drive API is FREE)
+
+---
+
+## 4. Development Tools
 
 | Tool | Cost | Purpose | Where to Get | Prerequisites | Action Needed | Status |
 |------|------|---------|--------------|---------------|---------------|--------|
@@ -63,7 +92,7 @@
 
 ---
 
-## 4. Accounts & Credentials
+## 5. Accounts & Credentials
 
 | Account | Cost | Purpose | Where to Get | Prerequisites | Time to Setup | Status |
 |---------|------|---------|--------------|---------------|---------------|--------|
@@ -75,7 +104,30 @@
 
 ---
 
-## 5. Domain & DNS (Optional for Initial Deployment)
+## 5a. NATS Messaging (Optional - Verify Usage First)
+
+| Service | Cost | Purpose | Where to Get | Prerequisites | Time to Setup | Status |
+|---------|------|---------|--------------|---------------|---------------|--------|
+| **NATS Server (Self-Hosted)** | $0/month | Agent-to-agent messaging (<10ms latency) | Deploy on existing Compute Engine VM | - Compute Engine VM (already deployed) | 30-45 min | [ ] |
+| **NATS Server (Managed)** | $15-50/month | Agent-to-agent messaging (managed service) | https://nats.io | - nats.io account | 20 min | [ ] |
+
+**⚠️ IMPORTANT:** NATS messaging is **OPTIONAL** and should only be deployed if **actively used** in production code.
+
+**Verification Step:** Before deploying, verify NATS is actively used:
+```bash
+cd apex-memory-system
+grep -r "NATSService" src/ --include="*.py" | grep -v "test" | grep -v "__pycache__"
+```
+
+**Recommendation:** Based on current codebase analysis, NATS appears to be implemented but not actively used. **Skip this prerequisite** unless usage is confirmed.
+
+**Complete Setup Guide:** `deployment/components/nats-messaging/DEPLOYMENT-GUIDE.md`
+
+**Subtotal NATS:** $0-50/month (only if actively used, recommend self-hosted = $0)
+
+---
+
+## 6. Domain & DNS (Optional for Initial Deployment)
 
 | Item | Cost | Purpose | Where to Get | Prerequisites | Time to Setup | Status |
 |------|------|---------|--------------|---------------|---------------|--------|
@@ -89,7 +141,7 @@
 
 ---
 
-## 6. Security & Secrets Management
+## 7. Security & Secrets Management
 
 | Item | Cost | Purpose | Action Required | Status |
 |------|------|---------|-----------------|--------|
@@ -106,15 +158,17 @@
 | **GCP Services** | $261/month | $542/month | Auto-scales based on traffic |
 | **Temporal Cloud** | $100/month | $150/month | Essentials tier |
 | **Grafana Cloud** | $19/month | $19/month | Pro tier (10k metrics) |
-| **API Keys** (OpenAI + Anthropic) | $30/month | $80/month | Usage-based (embeddings + chat) |
+| **API Keys** (OpenAI + Anthropic + Graphiti + Conversations) | $40/month | $110/month | Usage-based (embeddings + entity extraction + chat) |
+| **GCS Archival** (Documents + Messages) | $5/month | $15/month | Document + message storage with lifecycle policies |
+| **NATS Messaging** (optional) | $0/month | $50/month | Only if actively used (recommend self-hosted = $0) |
 | **Docker Desktop** | $0/month | $9/month | Only if org >250 employees |
 | **Domain/DNS** | $1/month | $2/month | ~$15/year amortized |
 | **Password Manager** | $0/month | $5/month | Optional (Bitwarden free) |
-| **TOTAL** | **$411/month** | **$807/month** | |
+| **TOTAL** | **$426/month** | **$902/month** | Without NATS: $426-852/month |
 
 **First 90 Days (with GCP $300 free credit):**
-- **Out-of-pocket:** $149-249/month (Temporal + Grafana + APIs only)
-- **After free credit:** $411-807/month (full cost)
+- **Out-of-pocket:** $164-284/month (Temporal + Grafana + APIs + GCS only)
+- **After free credit:** $426-902/month (full cost, includes optional NATS)
 
 ---
 

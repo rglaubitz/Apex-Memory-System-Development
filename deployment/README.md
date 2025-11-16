@@ -386,6 +386,59 @@ Do you need to deploy the MCP Server for Claude Desktop?
 
 ---
 
+## 🔧 Feature Integration Resources
+
+**For developers adding new features to deployment documentation:**
+
+### Integration Workflow
+
+When implementing a new feature in the codebase, ensure it's fully integrated into deployment documentation:
+
+1. **[INTEGRATION-CHECKLIST-TEMPLATE.md](INTEGRATION-CHECKLIST-TEMPLATE.md)** - Complete 6-phase integration checklist (2-4 hours)
+2. **[INTEGRATION-QA-SUMMARY.md](INTEGRATION-QA-SUMMARY.md)** - Quality assurance validation results
+3. **[scripts/detect-deployment-gaps.sh](scripts/detect-deployment-gaps.sh)** - Automated gap detection script
+
+### Integration Phases
+
+1. **Phase 1: Research & Analysis** - Analyze feature, identify dependencies, estimate costs
+2. **Phase 2: Component Documentation** - Create `deployment/components/[feature]/DEPLOYMENT-GUIDE.md`
+3. **Phase 3: Prerequisites Integration** - Update `DEPLOYMENT-NEEDS.md` with new prerequisites/costs
+4. **Phase 4: Workflow Integration** - Add steps to `PRODUCTION-DEPLOYMENT-PLAN.md` and `GCP-DEPLOYMENT-GUIDE.md`
+5. **Phase 5: Quality Assurance** - Validate cross-references, costs, commands, dependencies
+6. **Phase 6: Future Process** - Prevent future gaps with checklist templates and gap detection
+
+### Quick Commands
+
+```bash
+# Detect missing deployment documentation
+./deployment/scripts/detect-deployment-gaps.sh
+
+# Expected: "No deployment gaps detected!" (exit code 0)
+# If gaps found: Follow remediation steps in script output
+```
+
+### Recent Integration (Example)
+
+**10 Features Integrated (November 2025):**
+- Graphiti Integration ($10-30/month)
+- Structured Data Ingestion ($0/month)
+- Conversation Processing ($5-15/month)
+- Memory Decay ($0/month)
+- GCS Archival Service ($5-15/month)
+- NATS Messaging (OPTIONAL, $0-50/month)
+- Authentication (OPTIONAL, $0/month)
+- Agent Interactions (DEFERRED)
+- UI/UX Frontend (DEFERRED)
+- Google Drive Archive Workflow ($0/month)
+
+**Total Additional Cost:** $20-60/month (required features only)
+**Total Documentation:** ~2,300 lines added across 13 files
+**Quality Score:** 100% (all validations passed)
+
+See [INTEGRATION-QA-SUMMARY.md](INTEGRATION-QA-SUMMARY.md) for complete audit trail.
+
+---
+
 ## 🚨 Before You Deploy - Critical Checklist
 
 **⛔ STOP - Complete these before any deployment:**

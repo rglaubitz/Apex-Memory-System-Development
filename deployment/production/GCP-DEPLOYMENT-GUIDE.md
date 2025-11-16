@@ -129,6 +129,9 @@ gcloud services enable logging.googleapis.com
 # Networking
 gcloud services enable servicenetworking.googleapis.com
 
+# Google Drive Integration (optional component)
+gcloud services enable drive.googleapis.com
+
 # Wait for APIs to propagate (1-2 minutes)
 sleep 120
 ```
@@ -901,7 +904,18 @@ gcloud run deploy apex-memory-api \
   --update-env-vars="NEO4J_USER=neo4j" \
   --update-env-vars="QDRANT_URL=$QDRANT_URL" \
   --update-env-vars="TEMPORAL_HOST=$TEMPORAL_HOST" \
-  --update-env-vars="TEMPORAL_NAMESPACE=$TEMPORAL_NAMESPACE"
+  --update-env-vars="TEMPORAL_NAMESPACE=$TEMPORAL_NAMESPACE" \
+  --update-env-vars="GRAPHITI_ENABLED=true" \
+  --update-env-vars="USE_UNIFIED_SCHEMAS=true" \
+  --update-env-vars="ENABLE_STRUCTURED_DATA_INGESTION=true" \
+  --update-env-vars="ENABLE_CONVERSATION_INGESTION=true" \
+  --update-env-vars="CONVERSATION_MODEL=gpt-5-nano" \
+  --update-env-vars="GCS_ARCHIVE_BUCKET=apex-document-archive" \
+  --update-env-vars="GCS_MESSAGE_ARCHIVE_BUCKET=apex-message-archive"
+# OPTIONAL environment variables (uncomment if deploying these features):
+#   --update-env-vars="NATS_URL=nats://nats-server:4222" \
+#   --update-env-vars="JWT_ALGORITHM=HS256" \
+#   --update-env-vars="JWT_EXPIRATION=3600"
 
 # Get service URL
 export API_URL=$(gcloud run services describe apex-memory-api \
@@ -978,7 +992,18 @@ gcloud run deploy apex-memory-worker \
   --update-env-vars="NEO4J_USER=neo4j" \
   --update-env-vars="QDRANT_URL=$QDRANT_URL" \
   --update-env-vars="TEMPORAL_HOST=$TEMPORAL_HOST" \
-  --update-env-vars="TEMPORAL_NAMESPACE=$TEMPORAL_NAMESPACE"
+  --update-env-vars="TEMPORAL_NAMESPACE=$TEMPORAL_NAMESPACE" \
+  --update-env-vars="GRAPHITI_ENABLED=true" \
+  --update-env-vars="USE_UNIFIED_SCHEMAS=true" \
+  --update-env-vars="ENABLE_STRUCTURED_DATA_INGESTION=true" \
+  --update-env-vars="ENABLE_CONVERSATION_INGESTION=true" \
+  --update-env-vars="CONVERSATION_MODEL=gpt-5-nano" \
+  --update-env-vars="GCS_ARCHIVE_BUCKET=apex-document-archive" \
+  --update-env-vars="GCS_MESSAGE_ARCHIVE_BUCKET=apex-message-archive"
+# OPTIONAL environment variables (uncomment if deploying these features):
+#   --update-env-vars="NATS_URL=nats://nats-server:4222" \
+#   --update-env-vars="JWT_ALGORITHM=HS256" \
+#   --update-env-vars="JWT_EXPIRATION=3600"
 ```
 
 **Validation:**

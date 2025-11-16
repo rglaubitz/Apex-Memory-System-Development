@@ -231,7 +231,8 @@ Deploy Apex Memory System to Google Cloud Platform with production-grade infrast
      iam.googleapis.com \
      container.googleapis.com \
      logging.googleapis.com \
-     monitoring.googleapis.com
+     monitoring.googleapis.com \
+     drive.googleapis.com               # Google Drive Integration (optional component)
    ```
 
 8. **Configure VPC Network**
@@ -243,7 +244,9 @@ Deploy Apex Memory System to Google Cloud Platform with production-grade infrast
 9. **Set Up IAM Service Accounts**
    - `apex-api@apex-memory-prod.iam.gserviceaccount.com` - API service account
    - `apex-worker@apex-memory-prod.iam.gserviceaccount.com` - Worker service account
+   - `apex-drive@apex-memory-prod.iam.gserviceaccount.com` - Google Drive service account (optional)
    - Permissions: Secret Manager read, Cloud SQL client, Memorystore client
+   - Google Drive Permissions (optional): Drive API read access (share monitored folder with apex-drive service account)
 
 #### Day 3-5: Secret Manager & Pulumi Setup (18-26 hours)
 
@@ -263,6 +266,10 @@ Deploy Apex Memory System to Google Cloud Platform with production-grade infrast
     # Temporal Cloud
     echo -n "temporal-cert" | gcloud secrets create apex-temporal-cert --data-file=-
     echo -n "temporal-key" | gcloud secrets create apex-temporal-key --data-file=-
+
+    # Google Drive Integration (optional)
+    gcloud secrets create apex-drive-service-account-json --data-file=apex-drive-service-account-key.json
+    echo -n "1folder...id" | gcloud secrets create apex-drive-folder-id --data-file=-
     ```
 
 11. **Implement Secret Manager Client**
@@ -801,6 +808,287 @@ Deploy Apex Memory System to Google Cloud Platform with production-grade infrast
         asyncio.run(test())
     ```
 
+**Google Drive Integration (Optional - 1-2 hours):**
+
+44b. **Configure Google Drive Monitor Schedule** (if Google Drive enabled)
+    - File: Create `scripts/temporal/setup-google-drive-schedule.py`
+    - Schedule: Every 15 minutes (cron: `*/15 * * * *`)
+    - Workflow: `GoogleDriveMonitorWorkflow`
+    - Task Queue: `apex-ingestion-tasks`
+    - Execute: Python script creates Temporal schedule via SDK
+    - Verify: Schedule appears in Temporal UI (http://apex-memory-prod.tmprl.cloud)
+
+    ```python
+    # scripts/temporal/setup-google-drive-schedule.py
+    from temporalio.client import Client, Schedule, ScheduleIntervalSpec
+    from datetime import timedelta
+
+    async def setup_schedule():
+        client = await Client.connect(
+            "apex-memory-prod.tmprl.cloud:7233",
+            namespace="apex-memory-prod",
+            tls=True,
+        )
+
+        await client.create_schedule(
+            "google-drive-monitor-schedule",
+            Schedule(
+                action=ScheduleActionStartWorkflow(
+                    GoogleDriveMonitorWorkflow.run,
+                    args=["<FOLDER_ID>", None, 100],
+                    id="google-drive-monitor",
+                    task_queue="apex-ingestion-tasks",
+                ),
+                spec=ScheduleSpec(
+                    intervals=[ScheduleIntervalSpec(every=timedelta(minutes=15))]
+                ),
+            ),
+        )
+        print("✅ Google Drive schedule created: Every 15 minutes")
+
+    if __name__ == "__main__":
+        import asyncio
+        asyncio.run(setup_schedule())
+    ```
+
+    **Reference:** See `deployment/components/google-drive-integration/DEPLOYMENT-GUIDE.md` for complete setup.
+
+**Additional Feature Deployment (Week 2-3, 6-10 hours total):**
+
+44c. **Enable Graphiti Integration** (1 hour)
+    - Feature: LLM-powered entity extraction (90%+ accuracy, replaces regex)
+    - Cost: ~$10-30/month (usage-based, included in OpenAI costs)
+    - **Prerequisites:** OpenAI or Anthropic API key (already configured in Step 10)
+    - **Environment Variables:**
+      ```bash
+      gcloud run services update apex-api \
+        --region=us-central1 \
+        --update-env-vars="GRAPHITI_ENABLED=true,USE_UNIFIED_SCHEMAS=true"
+      ```
+    - **Database:** No migration needed (uses existing `episodes`, `entities` tables)
+    - **Verification:**
+      ```bash
+      # Test entity extraction
+      curl -X POST "$API_URL/api/v1/ingest/document" \
+        -H "Content-Type: application/json" \
+        -d '{"document_id": "test-graphiti", "content": "ACME Corp shipped 500 units to Bosch in March 2024."}'
+
+      # Check extracted entities (should show all 4: ACME Corp, 500 units, Bosch, March 2024)
+      ```
+    - **Reference:** `deployment/components/graphiti-integration/DEPLOYMENT-GUIDE.md`
+
+44d. **Enable Structured Data Ingestion** (1 hour)
+    - Feature: JSON/JSONB ingestion for Samsara, Turvo, FrontApp data
+    - Cost: $0/month (uses existing PostgreSQL)
+    - **Prerequisites:** PostgreSQL with JSONB support (already deployed in Step 21)
+    - **Database Migration:**
+      ```bash
+      cd apex-memory-system && alembic upgrade head
+      # Creates `structured_data` table with JSONB column
+      ```
+    - **Environment Variables:**
+      ```bash
+      gcloud run services update apex-api \
+        --region=us-central1 \
+        --update-env-vars="ENABLE_STRUCTURED_DATA_INGESTION=true"
+      ```
+    - **Workflow Registration:** Automatic (StructuredDataIngestionWorkflow registered in worker)
+    - **Verification:**
+      ```bash
+      # Test JSON ingestion
+      curl -X POST "$API_URL/api/v1/ingest/structured-data" \
+        -H "Content-Type: application/json" \
+        -d '{"data_type": "samsara_fleet", "source_system": "samsara", "data": {"vehicle_id": "V123", "miles": 5000}}'
+      ```
+    - **Reference:** `deployment/components/structured-data-ingestion/DEPLOYMENT-GUIDE.md`
+
+44e. **Enable Conversation Processing** (1 hour)
+    - Feature: Background entity extraction from conversations (85%+ accuracy, <20s P95)
+    - Cost: ~$5-15/month (GPT-5 nano: $0.05/$0.40 per 1M tokens, 40x cheaper than Claude)
+    - **Prerequisites:** OpenAI API key (already configured in Step 10)
+    - **Database:** Uses existing `conversations`, `episodes` tables
+    - **Environment Variables:**
+      ```bash
+      gcloud run services update apex-api \
+        --region=us-central1 \
+        --update-env-vars="ENABLE_CONVERSATION_INGESTION=true,CONVERSATION_MODEL=gpt-5-nano"
+      ```
+    - **Workflow:** ConversationIngestionWorkflow (automatic background processing)
+    - **Verification:**
+      ```bash
+      # Test conversation ingestion
+      curl -X POST "$API_URL/api/v1/conversations/" \
+        -H "Content-Type: application/json" \
+        -d '{"agent_id": "agent1", "content": "Order 50 units from supplier ABC", "importance": 0.8}'
+
+      # Check background processing (should extract entities asynchronously)
+      ```
+    - **Reference:** `deployment/components/conversation-processing/DEPLOYMENT-GUIDE.md`
+
+44f. **Enable Memory Decay Workflow** (30 min)
+    - Feature: Daily importance recalculation (10k episodes <10min, cost $0/month)
+    - Cost: $0/month (uses existing infrastructure)
+    - **Prerequisites:** Temporal Cloud (already configured in Step 38-40)
+    - **Schedule Creation:**
+      ```python
+      # scripts/temporal/setup-memory-decay-schedule.py
+      from temporalio.client import Client, Schedule, ScheduleSpec
+
+      async def setup():
+          client = await Client.connect(
+              "apex-memory-prod.tmprl.cloud:7233",
+              namespace="apex-memory-prod",
+              tls=True,
+          )
+
+          await client.create_schedule(
+              "memory-decay-daily-schedule",
+              Schedule(
+                  action=ScheduleActionStartWorkflow(
+                      MemoryDecayWorkflow.run,
+                      id="memory-decay-daily",
+                      task_queue="apex-ingestion-tasks",
+                  ),
+                  spec=ScheduleSpec(cron_expressions=['0 2 * * *']),  # Daily 2 AM UTC
+              ),
+          )
+          print("✅ Memory decay schedule created: Daily 2 AM UTC")
+      ```
+    - **Verification:** Check Temporal UI for schedule (http://apex-memory-prod.tmprl.cloud)
+    - **Reference:** `deployment/components/memory-decay/DEPLOYMENT-GUIDE.md`
+
+44g. **Enable GCS Archival Service** (2 hours)
+    - Feature: Two-bucket cold storage (documents + messages) with lifecycle policies
+    - Cost: ~$5-15/month ($5-10 messages, $0-5 documents)
+    - **Prerequisites:** GCP project (already configured in Step 6)
+    - **GCS Bucket Setup:**
+      ```bash
+      # Document archive bucket
+      gcloud storage buckets create gs://apex-document-archive \
+        --location=us-central1 \
+        --uniform-bucket-level-access
+
+      # Message archive bucket
+      gcloud storage buckets create gs://apex-message-archive \
+        --location=us-central1 \
+        --uniform-bucket-level-access
+
+      # Lifecycle policies (Standard → Nearline → Coldline → Archive)
+      gcloud storage buckets update gs://apex-message-archive \
+        --lifecycle-file=deployment/components/gcs-archival/message-lifecycle.json
+      ```
+    - **Service Account Permissions:**
+      ```bash
+      gcloud storage buckets add-iam-policy-binding gs://apex-document-archive \
+        --member="serviceAccount:apex-api@apex-memory-prod.iam.gserviceaccount.com" \
+        --role="roles/storage.objectCreator"
+
+      gcloud storage buckets add-iam-policy-binding gs://apex-message-archive \
+        --member="serviceAccount:apex-api@apex-memory-prod.iam.gserviceaccount.com" \
+        --role="roles/storage.objectCreator"
+      ```
+    - **Environment Variables:**
+      ```bash
+      gcloud run services update apex-api \
+        --region=us-central1 \
+        --update-env-vars="GCS_ARCHIVE_BUCKET=apex-document-archive,GCS_MESSAGE_ARCHIVE_BUCKET=apex-message-archive"
+      ```
+    - **Verification:**
+      ```bash
+      # Test archival
+      gcloud storage ls gs://apex-document-archive/
+      gcloud storage ls gs://apex-message-archive/
+      ```
+    - **Reference:** `deployment/components/gcs-archival/DEPLOYMENT-GUIDE.md`
+
+44h. **NATS Messaging (OPTIONAL - Verify Usage First)** (2-4 hours if deployed)
+    - Feature: Agent-to-agent messaging infrastructure
+    - Cost: $0-50/month (self-hosted = $0, managed = $15-50/month)
+    - **⚠️ WARNING:** Verify NATS usage before deploying
+      ```bash
+      # Check if NATS is actively used
+      cd apex-memory-system
+      grep -r "nats" src/ --include="*.py" | wc -l
+      # If <10 results, NATS likely not actively used - SKIP THIS STEP
+      ```
+    - **Self-Hosted Option (Recommended if needed):**
+      ```bash
+      # Add to Pulumi compute module
+      # Deploy NATS server on GCE e2-micro ($7/month)
+      ```
+    - **Managed Option:**
+      - Sign up: https://www.synadia.com/cloud
+      - Cost: $15-50/month
+    - **Environment Variables (only if deployed):**
+      ```bash
+      gcloud run services update apex-api \
+        --region=us-central1 \
+        --update-env-vars="NATS_URL=nats://nats-server:4222"
+      ```
+    - **Reference:** `deployment/components/nats-messaging/DEPLOYMENT-GUIDE.md`
+
+44i. **Authentication (OPTIONAL - Only if API Needs Public Access)** (1 hour if deployed)
+    - Feature: JWT token authentication with Bcrypt password hashing
+    - Cost: $0/month (uses existing infrastructure)
+    - **When to Deploy:** API needs public access, multiple users, granular access control
+    - **When to Skip:** Internal-only deployment, single-user system, VPC-protected API
+    - **Database Migration:**
+      ```bash
+      cd apex-memory-system && alembic upgrade head
+      # Creates `users`, `api_keys` tables
+      ```
+    - **Environment Variables:**
+      ```bash
+      gcloud run services update apex-api \
+        --region=us-central1 \
+        --update-env-vars="JWT_ALGORITHM=HS256,JWT_EXPIRATION=3600"
+      ```
+    - **SECRET_KEY:** Already configured in Step 10
+    - **Verification:**
+      ```bash
+      # Test user registration
+      curl -X POST "$API_URL/api/v1/auth/register" \
+        -H "Content-Type: application/json" \
+        -d '{"email": "test@example.com", "username": "testuser", "password": "SecurePass123!"}'
+
+      # Test login
+      curl -X POST "$API_URL/api/v1/auth/login" \
+        -H "Content-Type: application/json" \
+        -d '{"email": "test@example.com", "password": "SecurePass123!"}'
+      ```
+    - **Reference:** `deployment/components/authentication/DEPLOYMENT-GUIDE.md`
+
+44j. **GCS Archive Workflow for Google Drive** (30 min, extends 44b)
+    - Feature: Automatically archives processed Google Drive documents to GCS
+    - Cost: Included in Step 44g GCS costs (~$0-5/month for documents)
+    - **Prerequisites:** Google Drive Integration enabled (Step 44b) + GCS buckets (Step 44g)
+    - **Integration:** Triggered automatically by `cleanup_staging_activity` after document processing
+    - **No additional configuration needed** - Archives to `gs://apex-document-archive/{domain}/{source}/`
+    - **Verification:**
+      ```bash
+      # After processing a Google Drive document
+      gcloud storage ls gs://apex-document-archive/logistics/google_drive/
+      # Should show archived files
+      ```
+    - **Reference:** `deployment/components/google-drive-integration/ARCHIVE-WORKFLOW.md`
+
+**Feature Deployment Summary:**
+- ✅ **Graphiti Integration** (44c): $10-30/month, 1 hour
+- ✅ **Structured Data** (44d): $0/month, 1 hour
+- ✅ **Conversation Processing** (44e): $5-15/month, 1 hour
+- ✅ **Memory Decay** (44f): $0/month, 30 min
+- ✅ **GCS Archival** (44g): $5-15/month, 2 hours
+- ⚠️ **NATS Messaging** (44h): $0-50/month, OPTIONAL (verify usage first)
+- ⚠️ **Authentication** (44i): $0/month, OPTIONAL (only if public access needed)
+- ✅ **GCS Archive Workflow** (44j): $0/month (included in 44g), 30 min
+
+**Total Additional Cost:** $20-60/month (required features only)
+**Total Additional Time:** 6-8 hours (required features), 10-12 hours (if deploying optional features)
+
+**DEFERRED to Post-Initial Deployment:**
+- **Agent Interactions:** Deploy 4-8 weeks after initial launch (see `deployment/components/agent-interactions/DEPLOYMENT-GUIDE.md`)
+- **UI/UX Frontend:** Deploy 8-12 weeks after initial launch (see `deployment/components/frontend/DEPLOYMENT-GUIDE.md`)
+
 #### Day 3-4: Staging Deployment & Testing (12-16 hours)
 
 **Deploy to Staging:**
@@ -916,8 +1204,10 @@ Deploy Apex Memory System to Google Cloud Platform with production-grade infrast
 53. **Verify Grafana Dashboards**
     - Navigate: https://grafana.com (Grafana Cloud)
     - Import: 5 existing dashboards (Apex Overview, Graphiti, Query Router, Saga, Temporal Ingestion)
+    - Import (optional): Google Drive Integration dashboard (if Google Drive enabled)
     - Verify: Metrics flowing from staging environment
     - Check: All 27 Temporal metrics visible
+    - Check (optional): 7 Google Drive metrics visible (google_drive_files_processed_total, google_drive_poll, etc.)
 
 54. **Test Alert Rules**
     - Simulate: High error rate (send bad requests to API)
