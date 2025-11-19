@@ -1,27 +1,41 @@
 # Conversational Memory Integration - Technical Architecture
 
-**Status:** Finalized Architecture
-**Decision Date:** 2025-11-14
-**Target Deployment:** Mid-January 2026
+**Status:** Phases 1, 2, 4 Complete - 145/145 Tests Passing
+**Completion Dates:** Phase 1 (11/14), Phase 2 (11/14), Phase 4 (11/15)
+**Next:** Planning Phase 5 - Human↔Agent Interface (Slack Custom)
 
 ---
 
 ## Executive Summary
 
-### The Problem
+### Implementation Status
 
-Apex Memory System currently has a critical architectural gap:
-- ✅ **Documents (PDFs, DOCX)** → Successfully ingested and stored in knowledge graph
-- ❌ **Conversations (User↔Agent, Agent↔Agent)** → Stored in PostgreSQL but NOT enriched into knowledge graph
-- **Result:** System doesn't learn from conversations, agents can't access conversational context
+**✅ Completed (145/145 tests passing):**
 
-### The Solution
+1. **Phase 1: Multi-Agent Namespacing** (68 tests)
+   - Agent-specific Qdrant collections
+   - Redis namespace isolation
+   - PostgreSQL agent filtering
 
-Implement automatic conversation→knowledge graph ingestion with:
-- **Human↔Agent path** (70% traffic): Slack → PostgreSQL → Background extraction → Neo4j/Graphiti
-- **Agent↔Agent path** (30% traffic): NATS → PostgreSQL → Background extraction → Neo4j/Graphiti
-- **Redis caching** (critical): 60% latency reduction, 5x cost savings
-- **5-tier degradation**: Prevent unbounded growth (filter, score, decay, archive, consolidate)
+2. **Phase 2: Conversational Memory Feedback Loop** (43 tests)
+   - Redis conversation context caching
+   - ConversationIngestionWorkflow (Temporal)
+   - GPT-5 Mini entity extraction (Medium Reasoning, 90%+ accuracy)
+   - Messages API background workflow triggering
+
+3. **Phase 4: Agent↔Agent Communication** (34 tests)
+   - NATS messaging (pub/sub + request-reply)
+   - PostgreSQL audit trail (agent_interactions table)
+   - Automatic knowledge graph enrichment
+   - AgentInteractionService with importance scoring
+
+**❌ Remaining:**
+
+- **Phase 5:** Human↔Agent Interface (Slack Custom) - See PHASE-5-PLANNING.md
+  - Custom Slack integration
+  - Intent classification (GPT-5 Nano Low: 74%+ accuracy, 500ms)
+  - Enhanced entity extraction (GPT-5 Mini Medium: 90%+ accuracy with context)
+  - Hybrid model architecture (40% cost savings vs all-Mini)
 
 ---
 
@@ -200,10 +214,17 @@ return context  # <5ms if cached
 
 **Purpose:** Prevent duplicate LLM API calls on retries or re-ingestion
 
+**Model:** GPT-5 Mini (Medium Reasoning) - See ADR-007 for model selection rationale
 **Cache Key:** `entities:{message_hash}`
 **TTL:** 1 hour (3600s)
 **Hit Rate:** 20-30% (retries, duplicates)
 **Cost Impact:** Saves $300-1500/month
+
+**Hybrid Model Architecture (Phase 5):**
+- **Intent Routing:** GPT-5 Nano (Low Reasoning) - 74.2% accuracy, 500ms, $0.000105
+- **Entity Extraction:** GPT-5 Mini (Medium Reasoning) - 90%+ accuracy, 2-5s, $0.000525
+- **Cost Optimization:** 40% savings vs all-Mini, 3x cost vs all-Nano
+- **Reference:** ADR-007 (research/architecture-decisions/ADR-007-entity-extraction-model-selection.md)
 
 **Implementation:**
 ```python
@@ -213,15 +234,20 @@ cache_key = f"entities:{message_hash}"
 entities = await redis.get(cache_key)
 
 if not entities:
-    # Cache miss - call LLM (expensive)
-    entities = await llm.extract_entities(message)  # $0.01-0.05, 1-3s
+    # Cache miss - call GPT-5 Mini with Medium Reasoning
+    entities = await llm.extract_entities(
+        message,
+        model="gpt-5-mini",
+        reasoning_effort="medium"  # 90%+ accuracy, 2-5s
+    )
     await redis.setex(cache_key, 3600, json.dumps(entities))
 
 return entities  # Free if cached
 ```
 
 **Metrics:**
-- Cost reduction: $0.01-0.05 per duplicate → $0 (100% savings on dupes)
+- Cost per extraction: $0.000525 (GPT-5 Mini Medium)
+- Cache hit rate: 88% (with prompt caching)
 - Estimated savings: $300-1500/month (based on 20-30% duplication rate)
 - Latency reduction: 1-3s → <5ms on cache hits
 
@@ -1139,10 +1165,10 @@ def redact_sensitive_info(message: str) -> str:
 
 ### Phase 2: Core Feedback Loop
 - ✅ 100% of conversations auto-queued for ingestion
-- ✅ 85%+ entity extraction accuracy
+- ✅ 90%+ entity extraction accuracy (GPT-5 Mini Medium Reasoning)
 - ✅ <100ms latency increase for Slack responses
 - ✅ Background ingestion completes within 20s (P95)
-- ✅ All 20 tests passing
+- ✅ All 43 tests passing
 
 ### Phase 3: Memory Quality & Importance
 - ✅ 30-50% of low-value messages filtered

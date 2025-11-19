@@ -37,6 +37,17 @@
     "mcpdocsearch": {
       "command": "npx",
       "args": ["-y", "@alizdavoodi/mcpdocsearch"]
+    },
+    "archon": {
+      "command": "docker",
+      "args": [
+        "exec",
+        "-i",
+        "archon-mcp",
+        "python",
+        "-m",
+        "src.mcp_server.mcp_stdio"
+      ]
     }
   }
 }

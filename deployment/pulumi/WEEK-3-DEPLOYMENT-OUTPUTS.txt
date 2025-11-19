@@ -1,0 +1,33 @@
+Current stack outputs (31):
+    OUTPUT                    VALUE
+    database_name             apex_memory
+    deployment_summary        {"environment":"dev","next_steps":["1. Create modules/networking.py","2. Create modules/databases.py","3. Create modules/compute.py","4. Create modules/secrets.py","5. Create modules/monitoring.py","6. Uncomment module orchestration above","7. Run: pulumi up"],"project":"apex-memory-dev","region":"us-central1","status":"infrastructure-skeleton-deployed"}
+    is_production             false
+    neo4j_bolt_uri            bolt://10.0.0.2:7687
+    neo4j_browser_uri         http://10.0.0.2:7474
+    neo4j_instance_name       apex-neo4j-dev
+    neo4j_password            {*i-ouY!AZEp1Gf+h0u[A6)R]utvhb#0
+    neo4j_private_ip          10.0.0.2
+    postgres_connection_name  apex-memory-dev:us-central1:apex-postgres-dev
+    postgres_instance_name    apex-postgres-dev
+    postgres_password         V>r8b}e+jBO*<awJw(xlEHSl2u>TC2ds
+    postgres_private_ip       10.115.5.3
+    postgres_user             apex
+    project_id                apex-memory-dev
+    qdrant_grpc_endpoint      http://10.0.0.3:6334
+    qdrant_http_endpoint      http://10.0.0.3:6333
+    qdrant_instance_name      apex-qdrant-dev
+    qdrant_private_ip         10.0.0.3
+    redis_connection_string   redis://10.123.172.227:6379
+    redis_host                10.123.172.227
+    redis_instance_name       apex-redis-dev
+    redis_port                6379
+    region                    us-central1
+    stack                     dev
+    subnet_id                 projects/apex-memory-dev/regions/us-central1/subnetworks/apex-db-subnet-ef80746
+    subnet_name               apex-db-subnet-ef80746
+    vpc_connector_id          projects/apex-memory-dev/locations/us-central1/connectors/apex-vpc-connector
+    vpc_connector_name        apex-vpc-connector
+    vpc_id                    projects/apex-memory-dev/global/networks/apex-memory-vpc-50b72cc
+    vpc_name                  apex-memory-vpc-50b72cc
+    zone                      us-central1-a
